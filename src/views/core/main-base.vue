@@ -18,9 +18,16 @@
 export default {
   name: 'MainBase',
   mounted() {
-    setTimeout(() => {
-      this.$refs.contentView.$el.style.paddingTop = this.$refs.appBar.$el.offsetHeight + 'px';
-    }, 0);
+
+    // setTimeout(() => {
+    // this.$refs.contentView.$el.style.paddingTop = this.$refs.appBar.$el.offsetHeight + 'px';
+      // this.$refs.contentView.$el.style.paddingTop = 64 + 'px';
+    // }, 0);
+
+    if (this.$route.name === 'MainBase') {
+      this.$router.replace('/home');
+    }
+
   }
 }
 </script>
@@ -31,6 +38,7 @@ export default {
     .main-content {
       overflow-y: auto;
       height: 100%;
+      padding-top: 64px;
     }
   }
 </style>
