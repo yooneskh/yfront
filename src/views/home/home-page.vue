@@ -1,7 +1,7 @@
 <template>
-  <div class="home-page">
-    Home Page
-  </div>
+  <v-container class="home-page">
+    <h3 class="display-2">Home Page</h3>
+  </v-container>
 </template>
 
 <script>

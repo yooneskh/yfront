@@ -14,8 +14,15 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'home',
-      component: () => import('./views/home/home-page.vue'/* webpackChunkName: 'homepage' */)
-    }
+      name: 'MainBase',
+      component: () => import('./views/core/main-base.vue'/* webpackChunkName: 'mainbase' */),
+      children: [
+        {
+          path: 'home',
+          name: 'Home',
+          component: () => import('./views/home/home-page.vue'/* webpackChunkName: 'homepage' */)
+        }
+      ]
+    },
   ]
 });
