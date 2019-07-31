@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './app'
 import router from './router'
 import vuetify from './plugins/vuetify';
+import './plugins/yvue';
 
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
