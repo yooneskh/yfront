@@ -1,6 +1,6 @@
 <template>
   <div class="y-flexible-view" :class="{'compact': isDesktop}">
-
+    <slot />
   </div>
 </template>
 

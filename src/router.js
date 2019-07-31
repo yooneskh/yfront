@@ -8,9 +8,14 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/auth',
+      name: 'Auth',
+      component: () => import('./views/auth/auth-page.vue'/* webpackChunkName: 'authpage' */)
+    },
+    {
       path: '/',
       name: 'home',
-      component: () => import('./views/home.vue'/* webpackChunkName: 'homepage' */)
+      component: () => import('./views/home/home-page.vue'/* webpackChunkName: 'homepage' */)
     }
   ]
 });
