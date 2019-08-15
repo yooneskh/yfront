@@ -4,9 +4,10 @@
     <y-form
       :target="heh"
       :fields="[
-        {key: 'name', type: 'text', title: 'Name', width: 6},
-        {key: 'isMale', type: 'checkbox', title: 'Male?', width: 6},
-        {key: 'fruits', type: 'select', title: 'Fruits', width: 6, items: ['Apple', 'Banana', 'Orange'], multiple: true},
+        { key: 'name', type: 'text', title: 'Name', width: 6 },
+        { key: 'isMale', type: 'checkbox', title: 'Male?', width: 6 },
+        { key: 'fruits', type: 'select', title: 'Fruits', width: 6, items: ['Apple', 'Banana', 'Orange'], multiple: false },
+        { key: 'media', type: 'file', title: 'Media Picture', width: 6 },
       ]"
     />
   </v-container>
@@ -19,7 +20,8 @@ export default {
     heh: {
       name: '',
       isMale: false,
-      fruits: []
+      fruits: [],
+      media: {}
     }
   })
 };

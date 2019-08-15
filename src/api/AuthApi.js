@@ -5,10 +5,10 @@ const ENDPOINT_LOGIN = `${ENDPOINT_BASE}/auth/login`;
 
 export async function login(phoneNumber) {
     
-    const payload = {
-        phoneNumber
-    };
+  const payload = {
+    phoneNumber
+  };
 
-    return YNetwork.post(ENDPOINT_LOGIN, payload);
+  return YNetwork.post(ENDPOINT_LOGIN, payload);
 
 }

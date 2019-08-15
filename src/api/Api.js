@@ -1,5 +1,7 @@
-import * as AuthApi from './AuthApi';
+import * as Auth from './AuthApi';
+import * as Media from './MediaApi';
 
 export default {
-    Auth: AuthApi
+  Auth,
+  Media
 };

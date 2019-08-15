@@ -11,8 +11,21 @@ import './assets/scss/app.scss';
 
 Vue.config.productionTip = false
 
+Vue.mixin({
+  methods: {
+    $token() {
+      return this.$root.user.token;
+    }
+  }
+});
+
 new Vue({
   router,
   vuetify,
-  render: h => h(App)
+  render: h => h(App),
+  data: {
+    user: {
+      token: ''
+    }
+  }
 }).$mount('#app')
