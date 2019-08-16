@@ -1,0 +1,30 @@
+
+@font-face {
+	font-family: 'iryekan';
+	font-style: normal;
+	font-weight: bold;
+	src: url(iranyekanwebbold.eot),
+		 url(iranyekanwebbold.woff2) format('woff2'),
+		 url(iranyekanwebbold.woff) format('woff'),
+		 url(iranyekanwebbold.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'iryekan';
+	font-style: normal;
+	font-weight: 300;
+	src: url(iranyekanweblight.eot),
+		 url(iranyekanweblight.woff2) format('woff2'),
+		 url(iranyekanweblight.woff) format('woff'),
+		 url(iranyekanweblight.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'iryekan';
+	font-style: normal;
+	font-weight: normal;
+	src: url(iranyekanwebregular.eot),
+		 url(iranyekanwebregular.woff2) format('woff2'),
+		 url(iranyekanwebregular.woff) format('woff'),
+		 url(iranyekanwebregular.ttf) format('truetype');
+}

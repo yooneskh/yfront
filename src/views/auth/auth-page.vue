@@ -4,7 +4,7 @@
       <v-flex class="px-4">
         
         <v-card max-width="385" class="mx-auto" outlined :loading="loading">
-          <v-card-title class="text-center">Login to application</v-card-title>
+          <v-card-title class="text-center">ورود به اپلیکیشن</v-card-title>
           <v-card-text class="pt-0 pb-0">
 
             <y-form
@@ -12,7 +12,7 @@
               :target="this"
               no-padding
               :fields="[
-                { key: 'phoneNumber', type: 'text', title: 'Phone Number'}
+                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', classes: 'ltred'}
               ]"
             />
 
@@ -31,13 +31,13 @@
               :target="this"
               no-padding
               :fields="[
-                { key: 'verificationCode', type: 'text', title: 'Verification Code'}
+                { key: 'verificationCode', type: 'text', title: 'Verification Code', classes: 'ltred'}
               ]"
             />
 
           </v-card-text>
           <v-card-actions>
-            <v-btn v-if="mode === 'login'" block large color="primary" @click="doLogin()">Login To Your Account</v-btn>
+            <v-btn v-if="mode === 'login'" block large color="primary" @click="doLogin()">ورود به حساب کاربری</v-btn>
             <v-btn v-if="mode === 'register'" block large color="primary" @click="doRegister()">Register New Account</v-btn>
             <v-btn v-if="mode === 'verify'" block large color="primary" @click="doVerify()">Check Code</v-btn>
           </v-card-actions>

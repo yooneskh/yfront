@@ -10,17 +10,17 @@ export default new Router({
     {
       path: '/auth',
       name: 'Auth',
-      component: () => import('./views/auth/auth-page.vue'/* webpackChunkName: 'authpage' */)
+      component: () => import('./views/auth/auth-page.vue' /* webpackChunkName: 'authpage' */)
     },
     {
       path: '/',
       name: 'MainBase',
-      component: () => import('./views/core/main-base.vue'/* webpackChunkName: 'mainbase' */),
+      component: () => import('./views/core/main-base.vue' /* webpackChunkName: 'mainbase' */),
       children: [
         {
           path: 'home',
           name: 'Home',
-          component: () => import('./views/home/home-page.vue'/* webpackChunkName: 'homepage' */)
+          component: () => import('./views/home/home-page.vue' /* webpackChunkName: 'homepage' */)
         }
       ]
     },

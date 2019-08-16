@@ -3,7 +3,7 @@ import moment from 'moment-jalaali';
 
 moment.loadPersian({ dialect: 'persian-modern' });
 
-Vue.component('y-form', () => import('../components/y-form-vuetify'));
+Vue.component('y-form', () => import('../components/y-form-vuetify' /* webpackChunkName: 'y-form' */));
 
 function formatTime(time, format) {
   return moment(time || undefined).format(format)

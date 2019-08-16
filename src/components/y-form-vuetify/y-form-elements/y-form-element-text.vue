@@ -1,5 +1,5 @@
 <template>
-  <v-text-field v-model="target[field.key]" :label="field.title" />
+  <v-text-field v-model="target[field.key]" :label="field.title" :class="field.classes" />
 </template>
 
 <script>

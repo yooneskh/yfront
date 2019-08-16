@@ -1,3 +1,25 @@
 html, body, .v-application {
-    height: 100%;
+  height: 100%;
+}
+
+.v-application--is-rtl {
+  @import url(./rtl.scss);
+}
+
+.ltred {
+  direction: ltr;
+}
+
+.rtled {
+  direction: rtl;
+}
+
+.vts__snackbar.is-rtl > .v-snack__wrapper {
+  align-self: flex-end;
+  margin-left: auto;
+  margin-right: auto;
+  .vts__snackbar__message {
+    margin-right: unset;
+    margin-left: auto;
+  }
 }

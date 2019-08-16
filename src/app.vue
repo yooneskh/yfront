@@ -10,7 +10,7 @@
 export default {
   name: 'ApplicationBase',
   components: {
-    'y-flexible-view': () => import('./components/y-flexible-view')
+    'y-flexible-view': () => import('./components/y-flexible-view' /* webpackChunkName: 'y-flexible-view' */)
   }
 };
 </script>

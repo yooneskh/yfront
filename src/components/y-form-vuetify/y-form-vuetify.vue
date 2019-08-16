@@ -26,10 +26,10 @@ export default {
     }
   },
   components: {
-    'y-form-element-text': () => import('./y-form-elements/y-form-element-text.vue'),
-    'y-form-element-checkbox': () => import('./y-form-elements/y-form-element-checkbox.vue'),
-    'y-form-element-select': () => import('./y-form-elements/y-form-element-select.vue'),
-    'y-form-element-file': () => import('./y-form-elements/y-form-element-file.vue')
+    'y-form-element-text': () => import('./y-form-elements/y-form-element-text.vue' /* webpackChunkName: 'y-form-element-text' */),
+    'y-form-element-checkbox': () => import('./y-form-elements/y-form-element-checkbox.vue' /* webpackChunkName: 'y-form-element-checkbox' */),
+    'y-form-element-select': () => import('./y-form-elements/y-form-element-select.vue' /* webpackChunkName: 'y-form-element-select' */),
+    'y-form-element-file': () => import('./y-form-elements/y-form-element-file.vue' /* webpackChunkName: 'y-form-element-file' */)
   },
   methods: {
     makeWidthForField(field) {

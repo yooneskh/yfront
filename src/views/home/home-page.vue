@@ -23,6 +23,10 @@ export default {
       fruits: [],
       media: {}
     }
-  })
+  }),
+  mounted() {
+    this.$toast('یسسسس')
+    this.$toast.success('یسسسس')
+  }
 };
 </script>

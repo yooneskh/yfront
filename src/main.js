@@ -4,8 +4,9 @@ import router from './router'
 import vuetify from './plugins/vuetify';
 import './plugins/yvue';
 
-import 'roboto-fontface/css/roboto/roboto-fontface.css'
-import '@mdi/font/css/materialdesignicons.css'
+import 'roboto-fontface/css/roboto/roboto-fontface.css';
+import './fonts/iryekan/iryekan.css';
+import '@mdi/font/css/materialdesignicons.css';
 
 import './assets/scss/app.scss';
 
