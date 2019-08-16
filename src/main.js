@@ -35,14 +35,25 @@ new Vue({
       _id: '',
       firstName: '',
       lastName: '',
-      permissions: '',
+      permissions: [],
       phoneNumber: '',
       token: ''
     }
   },
   methods: {
     resetCredentials() {
-      Object.assign(this.user, JSON.parse(localStorage.getItem('--user--') || '{}'));
+      Object.assign(this.user, JSON.parse(localStorage.getItem('--user--') || JSON.stringify({
+        _id: '',
+        firstName: '',
+        lastName: '',
+        permissions: [],
+        phoneNumber: '',
+        token: ''
+      })));
+    },
+    logout() {
+      localStorage.removeItem('--user--');
+      this.resetCredentials();
     }
   }
 }).$mount('#app')

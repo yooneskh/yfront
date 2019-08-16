@@ -1,14 +1,19 @@
 <template>
   <div class="main-base" style="position: relative;">
       <v-app-bar absolute color="primary" dark ref="appBar">
+
         <v-toolbar-title>My Application</v-toolbar-title>
+
         <v-spacer />
-        <v-btn icon>
+
+        <v-btn icon class="me-2">
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
+
         <v-btn icon>
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
+
       </v-app-bar>
       <router-view ref="contentView" class="main-content" />
   </div>
@@ -17,7 +22,7 @@
 <script>
 export default {
   name: 'MainBase',
-  mounted() {
+  beforeCreate() {
     if (!this.$root.user.token) {
       this.$router.replace('/auth');
     }
