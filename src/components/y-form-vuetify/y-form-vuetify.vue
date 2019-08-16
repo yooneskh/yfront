@@ -1,7 +1,7 @@
 <template>
   <v-form class="y-form y-form-vuetify">
     <v-layout wrap>
-      <v-flex v-for="field in fields" :key="field.key" v-bind:[makeWidthForField(field)]="true" class="pe-4">
+      <v-flex v-for="field in fields" :key="field.key" v-bind:[makeWidthForField(field)]="true" :class="{'pe-4': !noPadding}">
         <component :is="mapElementType(field)" :target="target" :field="field" />
       </v-flex>
     </v-layout>
@@ -19,6 +19,10 @@ export default {
     fields: {
       type: Array,
       required: true
+    },
+    noPadding: {
+      type: Boolean,
+      default: false
     }
   },
   components: {

@@ -3,17 +3,43 @@
     <v-layout row wrap align-center>
       <v-flex class="px-4">
         
-        <v-card max-width="385" class="mx-auto" outlined>
-          <v-card-title class="text-center">Login</v-card-title>
-          <v-card-text class="pt-1 pb-0">
+        <v-card max-width="385" class="mx-auto" outlined :loading="loading">
+          <v-card-title class="text-center">Login to application</v-card-title>
+          <v-card-text class="pt-0 pb-0">
 
-            <v-form>
-              <v-text-field label="Phone Number" />
-            </v-form>
+            <y-form
+              v-if="mode === 'login'"
+              :target="this"
+              no-padding
+              :fields="[
+                { key: 'phoneNumber', type: 'text', title: 'Phone Number'}
+              ]"
+            />
+
+            <y-form
+              v-if="mode === 'register'"
+              :target="this"
+              no-padding
+              :fields="[
+                { key: 'firstName', type: 'text', title: 'First Name'},
+                { key: 'lastName', type: 'text', title: 'Last Name'}
+              ]"
+            />
+
+            <y-form
+              v-if="mode === 'verify'"
+              :target="this"
+              no-padding
+              :fields="[
+                { key: 'verificationCode', type: 'text', title: 'Verification Code'}
+              ]"
+            />
 
           </v-card-text>
           <v-card-actions>
-            <v-btn block large color="primary" @click="mode = 'register'">{{mode}}</v-btn>
+            <v-btn v-if="mode === 'login'" block large color="primary" @click="doLogin()">Login To Your Account</v-btn>
+            <v-btn v-if="mode === 'register'" block large color="primary" @click="doRegister()">Register New Account</v-btn>
+            <v-btn v-if="mode === 'verify'" block large color="primary" @click="doVerify()">Check Code</v-btn>
           </v-card-actions>
         </v-card>
 
@@ -23,11 +49,57 @@
 </template>
 
 <script>
+
+import Api from '../../api';
+
 export default {
   name: 'AuthPage',
   data: () => ({
-    mode: 'login'
-  })
+    mode: 'login',
+    loading: false,
+    phoneNumber: '',
+    firstName: '',
+    lastName: '',
+    verificationCode: ''
+  }),
+  methods: {
+    async doLogin() {
+
+      this.loading = true;
+      const { status, result } = await Api.Auth.login(`+98${this.phoneNumber.slice(1)}`);
+      this.loading = false;
+
+      if (status === 404) this.mode = 'register';
+      else if (this.$generalHandle(status, result)) return;
+      else this.mode = 'verify';
+
+    },
+    async doRegister() {
+
+      this.loading = true;
+      const { status, result } = await Api.Auth.register(`+98${this.phoneNumber.slice(1)}`, this.firstName, this.lastName);
+      this.loading = false;
+
+      if (this.$generalHandle(status, result)) return;
+      
+      this.mode = 'verify';
+
+    },
+    async doVerify() {
+
+      this.loading = true;
+      const { status, result } = await Api.Auth.verify(`+98${this.phoneNumber.slice(1)}`, this.verificationCode);
+      this.loading = false;
+
+      if (this.$generalHandle(status, result)) return;
+      
+      localStorage.setItem('--user--', JSON.stringify(result.user));
+      this.$root.resetCredentials();
+
+      this.$router.replace('/home');
+
+    }
+  }
 };
 </script>
 

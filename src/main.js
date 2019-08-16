@@ -15,6 +15,12 @@ Vue.mixin({
   methods: {
     $token() {
       return this.$root.user.token;
+    },
+    // eslint-disable-next-line no-unused-vars
+    $generalHandle(status, result) {
+      if (status !== 200) {
+        alert('Something went wrong!'); return true;
+      }
     }
   }
 });
@@ -25,7 +31,17 @@ new Vue({
   render: h => h(App),
   data: {
     user: {
+      _id: '',
+      firstName: '',
+      lastName: '',
+      permissions: '',
+      phoneNumber: '',
       token: ''
+    }
+  },
+  methods: {
+    resetCredentials() {
+      Object.assign(this.user, JSON.parse(localStorage.getItem('--user--') || '{}'));
     }
   }
 }).$mount('#app')
