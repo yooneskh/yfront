@@ -10,9 +10,11 @@ Vue.use(Vuetify, {
   }
 });
 
+const isRtl = false;
+
 Vue.use(VuetifyToast, {
   queueable: true,
-  classes: ['is-rtl'],
+  classes: [isRtl ? 'is-rtl' : ''],
   timeour: 2000
 });
 
@@ -20,7 +22,7 @@ export default new Vuetify({
   icons: {
     iconfont: 'mdi',
   },
-  rtl: true,
+  rtl: isRtl,
   theme: {
     themes: {
       light: {
