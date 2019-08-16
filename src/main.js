@@ -20,7 +20,7 @@ Vue.mixin({
     // eslint-disable-next-line no-unused-vars
     $generalHandle(status, result) {
       if (status !== 200) {
-        alert('Something went wrong!'); return true;
+        this.$toast('Something went wrong!'); return true;
       }
     }
   }

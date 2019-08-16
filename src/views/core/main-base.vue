@@ -18,16 +18,12 @@
 export default {
   name: 'MainBase',
   mounted() {
-
-    // setTimeout(() => {
-    // this.$refs.contentView.$el.style.paddingTop = this.$refs.appBar.$el.offsetHeight + 'px';
-      // this.$refs.contentView.$el.style.paddingTop = 64 + 'px';
-    // }, 0);
-
-    if (this.$route.name === 'MainBase') {
+    if (!this.$root.user.token) {
+      this.$router.replace('/auth');
+    }
+    else if (this.$route.name === 'MainBase') {
       this.$router.replace('/home');
     }
-
   }
 }
 </script>

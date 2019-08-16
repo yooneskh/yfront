@@ -14,8 +14,7 @@ const isRtl = false;
 
 Vue.use(VuetifyToast, {
   queueable: true,
-  classes: [isRtl ? 'is-rtl' : ''],
-  timeour: 2000
+  classes: [isRtl ? 'is-rtl' : '']
 });
 
 export default new Vuetify({

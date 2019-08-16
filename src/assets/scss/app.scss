@@ -14,12 +14,15 @@ html, body, .v-application {
   direction: rtl;
 }
 
-.vts__snackbar > .v-snack__wrapper {
-  align-self: flex-end;
-  margin-left: auto;
-  margin-right: auto;
+.vts__snackbar  {
   &.is-rtl .vts__snackbar__message {
     margin-right: unset;
     margin-left: auto;
+    font-family: iryekan;
+  }
+  & > .v-snack__wrapper {
+    align-self: flex-end;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
