@@ -21,8 +21,8 @@
               :target="this"
               no-padding
               :fields="[
-                { key: 'firstName', type: 'text', title: 'First Name'},
-                { key: 'lastName', type: 'text', title: 'Last Name'}
+                { key: 'firstName', type: 'text', title: 'نام'},
+                { key: 'lastName', type: 'text', title: 'نام خانوادگی'}
               ]"
             />
 
@@ -31,15 +31,15 @@
               :target="this"
               no-padding
               :fields="[
-                { key: 'verificationCode', type: 'text', title: 'Verification Code', classes: 'ltred'}
+                { key: 'verificationCode', type: 'text', title: 'کد تایید', classes: 'ltred'}
               ]"
             />
 
           </v-card-text>
           <v-card-actions>
             <v-btn v-if="mode === 'login'" block large color="primary" @click="doLogin()">ورود به حساب کاربری</v-btn>
-            <v-btn v-if="mode === 'register'" block large color="primary" @click="doRegister()">Register New Account</v-btn>
-            <v-btn v-if="mode === 'verify'" block large color="primary" @click="doVerify()">Check Code</v-btn>
+            <v-btn v-if="mode === 'register'" block large color="primary" @click="doRegister()">ایجاد حساب جدید</v-btn>
+            <v-btn v-if="mode === 'verify'" block large color="primary" @click="doVerify()">بررسی کد تایید</v-btn>
           </v-card-actions>
         </v-card>
 

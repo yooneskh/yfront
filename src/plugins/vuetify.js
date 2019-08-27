@@ -10,7 +10,7 @@ Vue.use(Vuetify, {
   }
 });
 
-const isRtl = false;
+const isRtl = true;
 
 Vue.use(VuetifyToast, {
   queueable: true,

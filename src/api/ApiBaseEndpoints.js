@@ -1,2 +1,2 @@
-export const ENDPOINT_CORE = 'https://api.8khand.yooneskh.ir';
+export const ENDPOINT_CORE = 'http://localhost:48500';
 export const ENDPOINT_BASE = `${ENDPOINT_CORE}/api/v1`;
