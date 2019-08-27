@@ -1,13 +1,13 @@
 <template>
-  <v-container class="home-page">
-    <h3 class="display-2">Home Page</h3>
+  <v-container class="home">
+    <h3 class="display-2">صفحه اصلی</h3>
     <y-form
       :target="heh"
       :fields="[
-        { key: 'name', type: 'text', title: 'Name', width: 6 },
-        { key: 'isMale', type: 'checkbox', title: 'Male?', width: 6 },
-        { key: 'fruits', type: 'select', title: 'Fruits', width: 6, items: ['Apple', 'Banana', 'Orange'], multiple: false },
-        { key: 'media', type: 'file', title: 'Media Picture', width: 6 },
+        { key: 'name', type: 'text', title: 'نام', width: 6 },
+        { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', width: 6 },
+        { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, items: ['سیب', 'موز', 'پرتقال'], multiple: false },
+        { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
       ]"
     />
   </v-container>

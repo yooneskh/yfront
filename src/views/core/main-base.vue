@@ -1,8 +1,8 @@
 <template>
   <div class="main-base" style="position: relative;">
-      <v-app-bar absolute color="primary" dark ref="appBar">
+      <v-app-bar absolute color="primary" dark>
 
-        <v-toolbar-title>My Application</v-toolbar-title>
+        <v-toolbar-title>اپلیکیشن من</v-toolbar-title>
 
         <v-spacer />
 
