@@ -5,15 +5,40 @@
 
       <v-toolbar-title>اپلیکیشن من</v-toolbar-title>
 
+      <v-btn class="ms-4" text @click="$router.replace('/home', () => {})">
+        خانه
+      </v-btn>
+
       <v-spacer />
 
-      <v-btn icon class="me-2">
-        <v-icon>mdi-magnify</v-icon>
+      <v-btn icon v-if="!$token">
+        <v-icon>mdi-login</v-icon>
       </v-btn>
+      
+      <v-menu v-else offset-y>
 
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
+        <template v-slot:activator="{ on }">
+          <v-btn text v-on="on">
+            <v-avatar size="24" class="mt-1 me-1"> <img :src="$user.profile.path || 'http://www.lakeportmetalcraft.com/wp-content/uploads/2018/10/user-placeholder.png'" alt="owner image avatar" /> </v-avatar>
+            {{ $user.firstName + ' ' + $user.lastName }}
+          </v-btn>
+        </template>
+
+        <v-list dense>
+
+          <v-list-item @click="$router.push(`/user/${$user._id}`)">
+            <v-list-item-title>مشاهده پروفایل</v-list-item-title>
+          </v-list-item>
+          
+          <!-- <v-divider /> -->
+
+          <v-list-item @click="doLogout();">
+            <v-list-item-title>خروج از حساب کاربری</v-list-item-title>
+          </v-list-item>
+
+        </v-list>
+
+      </v-menu>
 
     </v-app-bar>
 

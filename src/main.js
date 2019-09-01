@@ -14,6 +14,9 @@ Vue.config.productionTip = false
 
 Vue.mixin({
   computed: {
+    $user() {
+      return this.$root.user;
+    },
     $token() {
       return this.$root.user.token;
     }
@@ -24,6 +27,9 @@ Vue.mixin({
       if (status !== 200) {
         this.$toast('مشکلی پیش امده است. لطفا دوباره امتحان کنید!'); return true;
       }
+    },
+    $hasAccess(access) {
+      return access && this.$user.permissions && this.$user.permissions.indexOf(access) >= 0;
     }
   }
 });
@@ -37,6 +43,7 @@ new Vue({
       _id: '',
       firstName: '',
       lastName: '',
+      profile: {},
       permissions: [],
       phoneNumber: '',
       token: ''
@@ -51,6 +58,7 @@ new Vue({
         _id: '',
         firstName: '',
         lastName: '',
+        profile: {},
         permissions: [],
         phoneNumber: '',
         token: ''
