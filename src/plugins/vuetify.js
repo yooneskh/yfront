@@ -10,10 +10,11 @@ Vue.use(Vuetify, {
   }
 });
 
-const isRtl = true;
+const isRtl = true; // TODO: make dependant to main rtlish
 
 Vue.use(VuetifyToast, {
   queueable: true,
+  timeout: 50000,
   classes: [isRtl ? 'is-rtl' : '']
 });
 

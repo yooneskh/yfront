@@ -32,7 +32,7 @@
           
           <!-- <v-divider /> -->
 
-          <v-list-item @click="doLogout();">
+          <v-list-item @click="$root.logout() && $router.replace('/auth')">
             <v-list-item-title>خروج از حساب کاربری</v-list-item-title>
           </v-list-item>
 
@@ -67,7 +67,7 @@ export default {
     .main-content {
       overflow-y: auto;
       height: 100%;
-      padding-top: 64px;
+      padding-top: 64px; // TODO: reat to app bar size change
     }
   }
 </style>

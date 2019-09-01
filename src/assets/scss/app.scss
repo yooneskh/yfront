@@ -18,7 +18,8 @@ html, body, .v-application {
   &.is-rtl .vts__snackbar__message {
     margin-right: unset;
     margin-left: auto;
-    font-family: iryekan;
+    font-family: iryekan; // because it is out of main app diretive
+    direction: rtl;
   }
   & > .v-snack__wrapper {
     align-self: flex-end;
