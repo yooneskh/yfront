@@ -13,10 +13,12 @@ import './assets/scss/app.scss';
 Vue.config.productionTip = false
 
 Vue.mixin({
-  methods: {
+  computed: {
     $token() {
       return this.$root.user.token;
-    },
+    }
+  },
+  methods: {
     // eslint-disable-next-line no-unused-vars
     $generalHandle(status, result) {
       if (status !== 200) {
@@ -39,6 +41,9 @@ new Vue({
       phoneNumber: '',
       token: ''
     }
+  },
+  beforeMount() {
+    this.resetCredentials();
   },
   methods: {
     resetCredentials() {

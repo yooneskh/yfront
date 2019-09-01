@@ -5,7 +5,7 @@
         
         <v-card max-width="385" class="mx-auto" outlined :loading="loading">
           <v-card-title class="text-center">ورود به اپلیکیشن</v-card-title>
-          <v-card-text class="pt-0 pb-0">
+          <v-card-text class="pt-0 pb-0 px-4">
 
             <y-form
               v-if="mode === 'login'"
@@ -36,7 +36,7 @@
             />
 
           </v-card-text>
-          <v-card-actions>
+          <v-card-actions class="px-4 pb-4">
             <v-btn v-if="mode === 'login'" block large color="primary" @click="doLogin()">ورود به حساب کاربری</v-btn>
             <v-btn v-if="mode === 'register'" block large color="primary" @click="doRegister()">ایجاد حساب جدید</v-btn>
             <v-btn v-if="mode === 'verify'" block large color="primary" @click="doVerify()">بررسی کد تایید</v-btn>
