@@ -32,13 +32,25 @@
           
           <!-- <v-divider /> -->
 
-          <v-list-item @click="$root.logout() && $router.replace('/auth')">
+          <v-list-item @click="$root.logout(); $router.replace('/auth')">
             <v-list-item-title>خروج از حساب کاربری</v-list-item-title>
           </v-list-item>
 
         </v-list>
 
       </v-menu>
+
+      <!-- <template v-slot:extension>
+        <v-tabs align-with-title background-color="transparent">
+
+          <v-tabs-slider color="white" />
+
+          <v-tab v-for="toolbarItem in toolbars" :key="toolbarItem.path" @click="$router.push(toolbarItem.path)">
+            {{ toolbarItem.title }}
+          </v-tab>
+
+        </v-tabs>
+      </template> -->
 
     </v-app-bar>
 
@@ -50,6 +62,12 @@
 <script>
 export default {
   name: 'MainBase',
+  data: () => ({
+    // toolbars: [
+    //   { title: 'لیست مکان ها', path: '/places/list' },
+    //   { title: 'افزودن مکان جدید', path: '/places/new' },
+    // ]
+  }),
   beforeMount() {
     if (!this.$token) {
       this.$router.replace('/auth');
@@ -57,6 +75,9 @@ export default {
     else if (this.$route.name === 'MainBase') {
       this.$router.replace('/home');
     }
+    // else if (this.$route.name === 'MainBase') {
+    //   this.$router.replace(this.toolbars[0].path);
+    // }
   }
 }
 </script>
@@ -68,6 +89,7 @@ export default {
       overflow-y: auto;
       height: 100%;
       padding-top: 64px; // TODO: reat to app bar size change
+      // padding-top: 112px; // TODO: reat to app bar size change
     }
   }
 </style>
