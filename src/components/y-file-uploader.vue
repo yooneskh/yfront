@@ -58,7 +58,7 @@ export default {
 
       this.stateInfo = "در حال آپلود ...";
 
-      http.onreadystatechange = (event) => {
+      http.onreadystatechange = () => {
         if (http.readyState == 4) {
           if (http.status == 201) {
             this.processing = false;
