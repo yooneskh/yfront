@@ -14,8 +14,8 @@ html, body, .v-application {
   direction: rtl;
 }
 
-.vts__snackbar  {
-  &.is-rtl .vts__snackbar__message {
+.vts.v-snack  {
+  &.is-rtl .vts__message {
     margin-right: unset;
     margin-left: auto;
     font-family: iryekan; // because it is out of main app diretive
