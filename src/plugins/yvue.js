@@ -22,6 +22,17 @@ Vue.filter('truncate', truncate);
 Vue.filter('formatTime', formatTime);
 
 Vue.mixin({
+  computed: {
+    $isMobile() {
+      return window.innerWidth <= 450
+    },
+    $isTablet() {
+      return window.innerWidth > 450 && window.innerWidth <= 850
+    },
+    $isDesktop() {
+      return window.innerWidth > 850
+    }
+  },
   methods: {
     $formatTime(time, format) {
       return formatTime(time, format);

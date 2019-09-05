@@ -1,7 +1,7 @@
 <template>
   <div class="main-base" style="position: relative;">
 
-    <v-app-bar absolute color="primary" dark>
+    <v-app-bar class="main-bar" :class="{'has-tabs-icons': !$isMobile}" color="primary" dark>
 
       <v-toolbar-title>اپلیکیشن من</v-toolbar-title>
 
@@ -18,9 +18,9 @@
       <v-menu v-else offset-y>
 
         <template v-slot:activator="{ on }">
-          <v-btn text v-on="on">
-            <v-avatar size="24" class="mt-1 me-1"> <img :src="$user.profile.path || 'http://www.lakeportmetalcraft.com/wp-content/uploads/2018/10/user-placeholder.png'" alt="owner image avatar" /> </v-avatar>
-            {{ $user.firstName + ' ' + $user.lastName }}
+          <v-btn text v-on="on" class="px-0" style="min-width: unset;">
+            <v-avatar size="24" class="mt-1 me-1 ms-1"> <img :src="$user.profile.path || 'http://www.lakeportmetalcraft.com/wp-content/uploads/2018/10/user-placeholder.png'" alt="owner image avatar" /> </v-avatar>
+            <span v-if="!$isMobile">{{ $user.firstName + ' ' + $user.lastName }}</span>
           </v-btn>
         </template>
 
@@ -41,12 +41,13 @@
       </v-menu>
 
       <!-- <template v-slot:extension>
-        <v-tabs align-with-title background-color="transparent">
+        <v-tabs class="main-tabs" background-color="transparent" icons-and-text>
 
           <v-tabs-slider color="white" />
 
-          <v-tab v-for="toolbarItem in toolbars" :key="toolbarItem.path" @click="$router.push(toolbarItem.path)">
+          <v-tab v-for="(toolbarItem, index) in toolbars" :key="toolbarItem.path" :class="{'ms-0': index === 0}" @click="$router.push(toolbarItem.path, () => {})">
             {{ toolbarItem.title }}
+            <v-icon v-if="!$isMobile" class="mb-0">{{ toolbarItem.icon }}</v-icon>
           </v-tab>
 
         </v-tabs>
@@ -64,8 +65,8 @@ export default {
   name: 'MainBase',
   data: () => ({
     // toolbars: [
-    //   { title: 'لیست مکان ها', path: '/places/list' },
-    //   { title: 'افزودن مکان جدید', path: '/places/new' },
+      // { path: '/places/list', title: 'لیست مکان ها', icon: 'mdi-city' },
+      // { path: '/places/new', title: 'افزودن مکان جدید', icon: 'mdi-bank-plus' },
     // ]
   }),
   beforeMount() {
@@ -85,11 +86,17 @@ export default {
 <style lang="scss" scoped>
   .main-base {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    .main-bar {
+      flex-grow: 0;
+      &.has-tabs-icons ::v-deep .v-toolbar__extension {
+        height: 64px !important;
+      }
+    }
     .main-content {
       overflow-y: auto;
-      height: 100%;
-      padding-top: 64px; // TODO: reat to app bar size change
-      // padding-top: 112px; // TODO: reat to app bar size change
+      flex-grow: 1;
     }
   }
 </style>

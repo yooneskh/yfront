@@ -1,23 +1,12 @@
 <template>
-  <div class="y-flexible-view" :class="{'compact': isDesktop}">
+  <div class="y-flexible-view" :class="{'compact': $isDesktop}">
     <slot />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'YFlexibleView',
-  computed: {
-    isMobile() {
-      return window.innerWidth <= 450
-    },
-    isTablet() {
-      return window.innerWidth > 450 && window.innerWidth <= 850
-    },
-    isDesktop() {
-      return window.innerWidth > 850
-    }
-  }
+  name: 'YFlexibleView'
 }
 </script>
 
