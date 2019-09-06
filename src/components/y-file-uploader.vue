@@ -1,6 +1,6 @@
 <template>
   <div class="y-file-uploader">
-    <v-text-field readonly :label="label" :value="stateInfo" outlined flat @click="$refs.theFile.click()" />
+    <v-text-field readonly :label="label" hide-details :value="stateInfo" outlined flat @click="$refs.theFile.click()" />
     <input class="input" ref="theFile" type="file" @change.passive="theChange" style="display: none;" />
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
       const fileSize = file.size;
 
       this.processing = true;
-      const { status, result } = await Api.Media.initUpload(this.$token(), fileName, fileExtension, fileSize);
+      const { status, result } = await Api.Media.initUpload(this.$token, fileName, fileExtension, fileSize);
       
       if (status == 200) {
         this.currentFile = file;
