@@ -11,7 +11,7 @@
 
       <v-spacer />
 
-      <v-btn icon v-if="!$token">
+      <v-btn icon v-if="!$token" @click="$router.replace('/auth', () => {})">
         <v-icon>mdi-login</v-icon>
       </v-btn>
       
@@ -20,7 +20,7 @@
         <template v-slot:activator="{ on }">
           <v-btn text v-on="on" class="px-0" style="min-width: unset;">
             <v-avatar size="24" class="mt-1 me-1 ms-1"> <img :src="$user.profile.path || 'http://www.lakeportmetalcraft.com/wp-content/uploads/2018/10/user-placeholder.png'" alt="owner image avatar" /> </v-avatar>
-            <span v-if="!$isMobile">{{ $user.firstName + ' ' + $user.lastName }}</span>
+            <span v-if="!$isMobile" class="pe-1">{{ $user.firstName + ' ' + $user.lastName }}</span>
           </v-btn>
         </template>
 
