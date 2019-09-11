@@ -1,5 +1,5 @@
-html, body, .v-application {
-  height: 100%;
+html {
+  overflow-y: hidden;  
 }
 
 .v-application--is-rtl {

@@ -55,7 +55,15 @@
 
     </v-app-bar>
 
-    <router-view class="main-content" />
+    <y-flexible-view no-shadow>
+
+      <router-view class="main-content" />
+
+      <div class="bottom-spacer">
+        تهیه شده توسط یونس خوش قدم
+      </div>
+
+    </y-flexible-view>
 
   </div>
 </template>
@@ -63,6 +71,9 @@
 <script>
 export default {
   name: 'MainBase',
+  components: {
+    'y-flexible-view': () => import('../../components/y-flexible-view' /* webpackChunkName: 'y-flexible-view' */)
+  },
   data: () => ({
     // toolbars: [
       // { path: '/places/list', title: 'لیست مکان ها', icon: 'mdi-city' },
@@ -90,13 +101,26 @@ export default {
     flex-direction: column;
     .main-bar {
       flex-grow: 0;
-      &.has-tabs-icons ::v-deep .v-toolbar__extension {
-        height: 64px !important;
-      }
+      z-index: 1;
     }
-    .main-content {
+    .y-flexible-view {
       overflow-y: auto;
       flex-grow: 1;
+      z-index: 0;
+      height: 0px;
+      .main-content {
+        min-height: 100%;
+        min-height: calc(100% - 56px);
+      }
+      .bottom-spacer {
+        width: 100%;
+        height: 56px;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 16px;
+        font-size: 0.85em;
+        color: rgba(black, 0.3);
+      }
     }
   }
 </style>
