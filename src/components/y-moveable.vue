@@ -23,25 +23,29 @@ export default {
   },
   data: () => ({
     mouseDown: false,
-    offset: [0, 0]
+    start: [0, 0],
+    initial: [0, 0]
   }),
   methods: {
     onDown(event) {
 
       this.mouseDown = true;
 
-      this.offset = [
-        this.$el.offsetLeft - event.clientX,
-        this.$el.offsetTop - event.clientY
-      ];
+      this.start   = [this.$el.offsetLeft, this.$el.offsetTop];
+      this.initial = [event.clientX, event.clientY];
 
     },
     onMove(event) {
       if (this.mouseDown && event) {
+
+        const dx = event.clientX - this.initial[0];
+        const dy = event.clientY - this.initial[1];
+
         this.$emit('input', [
-          event.clientX + this.offset[0],
-          event.clientY + this.offset[1]
+          this.start[0] + dx,
+          this.start[1] + dy
         ]);
+
       }
     },
     onUp() {
