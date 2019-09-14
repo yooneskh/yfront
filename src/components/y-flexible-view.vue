@@ -1,5 +1,5 @@
 <template>
-  <div class="y-flexible-view" :class="{'compact': $isDesktop, 'shadowed': !noShadow}">
+  <div class="y-flexible-view" :class="{'compact': $isDesktop, 'padding-method': paddingMethod, 'margin-method': !paddingMethod, 'shadowed': !noShadow}">
     <slot />
   </div>
 </template>
@@ -9,6 +9,10 @@ export default {
   name: 'YFlexibleView',
   props: {
     noShadow: {
+      type: Boolean,
+      default: false
+    },
+    paddingMethod: {
       type: Boolean,
       default: false
     }
@@ -21,8 +25,13 @@ export default {
 
     &.compact {
       display: block;
-      width: 690px;
-      margin: auto;
+      &.margin-method {
+        width: 690px;
+        margin: auto;
+      }
+      &.padding-method {
+        padding: 0 25%;
+      }
     }
     &.shadowed {
       box-shadow: 0 0 16px 4px rgba(black, 0.1);

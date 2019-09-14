@@ -14,6 +14,7 @@
     "roboto-fontface": "*",
     "uuid": "^3.3.3",
     "vue": "^2.6.10",
+    "vue-draggable-resizable": "^2.0.1",
     "vue-router": "^3.1.3",
     "vuetify": "^2.0.17",
     "vuetify-toast-snackbar": "^0.5.0",

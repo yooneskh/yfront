@@ -55,7 +55,7 @@
 
     </v-app-bar>
 
-    <y-flexible-view no-shadow>
+    <y-flexible-view no-shadow padding-method>
 
       <router-view class="main-content" :class="{'mobile': $isMobile}" />
 
@@ -101,6 +101,7 @@ export default {
     flex-direction: column;
     .main-bar {
       flex-grow: 0;
+      z-index: 10;
     }
     .y-flexible-view {
       overflow-y: auto;
