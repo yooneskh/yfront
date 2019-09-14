@@ -2,7 +2,7 @@
   <v-card>
 
     <v-card-title class="headline" primary-title>
-      حذف
+      حذف {{ title }}
     </v-card-title>
 
     <v-card-text>
@@ -20,7 +20,10 @@
 
 <script>
 export default {
-  name: 'ConfirmDeleteDialog'
+  name: 'ConfirmDeleteDialog',
+  props: {
+    title: String
+  }
 }
 </script>
 

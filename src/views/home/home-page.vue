@@ -10,7 +10,7 @@
         { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
       ]"
     />
-    <v-btn large @click="makeDialog">Make Dialog</v-btn>
+    <v-btn large @click="makeDialog">حذف کن</v-btn>
   </v-container>
 </template>
 
@@ -28,9 +28,11 @@ export default {
   methods: {
     async makeDialog() {
       
-      const result = await this.$dialog(() => import('../../dialogs/confirm-delete.vue'));
+      const result = await this.$dialog(() => import('../../dialogs/confirm-delete.vue'), {
+        title: 'سیستم سرمایشی'
+      });
 
-      alert('result' + result);
+      console.log('result', result);
 
     }
   }

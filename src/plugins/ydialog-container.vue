@@ -10,6 +10,7 @@
       <component
         :is="dialog.component"
         @resolve="dialog.resolve($event); $root.dialogs.splice(index, 1);"
+        v-bind="dialog.options"
       />
 
     </v-dialog>
