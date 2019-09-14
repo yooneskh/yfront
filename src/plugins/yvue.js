@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import moment from 'moment-jalaali';
+import YDialog from './ydialog';
+import UUIDV4 from 'uuid/v4';
 
 moment.loadPersian({ dialect: 'persian-modern' });
 
@@ -39,6 +41,11 @@ Vue.mixin({
     },
     $truncate(lengthy, truncateLength) {
       return truncate(lengthy, truncateLength);
+    },
+    $uuid() {
+      return UUIDV4();
     }
   }
 });
+
+Vue.use(YDialog);

@@ -1,12 +1,16 @@
 <template>
   <v-app class="app-base">
     <router-view />
+    <y-dialog-container />
   </v-app>
 </template>
 
 <script>
 export default {
-  name: 'ApplicationBase'
+  name: 'ApplicationBase',
+  components: {
+    'y-dialog-container': () => import('./plugins/ydialog-container.vue')
+  }
 };
 </script>
 

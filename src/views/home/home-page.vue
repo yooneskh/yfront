@@ -10,6 +10,7 @@
         { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
       ]"
     />
+    <v-btn large @click="makeDialog">Make Dialog</v-btn>
   </v-container>
 </template>
 
@@ -23,6 +24,15 @@ export default {
       fruits: [],
       media: {}
     }
-  })
+  }),
+  methods: {
+    async makeDialog() {
+      
+      const result = await this.$dialog(() => import('../../dialogs/confirm-delete.vue'));
+
+      alert('result' + result);
+
+    }
+  }
 };
 </script>

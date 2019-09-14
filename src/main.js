@@ -47,7 +47,8 @@ new Vue({
       permissions: [],
       phoneNumber: '',
       token: ''
-    }
+    },
+    dialogs: []
   },
   beforeMount() {
     this.resetCredentials();
