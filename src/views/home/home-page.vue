@@ -4,7 +4,7 @@
     <v-card>
       <v-card-text>
 
-        <h3 class="display-2">صفحه اصلی</h3>
+        <h3 class="display-2">صفحه  اصلی</h3>
 
         <y-form
           :target="heh"
