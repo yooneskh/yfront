@@ -21,10 +21,26 @@
       </v-card-text>
     </v-card>
 
-    <v-card class="moveable-section mt-4 mb-8" style="width: 100%; height: 300px; position: relative; overflow: auto;">
+    <v-card class="moveable-section mt-4" style="width: 100%; height: 300px; position: relative; overflow: auto;">
       <y-moveable v-model="boxPosition" style="background: #EAEAEA; padding: 30px; user-select: none; cursor: pointer;" >
         تکون بده!
       </y-moveable>
+    </v-card>
+
+    <v-card class="mt-4 mb-8">
+      <y-table
+        :headers="[
+          { value: 'name', text: 'نام' },
+          { value: 'age', text: 'سن' }
+        ]"
+        :items="[
+          { name: 'یونس خوشقدم', age: 23 },
+          { name: 'یونس خوشقدم', age: 23 },
+          { name: 'زهرا سادات مطلبی', age: 23 },
+          { name: 'یونس خوشقدم', age: 23 },
+          { name: 'یونس خوشقدم', age: 23 }
+        ]"
+      />
     </v-card>
 
   </v-container>
@@ -34,7 +50,8 @@
 export default {
   name: 'HomePage',
   components: {
-    'y-moveable': () => import('../../components/y-moveable.vue'  /* webpackChunkName: 'y-moveable' */)
+    'y-moveable': () => import('../../components/y-moveable.vue' /* webpackChunkName: 'y-moveable' */),
+    'y-table': () => import('../../components/y-table' /* webpackChunkName: 'y-table' */)
   },
   data: () => ({
     heh: {
