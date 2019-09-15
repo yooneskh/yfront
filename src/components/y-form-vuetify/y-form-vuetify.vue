@@ -1,10 +1,10 @@
 <template>
   <v-form class="y-form y-form-vuetify">
-    <v-layout wrap>
-      <v-flex v-for="field in fields" :key="field.key" v-bind:[makeWidthForField(field)]="true" :class="{'pe-4': !noPadding}">
+    <v-row wrap>
+      <v-col v-for="field in fields" :key="field.key" :cols="field.width || 12">
         <component :is="mapElementType(field)" :target="target" :field="field" />
-      </v-flex>
-    </v-layout>
+      </v-col>
+    </v-row>
   </v-form>
 </template>
 

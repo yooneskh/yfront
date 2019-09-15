@@ -10,8 +10,8 @@
           :target="heh"
           :fields="[
             { key: 'name', type: 'text', title: 'نام', width: 6 },
-            { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', width: 6 },
             { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, items: ['سیب', 'موز', 'پرتقال'], multiple: false },
+            { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', width: 6 },
             { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
           ]"
         />
