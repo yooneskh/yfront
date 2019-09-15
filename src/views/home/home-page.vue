@@ -22,8 +22,8 @@
     </v-card>
 
     <v-card class="moveable-section mt-4 mb-8" style="width: 100%; height: 300px; position: relative; overflow: auto;">
-      <y-moveable v-model="boxPosition" style="background: red; padding: 30px;" >
-        My Man!
+      <y-moveable v-model="boxPosition" style="background: #EAEAEA; padding: 30px; user-select: none; cursor: pointer;" >
+        تکون بده!
       </y-moveable>
     </v-card>
 
