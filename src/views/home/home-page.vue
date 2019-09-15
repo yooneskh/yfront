@@ -34,7 +34,7 @@
 export default {
   name: 'HomePage',
   components: {
-    'y-moveable': () => import('../../components/y-moveable.vue')
+    'y-moveable': () => import('../../components/y-moveable.vue'  /* webpackChunkName: 'y-moveable' */)
   },
   data: () => ({
     heh: {
@@ -48,7 +48,7 @@ export default {
   methods: {
     async makeDialog() {
       
-      const result = await this.$dialog(() => import('../../dialogs/confirm-delete.vue'), {
+      const result = await this.$dialog(() => import('../../dialogs/confirm-delete.vue'  /* webpackChunkName: 'confirm-delete-dialog' */), {
         title: 'سیستم سرمایشی'
       });
 
