@@ -18,6 +18,8 @@
 
         <v-btn @click="makeDialog">حذف کن</v-btn>
 
+        <v-btn class="ms-2" @click="$toast('سلااااام به تو!')">پیام بده!</v-btn>
+
       </v-card-text>
     </v-card>
 

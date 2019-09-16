@@ -14,16 +14,16 @@ html {
   direction: rtl;
 }
 
-.vts.v-snack  {
-  &.is-rtl .vts__message {
-    margin-right: unset;
-    margin-left: auto;
-    font-family: iryekan; // because it is out of main app diretive
-    direction: rtl;
-  }
-  & > .v-snack__wrapper {
-    align-self: flex-end;
-    margin-left: auto;
-    margin-right: auto;
-  }
+.vts.v-snack > .v-snack__wrapper {
+  align-self: flex-end;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// rtlize snackbar here because it is out of main app diretive
+.v-application--is-rtl + script + .vts.v-snack .vts__message {
+  margin-right: unset;
+  margin-left: auto;
+  font-family: iryekan;
+  direction: rtl;
 }

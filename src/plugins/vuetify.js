@@ -10,19 +10,16 @@ Vue.use(Vuetify, {
   }
 });
 
-const isRtl = true; // TODO: make dependant to main rtlish
-
 Vue.use(VuetifyToast, {
   queueable: true,
-  timeout: 3000,
-  classes: [isRtl ? 'is-rtl' : '']
+  timeout: 3000
 });
 
 export default new Vuetify({
   icons: {
     iconfont: 'mdi',
   },
-  rtl: isRtl,
+  rtl: true,
   theme: {
     themes: {
       light: {
