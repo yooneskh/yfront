@@ -48,7 +48,7 @@ new Vue({
       phoneNumber: '',
       token: ''
     },
-    dialogs: []
+    dialogs: [] // TODO: make this in the plugin file
   },
   beforeMount() {
     this.resetCredentials();

@@ -1,9 +1,6 @@
 export default {
-  install (vue) {
-
-    // TODO: add dialogs variable to $root
-
-    vue.mixin({
+  install(Vue) {
+    Vue.mixin({
       methods: {
         $dialog(component, options) {
           return new Promise((resolve, reject) => {
@@ -18,6 +15,5 @@ export default {
         }
       }
     });
-
   }
 }
