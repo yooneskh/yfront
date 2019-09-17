@@ -6,6 +6,7 @@ import UUIDV4 from 'uuid/v4';
 moment.loadPersian({ dialect: 'persian-modern' });
 
 Vue.component('y-form', () => import('../components/y-form-vuetify' /* webpackChunkName: 'y-form' */));
+Vue.component('y-table', () => import('../components/y-table' /* webpackChunkName: 'y-table' */));
 
 function formatTime(time, format) {
   return moment(time || undefined).format(format)

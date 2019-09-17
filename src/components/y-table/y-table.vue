@@ -1,11 +1,28 @@
 <template>
-  <v-data-table
-    class="y-table"
-    :headers="headers"
-    :items="items"
-    hide-default-footer
-    :caption="caption"
-  />
+  <v-simple-table>
+    <thead>
+      <tr>
+        <th v-for="header in headers" :key="header.key">{{ header.text }}</th>
+        <th v-if="showActions" class="text-center">{{ actionTitle }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="item in items" :key="item[itemKey]">
+
+        <td v-for="header in headers" :key="header.key">
+          {{ item[header.key] }}
+        </td>
+        
+        <td v-if="showActions" class="text-center">
+          <v-btn v-for="(action, index) in actions" :key="action.key" text :small="!action.big" class="mb-1" :class="{'mt-1': index === 0}">
+            <v-icon small v-if="action.icon">{{ action.icon }}</v-icon>
+            {{ action.title }}
+          </v-btn>    
+        </td>
+      
+      </tr>
+    </tbody>
+  </v-simple-table>
 </template>
 
 <script>
@@ -22,6 +39,23 @@ export default {
     },
     caption: {
       type: String
+    },
+    itemKey: {
+      type: String,
+      default: '_id'
+    },
+    actionTitle: {
+      type: String,
+      default: 'عملیات'
+    },
+    actions: {
+      type: Array,
+      default: () => []
+    }
+  },
+  computed: {
+    showActions() {
+      return this.actions.length > 0;
     }
   }
 }

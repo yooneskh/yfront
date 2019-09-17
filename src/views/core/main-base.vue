@@ -1,7 +1,7 @@
 <template>
   <div class="main-base" style="position: relative;">
 
-    <v-app-bar class="main-bar" :class="{'has-tabs-icons': !$isMobile}" color="primary" dark>
+    <v-app-bar class="main-bar" :class="{'has-tabs-icons': !$isMobile && $data.toolbars && toolbars.length > 0}" color="primary" dark>
 
       <v-toolbar-title>اپلیکیشن من</v-toolbar-title>
 
@@ -40,18 +40,18 @@
 
       </v-menu>
 
-      <!-- <template v-slot:extension>
-        <v-tabs class="main-tabs" background-color="transparent" icons-and-text>
+      <template v-slot:extension>
+        <v-tabs class="main-tabs" background-color="transparent" icons-and-text :value="toolbars.findIndex(t => t.path === $route.path)">
 
           <v-tabs-slider color="white" />
 
-          <v-tab v-for="(toolbarItem, index) in toolbars" :key="toolbarItem.path" :class="{'ms-0': index === 0}" @click="$router.push(toolbarItem.path, () => {})">
+          <v-tab v-for="(toolbarItem, index) in toolbars" :key="index" :class="{'ms-0': index === 0}" @click="$router.push(toolbarItem.path, () => {})">
             {{ toolbarItem.title }}
-            <v-icon v-if="!$isMobile" class="mb-0">{{ toolbarItem.icon }}</v-icon>
+            <v-icon v-if="!$isMobile && toolbarItem.icon" class="mb-0">{{ toolbarItem.icon }}</v-icon>
           </v-tab>
 
         </v-tabs>
-      </template> -->
+      </template>
 
     </v-app-bar>
 
@@ -75,21 +75,21 @@ export default {
     'y-flexible-view': () => import('../../components/y-flexible-view' /* webpackChunkName: 'y-flexible-view' */)
   },
   data: () => ({
-    // toolbars: [
-      // { path: '/places/list', title: 'لیست مکان ها', icon: 'mdi-city' },
-      // { path: '/places/new', title: 'افزودن مکان جدید', icon: 'mdi-bank-plus' },
-    // ]
+    toolbars: [
+      { path: '/places/list', title: 'لیست مکان ها', icon: 'mdi-city' },
+      { path: '/places/new', title: 'افزودن مکان جدید', icon: 'mdi-bank-plus' },
+    ]
   }),
   beforeMount() {
     if (!this.$token) {
       this.$router.replace('/auth');
     }
-    else if (this.$route.name === 'MainBase') {
-      this.$router.replace('/home');
-    }
     // else if (this.$route.name === 'MainBase') {
-    //   this.$router.replace(this.toolbars[0].path);
+    //   this.$router.replace('/home');
     // }
+    else if (this.$route.name === 'MainBase') {
+      this.$router.replace(this.toolbars[0].path);
+    }
   }
 }
 </script>
@@ -102,6 +102,15 @@ export default {
     .main-bar {
       flex-grow: 0;
       z-index: 10;
+      &.has-tabs-icons {
+        height: 128px !important;
+        ::v-deep .v-toolbar__content {
+          height: 64px !important;
+        }
+        ::v-deep .v-toolbar__extension {
+          height: 64px !important;
+        }
+      }
     }
     .y-flexible-view {
       overflow-y: auto;
@@ -122,4 +131,5 @@ export default {
       }
     }
   }
+  
 </style>
