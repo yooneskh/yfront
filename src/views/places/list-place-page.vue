@@ -1,9 +1,10 @@
 <template>
-  <v-container fluid class="page pa-0">
+  <v-container fluid class="page">
     <y-resource-manager
       class="mt-4"
       title="مدیریت پست‌ها"
-      api-base="https://api.hashkhand.yooneskh.ir/api/v1/posts"
+      api-base="https://api.hashkhand.yooneskh.ir/api/v1"
+      model-name="posts"
     />
   </v-container>
 </template>

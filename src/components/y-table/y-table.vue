@@ -14,7 +14,7 @@
         </td>
         
         <td v-if="showActions" class="text-center">
-          <v-btn v-for="(action, index) in actions" :key="action.key" text :small="!action.big" class="mb-1" :class="{'mt-1': index === 0}">
+          <v-btn v-for="(action, index) in actions" :key="action.key" text :color="action.color" :icon="action.icon && !action.title" :small="!action.big" class="mb-1" :class="{'mt-1': index === 0}">
             <v-icon small v-if="action.icon">{{ action.icon }}</v-icon>
             {{ action.title }}
           </v-btn>    

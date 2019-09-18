@@ -1,7 +1,7 @@
 <template>
   <v-form class="y-form y-form-vuetify">
     <v-row wrap>
-      <v-col v-for="field in fields" :key="field.key" :cols="field.width || 12">
+      <v-col v-for="field in fields" class="py-0" :key="field.key" :cols="field.width || 12">
         <component :is="mapElementType(field)" :target="target" :field="field" />
       </v-col>
     </v-row>
@@ -29,7 +29,8 @@ export default {
     'y-form-element-text': () => import('./y-form-elements/y-form-element-text.vue' /* webpackChunkName: 'y-form-element-text' */),
     'y-form-element-checkbox': () => import('./y-form-elements/y-form-element-checkbox.vue' /* webpackChunkName: 'y-form-element-checkbox' */),
     'y-form-element-select': () => import('./y-form-elements/y-form-element-select.vue' /* webpackChunkName: 'y-form-element-select' */),
-    'y-form-element-file': () => import('./y-form-elements/y-form-element-file.vue' /* webpackChunkName: 'y-form-element-file' */)
+    'y-form-element-file': () => import('./y-form-elements/y-form-element-file.vue' /* webpackChunkName: 'y-form-element-file' */),
+    'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */)
   },
   methods: {
     makeWidthForField(field) {
@@ -41,6 +42,7 @@ export default {
         case 'checkbox': return 'y-form-element-checkbox';
         case 'select': return 'y-form-element-select';
         case 'file': return 'y-form-element-file';
+        case 'resource': return 'y-form-element-resource';
       } return '--no-such-form-element--';
     }
   }

@@ -55,7 +55,7 @@
 
     </v-app-bar>
 
-    <y-flexible-view no-shadow padding-method>
+    <div class="main-view">
 
       <router-view class="main-content" :class="{'mobile': $isMobile}" />
 
@@ -63,7 +63,7 @@
         تهیه شده توسط یونس خوش قدم
       </div>
 
-    </y-flexible-view>
+    </div>
 
   </div>
 </template>
@@ -112,13 +112,17 @@ export default {
         }
       }
     }
-    .y-flexible-view {
+    .main-view {
       overflow-y: auto;
       flex-grow: 1;
       height: 0px;
-      .main-content.mobile {
-        min-height: 100%;
-        min-height: calc(100% - 56px);
+      background-color: #EFEFEF;
+      .main-content {
+        max-width: 850px;
+        &.mobile {
+          min-height: 100%;
+          min-height: calc(100% - 56px);
+        }
       }
       .bottom-spacer {
         width: 100%;

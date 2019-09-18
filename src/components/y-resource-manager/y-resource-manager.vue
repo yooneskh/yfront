@@ -8,32 +8,17 @@
         :headers="headers"
         :items="resources.list"
         :actions="[
-          { key: 'delete', title: 'حذف', icon: 'mdi-plus' },
-          { key: 'edit', title: 'ویرایش' }
+          { key: 'edit', icon: 'mdi-pen' },
+          { key: 'delete', icon: 'mdi-delete', color: 'error' }
         ]"
       />
 
       <v-card-actions>
         <v-spacer />
-        <v-btn text color="primary" large @click="initAddNew">افزودن مورد جدید</v-btn>
+        <v-btn text color="primary" @click="initAddNew">افزودن مورد جدید</v-btn>
       </v-card-actions>
 
     </v-card>
-
-    <v-dialog v-model="modal.open" width="50%">
-      <v-card>
-
-        <v-card-title> 
-          افزودن مورد جدید
-        </v-card-title>
-
-        <v-card-actions>
-          <v-spacer />
-          <v-btn text color="primary" @click="doSubmit">افزودن</v-btn>
-        </v-card-actions>
-
-      </v-card>
-    </v-dialog>
 
   </div>
 </template>
@@ -53,6 +38,10 @@ export default {
     apiBase: {
       type: String,
       required: true
+    },
+    modelName: {
+      type: String,
+      required: true
     }
   },
   data: () => ({
@@ -63,10 +52,6 @@ export default {
     resources: {
       list: [],
       current: {}
-    },
-    modal: {
-      open: false,
-      data: {}
     }
   }),
   computed: {
@@ -94,7 +79,7 @@ export default {
     async loadMeta() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(this.apiBase + '/meta');
+      const { status, result } = await YNetwork.get(`${this.apiBase}/${this.modelName}/meta`);
       this.loading = false;
 
       console.log(status, result);
@@ -105,7 +90,7 @@ export default {
     async loadData() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(this.apiBase);
+      const { status, result } = await YNetwork.get(this.apiBase + '/' + this.modelName);
       this.loading = false;
 
       this.resources.list = result;
@@ -113,7 +98,11 @@ export default {
     },
     initAddNew() {
 
-      this.modal.open = true;
+      this.$dialog(() => import('./y-resource-dialog'), {
+        width: '400px',
+        apiBase: this.apiBase,
+        modelName: this.modelName
+      });
 
     },
     async doSubmit() {
