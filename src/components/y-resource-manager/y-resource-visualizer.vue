@@ -51,6 +51,15 @@ export default {
       if (this.model === 'Media') {
         window.open(this.resource.path, '_blank');
       }
+      else {
+        this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
+          width: '400px',
+          apiBase: this.apiBase,
+          modelName: this.model,
+          baseResource: this.resource,
+          readonly: true
+        });
+      }
     }
   }
 }

@@ -26,7 +26,7 @@
             {{ data === 0 ? '-' : $formatTime(data, header.timeFormat) }}
           </span>
           <span :key="header.key" v-else-if="header.ref">
-            <y-resource-visualizer :apiBase="apiBase" :model="header.ref" :id="data" />
+            <y-resource-visualizer :apiBase="apiBase" :model="header.ref" :id="data" :key="data" />
           </span>
         </template>
 

@@ -1,8 +1,8 @@
 <template>
   <v-card :loading="metas.list.length === 0 || loading">
 
-    <v-card-title> 
-      {{ resource._id ? 'ویرایش' : 'افزودن' }} مورد
+    <v-card-title>
+      {{ readonly ? ('مشاهده') : (resource._id ? 'ویرایش' : 'افزودن') }} مورد
     </v-card-title>
 
     <v-card-text class="pb-0">
@@ -12,7 +12,7 @@
       />
     </v-card-text>
 
-    <v-card-actions>
+    <v-card-actions v-if="!readonly">
       <v-spacer />
       <v-btn text color="primary" @click="submit">
         {{ resource._id ? 'ویرایش' : 'افزودن' }}
@@ -39,6 +39,10 @@ export default {
     },
     baseResource: {
       type: Object
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
