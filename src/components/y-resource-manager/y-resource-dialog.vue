@@ -2,7 +2,7 @@
   <v-card :loading="metas.list.length === 0">
 
     <v-card-title> 
-      افزودن مورد جدید
+      {{ resource._id ? 'ویرایش' : 'افزودن' }} مورد
     </v-card-title>
 
     <v-card-text class="pb-0">
@@ -14,7 +14,9 @@
 
     <v-card-actions>
       <v-spacer />
-      <v-btn text color="primary" @click="submit">افزودن</v-btn>
+      <v-btn text color="primary" @click="submit">
+        {{ resource._id ? 'ویرایش' : 'افزودن' }}
+      </v-btn>
     </v-card-actions>
 
   </v-card>
@@ -34,6 +36,9 @@ export default {
     modelName: {
       type: String,
       required: true
+    },
+    baseResource: {
+      type: Object
     }
   },
   data: () => ({
@@ -54,7 +59,11 @@ export default {
     }
   },
   mounted() {
+
+    if (this.baseResource) Object.assign(this.resource, this.baseResource);
+
     this.loadMeta();
+
   },
   methods: {
     async loadMeta() {
@@ -65,24 +74,25 @@ export default {
       
     },
     async submit() {
+
+      const payload = { payload: { ...this.resource } };
+
       if (this.resource._id) {
 
-        const { status, result } = await YNetwork.put(`${this.apiBase}/${this.modelName}/${this.resource._id}`, this.resource);
+        const { status, result } = await YNetwork.put(`${this.apiBase}/${this.modelName}/${this.resource._id}`, payload);
 
         if (this.$generalHandle(status, result)) return;
-
-        this.$toast('تغییر انجام شد.')
 
       }
       else {
         
-        const { status, result } = await YNetwork.post(`${this.apiBase}/${this.modelName}`, this.resource);
+        const { status, result } = await YNetwork.post(`${this.apiBase}/${this.modelName}`, payload);
 
         if (this.$generalHandle(status, result)) return;
 
-        this.$toast('ثبت انجام شد.')
-
       }
+
+      this.$toast.success('درخواست شما انجام شد.')
 
     },
     mapMetaType(type) {

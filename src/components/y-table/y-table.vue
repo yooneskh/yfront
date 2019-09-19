@@ -2,21 +2,34 @@
   <v-simple-table>
     <thead>
       <tr>
-        <th v-for="header in headers" :key="header.key">{{ header.text }}</th>
+        <th v-for="header in headers" :key="header.key" :class="header.class">{{ header.text }}</th>
         <th v-if="showActions" class="text-center">{{ actionTitle }}</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="item in items" :key="item[itemKey]">
 
-        <td v-for="header in headers" :key="header.key">
-          {{ item[header.key] }}
+        <td v-for="header in headers" :key="header.key" :class="header.class">
+          <slot :name="`item-${header.key}`" :item="item" :header="header" :data="item[header.key]">
+            {{ item[header.key] }}
+          </slot>
         </td>
-        
+         
         <td v-if="showActions" class="text-center">
-          <v-btn v-for="(action, index) in actions" :key="action.key" text :color="action.color" :icon="action.icon && !action.title" :small="!action.big" class="mb-1" :class="{'mt-1': index === 0}">
+          <v-btn
+            v-for="(action, index) in actions"
+            :key="action.key"
+            text
+            :color="action.color"
+            :icon="action.icon && !action.title"
+            :small="!action.big"
+            class="mb-1"
+            :class="{'mt-1': index === 0}"
+            @click="$emit(action.key, item)">
+
             <v-icon small v-if="action.icon">{{ action.icon }}</v-icon>
             {{ action.title }}
+
           </v-btn>    
         </td>
       

@@ -2,6 +2,9 @@ import Vue from 'vue';
 import moment from 'moment-jalaali';
 import YDialog from './ydialog';
 import UUIDV4 from 'uuid/v4';
+import YNetwork from 'ynetwork';
+
+YNetwork.debug = true;
 
 moment.loadPersian({ dialect: 'persian-modern' });
 

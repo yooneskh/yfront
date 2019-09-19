@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid class="page">
+  <v-container fluid class="page" style="max-width: 1200px;">
     <y-resource-manager
-      class="mt-4"
+      class="my-4"
       title="مدیریت پست‌ها"
       api-base="https://api.hashkhand.yooneskh.ir/api/v1"
       model-name="posts"

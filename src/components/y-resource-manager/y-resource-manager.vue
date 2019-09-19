@@ -2,7 +2,11 @@
   <div class="y-resource-manager">
     <v-card :loading="loading">
 
-      <v-card-title v-if="title">{{ title }}</v-card-title>
+      <v-card-title v-if="title">
+        {{ title }}
+        <v-spacer />
+        <v-btn text color="primary" @click="initEditor(undefined)">افزودن مورد جدید</v-btn>  
+      </v-card-title>
 
       <y-table
         :headers="headers"
@@ -11,12 +15,19 @@
           { key: 'edit', icon: 'mdi-pen' },
           { key: 'delete', icon: 'mdi-delete', color: 'error' }
         ]"
-      />
+        @edit="initEditor"
+        @delete="deleteResource">
 
-      <v-card-actions>
-        <v-spacer />
-        <v-btn text color="primary" @click="initAddNew">افزودن مورد جدید</v-btn>
-      </v-card-actions>
+        <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ item, header, data }">
+          <span :key="header.key" v-if="header.timeFormat">
+            {{ data === 0 ? '-' : $formatTime(data, header.timeFormat) }}
+          </span>
+          <span :key="header.key" v-else-if="header.ref">
+            <y-resource-visualizer :apiBase="apiBase" :model="header.ref" :id="data" />
+          </span>
+        </template>
+
+      </y-table>
 
     </v-card>
 
@@ -29,7 +40,7 @@ import YNetwork from 'ynetwork';
 export default {
   name: 'YResourceManager',
   components: {
-
+    'y-resource-visualizer': () => import('./y-resource-visualizer' /* webpackChunkName: 'y-dialog-container' */)
   },
   props: {
     title: {
@@ -58,15 +69,20 @@ export default {
     headers() {
       return this.metas.list.map(meta => ({
         key: meta.key,
-        text: meta.title || meta.key
+        text: meta.title || meta.key,
+        ref: meta.ref
       })).concat([
         {
           key: 'createdAt',
-          text: 'زمان ایجاد'
+          text: 'زمان ایجاد',
+          timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
+          class: 'text-center ltred'
         },
         {
           key: 'updatedAt',
-          text: 'زمان تغییر'
+          text: 'زمان تغییر',
+          timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
+          class: 'text-center ltred'
         }
       ]);
     }
@@ -76,6 +92,9 @@ export default {
     await this.loadData();
   },
   methods: {
+    makeSlotKeyForHeader(header) {
+      return 'item-' + header.key;
+    },
     async loadMeta() {
 
       this.loading = true;
@@ -96,17 +115,19 @@ export default {
       this.resources.list = result;
 
     },
-    initAddNew() {
-
-      this.$dialog(() => import('./y-resource-dialog'), {
+    initEditor(resource) {
+      this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
         width: '400px',
         apiBase: this.apiBase,
-        modelName: this.modelName
+        modelName: this.modelName,
+        baseResource: resource
       });
-
     },
-    async doSubmit() {
+    async deleteResource() {
+      if (await this.$dialog(() => import('../../dialogs/confirm-delete' /* webpackChunkName: 'confirm-delete' */))) {
 
+        const { status, result } = await YNetwork.delete(`${this.apiBase}/`)
+      }
     }
   }
 }

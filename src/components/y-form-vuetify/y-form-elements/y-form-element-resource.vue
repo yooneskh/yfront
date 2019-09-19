@@ -1,5 +1,5 @@
 <template>
-  <v-select v-model="target[field.key]" :label="field.title" :items="items" :multiple="field.multiple" />
+  <v-autocomplete v-model="target[field.key]" :label="field.title" :items="items" :multiple="field.multiple" />
 </template>
 
 <script>
@@ -27,14 +27,18 @@ export default {
   methods: {
     async loadData() {
 
-      const resourceUrl = this.field.resource.toLowerCase() + 's';
+      const resourceUrl = this.field.resource.toLowerCase() + 's'; // TODO: this might make problem! correct pluralize
 
       const metas = (await YNetwork.get(`${this.field.apiBase}/${resourceUrl}/meta`)).result;
       const items = (await YNetwork.get(`${this.field.apiBase}/${resourceUrl}`)).result;
 
+      const titleables = metas.filter(meta => meta.titleAble).map(meta => meta.key);
+
+      const itemTitler = (item) => titleables.map(field => item[field]).join(' ');
+
       this.items = items.map(item => ({
         value: item._id,
-        text: item.firstName || item.name
+        text: itemTitler(item)
       }));
       
     }
