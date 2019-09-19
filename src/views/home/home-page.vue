@@ -1,10 +1,9 @@
 <template>
   <v-container class="home">
 
-    <v-card>
+    <v-card class="mt-4">
+      <v-card-title>صفحه اصلی</v-card-title>
       <v-card-text>
-
-        <h3 class="display-2">صفحه  اصلی</h3>
 
         <y-form
           :target="heh"
@@ -16,11 +15,12 @@
           ]"
         />
 
-        <v-btn @click="makeDialog">حذف کن</v-btn>
-
-        <v-btn class="ms-2" @click="$toast('سلااااام به تو!')">پیام بده!</v-btn>
-
       </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn text color="error" @click="makeDialog">حذف کن</v-btn>
+        <v-btn text color="primary" class="ms-2" @click="$toast('سلااااام به تو!')">پیام بده!</v-btn>
+      </v-card-actions>
     </v-card>
 
     <v-card class="moveable-section mt-4" style="width: 100%; height: 300px; position: relative; overflow: auto;">
@@ -29,11 +29,12 @@
       </y-moveable>
     </v-card>
 
-    <v-card class="mt-4 mb-8">
+    <v-card class="mt-4 mb-4">
+      <v-card-title>نمونه جدول</v-card-title>
       <y-table
         :headers="[
-          { value: 'name', text: 'نام' },
-          { value: 'age', text: 'سن' }
+          { key: 'name', text: 'نام' },
+          { key: 'age', text: 'سن' }
         ]"
         :items="[
           { name: 'یونس خوشقدم', age: 23 },
@@ -60,7 +61,7 @@ export default {
       name: '',
       isMale: false,
       fruits: [],
-      media: {}
+      media: ''
     },
     boxPosition: [0, 0]
   }),

@@ -25,7 +25,7 @@ Vue.mixin({
     // eslint-disable-next-line no-unused-vars
     $generalHandle(status, result) {
       if (status !== 200) {
-        this.$toast('مشکلی پیش امده است. لطفا دوباره امتحان کنید!'); return true;
+        this.$toast.error('مشکلی پیش آمده است! لطفا دوباره امتحان کنید.'); return true;
       }
     },
     $hasAccess(access) {

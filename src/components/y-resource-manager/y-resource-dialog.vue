@@ -76,6 +76,8 @@ export default {
       
       const { status, result } = await YNetwork.get(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}/meta`);
 
+      if (this.$generalHandle(status, result)) return;
+
       this.metas.list = result;
       
     },

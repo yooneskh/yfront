@@ -4,14 +4,14 @@
       class="my-4"
       title="مدیریت کاربران"
       api-base="https://api.hashkhand.yooneskh.ir/api/v1"
-      model-name="Post"
+      model-name="User"
     />
   </v-container>
 </template>
 
 <script>
 export default {
-  name: 'ListPlacePage',
+  name: 'ListUsersPage',
   components: {
     'y-resource-manager': () => import('../../components/y-resource-manager/y-resource-manager.vue' /* webpackChunkName: 'y-resource-manager' */)
   },

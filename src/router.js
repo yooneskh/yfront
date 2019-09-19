@@ -17,21 +17,16 @@ export default new Router({
       name: 'MainBase',
       component: () => import('./views/core/main-base.vue' /* webpackChunkName: 'main-base' */),
       children: [
+        {
+          path: 'home',
+          name: 'Home',
+          component: () => import('./views/home/home-page.vue' /* webpackChunkName: 'home-page' */)
+        },
         // {
-        //   path: 'home',
-        //   name: 'Home',
-        //   component: () => import('./views/home/home-page.vue' /* webpackChunkName: 'home-page' */)
+        //   path: 'users/list',
+        //   name: 'ListUsers',
+        //   component: () => import('./views/users/list-user-page.vue' /* webpackChunkName: 'list-user-page' */)
         // },
-        {
-          path: 'places/new',
-          name: 'NewPlace',
-          component: () => import('./views/places/new-place-page.vue' /* webpackChunkName: 'new-place-page' */)
-        },
-        {
-          path: 'places/list',
-          name: 'ListPlaces',
-          component: () => import('./views/places/list-place-page.vue' /* webpackChunkName: 'list-place-page' */)
-        },
       ]
     },
   ]

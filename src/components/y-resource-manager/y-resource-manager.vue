@@ -6,7 +6,7 @@
         {{ title }}
         <v-spacer />
         <v-btn text color="primary" @click="initEditor(undefined)">
-          افزودن مورد جدید
+          افزودن
           &nbsp; <v-icon small class="mt-1">mdi-plus</v-icon>
         </v-btn>
       </v-card-title>
@@ -104,7 +104,7 @@ export default {
       const { status, result } = await YNetwork.get(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}/meta`);
       this.loading = false;
 
-      console.log(status, result);
+      if (this.$generalHandle(status, result)) return;
 
       this.metas.list = result;
 
@@ -115,6 +115,8 @@ export default {
       const { status, result } = await YNetwork.get(this.apiBase + '/' + this.modelName.toLowerCase() + 's');
       this.loading = false;
 
+      if (this.$generalHandle(status, result)) return;
+
       this.resources.list = result;
 
     },
@@ -124,7 +126,7 @@ export default {
         apiBase: this.apiBase,
         modelName: this.modelName,
         baseResource: resource
-      }).then(this.loadData);
+      }).then(result => result && this.loadData());
     },
     async deleteResource(resource) {
       if (await this.$dialog(() => import('../../dialogs/confirm-delete' /* webpackChunkName: 'confirm-delete' */))) {

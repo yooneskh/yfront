@@ -40,7 +40,7 @@
 
       </v-menu>
 
-      <template v-slot:extension>
+      <!-- <template v-slot:extension>
         <v-tabs class="main-tabs" background-color="transparent" icons-and-text :value="toolbars.findIndex(t => t.path === $route.path)">
 
           <v-tabs-slider color="white" />
@@ -51,7 +51,7 @@
           </v-tab>
 
         </v-tabs>
-      </template>
+      </template> -->
 
     </v-app-bar>
 
@@ -72,24 +72,23 @@
 export default {
   name: 'MainBase',
   components: {
-    'y-flexible-view': () => import('../../components/y-flexible-view' /* webpackChunkName: 'y-flexible-view' */)
+
   },
   data: () => ({
-    toolbars: [
-      { path: '/places/list', title: 'لیست مکان ها', icon: 'mdi-city' },
-      { path: '/places/new', title: 'افزودن مکان جدید', icon: 'mdi-bank-plus' },
-    ]
+    // toolbars: [
+    //   { path: '/users/list', title: 'لیست کاربران', icon: 'mdi-account-group' }
+    // ]
   }),
   beforeMount() {
     if (!this.$token) {
       this.$router.replace('/auth');
     }
-    // else if (this.$route.name === 'MainBase') {
-    //   this.$router.replace('/home');
-    // }
     else if (this.$route.name === 'MainBase') {
-      this.$router.replace(this.toolbars[0].path);
+      this.$router.replace('/home');
     }
+    // else if (this.$route.name === 'MainBase') {
+    //   this.$router.replace(this.toolbars[0].path);
+    // }
   }
 }
 </script>
