@@ -1,5 +1,5 @@
 <template>
-  <div class="main-base" style="position: relative;">
+  <div class="main-base">
 
     <v-app-bar class="main-bar" :class="{'has-tabs-icons': !$isMobile && $data.toolbars && toolbars.length > 0}" color="primary" dark>
 
@@ -96,9 +96,9 @@ export default {
 
 <style lang="scss" scoped>
   .main-base {
-    height: 100%;
     display: flex;
     flex-direction: column;
+    min-height: 100%;
     .main-bar {
       flex-grow: 0;
       z-index: 10;
@@ -113,10 +113,8 @@ export default {
       }
     }
     .main-view {
-      overflow-y: auto;
-      flex-grow: 1;
-      height: 0px;
       background-color: #EFEFEF;
+      flex-grow: 1;
       .main-content {
         max-width: 850px;
         &.mobile {

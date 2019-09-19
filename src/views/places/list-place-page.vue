@@ -2,9 +2,9 @@
   <v-container fluid class="page" style="max-width: 1200px;">
     <y-resource-manager
       class="my-4"
-      title="مدیریت پست‌ها"
+      title="مدیریت کاربران"
       api-base="https://api.hashkhand.yooneskh.ir/api/v1"
-      model-name="posts"
+      model-name="Post"
     />
   </v-container>
 </template>

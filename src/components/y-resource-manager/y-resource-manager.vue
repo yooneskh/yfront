@@ -5,7 +5,10 @@
       <v-card-title v-if="title">
         {{ title }}
         <v-spacer />
-        <v-btn text color="primary" @click="initEditor(undefined)">افزودن مورد جدید</v-btn>  
+        <v-btn text color="primary" @click="initEditor(undefined)">
+          افزودن مورد جدید
+          &nbsp; <v-icon small class="mt-1">mdi-plus</v-icon>
+        </v-btn>
       </v-card-title>
 
       <y-table
@@ -98,7 +101,7 @@ export default {
     async loadMeta() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.apiBase}/${this.modelName}/meta`);
+      const { status, result } = await YNetwork.get(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}/meta`);
       this.loading = false;
 
       console.log(status, result);
@@ -109,7 +112,7 @@ export default {
     async loadData() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(this.apiBase + '/' + this.modelName);
+      const { status, result } = await YNetwork.get(this.apiBase + '/' + this.modelName.toLowerCase() + 's');
       this.loading = false;
 
       this.resources.list = result;
@@ -121,12 +124,19 @@ export default {
         apiBase: this.apiBase,
         modelName: this.modelName,
         baseResource: resource
-      });
+      }).then(this.loadData);
     },
-    async deleteResource() {
+    async deleteResource(resource) {
       if (await this.$dialog(() => import('../../dialogs/confirm-delete' /* webpackChunkName: 'confirm-delete' */))) {
 
-        const { status, result } = await YNetwork.delete(`${this.apiBase}/`)
+        const { status, result } = await YNetwork.delete(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}/${resource._id}`);
+
+        if (this.$generalHandle(status, result)) return;
+
+        this.$toast('حذف با موفقیت انجام شد');
+
+        this.loadData();
+
       }
     }
   }

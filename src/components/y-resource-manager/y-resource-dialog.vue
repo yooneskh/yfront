@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="metas.list.length === 0">
+  <v-card :loading="metas.list.length === 0 || loading">
 
     <v-card-title> 
       {{ resource._id ? 'ویرایش' : 'افزودن' }} مورد
@@ -42,6 +42,7 @@ export default {
     }
   },
   data: () => ({
+    loading: false,
     resource: {},
     metas: {
       list: []
@@ -52,7 +53,8 @@ export default {
       return this.metas.list.map(meta => ({
         key: meta.key,
         title: meta.title || meta.key,
-        type: meta.ref ? 'resource' : this.mapMetaType(meta.type),
+        type: this.mapMetaType(meta),
+        wrapped: false, // for the file picker
         resource: meta.ref,
         apiBase: this.apiBase
       }));
@@ -68,40 +70,52 @@ export default {
   methods: {
     async loadMeta() {
       
-      const { status, result } = await YNetwork.get(`${this.apiBase}/${this.modelName}/meta`);
+      const { status, result } = await YNetwork.get(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}/meta`);
 
       this.metas.list = result;
       
     },
     async submit() {
 
+      this.loading = true;
+
       const payload = { payload: { ...this.resource } };
 
       if (this.resource._id) {
 
-        const { status, result } = await YNetwork.put(`${this.apiBase}/${this.modelName}/${this.resource._id}`, payload);
+        const { status, result } = await YNetwork.put(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}/${this.resource._id}`, payload);
 
         if (this.$generalHandle(status, result)) return;
 
       }
       else {
         
-        const { status, result } = await YNetwork.post(`${this.apiBase}/${this.modelName}`, payload);
+        const { status, result } = await YNetwork.post(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}`, payload);
 
         if (this.$generalHandle(status, result)) return;
 
       }
 
-      this.$toast.success('درخواست شما انجام شد.')
+      this.loading = false;
+
+      this.$toast.success('درخواست شما انجام شد.');
+
+      this.$emit('resolve', true);
 
     },
-    mapMetaType(type) {
-      switch (type) {
+    mapMetaType(meta) {
+
+      if (meta.type === 'string' && meta.ref === 'Media') return 'file';
+
+      if (meta.ref) return 'resource';
+
+      switch (meta.type) {
         case 'string': return 'text';
         case 'number': return 'text';
         case 'boolean': return 'checkbox';
         default: return 'text';
       }
+
     }
   }
 }

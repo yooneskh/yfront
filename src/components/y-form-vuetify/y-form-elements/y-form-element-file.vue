@@ -1,6 +1,6 @@
 <template>
   <div class="file-element">
-    <y-file-uploader :label="field.title" :class="field.classes" v-model="target[field.key]" />
+    <y-file-uploader :label="field.title" :wrapped="field.wrapped" :class="field.classes" v-model="target[field.key]" />
   </div>
 </template>
 

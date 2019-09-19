@@ -11,14 +11,30 @@ import Api from '../api';
 
 export default {
   name: 'YFileUploader',
-  props: ['value', 'label'],
+  props: {
+    value: {},
+    label: {},
+    wrapped: {
+      type: Boolean,
+      default: true
+    }
+  },
   data: () => ({
     processing: false,
     error: false,
     mediaId: null,
     stateInfo: '',
     currentFile: null,
+    path: ''
   }),
+  watch: {
+    value: {
+      handler() {
+        if (this.value) this.loadMedia();
+      },
+      immediate: true
+    }
+  },
   methods: {
     async theChange(event) {
 
@@ -67,7 +83,6 @@ export default {
           }
           else {
             this.error = true;
-            this.$emit('on-finish', false);
           }
         }
       };
@@ -85,8 +100,17 @@ export default {
 
       this.stateInfo = this.currentFile.name;
 
-      this.$emit('input', {_id: result.mediaId});
-      this.$emit('on-finish', true);
+      this.$emit('input', this.wrapped ? { _id: result.mediaId } : result.mediaId);
+
+    },
+    async loadMedia() {
+
+      const { status, result } = await Api.Media.loadOne(this.$token, this.value);
+
+      if (this.$generalHandle(status, result)) return;
+
+      this.stateInfo = `${result.name}.${result.extension}`;
+      this.path = result.path;
 
     }
   }
