@@ -67,7 +67,7 @@ export default {
   }),
   methods: {
     async makeDialog() {
-      
+
       const result = await this.$dialog(() => import('../../dialogs/confirm-delete.vue'  /* webpackChunkName: 'confirm-delete-dialog' */), {
         title: 'سیستم سرمایشی'
       });
