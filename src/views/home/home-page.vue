@@ -53,8 +53,7 @@
 export default {
   name: 'HomePage',
   components: {
-    'y-moveable': () => import('../../components/y-moveable.vue' /* webpackChunkName: 'y-moveable' */),
-    'y-table': () => import('../../components/y-table' /* webpackChunkName: 'y-table' */)
+    'y-moveable': () => import('../../components/y-moveable.vue' /* webpackChunkName: 'y-moveable' */)
   },
   data: () => ({
     heh: {

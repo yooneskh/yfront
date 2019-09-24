@@ -43,7 +43,7 @@ import YNetwork from 'ynetwork';
 export default {
   name: 'YResourceManager',
   components: {
-    'y-resource-visualizer': () => import('./y-resource-visualizer' /* webpackChunkName: 'y-dialog-container' */)
+    'y-resource-visualizer': () => import('./y-resource-visualizer' /* webpackChunkName: 'y-resource-visualizer' */)
   },
   props: {
     title: {
