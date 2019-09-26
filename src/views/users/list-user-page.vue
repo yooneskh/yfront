@@ -3,7 +3,7 @@
     <y-resource-manager
       class="my-4"
       title="مدیریت کاربران"
-      api-base="https://api.hashkhand.yooneskh.ir/api/v1"
+      :api-base="$apiBase"
       model-name="User"
     />
   </v-container>

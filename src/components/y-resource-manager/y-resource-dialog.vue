@@ -59,6 +59,8 @@ export default {
         title: meta.title || meta.key,
         type: this.mapMetaType(meta),
         wrapped: false, // for the file picker
+        multiple: meta.isArray, // for select
+        addable: meta.isArray, // for select again :D
         resource: meta.ref,
         apiBase: this.apiBase
       }));
@@ -79,17 +81,26 @@ export default {
       if (this.$generalHandle(status, result)) return;
 
       this.metas.list = result;
+
+      if (!this.resource._id) {
+        for (const metaField of result) {
+          if ('default' in metaField) {
+            this.resource[metaField.key] = metaField.default;
+          }
+        }
+      }
       
     },
     async submit() {
 
       this.loading = true;
 
-      const payload = { payload: { ...this.resource } };
+      const payload = { ...this.resource };
 
       if (this.resource._id) {
 
-        const { status, result } = await YNetwork.put(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}/${this.resource._id}`, payload);
+        const { status, result } = await YNetwork.patch(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}/${this.resource._id}`, payload);
+        this.loading = false;
 
         if (this.$generalHandle(status, result)) return;
 
@@ -97,6 +108,7 @@ export default {
       else {
         
         const { status, result } = await YNetwork.post(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}`, payload);
+        this.loading = false;
 
         if (this.$generalHandle(status, result)) return;
 
@@ -114,6 +126,8 @@ export default {
       if (meta.type === 'string' && meta.ref === 'Media') return 'file';
 
       if (meta.ref) return 'resource';
+
+      if (meta.isArray) return 'select';
 
       switch (meta.type) {
         case 'string': return 'text';

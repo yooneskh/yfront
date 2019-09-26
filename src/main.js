@@ -3,6 +3,8 @@ import App from './app'
 import router from './router'
 import vuetify from './plugins/vuetify';
 import './plugins/yvue';
+import Api from './api';
+import { ENDPOINT_BASE } from './api/ApiBaseEndpoints';
 
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import './fonts/iryekan/iryekan.css';
@@ -19,6 +21,9 @@ Vue.mixin({
     },
     $token() {
       return this.$root.user.token;
+    },
+    $apiBase() {
+      return ENDPOINT_BASE;
     }
   },
   methods: {
@@ -29,7 +34,7 @@ Vue.mixin({
       }
     },
     $hasAccess(access) {
-      return access && this.$user.permissions && this.$user.permissions.indexOf(access) >= 0;
+      return access && this.$user.permissions && this.$user.permissions.indexOf(access) >= 0; // TODO: handle regexiness
     }
   }
 });
@@ -55,6 +60,7 @@ new Vue({
   },
   methods: {
     resetCredentials() {
+
       Object.assign(this.user, JSON.parse(localStorage.getItem('--user--') || JSON.stringify({
         _id: '',
         firstName: '',
@@ -64,6 +70,9 @@ new Vue({
         phoneNumber: '',
         token: ''
       })));
+
+      Api.setToken(this.$token);
+
     },
     logout() {
       localStorage.removeItem('--user--');

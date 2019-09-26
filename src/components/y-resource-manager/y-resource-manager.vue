@@ -26,7 +26,7 @@
             {{ data === 0 ? '-' : $formatTime(data, header.timeFormat) }}
           </span>
           <span :key="header.key" v-else-if="header.ref">
-            <y-resource-visualizer :apiBase="apiBase" :model="header.ref" :id="data" :key="data" />
+            <y-resource-visualizer v-if="data" :apiBase="apiBase" :model="header.ref" :id="data" :key="data" />
           </span>
         </template>
 
@@ -70,11 +70,14 @@ export default {
   }),
   computed: {
     headers() {
-      return this.metas.list.map(meta => ({
+      return this.metas.list
+      .filter(header => !header.hideInTable)
+      .map(meta => ({
         key: meta.key,
         text: meta.title || meta.key,
         ref: meta.ref
-      })).concat([
+      }))
+      .concat([
         {
           key: 'createdAt',
           text: 'زمان ایجاد',

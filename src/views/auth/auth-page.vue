@@ -1,9 +1,9 @@
 <template>
-  <v-container bg fill-height>
+  <v-container bg fill-height style="background-color: #EAEAEA">
     <v-layout row wrap align-center>
       <v-flex class="px-4">
         
-        <v-card max-width="385" class="mx-auto" outlined :loading="loading">
+        <v-card max-width="385" class="mx-auto" :loading="loading">
           <v-card-title class="text-center">ورود به اپلیکیشن</v-card-title>
           <v-card-text class="pt-0 pb-0 px-4">
 
@@ -96,7 +96,7 @@ export default {
       localStorage.setItem('--user--', JSON.stringify(result.user));
       this.$root.resetCredentials();
 
-      this.$router.replace('/home');
+      this.$router.replace('/');
 
     }
   }
