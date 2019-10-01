@@ -1,5 +1,11 @@
 <template>
-  <v-text-field :type="field.password ? 'password' : 'text'" v-model="target[field.key]" :label="field.title" :class="field.classes" />
+  <v-text-field
+    :type="field.password ? 'password' : 'text'"
+    :value="(field.getter && field.getter()) || (field.key && target[field.key])"
+    @input="handleInput"
+    :label="field.title"
+    :class="field.classes"
+    :hide-details="field.hideDetails" />
 </template>
 
 <script>
@@ -13,6 +19,16 @@ export default {
     field: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    handleInput(text) {
+      if (this.field.setter) {
+        this.field.setter(this.field.number ? parseInt(text, this.field.radix || 10) : text);
+      }
+      else {
+        this.target[this.field.key] = this.field.number ? parseInt(text, this.field.radix || 10) : text;
+      }
     }
   }
 }

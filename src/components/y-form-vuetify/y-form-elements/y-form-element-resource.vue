@@ -1,5 +1,11 @@
 <template>
-  <v-autocomplete v-model="target[field.key]" :label="field.title" :items="items" :multiple="field.multiple" />
+  <v-autocomplete
+    :label="field.title"
+    :items="items"
+    :multiple="field.multiple"
+    :value="(field.getter && field.getter()) || (field.key && target[field.key])"
+    @input="handleInput"
+  />
 </template>
 
 <script>
@@ -41,6 +47,14 @@ export default {
         text: itemTitler(item)
       }));
       
+    },
+    handleInput(value) {
+      if (this.field.setter) {
+        this.field.setter(value);
+      }
+      else {
+        this.target[this.field.key] = value;
+      }
     }
   }
 }

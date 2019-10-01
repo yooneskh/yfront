@@ -1,20 +1,23 @@
 <template>
   <v-select
     v-if="!field.addable"
-    v-model="target[field.key]"
     :label="field.title"
     :items="field.items"
+    :hide-details="field.hideDetails"
     :multiple="field.multiple"
+    :value="(field.getter && field.getter()) || (field.key && target[field.key])"
+    @input="handleInput"
   />
   <v-combobox
     v-else
-    v-model="target[field.key]"
     :label="field.title"
     :items="field.items"
     chips
     deletable-chips
     small-chips
     :multiple="field.multiple"
+    :value="(field.getter && field.getter()) || (field.key && target[field.key])"
+    @input="handleInput" 
   />
 </template>
 
@@ -29,6 +32,16 @@ export default {
     field: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    handleInput(value) {
+      if (this.field.setter) {
+        this.field.setter(value);
+      }
+      else {
+        this.target[this.field.key] = value;
+      }
     }
   }
 }

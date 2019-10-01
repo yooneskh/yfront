@@ -1,6 +1,12 @@
 <template>
   <div class="file-element mb-4">
-    <y-file-uploader :label="field.title" :wrapped="field.wrapped" :class="field.classes" v-model="target[field.key]" />
+    <y-file-uploader
+      :label="field.title"
+      :wrapped="field.wrapped"
+      :class="field.classes"
+      :value="(field.getter && field.getter()) || (field.key && target[field.key])"
+      @input="handleInput"
+    />
   </div>
 </template>
 
@@ -18,6 +24,16 @@ export default {
     field: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    handleInput(value) {
+      if (this.field.setter) {
+        this.field.setter(value);
+      }
+      else {
+        this.target[this.field.key] = value;
+      }
     }
   }
 }
