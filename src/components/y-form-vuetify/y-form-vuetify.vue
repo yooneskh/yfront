@@ -29,6 +29,7 @@ export default {
     'y-form-element-text': () => import('./y-form-elements/y-form-element-text.vue' /* webpackChunkName: 'y-form-element-text' */),
     'y-form-element-checkbox': () => import('./y-form-elements/y-form-element-checkbox.vue' /* webpackChunkName: 'y-form-element-checkbox' */),
     'y-form-element-select': () => import('./y-form-elements/y-form-element-select.vue' /* webpackChunkName: 'y-form-element-select' */),
+    'y-form-element-radios': () => import('./y-form-elements/y-form-element-radios.vue' /* webpackChunkName: 'y-form-element-radios' */),
     'y-form-element-file': () => import('./y-form-elements/y-form-element-file.vue' /* webpackChunkName: 'y-form-element-file' */),
     'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */)
   },
@@ -41,6 +42,7 @@ export default {
         case 'text': return 'y-form-element-text';
         case 'checkbox': return 'y-form-element-checkbox';
         case 'select': return 'y-form-element-select';
+        case 'radios': return 'y-form-element-radios';
         case 'file': return 'y-form-element-file';
         case 'resource': return 'y-form-element-resource';
       } return '--no-such-form-element--';
