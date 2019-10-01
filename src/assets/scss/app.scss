@@ -27,3 +27,8 @@ html {
   font-family: iryekan;
   direction: rtl;
 }
+
+// bug in vuetify@2.1.0 TODO: remove in updates
+.v-dialog__container {
+  display: unset;
+}

@@ -17,9 +17,9 @@
 
       </v-card-text>
       <v-card-actions>
+        <v-btn text color="primary" class="ms-2" @click="$toast('سلااااام به تو!')">پیام بده!</v-btn>
         <v-spacer />
         <v-btn text color="error" @click="makeDialog">حذف کن</v-btn>
-        <v-btn text color="primary" class="ms-2" @click="$toast('سلااااام به تو!')">پیام بده!</v-btn>
       </v-card-actions>
     </v-card>
 
@@ -53,7 +53,7 @@
 export default {
   name: 'HomePage',
   components: {
-    'y-moveable': () => import('../../components/y-moveable.vue' /* webpackChunkName: 'y-moveable' */)
+    'y-moveable': () => import('../../components/y-moveable' /* webpackChunkName: 'y-moveable' */)
   },
   data: () => ({
     heh: {
@@ -67,7 +67,7 @@ export default {
   methods: {
     async makeDialog() {
 
-      const result = await this.$dialog(() => import('../../dialogs/confirm-delete.vue'  /* webpackChunkName: 'confirm-delete-dialog' */), {
+      const result = await this.$dialog(() => import('../../dialogs/confirm-delete'  /* webpackChunkName: 'confirm-delete-dialog' */), {
         title: 'سیستم سرمایشی'
       });
 
