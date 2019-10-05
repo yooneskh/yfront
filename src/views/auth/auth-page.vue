@@ -1,5 +1,5 @@
 <template>
-  <v-container bg fill-height style="background-color: #EAEAEA">
+  <v-container bg fill-height fluid style="background-color: #EAEAEA">
     <v-layout row wrap align-center>
       <v-flex class="px-4">
         
