@@ -3,11 +3,11 @@
 
     <v-app-bar class="main-bar" :class="{'has-tabs-icons': !$isMobile && $data.toolbars && toolbars.length > 0}" color="primary" dark>
 
-      <v-toolbar-title>اپلیکیشن من</v-toolbar-title>
+      <v-toolbar-title>پنل مدیریت</v-toolbar-title>
 
-      <v-btn class="ms-4" text @click="$router.replace('/home', () => {})">
+      <!-- <v-btn class="ms-4" text @click="$router.replace('/home', () => {})">
         خانه
-      </v-btn>
+      </v-btn> -->
 
       <v-spacer />
 
@@ -40,7 +40,7 @@
 
       </v-menu>
 
-      <!-- <template v-slot:extension>
+      <template v-slot:extension>
         <v-tabs class="main-tabs" background-color="transparent" icons-and-text :value="toolbars.findIndex(t => t.path === $route.path)">
 
           <v-tabs-slider color="white" />
@@ -51,7 +51,7 @@
           </v-tab>
 
         </v-tabs>
-      </template> -->
+      </template>
 
     </v-app-bar>
 
@@ -71,24 +71,18 @@
 <script>
 export default {
   name: 'MainBase',
-  components: {
-
-  },
   data: () => ({
-    // toolbars: [
-    //   { path: '/users/list', title: 'لیست کاربران', icon: 'mdi-account-group' }
-    // ]
+    toolbars: [
+      { path: '/users/list', title: 'لیست کاربران', icon: 'mdi-account-group' }
+    ]
   }),
   beforeMount() {
     if (!this.$token) {
       this.$router.replace('/auth');
     }
     else if (this.$route.name === 'MainBase') {
-      this.$router.replace('/home');
+      this.$router.replace(this.toolbars[0].path);
     }
-    // else if (this.$route.name === 'MainBase') {
-    //   this.$router.replace(this.toolbars[0].path);
-    // }
   }
 }
 </script>

@@ -18,15 +18,10 @@ export default new Router({
       component: () => import('./views/core/main-base.vue' /* webpackChunkName: 'main-base' */),
       children: [
         {
-          path: 'home',
-          name: 'Home',
-          component: () => import('./views/home/home-page.vue' /* webpackChunkName: 'home-page' */)
+          path: 'users/list',
+          name: 'ListUsers',
+          component: () => import('./views/users/list-user-page.vue' /* webpackChunkName: 'list-user-page' */)
         },
-        // {
-        //   path: 'users/list',
-        //   name: 'ListUsers',
-        //   component: () => import('./views/users/list-user-page.vue' /* webpackChunkName: 'list-user-page' */)
-        // },
       ]
     },
   ]

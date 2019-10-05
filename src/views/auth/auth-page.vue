@@ -1,5 +1,5 @@
 <template>
-  <v-container bg fill-height style="background-color: #EAEAEA">
+  <v-container fluid bg fill-height style="background-color: #EAEAEA">
     <v-layout row wrap align-center>
       <v-flex class="px-4">
         
@@ -93,7 +93,7 @@ export default {
 
       if (this.$generalHandle(status, result)) return;
       
-      localStorage.setItem('--user--', JSON.stringify(result.user));
+      localStorage.setItem('--user--', JSON.stringify(result));
       this.$root.resetCredentials();
 
       this.$router.replace('/');
