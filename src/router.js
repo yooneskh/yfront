@@ -22,6 +22,21 @@ export default new Router({
           name: 'ListUsers',
           component: () => import('./views/users/list-user-page.vue' /* webpackChunkName: 'list-user-page' */)
         },
+        {
+          path: 'handouts/list',
+          name: 'ListHandouts',
+          component: () => import('./views/handouts/list-handout-page.vue' /* webpackChunkName: 'list-handout-page' */)
+        },
+        {
+          path: 'categorys/list',
+          name: 'ListCategorys',
+          component: () => import('./views/categorys/list-category-page.vue' /* webpackChunkName: 'list-category-page' */)
+        },
+        {
+          path: 'tags/list',
+          name: 'ListTags',
+          component: () => import('./views/tags/list-tag-page.vue' /* webpackChunkName: 'list-tag-page' */)
+        },
       ]
     },
   ]

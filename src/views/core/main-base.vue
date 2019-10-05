@@ -73,7 +73,10 @@ export default {
   name: 'MainBase',
   data: () => ({
     toolbars: [
-      { path: '/users/list', title: 'لیست کاربران', icon: 'mdi-account-group' }
+      { path: '/users/list', title: 'لیست کاربران', icon: 'mdi-account-group' },
+      { path: '/handouts/list', title: 'لیست جزوه‌ها', icon: 'mdi-file' },
+      { path: '/categorys/list', title: 'لیست دسته بندی‌ها', icon: 'mdi-tag' },
+      { path: '/tags/list', title: 'لیست تگ‌ها', icon: 'mdi-pound' }
     ]
   }),
   beforeMount() {
