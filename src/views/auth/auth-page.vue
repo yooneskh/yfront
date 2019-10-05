@@ -93,7 +93,7 @@ export default {
 
       if (this.$generalHandle(status, result)) return;
       
-      localStorage.setItem('--user--', JSON.stringify(result.user));
+      localStorage.setItem('--user--', JSON.stringify(result));
       this.$root.resetCredentials();
 
       this.$router.replace('/');
