@@ -18,25 +18,15 @@ export default new Router({
       component: () => import('./views/core/main-base.vue' /* webpackChunkName: 'main-base' */),
       children: [
         {
-          path: 'users/list',
-          name: 'ListUsers',
-          component: () => import('./views/users/list-user-page.vue' /* webpackChunkName: 'list-user-page' */)
+          path: 'home',
+          name: 'Home',
+          component: () => import('./views/home/home-page.vue' /* webpackChunkName: 'home-page' */)
         },
-        {
-          path: 'handouts/list',
-          name: 'ListHandouts',
-          component: () => import('./views/handouts/list-handout-page.vue' /* webpackChunkName: 'list-handout-page' */)
-        },
-        {
-          path: 'categorys/list',
-          name: 'ListCategorys',
-          component: () => import('./views/categorys/list-category-page.vue' /* webpackChunkName: 'list-category-page' */)
-        },
-        {
-          path: 'tags/list',
-          name: 'ListTags',
-          component: () => import('./views/tags/list-tag-page.vue' /* webpackChunkName: 'list-tag-page' */)
-        },
+        // {
+        //   path: 'users/list',
+        //   name: 'ListUsers',
+        //   component: () => import('./views/users/list-user-page.vue' /* webpackChunkName: 'list-user-page' */)
+        // },
       ]
     },
   ]
