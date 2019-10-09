@@ -23,12 +23,16 @@ export default {
   },
   methods: {
     handleInput(text) {
+
+      const value = this.field.number ? parseInt(text, this.field.radix || 10) : text;
+
       if (this.field.setter) {
-        this.field.setter(this.field.number ? parseInt(text, this.field.radix || 10) : text);
+        this.field.setter(value);
       }
       else {
-        this.target[this.field.key] = this.field.number ? parseInt(text, this.field.radix || 10) : text;
+        this.$set(this.target, this.field.key, value);
       }
+
     }
   }
 }
