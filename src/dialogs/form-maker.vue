@@ -25,15 +25,21 @@
 
 <script>
 export default {
-  name: 'ConfirmDeleteDialog',
+  name: 'FormMakerDialog',
   props: {
     title: String,
     actionTitle: String,
-    fields: Array
+    fields: Array,
+    values: Object
   },
   data: () => ({
     form: {}
-  })
+  }),
+  created() {
+    if (this.values) {
+      Object.assign(this.form, this.values);
+    }
+  }
 }
 </script>
 
