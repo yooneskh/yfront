@@ -24,19 +24,21 @@
           </v-btn>
         </template>
 
-        <v-list dense>
+        <v-card width="200">
+          <v-list dense nav>
 
-          <v-list-item @click="$router.push(`/user/${$user._id}`)">
-            <v-list-item-title>مشاهده پروفایل</v-list-item-title>
-          </v-list-item>
-          
-          <!-- <v-divider /> -->
+            <v-list-item @click="$router.push(`/users/${$user._id}`)">
+              <v-list-item-title>مشاهده پروفایل</v-list-item-title>
+            </v-list-item>
+            
+            <!-- <v-divider /> -->
 
-          <v-list-item @click="$root.logout(); $router.replace('/auth')">
-            <v-list-item-title>خروج از حساب کاربری</v-list-item-title>
-          </v-list-item>
+            <v-list-item @click="$root.logout(); $router.replace('/auth')">
+              <v-list-item-title>خروج از حساب کاربری</v-list-item-title>
+            </v-list-item>
 
-        </v-list>
+          </v-list>
+        </v-card>
 
       </v-menu>
 
