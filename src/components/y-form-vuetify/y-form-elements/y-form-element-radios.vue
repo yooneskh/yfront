@@ -34,7 +34,7 @@ export default {
         this.field.setter(value);
       }
       else {
-        this.target[this.field.key] = value;
+        this.$set(this.target, this.field.key, value);
       }
     }
   }
