@@ -29,5 +29,10 @@ export default new Router({
         // },
       ]
     },
+    {
+      path: '*',
+      name: 'NotFound',
+      component: () => import('./views/error/404-page' /* webpackChunkName: '404-page' */)
+    }
   ]
 });
