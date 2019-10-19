@@ -105,7 +105,7 @@ export default {
     },
     async loadMedia() {
 
-      const { status, result } = await Api.Media.loadOne(this.$token, this.value);
+      const { status, result } = await Api.Media.loadOne(this.$token, this.wrapped ? this.value._id : this.value);
 
       if (this.$generalHandle(status, result)) return;
 
