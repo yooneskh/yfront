@@ -4,7 +4,7 @@
       <v-flex class="px-4">
         
         <v-card max-width="385" class="mx-auto" :loading="loading">
-          <v-card-title class="text-center">ورود به اپلیکیشن</v-card-title>
+          <v-card-title class="text-center d-block">ورود به اپلیکیشن</v-card-title>
           <v-card-text class="pt-0 pb-0 px-4">
 
             <y-form

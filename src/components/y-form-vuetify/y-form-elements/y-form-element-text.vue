@@ -5,6 +5,7 @@
     @input="handleInput"
     :label="field.title"
     :class="field.classes"
+    :dir="field.dir"
     :hide-details="field.hideDetails" />
 </template>
 

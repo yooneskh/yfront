@@ -5,17 +5,17 @@
 
       <v-toolbar-title>اپلیکیشن من</v-toolbar-title>
 
-      <v-btn class="ms-4" text @click="$router.replace('/home', () => {})">
+      <v-btn class="ms-4" text to="/">
         خانه
       </v-btn>
 
       <v-spacer />
 
-      <v-btn icon v-if="!$token" @click="$router.replace('/auth', () => {})">
+      <v-btn icon v-if="!$token" to="/auth">
         <v-icon>mdi-login</v-icon>
       </v-btn>
       
-      <v-menu v-else offset-y>
+      <v-menu v-else>
 
         <template v-slot:activator="{ on }">
           <v-btn text v-on="on" class="px-0" style="min-width: unset;">
@@ -25,16 +25,16 @@
         </template>
 
         <v-card width="200">
-          <v-list dense nav>
+          <v-list class="text-center" dense nav>
 
-            <v-list-item @click="$router.push(`/users/${$user._id}`)">
+            <v-list-item :to="`/users/${$user._id}`">
               <v-list-item-title>مشاهده پروفایل</v-list-item-title>
             </v-list-item>
             
             <!-- <v-divider /> -->
 
             <v-list-item @click="$root.logout(); $router.replace('/auth')">
-              <v-list-item-title>خروج از حساب کاربری</v-list-item-title>
+              <v-list-item-title class="red--text">خروج از حساب کاربری</v-list-item-title>
             </v-list-item>
 
           </v-list>
@@ -84,9 +84,6 @@ export default {
   beforeMount() {
     if (!this.$token) {
       this.$router.replace('/auth');
-    }
-    else if (this.$route.name === 'MainBase') {
-      this.$router.replace('/home');
     }
     // else if (this.$route.name === 'MainBase') {
     //   this.$router.replace(this.toolbars[0].path);

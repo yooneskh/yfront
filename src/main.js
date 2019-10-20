@@ -67,7 +67,7 @@ new Vue({
   methods: {
     resetCredentials() {
 
-      Object.assign(this.user, JSON.parse(localStorage.getItem('--user--') || JSON.stringify({
+      this.user = JSON.parse(localStorage.getItem('--user--') || JSON.stringify({
         _id: '',
         firstName: '',
         lastName: '',
@@ -75,7 +75,7 @@ new Vue({
         permissions: [],
         phoneNumber: '',
         token: ''
-      })));
+      }));
 
       Api.setToken(this.$token);
 

@@ -14,11 +14,10 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'MainBase',
       component: () => import('./views/core/main-base.vue' /* webpackChunkName: 'main-base' */),
       children: [
         {
-          path: 'home',
+          path: '/',
           name: 'Home',
           component: () => import('./views/home/home-page.vue' /* webpackChunkName: 'home-page' */)
         },
