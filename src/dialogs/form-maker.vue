@@ -1,7 +1,7 @@
 <template>
   <v-card>
 
-    <v-card-title class="headline" primary-title>
+    <v-card-title>
       {{ title || 'ورود اطلاعات' }}
     </v-card-title>
 
