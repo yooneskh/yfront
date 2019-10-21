@@ -17,6 +17,28 @@
               { value: 'mech', text: 'مکانیک' },
               { value: 'comp', text: 'کامپیوتری' }
             ] },
+            {
+              key: 'freeTimes',
+              type: 'series',
+              title: 'زمان‌های خالی',
+              width: 8,
+              base: { begin: '12:00', end: '', fruits: ['سیب'] },
+              itemFields: [
+                { key: 'begin', type: 'text', title: 'زمان شروع', width: 3, dir: 'ltr' },
+                { key: 'end', type: 'text', title: 'زمان پایان', width: 3, dir: 'ltr' },
+                { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] }
+              ]
+            },
+            {
+              key: 'freeNames',
+              type: 'series',
+              title: 'نام‌های قابل استفاده',
+              width: 4,
+              base: { names: [] },
+              itemFields: [
+                { key: 'names', type: 'select', title: 'نام‌ها', multiple: true, addable: true },
+              ]
+            }
           ]"
         />
 
@@ -70,7 +92,9 @@ export default {
       fruit: 'سیب',
       fruits: [],
       media: '',
-      job: 'comp'
+      job: 'comp',
+      freeTimes: [],
+      freeNames: []
     },
     boxPosition: [0, 0]
   }),

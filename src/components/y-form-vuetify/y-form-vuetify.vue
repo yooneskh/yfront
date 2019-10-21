@@ -25,13 +25,10 @@ export default {
     fields: {
       type: Array,
       required: true
-    },
-    noPadding: {
-      type: Boolean,
-      default: false
     }
   },
   components: {
+    'y-form-series': () => import('./y-form-series' /* webpackChunkName: 'y-form-series' */),
     'y-form-element-text': () => import('./y-form-elements/y-form-element-text.vue' /* webpackChunkName: 'y-form-element-text' */),
     'y-form-element-checkbox': () => import('./y-form-elements/y-form-element-checkbox.vue' /* webpackChunkName: 'y-form-element-checkbox' */),
     'y-form-element-select': () => import('./y-form-elements/y-form-element-select.vue' /* webpackChunkName: 'y-form-element-select' */),
@@ -40,11 +37,9 @@ export default {
     'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */)
   },
   methods: {
-    makeWidthForField(field) {
-      return `xs${field.width || 12}`;
-    },
     mapElementType(field) {
       switch (field.type) {
+        case 'series': return 'y-form-series';
         case 'text': return 'y-form-element-text';
         case 'checkbox': return 'y-form-element-checkbox';
         case 'select': return 'y-form-element-select';

@@ -33,7 +33,7 @@
             
             <!-- <v-divider /> -->
 
-            <v-list-item @click="$root.logout(); $router.replace('/auth')">
+            <v-list-item class="mt-4" @click="$root.logout(); $router.replace('/auth')">
               <v-list-item-title class="red--text">خروج از حساب کاربری</v-list-item-title>
             </v-list-item>
 
