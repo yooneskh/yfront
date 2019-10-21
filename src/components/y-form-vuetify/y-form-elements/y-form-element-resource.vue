@@ -3,8 +3,8 @@
     :label="field.title"
     :items="items"
     :multiple="field.multiple"
-    :value="(field.getter && field.getter()) || (field.key && target[field.key])"
-    @input="handleInput"
+    :value="value"
+    @input="$emit('input', $event)"
   />
 </template>
 
@@ -15,9 +15,8 @@ import YNetwork from 'ynetwork';
 export default {
   name: 'YFormElementResource',
   props: {
-    target: {
-      type: Object,
-      required: true
+    value: {
+
     },
     field: {
       type: Object,
@@ -47,14 +46,6 @@ export default {
         text: itemTitler(item)
       }));
       
-    },
-    handleInput(value) {
-      if (this.field.setter) {
-        this.field.setter(value);
-      }
-      else {
-        this.$set(this.target, this.field.key, value);
-      }
     }
   }
 }

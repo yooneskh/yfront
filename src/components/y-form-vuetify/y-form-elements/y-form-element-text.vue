@@ -1,8 +1,8 @@
 <template>
   <v-text-field
     :type="field.password ? 'password' : 'text'"
-    :value="(field.getter && field.getter()) || (field.key && target[field.key])"
-    @input="handleInput"
+    :value="value"
+    @input="$emit('input', $event)"
     :label="field.title"
     :class="field.classes"
     :dir="field.dir"
@@ -13,27 +13,12 @@
 export default {
   name: 'YFormElementText',
   props: {
-    target: {
-      type: Object,
-      required: true
+    value: {
+
     },
     field: {
       type: Object,
       required: true
-    }
-  },
-  methods: {
-    handleInput(text) {
-
-      const value = this.field.number ? parseInt(text, this.field.radix || 10) : text;
-
-      if (this.field.setter) {
-        this.field.setter(value);
-      }
-      else {
-        this.$set(this.target, this.field.key, value);
-      }
-
     }
   }
 }

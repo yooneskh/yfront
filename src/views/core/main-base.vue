@@ -19,7 +19,7 @@
 
         <template v-slot:activator="{ on }">
           <v-btn text v-on="on" class="px-0" style="min-width: unset;">
-            <v-avatar size="24" class="mt-1 me-2 ms-2"> <img :src="$user.profile.path || 'http://www.lakeportmetalcraft.com/wp-content/uploads/2018/10/user-placeholder.png'" alt="owner image avatar" /> </v-avatar>
+            <v-avatar size="24" class="mt-1 me-2 ms-2"> <img :src="($user.profile && $user.profile.path) || 'http://www.lakeportmetalcraft.com/wp-content/uploads/2018/10/user-placeholder.png'" alt="owner image avatar" /> </v-avatar>
             <span v-if="!$isMobile" class="pe-2">{{ $user.firstName + ' ' + $user.lastName }}</span>
           </v-btn>
         </template>

@@ -4,8 +4,8 @@
       :label="field.title"
       :wrapped="field.wrapped"
       :class="field.classes"
-      :value="(field.getter && field.getter()) || (field.key && target[field.key])"
-      @input="handleInput"
+      :value="value"
+      @input="$emit('input', $event)"
     />
   </div>
 </template>
@@ -17,23 +17,12 @@ export default {
     'y-file-uploader': () => import('../../y-file-uploader.vue' /* webpackChunkName: 'y-file-uploader' */)
   },
   props: {
-    target: {
-      type: Object,
-      required: true
+    value: {
+
     },
     field: {
       type: Object,
       required: true
-    }
-  },
-  methods: {
-    handleInput(value) {
-      if (this.field.setter) {
-        this.field.setter(value);
-      }
-      else {
-        this.$set(this.target, this.field.key, value);
-      }
     }
   }
 }

@@ -9,9 +9,14 @@
           :target="heh"
           :fields="[
             { key: 'name', type: 'text', title: 'نام', width: 6 },
-            { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, items: ['سیب', 'موز', 'پرتقال'], multiple: false },
+            { key: 'fruit', type: 'select', title: 'میوه‌ها', width: 6, items: ['سیب', 'موز', 'پرتقال'], multiple: false },
+            { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] },
             { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', width: 6 },
             { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
+            { key: 'job', type: 'radios', title: 'شغل', width: 6, items: [
+              { value: 'mech', text: 'مکانیک' },
+              { value: 'comp', text: 'کامپیوتری' }
+            ] },
           ]"
         />
 
@@ -58,9 +63,11 @@ export default {
   data: () => ({
     heh: {
       name: '',
-      isMale: false,
+      isMale: true,
+      fruit: 'سیب',
       fruits: [],
-      media: ''
+      media: '',
+      job: 'comp'
     },
     boxPosition: [0, 0]
   }),

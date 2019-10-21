@@ -2,7 +2,13 @@
   <v-form class="y-form y-form-vuetify">
     <v-row wrap>
       <v-col v-for="field in fields" class="py-0" :key="field.key" :cols="field.width || 12">
-        <component :is="mapElementType(field)" :target="target" :field="field" />
+        <component
+          :is="mapElementType(field)"
+          :target="target"
+          :field="field"
+          :value="(field.getter && field.getter()) || (field.key && target[field.key])"
+          @input="handleInput(field, $event)"
+        />
       </v-col>
     </v-row>
   </v-form>
@@ -46,6 +52,18 @@ export default {
         case 'file': return 'y-form-element-file';
         case 'resource': return 'y-form-element-resource';
       } return '--no-such-form-element--';
+    },
+    handleInput(field, text) {
+
+      const value = field.number ? parseInt(text, field.radix || 10) : text;
+
+      if (field.setter) {
+        field.setter(value);
+      }
+      else {
+        this.$set(this.target, field.key, value);
+      }
+
     }
   }
 }

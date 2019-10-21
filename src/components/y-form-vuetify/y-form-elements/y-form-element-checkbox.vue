@@ -1,8 +1,10 @@
 <template>
   <v-checkbox
     :label="field.title"
-    :value="(field.getter && field.getter()) || (field.key && target[field.key])"
-    @input="handleInput"
+    :input-value="value"
+    :true-value="true"
+    :false-value="false"
+    @change="$emit('input', !!$event)"
   />
 </template>
 
@@ -10,23 +12,12 @@
 export default {
   name: 'YFormElementCheckbox',
   props: {
-    target: {
-      type: Object,
-      required: true
+    value: {
+
     },
     field: {
       type: Object,
       required: true
-    }
-  },
-  methods: {
-    handleInput(value) {
-      if (this.field.setter) {
-        this.field.setter(value);
-      }
-      else {
-        this.$set(this.target, this.field.key, value);
-      }
     }
   }
 }
