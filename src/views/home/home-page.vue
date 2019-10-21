@@ -23,6 +23,8 @@
       </v-card-text>
       <v-card-actions>
         <v-btn text color="primary" class="ms-2" @click="$toast('سلااااام به تو!')">پیام بده!</v-btn>
+        <v-btn text color="warning" class="ms-2" @click="$toast.warning('سلااااام به تو!')">پیام بده!</v-btn>
+        <v-btn text color="error" class="ms-2" @click="$toast.error('سلااااام به تو!')">پیام بده!</v-btn>
         <v-spacer />
         <v-btn text color="error" @click="makeDialog">حذف کن</v-btn>
       </v-card-actions>
@@ -39,14 +41,15 @@
       <y-table
         :headers="[
           { key: 'name', text: 'نام' },
-          { key: 'age', text: 'سن' }
+          { key: 'age', text: 'سن' },
+          { key: 'time', text: 'زمان' }
         ]"
         :items="[
-          { name: 'یونس خوشقدم', age: 23 },
-          { name: 'یونس خوشقدم', age: 23 },
-          { name: 'زهرا سادات مطلبی', age: 23 },
-          { name: 'یونس خوشقدم', age: 23 },
-          { name: 'یونس خوشقدم', age: 23 }
+          { name: 'یونس خوشقدم', age: 23, time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
+          { name: 'یونس خوشقدم', age: 23, time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
+          { name: 'زهرا سادات مطلبی', age: 23, time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
+          { name: 'یونس خوشقدم', age: 23, time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
+          { name: 'یونس خوشقدم', age: 23, time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') }
         ]"
       />
     </v-card>
@@ -80,6 +83,9 @@ export default {
 
       console.log('result', result);
 
+    },
+    rand() {
+      return Math.trunc(Math.random() * 10000000000);
     }
   }
 };
