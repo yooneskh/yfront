@@ -50,7 +50,7 @@ export default {
     },
     handleInput(field, text) {
 
-      const value = field.number ? parseInt(text, field.radix || 10) : text;
+      const value = field.number ? parseInt(text || field.defaultNumber || '0', field.radix || 10) : text;
 
       if (field.setter) {
         field.setter(value);
