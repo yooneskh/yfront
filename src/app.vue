@@ -15,10 +15,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .app {
-    background: rgba(black, 0.2);
-    .flexible-view {
-      background: white;
-    }
-  }
+  // .app {
+  //   background: #EFEFEF;
+  // }
 </style>

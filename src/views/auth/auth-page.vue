@@ -1,11 +1,11 @@
 <template>
-  <v-container fluid bg fill-height style="background-color: #EAEAEA">
+  <v-container fluid bg fill-height style="background: transparent">
     <v-layout row wrap align-center>
       <v-flex class="px-4">
         
-        <v-card max-width="385" class="mx-auto" :loading="loading">
+        <v-card max-width="385" class="mx-auto" flat style="background: transparent;" :loading="loading">
           <v-card-title class="text-center d-block">ورود به اپلیکیشن</v-card-title>
-          <v-card-text class="pt-0 pb-0 px-4">
+          <v-card-text class="pt-0 pb-0 px-4 mt-6">
 
             <y-form
               v-if="mode === 'login'"
@@ -37,9 +37,9 @@
 
           </v-card-text>
           <v-card-actions class="px-4 pb-4">
-            <v-btn v-if="mode === 'login'" block large color="primary" @click="doLogin()">ورود به حساب کاربری</v-btn>
-            <v-btn v-if="mode === 'register'" block large color="primary" @click="doRegister()">ایجاد حساب جدید</v-btn>
-            <v-btn v-if="mode === 'verify'" block large color="primary" @click="doVerify()">بررسی کد تایید</v-btn>
+            <v-btn v-if="mode === 'login'" block large text color="primary" @click="doLogin()">ورود به حساب کاربری</v-btn>
+            <v-btn v-if="mode === 'register'" block large text color="primary" @click="doRegister()">ایجاد حساب جدید</v-btn>
+            <v-btn v-if="mode === 'verify'" block large text color="primary" @click="doVerify()">بررسی کد تایید</v-btn>
           </v-card-actions>
         </v-card>
 
