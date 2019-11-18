@@ -58,7 +58,7 @@
       </y-moveable>
     </v-card>
 
-    <v-card class="mt-4 mb-4">
+    <v-card class="mt-4 mb-4" flat style="background: transparent;">
       <v-card-title>نمونه جدول</v-card-title>
       <y-table
         :headers="[

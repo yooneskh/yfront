@@ -1,5 +1,5 @@
 <template>
-  <v-simple-table>
+  <v-simple-table style="background: transparent;">
     <thead>
       <tr>
         <th v-for="header in headers" :key="header.key" :class="header.class">{{ header.text }}</th>
