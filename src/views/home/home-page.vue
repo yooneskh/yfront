@@ -1,7 +1,7 @@
 <template>
   <v-container class="home">
 
-    <v-card class="mt-4">
+    <v-card>
       <v-card-title>صفحه اصلی</v-card-title>
       <v-card-text>
 

@@ -1,11 +1,13 @@
 <template>
   <div class="main-base">
 
-    <v-app-bar class="main-bar" :class="{'has-tabs-icons': !$isMobile && $data.toolbars && toolbars.length > 0}" color="primary" dark>
+    <v-app-bar color="primary" fixed elevate-on-scroll class="main-bar">
 
-      <v-toolbar-title>اپلیکیشن من</v-toolbar-title>
+      <v-toolbar-title class="me-4" @click="$router.push('/', () => {})" style="cursor: pointer;">
+        اپلیکیشن من
+      </v-toolbar-title>
 
-      <v-btn class="ms-4" text to="/">
+      <v-btn text to="/">
         خانه
       </v-btn>
 
@@ -20,52 +22,39 @@
         <template v-slot:activator="{ on }">
           <v-btn text v-on="on" class="px-0" style="min-width: unset;">
             <v-avatar size="24" class="mt-1 me-2 ms-2"> <img :src="($user.profile && $user.profile.path) || 'http://www.lakeportmetalcraft.com/wp-content/uploads/2018/10/user-placeholder.png'" alt="owner image avatar" /> </v-avatar>
-            <span v-if="!$isMobile" class="pe-2">{{ $user.firstName + ' ' + $user.lastName }}</span>
+            <span v-if="!$isMobile" class="pe-2 pt-1">{{ $user.firstName + ' ' + $user.lastName }}</span>
           </v-btn>
         </template>
 
-        <v-card width="200">
-          <v-list class="text-center" dense nav>
+        <v-list class="text-center" dense nav>
 
-            <v-list-item :to="`/users/${$user._id}`">
-              <v-list-item-title>مشاهده پروفایل</v-list-item-title>
-            </v-list-item>
-            
-            <!-- <v-divider /> -->
+          <v-list-item :to="`/users/${$user._id}`">
+            <v-list-item-title>مشاهده پروفایل</v-list-item-title>
+          </v-list-item>
+          
+          <v-list-item class="mt-4" @click="$root.logout(); $router.replace('/auth')">
+            <v-list-item-title class="red--text">خروج از حساب کاربری</v-list-item-title>
+          </v-list-item>
 
-            <v-list-item class="mt-4" @click="$root.logout(); $router.replace('/auth')">
-              <v-list-item-title class="red--text">خروج از حساب کاربری</v-list-item-title>
-            </v-list-item>
-
-          </v-list>
-        </v-card>
+        </v-list>
 
       </v-menu>
 
-      <!-- <template v-slot:extension>
-        <v-tabs class="main-tabs" background-color="transparent" icons-and-text :value="toolbars.findIndex(t => t.path === $route.path)">
+      <template v-slot:extension>
+        <v-tabs class="main-tabs" background-color="transparent" :value="toolbars.findIndex(t => t.path === $route.path)">
 
           <v-tabs-slider color="white" />
 
           <v-tab v-for="(toolbarItem, index) in toolbars" :key="index" :class="{'ms-0': index === 0}" @click="$router.push(toolbarItem.path, () => {})">
             {{ toolbarItem.title }}
-            <v-icon v-if="!$isMobile && toolbarItem.icon" class="mb-0">{{ toolbarItem.icon }}</v-icon>
           </v-tab>
 
         </v-tabs>
-      </template> -->
+      </template>
 
     </v-app-bar>
 
-    <div class="main-view">
-
-      <router-view class="main-content" :class="{'mobile': $isMobile}" />
-
-      <div v-if="$isMobile" class="bottom-spacer">
-        تهیه شده توسط یونس خوش قدم
-      </div>
-
-    </div>
+    <router-view class="main-content" :style="{'margin-top': (toolbars && toolbars.length > 0) ? '112px' : '64px' }" />
 
   </div>
 </template>
@@ -73,13 +62,10 @@
 <script>
 export default {
   name: 'MainBase',
-  components: {
-
-  },
   data: () => ({
-    // toolbars: [
-    //   { path: '/users/list', title: 'لیست کاربران', icon: 'mdi-account-group' }
-    // ]
+    toolbars: [
+      { path: '/users/list', title: 'لیست کاربران' }
+    ]
   }),
   beforeMount() {
     if (!this.$token) {
@@ -94,40 +80,12 @@ export default {
 
 <style lang="scss" scoped>
   .main-base {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
+    background: transparent;
     .main-bar {
-      flex-grow: 0;
       z-index: 10;
-      &.has-tabs-icons {
-        height: 128px !important;
-        ::v-deep .v-toolbar__content {
-          height: 64px !important;
-        }
-        ::v-deep .v-toolbar__extension {
-          height: 64px !important;
-        }
-      }
-    }
-    .main-view {
-      background-color: #EFEFEF;
-      flex-grow: 1;
-      .main-content {
-        max-width: 850px;
-        &.mobile {
-          min-height: 100%;
-          min-height: calc(100% - 56px);
-        }
-      }
-      .bottom-spacer {
-        width: 100%;
-        height: 56px;
-        box-sizing: border-box;
-        text-align: center;
-        padding: 16px;
-        font-size: 0.85em;
-        color: rgba(black, 0.3);
+      &:not(.v-app-bar--is-scrolled) {
+        background: transparent !important;
+        background-color: transparent !important;
       }
     }
   }
