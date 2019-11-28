@@ -34,6 +34,10 @@ export default {
     flex-direction: row;
     height: 100%;
     max-height: 100%;
+    .main-sidebar {
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
     .main-content {
       height: 100%;
       max-height: 100%;

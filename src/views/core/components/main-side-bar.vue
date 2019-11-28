@@ -1,5 +1,5 @@
 <template>
-  <v-sheet elevation="8" width="300" class="ma-0">
+  <v-sheet elevation="8" width="250" class="ma-0">
     <v-list nav dense height="100%" color="primary" dark>
 
       <v-list-item class="text-center py-4" @click="$router.push('/', () => {})">
