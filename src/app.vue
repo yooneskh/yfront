@@ -1,7 +1,7 @@
 <template>
   <v-app class="app-base">
     <router-view />
-    <y-dialog-container v-if="$root.dialogs.length > 0" />
+    <y-dialog-container v-if="$root.dialogs.length > 0" style="position: fixed;" />
   </v-app>
 </template>
 
@@ -13,9 +13,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-  // .app {
-  //   background: #EFEFEF;
-  // }
-</style>
