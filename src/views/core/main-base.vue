@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss" scoped>
   .main-base {
-    background: transparent;
+    background: #EAEAEA;
   }
   .main-base.sidebar {
     display: flex;

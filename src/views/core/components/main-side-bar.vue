@@ -37,7 +37,7 @@
                 <v-img :src="($user.profile && $user.profile.path) || $options.UserPlaceholder" />
               </v-avatar>
             </v-list-item-avatar>
-            <v-list-item-title>یونس خوش قدم</v-list-item-title>
+            <v-list-item-title>{{ $user.firstName + ' ' + $user.lastName }}</v-list-item-title>
           </v-list-item>
         </template>
 
@@ -67,7 +67,7 @@
 
 <script>
 
-import UserPlaceholder from '../../../assets/img/user-placeholder.jpg';
+import UserPlaceholder from '../../../assets/img/user-placeholder.jpeg';
 import { version as Version } from '../../../../package.json';
 
 export default {
@@ -85,7 +85,7 @@ export default {
       {
         groupName: 'کاربران',
         items: [
-          { title: 'مدیریت', icon: 'mdi-plus', to: '/users' }
+          { title: 'مدیریت', icon: 'mdi-plus', to: '/users/list' }
         ]
       }
     ]
