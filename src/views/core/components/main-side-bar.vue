@@ -82,6 +82,12 @@ export default {
     toolbarGroups() {
       return groupBy(this.toolbarItems, 'group');
     }
+  },
+  mounted() {
+    document.querySelectorAll('html, body, .v-application').forEach(element => element.style.height = '100%');
+  },
+  beforeDestroy() {
+    document.querySelectorAll('html, body, .v-application').forEach(element => element.style.height = 'unset');
   }
 }
 </script>
@@ -111,6 +117,6 @@ export default {
 
 <style>
   html, body, .v-application {
-    height: 100%;
+    /* min-height: 100%; */
   }
 </style>

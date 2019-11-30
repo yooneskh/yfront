@@ -21,11 +21,11 @@ export default new Router({
           name: 'Home',
           component: () => import('./views/home/home-page.vue' /* webpackChunkName: 'home-page' */)
         },
-        // {
-        //   path: 'users/list',
-        //   name: 'ListUsers',
-        //   component: () => import('./views/users/list-user-page.vue' /* webpackChunkName: 'list-user-page' */)
-        // },
+        {
+          path: 'users/list',
+          name: 'ListUsers',
+          component: () => import('./views/users/list-user-page.vue' /* webpackChunkName: 'list-user-page' */)
+        },
       ]
     },
     {

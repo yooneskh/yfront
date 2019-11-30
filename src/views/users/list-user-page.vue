@@ -1,7 +1,6 @@
 <template>
   <v-container fluid class="page" style="max-width: 1200px;">
     <y-resource-manager
-      class="my-4"
       title="مدیریت کاربران"
       :api-base="$apiBase"
       model-name="User"

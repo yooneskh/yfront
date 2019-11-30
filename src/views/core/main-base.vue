@@ -4,6 +4,7 @@
     <main-app-bar
       v-if="config.mode === 'appbar'"
       class="main-bar"
+      :toolbar-items="toolbars"
       :color="config.color"
       :height="config.appBarHeight"
       :dark="config.isDark"
@@ -19,7 +20,7 @@
     <router-view
       class="main-content"
       :style="{
-        'padding-top': config.mode === 'appbar' && config.stickyAppBar ? `${config.appBarHeight + 12}px` : '12px'
+        'padding-top': `${contentTopPadding}px`
       }"
     />
 
@@ -39,13 +40,26 @@ export default {
       appBarHeight: 64,
       color: 'primary',
       isDark: true,
-      stickyAppBar: false
+      stickyAppBar: true
     },
     toolbars: [
       { group: 'عمومی', title: 'خانه', icon: 'mdi-home', path: '/' },
       { group: 'کاربران', title: 'مذیریت کاربران', icon: 'mdi-account-group', path: '/users/list' }
     ]
   }),
+  computed: {
+    contentTopPadding() {
+
+      if (this.config.mode !== 'appbar') return 12;
+
+      if (!this.config.stickyAppBar) return 12;
+
+      if (!this.toolbars || this.toolbars.length === 0) return this.config.appBarHeight + 12;
+
+      return this.config.appBarHeight + 64 + 12;
+
+    }
+  },
   beforeMount() {
     if (!this.$token) {
       this.$router.replace('/auth');
@@ -60,20 +74,23 @@ export default {
 <style lang="scss" scoped>
   .main-base {
     background: #EAEAEA;
-  }
-  .main-base.sidebar {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    max-height: 100%;
-    .main-sidebar {
-      flex-grow: 0;
-      flex-shrink: 0;
+    &:not(.sidebar) {
+      min-height: 100%;
     }
-    .main-content {
+    &.sidebar {
+      display: flex;
+      flex-direction: row;
       height: 100%;
       max-height: 100%;
-      overflow-y: auto;
+      .main-sidebar {
+        flex-grow: 0;
+        flex-shrink: 0;
+      }
+      .main-content {
+        height: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+      }
     }
   }
 </style>
