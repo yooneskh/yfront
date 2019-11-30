@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="primary" height="64" elevate-on-scroll>
+  <v-app-bar :color="color || 'primary'" :height="height" :elevate-on-scroll="sticky" :fixed="sticky" :dark="dark">
 
     <v-toolbar-title class="me-4" @click="$router.push('/', () => {})" style="cursor: pointer;">
       اپلیکیشن من
@@ -43,7 +43,13 @@
 
 <script>
 export default {
-  name: 'MainAppBar'
+  name: 'MainAppBar',
+  props: {
+    color: String,
+    sticky: Boolean,
+    dark: Boolean,
+    height: { type: Number, default: 64 }
+  }
 }
 </script>
 
@@ -51,8 +57,8 @@ export default {
   .v-app-bar {
     z-index: 10;
     &:not(.v-app-bar--is-scrolled) {
-      background: transparent !important;
-      background-color: transparent !important;
+      // background: transparent !important;
+      // background-color: transparent !important;
     }
   }
 </style>
