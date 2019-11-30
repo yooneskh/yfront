@@ -30,13 +30,13 @@ Vue.filter('formatTime', formatTime);
 Vue.mixin({
   computed: {
     $isMobile() {
-      return window.innerWidth <= 450
+      return this.$vuetify && this.$vuetify.breakpoint.smAndDown;
     },
     $isTablet() {
-      return window.innerWidth > 450 && window.innerWidth <= 850
+      return this.$vuetify && this.$vuetify.breakpoint.mdOnly;
     },
     $isDesktop() {
-      return window.innerWidth > 850
+      return this.$vuetify && this.$vuetify.breakpoint.lgAndUp;
     }
   },
   methods: {

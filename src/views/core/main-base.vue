@@ -1,8 +1,8 @@
 <template>
-  <div class="main-base" :class="{ 'sidebar': config.mode === 'sidebar' }">
+  <div class="main-base" :class="{ 'sidebar': appliedConfigMode === 'sidebar' }">
 
     <main-app-bar
-      v-if="config.mode === 'appbar'"
+      v-if="appliedConfigMode === 'appbar'"
       class="main-bar"
       :toolbar-items="toolbars"
       :color="config.color"
@@ -12,7 +12,7 @@
     />
 
     <main-side-bar
-      v-if="config.mode === 'sidebar'"
+      v-if="appliedConfigMode === 'sidebar'"
       :toolbar-items="toolbars"
       class="main-sidebar"
     />
@@ -44,13 +44,22 @@ export default {
     },
     toolbars: [
       { group: 'عمومی', title: 'خانه', icon: 'mdi-home', path: '/' },
-      { group: 'کاربران', title: 'مذیریت کاربران', icon: 'mdi-account-group', path: '/users/list' }
+      { group: 'کاربران', title: 'مدیریت کاربران', icon: 'mdi-account-group', path: '/users/list' }
     ]
   }),
   computed: {
+    appliedConfigMode() {
+
+      if (this.config.mode === 'appbar') return 'appbar';
+
+      if (this.$isMobile || this.$isTablet) return 'appbar';
+
+      return this.config.mode;
+
+    },
     contentTopPadding() {
 
-      if (this.config.mode !== 'appbar') return 12;
+      if (this.appliedConfigMode !== 'appbar') return 12;
 
       if (!this.config.stickyAppBar) return 12;
 
