@@ -36,10 +36,10 @@
             />
 
           </v-card-text>
-          <v-card-actions class="px-4 pb-4">
-            <v-btn v-if="mode === 'login'" block large color="primary" @click="doLogin()">ورود به حساب کاربری</v-btn>
-            <v-btn v-if="mode === 'register'" block large color="primary" @click="doRegister()">ایجاد حساب جدید</v-btn>
-            <v-btn v-if="mode === 'verify'" block large color="primary" @click="doVerify()">بررسی کد تایید</v-btn>
+          <v-card-actions>
+            <v-btn v-if="mode === 'login'" block large depressed color="primary" @click="doLogin()">ورود به حساب کاربری</v-btn>
+            <v-btn v-if="mode === 'register'" block large depressed color="primary" @click="doRegister()">ایجاد حساب جدید</v-btn>
+            <v-btn v-if="mode === 'verify'" block large depressed color="primary" @click="doVerify()">بررسی کد تایید</v-btn>
           </v-card-actions>
         </v-card>
 

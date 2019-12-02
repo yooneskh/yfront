@@ -6,34 +6,22 @@ const ENDPOINT_REGISTER = `${ENDPOINT_BASE}/auth/register`;
 const ENDPOINT_VERIFY = `${ENDPOINT_BASE}/auth/verify`;
 
 export async function login(phoneNumber) {
-    
-  const payload = {
+  return YNetwork.post(ENDPOINT_LOGIN, {
     phoneNumber
-  };
-
-  return YNetwork.post(ENDPOINT_LOGIN, payload);
-
+  });
 }
 
 export async function register(phoneNumber, firstName, lastName) {
-  
-  const payload = {
+  return YNetwork.post(ENDPOINT_REGISTER, {
     phoneNumber,
     firstName,
     lastName
-  };
-  
-  return YNetwork.post(ENDPOINT_REGISTER, payload);
-
+  });
 }
 
 export async function verify(phoneNumber, verificationCode) {
-    
-  const payload = {
+  return YNetwork.post(ENDPOINT_VERIFY, {
     phoneNumber,
     verificationCode
-  };
-
-  return YNetwork.post(ENDPOINT_VERIFY, payload);
-
+  });
 }
