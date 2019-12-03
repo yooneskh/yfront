@@ -5,7 +5,7 @@
       {{ readonly ? ('مشاهده') : (resource._id ? 'ویرایش' : 'افزودن') }} مورد
     </v-card-title>
 
-    <v-card-text class="pb-0">
+    <v-card-text class="pb-1">
       <y-form
         :target="resource"
         :fields="fields"
@@ -13,7 +13,6 @@
     </v-card-text>
 
     <v-card-actions v-if="!readonly">
-      <v-spacer />
       <v-btn text color="primary" @click="submit">
         {{ resource._id ? 'ویرایش' : 'افزودن' }}
       </v-btn>

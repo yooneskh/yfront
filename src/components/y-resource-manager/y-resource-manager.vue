@@ -25,8 +25,13 @@
           <span :key="header.key" v-if="header.timeFormat">
             {{ data === 0 ? '-' : $formatTime(data, header.timeFormat) }}
           </span>
-          <span :key="header.key" v-else-if="header.ref">
-            <y-resource-visualizer v-if="data" :apiBase="apiBase" :model="header.ref" :id="data" :key="data" />
+          <span :key="header.key" v-else-if="header.ref && data">
+            <template v-if="!Array.isArray(data)">
+              <y-resource-visualizer :key="data" :apiBase="apiBase" :model="header.ref" :id="data" />
+            </template>
+            <template v-else>
+              <y-resource-visualizer v-for="dataElement in data" :key="dataElement" class="me-1" :apiBase="apiBase" :model="header.ref" :id="dataElement" />
+            </template>
           </span>
         </template>
 
