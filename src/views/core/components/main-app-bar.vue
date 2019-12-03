@@ -66,10 +66,6 @@ export default {
 <style lang="scss" scoped>
   .v-app-bar {
     z-index: 10;
-    &:not(.v-app-bar--is-scrolled) {
-      // background: transparent !important;
-      // background-color: transparent !important;
-    }
     &.has-tabs {
       height: 128px !important;
       ::v-deep .v-toolbar__extension {

@@ -3,6 +3,7 @@ import moment from 'moment-jalaali';
 import YDialog from './ydialog';
 import UUIDV4 from 'uuid/v4';
 import YNetwork from 'ynetwork';
+import copyToClipboard from 'copy-to-clipboard';
 
 YNetwork.debug = true;
 
@@ -48,6 +49,9 @@ Vue.mixin({
     },
     $uuid() {
       return UUIDV4();
+    },
+    $copy(text) {
+      return copyToClipboard(text);
     }
   }
 });

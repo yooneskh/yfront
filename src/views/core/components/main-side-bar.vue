@@ -114,9 +114,3 @@ export default {
     }
   }
 </style>
-
-<style>
-  html, body, .v-application {
-    /* min-height: 100%; */
-  }
-</style>
