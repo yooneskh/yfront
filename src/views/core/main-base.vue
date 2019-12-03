@@ -59,13 +59,13 @@ export default {
     },
     contentTopPadding() {
 
-      if (this.appliedConfigMode !== 'appbar') return 0;
+      if (this.appliedConfigMode !== 'appbar') return 12;
 
-      if (!this.config.stickyAppBar) return 0;
+      if (!this.config.stickyAppBar) return 12;
 
-      if (!this.toolbars || this.toolbars.length === 0) return this.config.appBarHeight;
+      if (!this.toolbars || this.toolbars.length === 0) return this.config.appBarHeight + 12;
 
-      return this.config.appBarHeight + 64;
+      return this.config.appBarHeight + 64 + 12;
 
     }
   },
