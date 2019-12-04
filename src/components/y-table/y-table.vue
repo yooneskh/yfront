@@ -25,6 +25,7 @@
             :small="!action.big"
             class="mb-1"
             :class="{'mt-1': index === 0}"
+            :to="action.link && action.link(item)"
             @click="$emit(action.key, item)">
 
             <v-icon small v-if="action.icon">{{ action.icon }}</v-icon>
