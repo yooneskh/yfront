@@ -33,6 +33,7 @@
 </template>
 
 <script>
+
 import YNetwork from 'ynetwork';
 
 export default {
@@ -90,9 +91,6 @@ export default {
     await this.loadData();
   },
   methods: {
-    makeSlotKeyForHeader(header) {
-      return 'item-' + header.key;
-    },
     async loadMeta() {
 
       this.loading = true;

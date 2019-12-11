@@ -1,6 +1,11 @@
 <template>
   <v-container fluid class="page" style="max-width: 1200px;">
     <y-resource-manager
+      title="مدیریت نویسندگان"
+      model-name="Author"
+    />
+    <y-resource-manager
+      class="mt-2"
       title="مدیریت کاربران"
       model-name="User"
     />

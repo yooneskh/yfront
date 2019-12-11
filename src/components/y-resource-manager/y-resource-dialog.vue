@@ -1,23 +1,33 @@
 <template>
-  <v-card :loading="metas.list.length === 0 || loading">
+  <v-card :loading="allLoading">
+    <v-row no-gutters>
+      
+      <v-col :cols="relations.list.length == 0 ? 12 : 4">
+        <v-card-title>
+          {{ readonly ? ('مشاهده') : (resource._id ? 'ویرایش' : 'افزودن') }} مورد
+        </v-card-title>
+        <v-card-text class="pb-1">
+          <y-form
+            :target="resource"
+            :fields="fields"
+          />
+        </v-card-text>
+        <v-card-actions v-if="!readonly">
+          <v-btn text color="primary" @click="submit">
+            {{ resource._id ? 'ویرایش' : 'افزودن' }}
+          </v-btn>
+        </v-card-actions>
+      </v-col>
 
-    <v-card-title>
-      {{ readonly ? ('مشاهده') : (resource._id ? 'ویرایش' : 'افزودن') }} مورد
-    </v-card-title>
+      <v-col v-if="relations.list.length > 0" cols="8">
+        <y-resource-relation-manager
+          v-for="relation in relations.list"
+          :key="relation.relationModelName || relation.targetName"
+          :relation="relation"
+        />
+      </v-col>
 
-    <v-card-text class="pb-1">
-      <y-form
-        :target="resource"
-        :fields="fields"
-      />
-    </v-card-text>
-
-    <v-card-actions v-if="!readonly">
-      <v-btn text color="primary" @click="submit">
-        {{ resource._id ? 'ویرایش' : 'افزودن' }}
-      </v-btn>
-    </v-card-actions>
-
+    </v-row>
   </v-card>
 </template>
 
@@ -27,6 +37,9 @@ import YNetwork from 'ynetwork';
 
 export default {
   name: 'YResourceDialog',
+  components: {
+    'y-resource-relation-manager': () => import('./y-resource-relation-manager' /* webpackChunkName: 'y-resource-relation-manager' */)
+  },
   props: {
     modelName: {
       type: String,
@@ -42,8 +55,13 @@ export default {
   },
   data: () => ({
     loading: false,
+    metasLoading: false,
+    relationsLoading: false,
     resource: {},
     metas: {
+      list: []
+    },
+    relations: {
       list: []
     }
   }),
@@ -59,19 +77,27 @@ export default {
         addable: meta.isArray, // for select again :D
         resource: meta.ref
       }));
+    },
+    allLoading() {
+      return this.loading || this.metasLoading || this.relationsLoading;
     }
   },
   mounted() {
-
-    if (this.baseResource) Object.assign(this.resource, this.baseResource);
-
+    
     this.loadMeta();
+
+    if (this.baseResource) {
+      Object.assign(this.resource, this.baseResource);
+      this.loadRelations();
+    }
 
   },
   methods: {
     async loadMeta() {
-      
+
+      this.metasLoading = true;
       const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/metas`);
+      this.metasLoading = false;
 
       if (this.$generalHandle(status, result)) return;
 
@@ -83,6 +109,21 @@ export default {
             this.resource[metaField.key] = metaField.default;
           }
         }
+      }
+      
+    },
+    async loadRelations() {
+      
+      this.relationsLoading = true;
+      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/relations`);
+      this.relationsLoading = false;
+
+      if (this.$generalHandle(status, result)) return;
+
+      this.relations.list = result;
+
+      if (this.relations.list.length > 0) {
+        this.$emit('update:width', '90%');
       }
       
     },

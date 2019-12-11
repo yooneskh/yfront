@@ -9,8 +9,9 @@
 
       <component
         :is="dialog.component"
-        @resolve="dialog.resolve($event); $root.dialogs.splice(index, 1);"
         v-bind="dialog.options"
+        @resolve="dialog.resolve($event); $root.dialogs.splice(index, 1);"
+        @update:width="dialog.options.width = $event"
       />
 
     </v-dialog>
