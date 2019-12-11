@@ -34,12 +34,14 @@ export default {
 
       const resourceUrl = this.field.resource.toLowerCase() + 's'; // TODO: this might make problem! correct pluralize
 
-      const metas = (await YNetwork.get(`${this.field.apiBase}/${resourceUrl}/meta`)).result;
-      const items = (await YNetwork.get(`${this.field.apiBase}/${resourceUrl}`)).result;
+      const metas = (await YNetwork.head(`${this.$apiBase}/${resourceUrl}`)).result;
+      const items = (await YNetwork.get(`${this.$apiBase}/${resourceUrl}`)).result;
 
       const titleables = metas.filter(meta => meta.titleAble).map(meta => meta.key);
 
-      const itemTitler = (item) => titleables.map(field => item[field]).join(' ');
+      const itemTitler = (item) => titleables.map(field =>
+        Array.isArray(item[field]) ? item[field].join(', ') : item[field]
+      ).join(' ');
 
       this.items = items.map(item => ({
         value: item._id,

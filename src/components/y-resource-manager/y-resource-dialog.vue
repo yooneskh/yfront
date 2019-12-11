@@ -28,10 +28,6 @@ import YNetwork from 'ynetwork';
 export default {
   name: 'YResourceDialog',
   props: {
-    apiBase: {
-      type: String,
-      required: true
-    },
     modelName: {
       type: String,
       required: true
@@ -60,8 +56,7 @@ export default {
         wrapped: false, // for the file picker
         multiple: meta.isArray, // for select
         addable: meta.isArray, // for select again :D
-        resource: meta.ref,
-        apiBase: this.apiBase
+        resource: meta.ref
       }));
     }
   },
@@ -75,7 +70,7 @@ export default {
   methods: {
     async loadMeta() {
       
-      const { status, result } = await YNetwork.get(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}/meta`);
+      const { status, result } = await YNetwork.head(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/`);
 
       if (this.$generalHandle(status, result)) return;
 
@@ -98,7 +93,7 @@ export default {
 
       if (this.resource._id) {
 
-        const { status, result } = await YNetwork.patch(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}/${this.resource._id}`, payload);
+        const { status, result } = await YNetwork.patch(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/${this.resource._id}`, payload);
         this.loading = false;
 
         if (this.$generalHandle(status, result)) return;
@@ -106,7 +101,7 @@ export default {
       }
       else {
         
-        const { status, result } = await YNetwork.post(`${this.apiBase}/${this.modelName.toLowerCase() + 's'}`, payload);
+        const { status, result } = await YNetwork.post(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}`, payload);
         this.loading = false;
 
         if (this.$generalHandle(status, result)) return;

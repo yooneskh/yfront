@@ -11,10 +11,6 @@ import YNetwork from 'ynetwork';
 export default {
   name: 'YResourceVisualizer',
   props: {
-    apiBase: {
-      type: String,
-      required: true
-    },
     model: {
       type: String,
       required: true
@@ -38,8 +34,8 @@ export default {
     const modelUrl = this.model.toLowerCase() + 's';
 
     const result = await Promise.all([
-      YNetwork.get(`${this.apiBase}/${modelUrl}/meta`),
-      YNetwork.get(`${this.apiBase}/${modelUrl}/${this.id}`)
+      YNetwork.head(`${this.$apiBase}/${modelUrl}`),
+      YNetwork.get(`${this.$apiBase}/${modelUrl}/${this.id}`)
     ]);
 
     this.metas = result[0].result;
@@ -54,7 +50,6 @@ export default {
       else {
         this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
           width: '400px',
-          apiBase: this.apiBase,
           modelName: this.model,
           baseResource: this.resource,
           readonly: true
