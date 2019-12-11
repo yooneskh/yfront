@@ -52,6 +52,7 @@ export default {
       return this.metas.list.map(meta => ({
         key: meta.key,
         title: meta.title || meta.key,
+        dir: meta.dir,
         type: this.mapMetaType(meta),
         wrapped: false, // for the file picker
         multiple: meta.isArray, // for select

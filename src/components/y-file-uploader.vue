@@ -1,6 +1,6 @@
 <template>
   <div class="y-file-uploader">
-    <v-text-field readonly :label="label" hide-details :value="stateInfo" outlined flat @click="$refs.theFile.click()" />
+    <v-text-field readonly :label="label" hide-details :value="stateInfo" prepend-inner-icon="mdi-paperclip" flat @click="$refs.theFile.click()" />
     <input class="input" ref="theFile" type="file" @change.passive="theChange" style="display: none;" />
   </div>
 </template>
