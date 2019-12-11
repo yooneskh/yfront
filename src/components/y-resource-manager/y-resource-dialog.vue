@@ -70,7 +70,7 @@ export default {
   methods: {
     async loadMeta() {
       
-      const { status, result } = await YNetwork.head(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/`);
+      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/metas`);
 
       if (this.$generalHandle(status, result)) return;
 

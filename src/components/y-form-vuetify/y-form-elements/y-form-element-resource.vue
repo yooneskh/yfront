@@ -34,7 +34,7 @@ export default {
 
       const resourceUrl = this.field.resource.toLowerCase() + 's'; // TODO: this might make problem! correct pluralize
 
-      const metas = (await YNetwork.head(`${this.$apiBase}/${resourceUrl}`)).result;
+      const metas = (await YNetwork.get(`${this.$apiBase}/${resourceUrl}/metas`)).result;
       const items = (await YNetwork.get(`${this.$apiBase}/${resourceUrl}`)).result;
 
       const titleables = metas.filter(meta => meta.titleAble).map(meta => meta.key);

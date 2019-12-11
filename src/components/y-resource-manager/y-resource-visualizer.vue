@@ -34,7 +34,7 @@ export default {
     const modelUrl = this.model.toLowerCase() + 's';
 
     const result = await Promise.all([
-      YNetwork.head(`${this.$apiBase}/${modelUrl}`),
+      YNetwork.get(`${this.$apiBase}/${modelUrl}/metas`),
       YNetwork.get(`${this.$apiBase}/${modelUrl}/${this.id}`)
     ]);
 
