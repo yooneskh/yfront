@@ -1,6 +1,11 @@
 <template>
-  <v-btn text small class="y-resource-visualizer" @click="goToResource">
-    {{ title }}
+  <v-btn text small :icon="error" class="y-resource-visualizer" @click="!error && goToResource()">
+    <v-icon v-if="error" small :color="error ? 'red': undefined">
+      mdi-alert-circle-outline
+    </v-icon>
+    <template v-else>
+      {{ title }}
+    </template>
   </v-btn>
 </template>
 
@@ -22,7 +27,8 @@ export default {
   },
   data: () => ({
     metas: [],
-    resource: {}
+    resource: {},
+    error: false
   }),
   computed: {
     title() {
@@ -37,6 +43,11 @@ export default {
       YNetwork.get(`${this.$apiBase}/${modelUrl}/metas`),
       YNetwork.get(`${this.$apiBase}/${modelUrl}/${this.id}`)
     ]);
+
+    if (result[0].status !== 200 || result[1].status !== 200) {
+      this.error = true;
+      return;
+    }
 
     this.metas = result[0].result;
     this.resource = result[1].result;
