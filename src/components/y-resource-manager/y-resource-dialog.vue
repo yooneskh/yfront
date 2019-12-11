@@ -91,6 +91,12 @@ export default {
 
       const payload = { ...this.resource };
 
+      Object.keys(payload).forEach(key => {
+        if (!this.metas.list.find(meta => meta.key === key)) {
+          delete payload[key];
+        }
+      });
+
       if (this.resource._id) {
 
         const { status, result } = await YNetwork.patch(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/${this.resource._id}`, payload);
