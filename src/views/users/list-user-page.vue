@@ -6,6 +6,16 @@
     />
     <y-resource-manager
       class="mt-2"
+      title="مدیریت صفحات"
+      model-name="Page"
+    />
+    <y-resource-manager
+      class="mt-2"
+      title="مدیریت کتاب ها"
+      model-name="Book"
+    />
+    <y-resource-manager
+      class="mt-2"
       title="مدیریت کاربران"
       model-name="User"
     />

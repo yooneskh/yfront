@@ -2,7 +2,7 @@
   <v-card :loading="allLoading">
     <v-row no-gutters>
       
-      <v-col :cols="relations.list.length == 0 ? 12 : 4">
+      <v-col :cols="!showRelations ? 12 : 4">
         <v-card-title>
           {{ readonly ? ('مشاهده') : (resource._id ? 'ویرایش' : 'افزودن') }} مورد
         </v-card-title>
@@ -19,10 +19,12 @@
         </v-card-actions>
       </v-col>
 
-      <v-col v-if="relations.list.length > 0" cols="8">
+      <v-col v-if="showRelations" cols="8">
         <y-resource-relation-manager
           v-for="relation in relations.list"
           :key="relation.relationModelName || relation.targetName"
+          :source-model="modelName"
+          :source-id="resource._id"
           :relation="relation"
         />
       </v-col>
@@ -80,6 +82,9 @@ export default {
     },
     allLoading() {
       return this.loading || this.metasLoading || this.relationsLoading;
+    },
+    showRelations() {
+      return this.relations.list.length > 0 && this.resource._id;
     }
   },
   mounted() {

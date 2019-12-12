@@ -4,7 +4,7 @@
     <v-card-title>
       {{ relation.title || relation.relationModelName || relation.targetModel }}
       <v-spacer />
-      <v-btn color="primary" small text>
+      <v-btn color="primary" small text :disabled="resources.list.length >= maxRelationsCount" @click="initEditor">
         افزودن &nbsp;
         <v-icon small>mdi-plus</v-icon>
       </v-btn>
@@ -14,11 +14,9 @@
       :headers="headers"
       :items="resources.list"
       :actions="[
-        { key: 'edit', icon: 'mdi-pen' },
         { key: 'delete', icon: 'mdi-delete', color: 'error' }
       ]"
-      @edit="initEditor"
-      @delete="deleteResource">
+      @delete="deleteRelation">
 
       <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ header, data }">
         <y-resource-table-cell :key="header.key" :data="data" :header="header" />
@@ -39,6 +37,8 @@ export default {
     'y-resource-table-cell': () => import('./y-resource-table-cell' /* webpackChunkName: 'y-resource-table-cell' */)
   },
   props: {
+    sourceModel: String,
+    sourceId: String,
     relation: { required: true }
   },
   data: () => ({
@@ -49,28 +49,37 @@ export default {
     }
   }),
   computed: {
+    maxRelationsCount() {
+
+      if (this.relation.singular) return 1;
+
+      if (this.relation.maxCount) return this.relation.maxCount;
+
+      return Infinity;
+
+    },
     modelName() {
       return this.relation.relationModelName || this.relation.targetModel;
     },
     headers() {
-      return this.relation.properties
+      return [
+        {
+          key: this.relation.targetModel.toLowerCase(),
+          text: this.relation.targetPropertyTitle,
+          ref: this.relation.targetModel
+        }
+      ].concat(this.relation.properties
         .filter(header => !header.hideInTable)
         .map(meta => ({
           key: meta.key,
           text: meta.title || meta.key,
           ref: meta.ref,
           dir: meta.dir
-        }))
+        })))
         .concat([
           {
             key: 'createdAt',
             text: 'زمان ایجاد',
-            timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
-            class: 'text-center ltred'
-          },
-          {
-            key: 'updatedAt',
-            text: 'زمان تغییر',
             timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
             class: 'text-center ltred'
           }
@@ -84,7 +93,7 @@ export default {
     async loadData() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(this.$apiBase + '/' + this.modelName.toLowerCase() + 's');
+      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}`);
       this.loading = false;
 
       if (this.$generalHandle(status, result)) return;
@@ -92,15 +101,55 @@ export default {
       this.resources.list = result;
 
     },
-    initEditor(resource) {
-      this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
+    async initEditor() {
+
+      const title = `افزودن`;
+      const actionTitle = `افزودن`;
+
+      const fields = this.relation.properties.map(meta => ({
+        key: meta.key,
+        title: meta.title || meta.key,
+        dir: meta.dir,
+        type: this.mapMetaType(meta),
+        wrapped: false, // for the file picker
+        multiple: meta.isArray, // for select
+        addable: meta.isArray, // for select again :D
+        resource: meta.ref
+      }));
+
+      fields.unshift({
+        key: this.relation.targetModel.toLowerCase(),
+        type: 'resource',
+        resource: this.relation.targetModel,
+        title: this.relation.targetPropertyTitle
+      });
+      
+      const form = await this.$dialog(() => import('../../dialogs/form-maker' /* webpackChunkName: 'form-maker-dialog' */), {
         width: '400px',
-        modelName: this.modelName,
-        baseResource: resource
-      }).then(result => result && this.loadData());
+        title,
+        actionTitle,
+        fields
+      });
+
+      const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${form[this.relation.targetModel.toLowerCase()]}`;
+
+      const payload = { ...form };
+      delete payload[this.modelName.toLowerCase()];
+
+      this.loading = true;
+      const { status, result } = await YNetwork.post(url, payload);
+      this.loading = false;
+
+      if (this.$generalHandle(status, result)) return;
+
+      this.loadData();
+
     },
-    async deleteResource(resource) {
+    async deleteRelation(relation) {
       if (await this.$dialog(() => import('../../dialogs/confirm-delete' /* webpackChunkName: 'confirm-delete' */))) {
+        
+        // TODO: HERE!!!!
+        const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${form[this.relation.targetModel.toLowerCase()]}`;
 
         const { status, result } = await YNetwork.delete(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/${resource._id}`);
 
@@ -111,6 +160,22 @@ export default {
         this.loadData();
 
       }
+    },
+    mapMetaType(meta) {
+
+      if (meta.type === 'string' && meta.ref === 'Media') return 'file';
+
+      if (meta.ref) return 'resource';
+
+      if (meta.isArray) return 'select';
+
+      switch (meta.type) {
+        case 'string': return 'text';
+        case 'number': return 'text';
+        case 'boolean': return 'checkbox';
+        default: return 'text';
+      }
+
     }
   }
 }
