@@ -19,10 +19,11 @@
         </v-card-actions>
       </v-col>
 
-      <v-col v-if="showRelations" cols="8">
+      <v-col v-if="showRelations" cols="8" style="border-right: 1px solid rgba(0, 0, 0, 0.1)">
         <y-resource-relation-manager
           v-for="relation in relations.list"
           :key="relation.relationModelName || relation.targetName"
+          class="mt-2"
           :source-model="modelName"
           :source-id="resource._id"
           :relation="relation"

@@ -4,7 +4,7 @@
     <v-card-title>
       {{ relation.title || relation.relationModelName || relation.targetModel }}
       <v-spacer />
-      <v-btn color="primary" small text :disabled="resources.list.length >= maxRelationsCount" @click="initEditor">
+      <v-btn color="primary" small text :disabled="resources.list.length >= maxRelationsCount" @click="initEditor(undefined)">
         افزودن &nbsp;
         <v-icon small>mdi-plus</v-icon>
       </v-btn>
@@ -14,8 +14,10 @@
       :headers="headers"
       :items="resources.list"
       :actions="[
+        { key: 'edit', icon: 'mdi-pen' },
         { key: 'delete', icon: 'mdi-delete', color: 'error' }
       ]"
+      @edit="initEditor"
       @delete="deleteRelation">
 
       <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ header, data }">
@@ -82,6 +84,12 @@ export default {
             text: 'زمان ایجاد',
             timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
             class: 'text-center ltred'
+          },
+          {
+            key: 'updatedAt',
+            text: 'زمان تغییر',
+            timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
+            class: 'text-center ltred'
           }
         ]);
     }
@@ -101,10 +109,12 @@ export default {
       this.resources.list = result;
 
     },
-    async initEditor() {
+    async initEditor(relation) {
 
-      const title = `افزودن`;
-      const actionTitle = `افزودن`;
+      const toEdit = !!relation;
+
+      const title = toEdit ? 'ویرایش' : `افزودن`;
+      const actionTitle = toEdit ? 'ویرایش' : `افزودن`;
 
       const fields = this.relation.properties.map(meta => ({
         key: meta.key,
@@ -128,7 +138,8 @@ export default {
         width: '400px',
         title,
         actionTitle,
-        fields
+        fields,
+        values: relation
       });
 
       const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${form[this.relation.targetModel.toLowerCase()]}`;
@@ -136,26 +147,39 @@ export default {
       const payload = { ...form };
       delete payload[this.modelName.toLowerCase()];
 
-      this.loading = true;
-      const { status, result } = await YNetwork.post(url, payload);
-      this.loading = false;
+      if (!toEdit) {
 
-      if (this.$generalHandle(status, result)) return;
+        this.loading = true;
+        const { status, result } = await YNetwork.post(url, payload);
+        this.loading = false;
+  
+        if (this.$generalHandle(status, result)) return;
+  
+        this.loadData();
 
-      this.loadData();
+      }
+      else {
+
+        this.loading = true;
+        const { status, result } = await YNetwork.patch(url + '/' + relation._id, payload);
+        this.loading = false;
+  
+        if (this.$generalHandle(status, result)) return;
+  
+        this.loadData();
+
+      }
+
 
     },
     async deleteRelation(relation) {
       if (await this.$dialog(() => import('../../dialogs/confirm-delete' /* webpackChunkName: 'confirm-delete' */))) {
         
-        // TODO: HERE!!!!
-        const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${form[this.relation.targetModel.toLowerCase()]}`;
+        const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${relation[this.relation.targetModel.toLowerCase()]}/${relation._id}`;
 
-        const { status, result } = await YNetwork.delete(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/${resource._id}`);
+        const { status, result } = await YNetwork.delete(url);
 
         if (this.$generalHandle(status, result)) return;
-
-        this.$toast('حذف با موفقیت انجام شد');
 
         this.loadData();
 
