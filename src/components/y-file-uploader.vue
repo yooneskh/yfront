@@ -1,6 +1,16 @@
 <template>
   <div class="y-file-uploader">
-    <v-text-field readonly :label="label" hide-details :value="stateInfo" prepend-inner-icon="mdi-paperclip" flat @click="$refs.theFile.click()" />
+    <v-text-field
+      readonly
+      :label="label"
+      hide-details
+      :value="stateInfo"
+      prepend-inner-icon="mdi-paperclip"
+      :append-icon="path ? 'mdi-open-in-new' : undefined"
+      flat
+      @click="$refs.theFile.click()"
+      @click:append="openPath"
+    />
     <input class="input" ref="theFile" type="file" @change.passive="theChange" style="display: none;" />
   </div>
 </template>
@@ -98,22 +108,25 @@ export default {
     },
     handleResult(result) {
 
-      this.stateInfo = this.currentFile.name;
-
       this.$emit('input', this.wrapped ? { _id: result.mediaId } : result.mediaId);
+
+      this.loadMedia();
 
     },
     async loadMedia() {
 
-      if (!this.value || !this.value._id) return;
+      if (!this.value && !this.value._id) return;
 
       const { status, result } = await Api.Media.loadOne(this.$token, this.wrapped ? this.value._id : this.value);
 
       if (this.$generalHandle(status, result)) return;
 
-      this.stateInfo = `${result.name}.${result.extension}`;
+      this.stateInfo = `${result.name.toLowerCase()}.${result.extension.toLowerCase()}`;
       this.path = result.path;
 
+    },
+    openPath() {
+      window.open(this.path, '_blank');
     }
   }
 }
