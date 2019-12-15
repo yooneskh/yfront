@@ -178,7 +178,7 @@ export default {
       if (meta.isArray) return 'select';
 
       switch (meta.type) {
-        case 'string': return 'text';
+        case 'string': return meta.languages ? 'text-multilang' : 'text';
         case 'number': return 'text';
         case 'boolean': return 'checkbox';
         default: return 'text';

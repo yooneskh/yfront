@@ -76,7 +76,8 @@ export default {
           key: meta.key,
           text: meta.title || meta.key,
           ref: meta.ref,
-          dir: meta.dir
+          dir: meta.dir,
+          language: meta.language
         })))
         .concat([
           {

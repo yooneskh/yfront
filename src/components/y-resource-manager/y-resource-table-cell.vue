@@ -3,6 +3,15 @@
     <template v-if="Array.isArray(data)">
       <YResourceCell v-for="dataElement in data" :key="dataElement" class="me-2 d-inline-block" :header="header" :data="dataElement" />
     </template>
+    <template v-else-if="header.languages">
+      <v-chip
+        v-for="(config, language) in header.languages"
+        :key="language"
+        class="me-1"
+        small>
+        {{ language }}: {{ data[language] }}
+      </v-chip>
+    </template>
     <template v-else>
       <span v-if="header.timeFormat" :style="{'direction': header.dir}" class="d-inline-block">
         {{ data === 0 ? '-' : $formatTime(data, header.timeFormat) }}

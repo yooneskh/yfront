@@ -30,6 +30,7 @@ export default {
   components: {
     'y-form-series': () => import('./y-form-series' /* webpackChunkName: 'y-form-series' */),
     'y-form-element-text': () => import('./y-form-elements/y-form-element-text.vue' /* webpackChunkName: 'y-form-element-text' */),
+    'y-form-element-text-multilang': () => import('./y-form-elements/y-form-element-text-multilang.vue' /* webpackChunkName: 'y-form-element-text-multilang' */),
     'y-form-element-checkbox': () => import('./y-form-elements/y-form-element-checkbox.vue' /* webpackChunkName: 'y-form-element-checkbox' */),
     'y-form-element-select': () => import('./y-form-elements/y-form-element-select.vue' /* webpackChunkName: 'y-form-element-select' */),
     'y-form-element-radios': () => import('./y-form-elements/y-form-element-radios.vue' /* webpackChunkName: 'y-form-element-radios' */),
@@ -41,6 +42,7 @@ export default {
       switch (field.type) {
         case 'series': return 'y-form-series';
         case 'text': return 'y-form-element-text';
+        case 'text-multilang': return 'y-form-element-text-multilang';
         case 'checkbox': return 'y-form-element-checkbox';
         case 'select': return 'y-form-element-select';
         case 'radios': return 'y-form-element-radios';
