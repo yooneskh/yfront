@@ -67,6 +67,7 @@ export default {
       .map(meta => ({
         key: meta.key,
         text: meta.title || meta.key,
+        type: meta.type,
         ref: meta.ref,
         dir: meta.dir,
         languages: meta.languages

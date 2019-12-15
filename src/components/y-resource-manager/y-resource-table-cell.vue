@@ -19,6 +19,9 @@
       <template v-else-if="header.ref">
         <y-resource-visualizer v-if="data" :model="header.ref" :id="data" />
       </template>
+      <template v-else-if="header.type === 'boolean'">
+        <v-icon :color="data ? 'success' : 'error'" >{{ data ? 'mdi-check' : 'mdi-close' }}</v-icon>
+      </template>
       <span v-else :style="{'direction': header.dir}" class="d-inline-block">
         {{ data }}
       </span>

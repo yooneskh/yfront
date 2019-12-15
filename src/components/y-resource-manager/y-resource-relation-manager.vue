@@ -74,10 +74,11 @@ export default {
         .filter(header => !header.hideInTable)
         .map(meta => ({
           key: meta.key,
+          type: meta.type,
           text: meta.title || meta.key,
           ref: meta.ref,
           dir: meta.dir,
-          language: meta.language
+          languages: meta.languages
         })))
         .concat([
           {
@@ -121,6 +122,7 @@ export default {
         key: meta.key,
         title: meta.title || meta.key,
         dir: meta.dir,
+        languages: meta.languages,
         type: this.mapMetaType(meta),
         wrapped: false, // for the file picker
         multiple: meta.isArray, // for select
@@ -193,6 +195,8 @@ export default {
       if (meta.ref) return 'resource';
 
       if (meta.isArray) return 'select';
+
+      if (meta.languages) return 'text-multilang';
 
       switch (meta.type) {
         case 'string': return 'text';

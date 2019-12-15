@@ -78,7 +78,8 @@ export default {
         wrapped: false, // for the file picker
         multiple: meta.isArray, // for select
         addable: meta.isArray, // for select again :D
-        resource: meta.ref
+        resource: meta.ref,
+        languages: meta.languages
       }));
     },
     allLoading() {
