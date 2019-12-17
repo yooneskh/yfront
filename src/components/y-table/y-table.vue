@@ -1,21 +1,15 @@
 <template>
-  <v-simple-table style="background: transparent;">
-    <thead>
+  <v-data-table :headers="datatableHeaders" :items="items">
+    <template #item="{ item, index }">
       <tr>
-        <th v-for="header in headers" :key="header.key" :class="header.class">{{ header.text }}</th>
-        <th v-if="showActions" class="text-center">{{ actionTitle }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="item in items" :key="item[itemKey]">
 
-        <td v-for="header in headers" :key="header.key" :class="header.class">
-          <slot :name="`item-${header.key}`" :item="item" :header="header" :data="item[header.key]">
-            {{ item[header.key] }}
+        <td v-for="header in rawHeaders" :key="header.value" :class="header.class">
+          <slot :name="`item-${header.key}`" :item="item" :header="header" :data="item[header.value]">
+            {{ item[header.value] }}
           </slot>
         </td>
-         
-        <td v-if="showActions" class="text-center">
+
+        <td v-if="showActions">
           <v-btn
             v-for="(action, index) in actions"
             :key="action.key"
@@ -33,10 +27,10 @@
 
           </v-btn>    
         </td>
-      
+
       </tr>
-    </tbody>
-  </v-simple-table>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
@@ -68,15 +62,39 @@ export default {
     }
   },
   computed: {
+    rawHeaders() {
+
+      const headers = this.headers.map(header => ({
+        ...header,
+        text: header.text,
+        value: header.key
+      }));
+
+      if (this.actions.length > 0) {
+        headers.push();
+      }
+
+      return headers;
+
+    },
+    datatableHeaders() {
+      
+      if (this.actions.length === 0) return this.rawHeaders;
+
+      return [
+        ...this.rawHeaders,
+        {
+          text: this.actionTitle,
+          value: '__actions',
+          align: 'center',
+          sortable: false
+        }
+      ];
+
+    },
     showActions() {
       return this.actions.length > 0;
     }
   }
 }
 </script>
-
-<style>
-  .y-table {
-
-  }
-</style>
