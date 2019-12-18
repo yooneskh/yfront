@@ -11,6 +11,8 @@
         </v-btn>
       </v-card-title>
 
+      <v-text-field filled single-line flat hide-details prepend-inner-icon="mdi-magnify" placeholder="جستجو" v-model="query" />
+
       <y-table
         :headers="headers"
         :items="resources.list"
@@ -18,6 +20,11 @@
           { key: 'edit', icon: 'mdi-pen' },
           { key: 'delete', icon: 'mdi-delete', color: 'error' }
         ]"
+        :loading="loading"
+        :server-items-length="resources.allCount"
+        @update:page="page = $event"
+        @update:items-per-page="itemsPerPage = $event"
+        @update:sorts="sorts = $event"
         @edit="initEditor"
         @delete="deleteResource">
 
@@ -57,8 +64,13 @@ export default {
     },
     resources: {
       list: [],
-      current: {}
-    }
+      current: {},
+      allCount: 0
+    },
+    query: '',
+    page: 1,
+    itemsPerPage: 10,
+    sorts: {}
   }),
   computed: {
     headers() {
@@ -89,8 +101,22 @@ export default {
     }
   },
   async mounted() {
-    await this.loadMeta();
-    await this.loadData();
+    this.loadMeta();
+    this.loadData();
+  },
+  watch: {
+    query() {
+      this.loadData();
+    },
+    page() {
+      this.loadData();
+    },
+    itemsPerPage() {
+      this.loadData();
+    },
+    sorts() {
+      this.loadData();
+    }
   },
   methods: {
     async loadMeta() {
@@ -105,14 +131,21 @@ export default {
 
     },
     async loadData() {
-
+      
       this.loading = true;
-      const { status, result } = await YNetwork.get(this.$apiBase + '/' + this.modelName.toLowerCase() + 's');
+      const { status, result } = await YNetwork.post(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/query`, {
+        from: (this.page - 1) * this.itemsPerPage,
+        to: this.page * this.itemsPerPage,
+        query: this.query,
+        sorts: this.sorts,
+        timeFormat: 'YYYY/MM/DD HH:mm:ss'
+      });
       this.loading = false;
 
       if (this.$generalHandle(status, result)) return;
 
-      this.resources.list = result;
+      this.resources.list = result.data;
+      this.resources.allCount = result.count;
 
     },
     initEditor(resource) {

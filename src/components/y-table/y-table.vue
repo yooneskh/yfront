@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :headers="datatableHeaders" :items="items">
+  <v-data-table :headers="datatableHeaders" @update:options="handleSort" :items="items" :server-items-length="serverItemsLength" :caption="caption" @update:page="$emit('update:page', $event)" @update:items-per-page="$emit('update:items-per-page', $event)">
     <template #item="{ item, index }">
       <tr>
 
@@ -56,6 +56,9 @@ export default {
       type: String,
       default: 'عملیات'
     },
+    serverItemsLength: {
+      type: Number
+    },
     actions: {
       type: Array,
       default: () => []
@@ -94,6 +97,19 @@ export default {
     },
     showActions() {
       return this.actions.length > 0;
+    }
+  },
+  methods: {
+    handleSort(options) {
+
+      const t = (options.sortBy || []).concat(options.sortDesc || []);
+      let tt = {};
+
+      if (options.sortBy && options.sortBy[0]) tt = {[t[0]]: 1};
+      if (options.sortDesc && options.sortDesc[0]) tt = {[t[0]]: -1};
+
+      this.$emit('update:sorts', tt);
+
     }
   }
 }
