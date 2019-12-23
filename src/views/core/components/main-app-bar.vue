@@ -1,7 +1,7 @@
 <template>
   <v-app-bar :class="{'has-tabs': toolbarItems && toolbarItems.length > 0}" :color="color || 'primary'" :height="height" :elevate-on-scroll="sticky" :fixed="sticky" :dark="dark">
 
-    <v-toolbar-title class="me-4" @click="$router.push(toolbarItems[0].path, () => {})" style="cursor: pointer;">
+    <v-toolbar-title class="me-4" @click="$router.push((toolbarItems[0] || { path: '/' }).path, () => {})" style="cursor: pointer;">
       اپلیکیشن من
     </v-toolbar-title>
 

@@ -2,7 +2,7 @@
   <v-sheet elevation="8" width="250" class="ma-0">
     <v-list nav dense height="100%" color="primary" dark>
 
-      <v-list-item class="text-center py-4" @click="$router.push(toolbarItems[0].path, () => {})">
+      <v-list-item class="text-center py-4" @click="$router.push((toolbarItems[0] || { path: '/' }).path, () => {})">
         <v-list-item-title style="font-size: 1.5em; line-height: unset;">
           اپلیکیشن من
         </v-list-item-title>
