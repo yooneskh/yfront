@@ -54,7 +54,7 @@ new Vue({
       _id: '',
       firstName: '',
       lastName: '',
-      profile: {},
+      profilePicture: {},
       permissions: [],
       phoneNumber: '',
       token: ''
@@ -71,7 +71,7 @@ new Vue({
         _id: '',
         firstName: '',
         lastName: '',
-        profile: {},
+        profilePicture: {},
         permissions: [],
         phoneNumber: '',
         token: ''
