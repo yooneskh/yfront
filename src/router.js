@@ -29,9 +29,14 @@ export default new Router({
       ]
     },
     {
+      path: '/payment/verify',
+      name: 'VerifyPayment',
+      component: () => import('./views/general/verify-payment-page.vue' /* webpackChunkName: 'verify-payment' */)
+    },
+    {
       path: '*',
       name: 'NotFound',
-      component: () => import('./views/error/404-page' /* webpackChunkName: '404-page' */)
+      component: () => import('./views/general/404-page' /* webpackChunkName: '404-page' */)
     }
   ]
 });
