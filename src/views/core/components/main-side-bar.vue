@@ -34,7 +34,7 @@
           <v-list-item v-on="on">
             <v-list-item-avatar size="24" class="me-4 my-0">
               <v-avatar size="24">
-                <v-img :src="($user.profile && $user.profile.path) || $options.UserPlaceholder" />
+                <v-img :src="($user.profilePicture && $user.profilePicture.path) || $options.UserPlaceholder" />
               </v-avatar>
             </v-list-item-avatar>
             <v-list-item-title>{{ $user.firstName + ' ' + $user.lastName }}</v-list-item-title>
