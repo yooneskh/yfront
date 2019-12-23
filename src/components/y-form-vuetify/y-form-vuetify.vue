@@ -35,13 +35,15 @@ export default {
     'y-form-element-select': () => import('./y-form-elements/y-form-element-select.vue' /* webpackChunkName: 'y-form-element-select' */),
     'y-form-element-radios': () => import('./y-form-elements/y-form-element-radios.vue' /* webpackChunkName: 'y-form-element-radios' */),
     'y-form-element-file': () => import('./y-form-elements/y-form-element-file.vue' /* webpackChunkName: 'y-form-element-file' */),
-    'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */)
+    'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */),
+    'y-form-element-textarea': () => import('./y-form-elements/y-form-element-textarea.vue' /* webpackChunkName: 'y-form-element-textarea' */)
   },
   methods: {
     mapElementType(field) {
       switch (field.type) {
         case 'series': return 'y-form-series';
         case 'text': return 'y-form-element-text';
+        case 'textarea': return 'y-form-element-textarea';
         case 'text-multilang': return 'y-form-element-text-multilang';
         case 'checkbox': return 'y-form-element-checkbox';
         case 'select': return 'y-form-element-select';

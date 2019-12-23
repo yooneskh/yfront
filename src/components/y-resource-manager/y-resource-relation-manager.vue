@@ -197,6 +197,7 @@ export default {
       if (meta.isArray) return 'select';
 
       if (meta.languages) return 'text-multilang';
+      if (meta.richText) return 'textarea';
 
       switch (meta.type) {
         case 'string': return 'text';
