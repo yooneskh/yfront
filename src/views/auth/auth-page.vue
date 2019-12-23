@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid bg fill-height style="background: #EAEAEA">
-    <v-layout row wrap align-center>
-      <v-flex class="px-4">
+  <v-container fluid fill-height style="background: #EAEAEA">
+    <v-row align-center class="ma-0">
+      <v-col class="px-4">
         
         <v-card max-width="385" class="mx-auto" :loading="loading">
           <v-card-title class="text-center d-block">ورود به اپلیکیشن</v-card-title>
@@ -43,8 +43,8 @@
           </v-card-actions>
         </v-card>
 
-      </v-flex>
-    </v-layout>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
