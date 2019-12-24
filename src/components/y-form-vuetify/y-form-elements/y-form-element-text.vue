@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-    :type="field.password ? 'password' : 'text'"
+    :type="field.password ? 'password' : (field.number ? 'number' : 'text')"
     :value="value"
     @input="$emit('input', $event)"
     :label="field.title"
