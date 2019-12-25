@@ -1,13 +1,13 @@
 <template>
   <div class="filter-section align-center">
 
-    <div class="part me-2" v-for="(filter, index) in value" :key="filter[0]" :class="{'ms-2': index > 0}">
-      <v-select class="small-text" dense solo flat background-color="transparent" style="width: 120px;" hide-details v-model="filter[0]" :items="metas.map(meta => ({ value: meta.key, text: meta.title }))" />
-      <v-select class="small-text" dense solo flat background-color="transparent" style="width: 85px;" hide-details v-model="filter[1]" :items="$options.Operators" />
-      <v-text-field class="small-text" dense solo flat :value="filter[2]" style="width: 120px;" background-color="transparent" hide-details />
+    <div class="part me-2" v-for="filter in value" :key="filter[0]">
+      <v-select class="small-text" dense solo flat background-color="transparent" style="width: 120px;" hide-details v-model="filter.key" :items="metas.map(meta => ({ value: meta.key, text: meta.title }))" />
+      <v-select class="small-text" dense solo flat background-color="transparent" style="width: 85px;" hide-details v-model="filter.operator" :items="$options.Operators" />
+      <v-text-field class="small-text" placeholder="جستجو" dense solo flat :value="filter.value" style="width: 120px;" background-color="transparent" hide-details />
     </div>
 
-    <v-btn icon small>
+    <v-btn icon small @click="addFilter">
       <v-icon small>mdi-plus</v-icon>
     </v-btn>
 
@@ -27,7 +27,12 @@ export default {
     { value: '>', text: 'بیشتر' },
     { value: '<', text: 'کمتر' },
     { value: '~=', text: 'شامل' }
-  ]
+  ],
+  methods: {
+    addFilter() {
+      this.value.push({ key: this.metas[0].key, operator: '=', value: '' })
+    }
+  }
 }
 </script>
 
@@ -37,6 +42,7 @@ export default {
     transition: background 0.2s ease-in-out;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     &:hover {
       background: rgba(black, 0.10);
     }
@@ -44,8 +50,6 @@ export default {
       flex-grow: 0;
       display: flex;
       flex-direction: row;
-      border-left: 1px solid rgba(black, 0.08);
-      border-right: 1px solid rgba(black, 0.08);
       & > * {
         width: 150px;
       }

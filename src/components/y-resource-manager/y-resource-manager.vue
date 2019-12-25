@@ -69,7 +69,7 @@ export default {
       current: {},
       allCount: 0
     },
-    filters: [['firstName', '~=', 'نس']],
+    filters: [],
     page: 1,
     itemsPerPage: 10,
     sorts: {}
