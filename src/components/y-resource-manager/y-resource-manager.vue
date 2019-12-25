@@ -11,7 +11,8 @@
         </v-btn>
       </v-card-title>
 
-      <v-text-field filled single-line flat hide-details prepend-inner-icon="mdi-magnify" placeholder="جستجو" v-model="query" />
+      <!-- <v-text-field filled single-line flat hide-details prepend-inner-icon="mdi-magnify" placeholder="جستجو" v-model="query" /> -->
+      <y-resource-filter v-model="filters" :metas="metas.list" />
 
       <y-table
         :headers="headers"
@@ -46,7 +47,8 @@ import YNetwork from 'ynetwork';
 export default {
   name: 'YResourceManager',
   components: {
-    'y-resource-table-cell': () => import('./y-resource-table-cell' /* webpackChunkName: 'y-resource-table-cell' */)
+    'y-resource-table-cell': () => import('./y-resource-table-cell' /* webpackChunkName: 'y-resource-table-cell' */),
+    'y-resource-filter': () => import('./y-resource-filter' /* webpackChunkName: 'y-resource-filter' */)
   },
   props: {
     title: {
@@ -67,7 +69,7 @@ export default {
       current: {},
       allCount: 0
     },
-    query: '',
+    filters: [['firstName', '~=', 'نس']],
     page: 1,
     itemsPerPage: 10,
     sorts: {}
