@@ -1,13 +1,14 @@
 <template>
   <div class="filter-section align-center">
 
-    <div class="part me-2" v-for="filter in value" :key="filter[0]">
-      <v-select class="small-text" dense solo flat background-color="transparent" style="width: 120px;" hide-details v-model="filter.key" :items="metas.map(meta => ({ value: meta.key, text: meta.title }))" />
-      <v-select class="small-text" dense solo flat background-color="transparent" style="width: 85px;" hide-details v-model="filter.operator" :items="$options.Operators" />
-      <v-text-field class="small-text" placeholder="جستجو" dense solo flat :value="filter.value" style="width: 120px;" background-color="transparent" hide-details />
-    </div>
+    <y-filter-element
+      class="part me-2"
+      v-for="filter in value" :key="filter[0]"
+      :filter="filter"
+      :metas="metas"
+    />
 
-    <v-btn icon small @click="addFilter">
+    <v-btn class="my-1" icon small @click="addFilter">
       <v-icon small>mdi-plus</v-icon>
     </v-btn>
 
@@ -17,8 +18,11 @@
 <script>
 export default {
   name: 'YResourceFilter',
+  components: {
+    'y-filter-element': () => import('./y-resource-filter-element' /* webpackChunkName: 'y-resource-filter-element' */),
+  },
   props: {
-    value: Object,
+    value: Array,
     metas: Array
   },
   Operators: [
@@ -52,16 +56,6 @@ export default {
       flex-direction: row;
       & > * {
         width: 150px;
-      }
-    }
-  }
-  ::v-deep {
-    .small-text {
-      .v-input__slot {
-        padding: 0 4px !important;
-      }
-      input, .v-select__selection {
-        font-size: 0.75rem !important;
       }
     }
   }

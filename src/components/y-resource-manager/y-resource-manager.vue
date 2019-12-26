@@ -134,20 +134,17 @@ export default {
     },
     async loadData() {
       
+      const filters = this.transformFilters(this.filters); // TODO: this method!
+
       this.loading = true;
-      const { status, result } = await YNetwork.post(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/query`, {
-        from: (this.page - 1) * this.itemsPerPage,
-        to: this.page * this.itemsPerPage,
-        query: this.query,
-        sorts: this.sorts,
-        timeFormat: 'YYYY/MM/DD HH:mm:ss'
-      });
+      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}`);
+      const { status: s2, result: r2 } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/count`);
       this.loading = false;
 
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
 
-      this.resources.list = result.data;
-      this.resources.allCount = result.count;
+      this.resources.list = result;
+      this.resources.allCount = r2;
 
     },
     initEditor(resource) {

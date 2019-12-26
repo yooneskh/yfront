@@ -4,6 +4,7 @@
     :input-value="value"
     :true-value="true"
     :false-value="false"
+    :hide-details="field.hideDetails"
     @change="$emit('input', !!$event)"
   />
 </template>
