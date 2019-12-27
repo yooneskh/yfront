@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :headers="datatableHeaders" @update:options="handleSort" :items="items" :server-items-length="serverItemsLength" :caption="caption" :itemid="itemKey" @update:page="$emit('update:page', $event)" @update:items-per-page="$emit('update:items-per-page', $event)">
+  <v-data-table :headers="datatableHeaders" @update:options="handleSort" :items="items" :server-items-length="serverItemsLength" :caption="caption" :itemid="itemKey" @update:page="$emit('update:page', $event)" :items-per-page="itemsPerPage" @update:items-per-page="$emit('update:items-per-page', $event)">
     <template #item="{ item, index }">
       <tr>
 
@@ -58,6 +58,10 @@ export default {
     },
     serverItemsLength: {
       type: Number
+    },
+    itemsPerPage: {
+      type: Number,
+      default: 5
     },
     actions: {
       type: Array,

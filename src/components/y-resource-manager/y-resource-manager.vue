@@ -23,6 +23,7 @@
         :loading="loading"
         :server-items-length="resources.allCount"
         @update:page="page = $event"
+        :items-per-page="itemsPerPage"
         @update:items-per-page="itemsPerPage = $event"
         @update:sorts="sorts = $event"
         @edit="initEditor"
@@ -71,7 +72,7 @@ export default {
     },
     filters: [],
     page: 1,
-    itemsPerPage: 10,
+    itemsPerPage: 5,
     sorts: {}
   }),
   computed: {
@@ -140,11 +141,14 @@ export default {
     },
     async loadData() {
       
-      const filters = this.transformFilters(this.filters); // TODO: this method!
+      const filters = this.transformFilters(this.filters);
+
+      const skip = (this.page - 1) * this.itemsPerPage;
+      const limit = this.itemsPerPage;
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}?${filters}`);
-      const { status: s2, result: r2 } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/count`);
+      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}?skip=${skip}&limit=${limit}&${filters}`);
+      const { status: s2, result: r2 } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/count?${filters}`);
       this.loading = false;
 
       if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
@@ -186,7 +190,3 @@ export default {
 }
 
 </script>
-
-<style>
-
-</style>
