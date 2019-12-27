@@ -142,12 +142,13 @@ export default {
     async loadData() {
       
       const filters = this.transformFilters(this.filters);
+      const sorts = this.transformSorts(this.sorts);
 
       const skip = (this.page - 1) * this.itemsPerPage;
       const limit = this.itemsPerPage;
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}?skip=${skip}&limit=${limit}&${filters}`);
+      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}?skip=${skip}&limit=${limit}&${filters}&${sorts}`);
       const { status: s2, result: r2 } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/count?${filters}`);
       this.loading = false;
 
@@ -183,10 +184,25 @@ export default {
 
       return 'filters=' + filters.map(
         filter => `${filter.key}:${filter.operator}:${filter.value}`
-      ).join('&');
+      ).join(',');
+
+    },
+    transformSorts(sorts) {
+
+      const entries = Object.entries(sorts || {});
+
+      if (entries.length === 0) return '';
+
+      return 'sorts=' + entries.map(
+        sort => `${sort[0]}:${sort[1]}`
+      ).join(',');
 
     }
   }
 }
 
 </script>
+
+<style>
+
+</style>
