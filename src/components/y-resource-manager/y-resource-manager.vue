@@ -11,7 +11,6 @@
         </v-btn>
       </v-card-title>
 
-      <!-- <v-text-field filled single-line flat hide-details prepend-inner-icon="mdi-magnify" placeholder="جستجو" v-model="query" /> -->
       <y-resource-filter v-model="filters" :metas="metas.list" />
 
       <y-table

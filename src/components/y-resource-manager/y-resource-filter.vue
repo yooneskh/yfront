@@ -27,7 +27,13 @@ export default {
   },
   methods: {
     addFilter() {
-      this.value.push({ key: this.metas[0].key, operator: '=', value: '' })
+
+      const meta = this.metas[0];
+
+      const hasNotContain = !!meta.timeformat || !!meta.ref;
+
+      this.value.push({ key: this.metas[0].key, operator: hasNotContain ? '=' : '~=', value: '' })
+
     }
   }
 }

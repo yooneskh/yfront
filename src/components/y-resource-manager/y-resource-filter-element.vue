@@ -14,19 +14,11 @@
       class="small-text"
       dense solo flat hide-details
       background-color="transparent"
-      :items="$options.Operators"
+      :items="currentOperators"
       v-model="filter.operator"
       style="width: 85px;"
     />
 
-    <!-- <v-text-field
-      class="small-text"
-      placeholder="جستجو"
-      dense solo flat hide-details
-      background-color="transparent"
-      v-model="filter.value"
-      style="width: 120px;"
-    /> -->
     <y-form
       class="small-text"
       :target="filter"
@@ -40,34 +32,47 @@
 <script>
 export default {
   name: 'YResourceFilterElement',
-  Operators: [
-    { value: '=', text: 'مساوی' },
-    { value: '!=', text: 'نامساوی' },
-    { value: '>', text: 'بیشتر' },
-    { value: '<', text: 'کمتر' },
-    { value: '~=', text: 'شامل' }
-  ],
   props: {
     metas: Array,
     filter: Object
   },
   computed: {
+    currentMeta() {
+      return this.metas.find(meta => meta.key === this.filter.key);
+    },
+    currentOperators() {
+
+      const result = [
+        { value: '=', text: 'مساوی' },
+        { value: '!=', text: 'نامساوی' }
+      ];
+
+      if (!this.currentMeta.ref) {
+        result.push(...[
+          { value: '>', text: 'بیشتر' },
+          { value: '<', text: 'کمتر' },
+          { value: '~=', text: 'شامل' }
+        ]);
+      }
+      else if (this.currentMeta.timeFormat) {
+        result.push({ value: '~=', text: 'شامل' });
+      }
+
+      return result;
+
+    },
     valueField() {
 
-      const currentMeta = this.metas.find(meta => meta.key === this.filter.key);
+      if (!this.currentMeta) return [];
 
-      if (!currentMeta) return [];
-
-      currentMeta.type = 'text';
-
-      if (currentMeta.ref) {
-        return [ { key: 'value', type: 'text', placeholder: 'جستجو', hideDetails: true, dense: true, simple: true, background: 'transparent' } ];
+      if (this.currentMeta.ref) {
+        return [ { key: 'value', type: 'resource', resource: this.currentMeta.ref, hideDetails: true, dense: true, simple: true, background: 'transparent' } ];
       }
-      else if (currentMeta.type === 'boolean') {
+      else if (this.currentMeta.type === 'boolean') {
         return [ { key: 'value', type: 'checkbox', hideDetails: true, title: 'مقدار' } ];
       }
       else {
-        return [ { key: 'value', type: 'text', placeholder: 'جستجو', number: currentMeta.type === 'number', hideDetails: true, dense: true, simple: true, background: 'transparent' } ];
+        return [ { key: 'value', type: 'text', placeholder: 'جستجو', number: this.currentMeta.type === 'number', hideDetails: true, dense: true, simple: true, background: 'transparent' } ];
       }
 
     }
