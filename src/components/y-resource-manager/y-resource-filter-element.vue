@@ -7,7 +7,7 @@
       background-color="transparent"
       v-model="filter.key"
       :items="metas.map(meta => ({ value: meta.key, text: meta.title }))"
-      style="width: 120px;"
+      style="width: 110px;"
     />
 
     <v-select
@@ -16,14 +16,14 @@
       background-color="transparent"
       :items="currentOperators"
       v-model="filter.operator"
-      style="width: 85px;"
+      style="width: 90px;"
     />
 
     <y-form
       class="small-text"
       :target="filter"
       :fields="valueField"
-      style="width: 120px"
+      style="width: 110px;"
     />
 
   </div>
@@ -46,6 +46,8 @@ export default {
         { value: '=', text: 'مساوی' },
         { value: '!=', text: 'نامساوی' }
       ];
+
+      if (this.currentMeta.type === 'boolean') return result;
 
       if (!this.currentMeta.ref) {
         result.push(...[
@@ -81,6 +83,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .filter-element > .small-text {
+    display: inline-block;
+  }
   ::v-deep {
     .small-text {
       .v-input__slot {

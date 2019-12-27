@@ -8,7 +8,11 @@
       :metas="metas"
     />
 
-    <v-btn class="my-1" icon small @click="addFilter">
+    <v-btn v-if="value.length > 0" class="my-1 me-1" icon small @click="removeLastFilter">
+      <v-icon small>mdi-minus</v-icon>
+    </v-btn>
+
+    <v-btn class="my-1" :class="{'ms-2': value.length === 0}" icon small @click="addFilter">
       <v-icon small>mdi-plus</v-icon>
     </v-btn>
 
@@ -34,6 +38,9 @@ export default {
 
       this.value.push({ key: this.metas[0].key, operator: hasNotContain ? '=' : '~=', value: '' })
 
+    },
+    removeLastFilter() {
+      this.value.pop();
     }
   }
 }
@@ -45,17 +52,18 @@ export default {
     transition: background 0.2s ease-in-out;
     display: flex;
     flex-direction: row;
+    min-height: 38px;
     flex-wrap: wrap;
     &:hover {
       background: rgba(black, 0.10);
     }
     & > .part {
       flex-grow: 0;
-      display: flex;
-      flex-direction: row;
-      & > * {
-        width: 150px;
-      }
+      // display: flex;
+      // flex-direction: row;
+      // & > * {
+      //   width: 150px;
+      // }
     }
   }
 </style>
