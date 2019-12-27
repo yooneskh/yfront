@@ -43,6 +43,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
+import debounce from 'lodash/debounce';
 
 export default {
   name: 'YResourceManager',
@@ -118,6 +119,12 @@ export default {
     },
     sorts() {
       this.loadData();
+    },
+    filters: {
+      deep: true,
+      handler: debounce(function() {
+        this.loadData();
+      }, 500)
     }
   },
   methods: {
@@ -137,7 +144,7 @@ export default {
       const filters = this.transformFilters(this.filters); // TODO: this method!
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}`);
+      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}?${filters}`);
       const { status: s2, result: r2 } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/count`);
       this.loading = false;
 
@@ -166,6 +173,15 @@ export default {
         this.loadData();
 
       }
+    },
+    transformFilters(filters) {
+
+      if (!filters) return '';
+
+      return 'filters=' + filters.map(
+        filter => `${filter.key}:${filter.operator}:${filter.value}`
+      ).join('&');
+
     }
   }
 }

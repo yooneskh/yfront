@@ -25,13 +25,6 @@ export default {
     value: Array,
     metas: Array
   },
-  Operators: [
-    { value: '=', text: 'مساوی' },
-    { value: '!=', text: 'نامساوی' },
-    { value: '>', text: 'بیشتر' },
-    { value: '<', text: 'کمتر' },
-    { value: '~=', text: 'شامل' }
-  ],
   methods: {
     addFilter() {
       this.value.push({ key: this.metas[0].key, operator: '=', value: '' })

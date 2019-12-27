@@ -40,6 +40,13 @@
 <script>
 export default {
   name: 'YResourceFilterElement',
+  Operators: [
+    { value: '=', text: 'مساوی' },
+    { value: '!=', text: 'نامساوی' },
+    { value: '>', text: 'بیشتر' },
+    { value: '<', text: 'کمتر' },
+    { value: '~=', text: 'شامل' }
+  ],
   props: {
     metas: Array,
     filter: Object
