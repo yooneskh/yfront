@@ -4,6 +4,11 @@
     :items="items"
     :multiple="field.multiple"
     :value="value"
+    :dense="field.dense"
+    :solo="field.simple"
+    :flat="field.simple"
+    :background-color="field.background"
+    :hide-details="field.hideDetails"
     @input="$emit('input', $event)"
   />
 </template>

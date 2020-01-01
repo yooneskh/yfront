@@ -2,6 +2,10 @@
   <v-text-field
     :type="field.password ? 'password' : (field.number ? 'number' : 'text')"
     :value="value"
+    :solo="field.simple"
+    :flat="field.simple"
+    :dense="field.dense"
+    :background-color="field.background"
     @input="$emit('input', $event)"
     :label="field.title"
     :placeholder="field.placeholder"

@@ -11,7 +11,6 @@
         </v-btn>
       </v-card-title>
 
-      <!-- <v-text-field filled single-line flat hide-details prepend-inner-icon="mdi-magnify" placeholder="جستجو" v-model="query" /> -->
       <y-resource-filter v-model="filters" :metas="metas.list" />
 
       <y-table
@@ -24,6 +23,7 @@
         :loading="loading"
         :server-items-length="resources.allCount"
         @update:page="page = $event"
+        :items-per-page="itemsPerPage"
         @update:items-per-page="itemsPerPage = $event"
         @update:sorts="sorts = $event"
         @edit="initEditor"
@@ -43,6 +43,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
+import debounce from 'lodash/debounce';
 
 export default {
   name: 'YResourceManager',
@@ -71,7 +72,7 @@ export default {
     },
     filters: [],
     page: 1,
-    itemsPerPage: 10,
+    itemsPerPage: 5,
     sorts: {}
   }),
   computed: {
@@ -118,6 +119,12 @@ export default {
     },
     sorts() {
       this.loadData();
+    },
+    filters: {
+      deep: true,
+      handler: debounce(function() {
+        this.loadData();
+      }, 500)
     }
   },
   methods: {
@@ -134,20 +141,21 @@ export default {
     },
     async loadData() {
       
+      const filters = this.transformFilters(this.filters);
+      const sorts = this.transformSorts(this.sorts);
+
+      const skip = (this.page - 1) * this.itemsPerPage;
+      const limit = this.itemsPerPage;
+
       this.loading = true;
-      const { status, result } = await YNetwork.post(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/query`, {
-        from: (this.page - 1) * this.itemsPerPage,
-        to: this.page * this.itemsPerPage,
-        query: this.query,
-        sorts: this.sorts,
-        timeFormat: 'YYYY/MM/DD HH:mm:ss'
-      });
+      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}?skip=${skip}&limit=${limit}&${filters}&${sorts}`);
+      const { status: s2, result: r2 } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/count?${filters}`);
       this.loading = false;
 
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
 
-      this.resources.list = result.data;
-      this.resources.allCount = result.count;
+      this.resources.list = result;
+      this.resources.allCount = r2;
 
     },
     initEditor(resource) {
@@ -169,6 +177,26 @@ export default {
         this.loadData();
 
       }
+    },
+    transformFilters(filters) {
+
+      if (!filters) return '';
+
+      return 'filters=' + filters.map(
+        filter => `${filter.key}:${filter.operator}:${filter.value}`
+      ).join(',');
+
+    },
+    transformSorts(sorts) {
+
+      const entries = Object.entries(sorts || {});
+
+      if (entries.length === 0) return '';
+
+      return 'sorts=' + entries.map(
+        sort => `${sort[0]}:${sort[1]}`
+      ).join(',');
+
     }
   }
 }
