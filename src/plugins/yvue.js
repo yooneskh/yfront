@@ -5,6 +5,9 @@ import UUIDV4 from 'uuid/v4';
 import YNetwork from 'ynetwork';
 import copyToClipboard from 'copy-to-clipboard';
 
+// import VueAnalytics from 'vue-analytics';
+// Vue.use(VueAnalytics, { id: '---' });
+
 YNetwork.debug = true;
 
 moment.loadPersian({ dialect: 'persian-modern' });
