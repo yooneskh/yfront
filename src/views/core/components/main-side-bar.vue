@@ -8,7 +8,7 @@
         </v-list-item-title>
       </v-list-item>
 
-      <div class="items-part">
+      <div class="items-part no-scrollbar">
         <v-list-item-group v-for="(items, groupName) in toolbarGroups" :key="groupName">
           <v-subheader class="mb-1" style="height: 24px;">{{ groupName }}</v-subheader>
           <v-list-item v-for="item in items" :key="item.title" :to="item.path">
