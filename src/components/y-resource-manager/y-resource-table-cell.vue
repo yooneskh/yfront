@@ -12,6 +12,11 @@
         {{ language }}: {{ data[language] }}
       </v-chip>
     </template>
+    <template v-else-if="isRelation">
+      <v-btn small text @click="showResource">
+        {{ relationTitle }}
+      </v-btn>
+    </template>
     <template v-else>
       <span v-if="header.timeFormat" :style="{'direction': header.dir}" class="d-inline-block">
         {{ data === 0 ? '-' : $formatTime(data, header.timeFormat) }}
@@ -30,6 +35,10 @@
 </template>
 
 <script>
+
+import YNetwork from 'ynetwork';
+import { transformResourceToTitle } from './y-resource-util';
+
 export default {
   name: 'YResourceCell',
   components: {
@@ -38,6 +47,54 @@ export default {
   props: {
     header: {},
     data: {}
+  },
+  data: () => ({
+    relationTitle: '',
+    relationSourceId: '',
+    sourceResourceData: {}
+  }),
+  computed: {
+    isRelation() {
+      return this.header.relationSourceModel && this.header.relationTargetModel;
+    }
+  },
+  async mounted() {
+    if (this.isRelation) {
+
+      const targetName = (this.header.ref || this.header.relationTargetModel).toLowerCase();
+      const sourceName = this.header.relationSourceModel.toLowerCase();
+
+      const { result: relationData } = await YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s/${this.data}`);
+      const { result: relations } = await YNetwork.get(`${this.$apiBase}/${sourceName}s/relations`);
+
+      const relationMeta = relations.find(relation => relation.targetModel === this.header.relationTargetModel);
+      this.relationSourceId = relationData[this.header.relationSourceModel.toLowerCase()];
+
+      const sourceTitle = await transformResourceToTitle(this.$apiBase, this.header.relationSourceModel, this.relationSourceId);
+      const targetTitle = await transformResourceToTitle(this.$apiBase, this.header.relationTargetModel, relationData[this.header.relationTargetModel.toLowerCase()]);
+
+      this.relationTitle = sourceTitle + ' ' + targetTitle + ' ' + relationMeta.properties.filter(p => p.titleable).map(meta => relationData[meta.key]).join(' ');
+
+      this.sourceResourceData = (await YNetwork.get(`${this.$apiBase}/${sourceName}s/${this.relationSourceId}`)).result;
+
+    }
+  },
+  methods: {
+    async showResource() {
+      if (this.header.relationSourceModel === 'Media') {
+        window.open(this.sourceResourceData.path, '_blank');
+      }
+      else {
+        this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
+          width: '400px',
+          modelName: this.header.relationSourceModel,
+          baseResource: this.sourceResourceData,
+          readonly: true
+        });
+      }
+
+    }
   }
 }
+
 </script>

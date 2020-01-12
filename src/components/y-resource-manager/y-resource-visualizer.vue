@@ -12,6 +12,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
+import { transformResourceToTitle } from './y-resource-util'
 
 export default {
   name: 'YResourceVisualizer',
@@ -26,30 +27,25 @@ export default {
     }
   },
   data: () => ({
-    metas: [],
     resource: {},
-    error: false
+    error: false,
+    title: ''
   }),
-  computed: {
-    title() {
-      return this.metas.filter(meta => meta.titleAble).map(meta => this.resource[meta.key]).join(' ');
-    }
-  },
   async mounted() {
 
     const modelUrl = this.model.toLowerCase() + 's';
 
     const result = await Promise.all([
-      YNetwork.get(`${this.$apiBase}/${modelUrl}/metas`),
+      transformResourceToTitle(this.$apiBase, this.model, this.id),
       YNetwork.get(`${this.$apiBase}/${modelUrl}/${this.id}`)
     ]);
 
-    if (result[0].status !== 200 || result[1].status !== 200) {
+    if (result[0] === '---' || result[1].status !== 200) {
       this.error = true;
       return;
     }
 
-    this.metas = result[0].result;
+    this.title = result[0];
     this.resource = result[1].result;
 
   },
