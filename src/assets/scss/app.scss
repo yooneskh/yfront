@@ -35,3 +35,7 @@ html {
     width: 0 !important
   }
 }
+
+.v-img--darken > .v-image__image {
+  filter: brightness(70%);
+}
