@@ -1,5 +1,5 @@
 <template>
-  <v-form class="y-form y-form-vuetify">
+  <v-form class="y-form y-form-vuetify" @submit.prevent>
     <v-row wrap>
       <v-col v-for="field in fields" class="py-0" :key="field.key" :cols="field.width || 12">
         <component
