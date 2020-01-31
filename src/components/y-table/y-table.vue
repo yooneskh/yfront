@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :headers="datatableHeaders" @update:options="handleSort" :items="items" :server-items-length="serverItemsLength" :caption="caption" :itemid="itemKey" @update:page="$emit('update:page', $event)" :items-per-page="itemsPerPage" @update:items-per-page="$emit('update:items-per-page', $event)">
+  <v-data-table class="no-wrap" :headers="datatableHeaders" @update:options="handleSort" :items="items" :server-items-length="serverItemsLength" :caption="caption" :itemid="itemKey" @update:page="$emit('update:page', $event)" :items-per-page="itemsPerPage" @update:items-per-page="$emit('update:items-per-page', $event)">
     <template #item="{ item, index }">
       <tr>
 
@@ -9,7 +9,7 @@
           </slot>
         </td>
 
-        <td v-if="showActions" class="text-center">
+        <td v-if="showActions" class="text-center" style="white-space: nowrap;">
           <v-btn
             v-for="(action, index) in actions"
             :key="action.key"
@@ -118,3 +118,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .v-data-table.no-wrap {
+    th {
+      white-space: nowrap;
+    }
+  }
+</style>
