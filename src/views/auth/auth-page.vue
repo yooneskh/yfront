@@ -4,6 +4,7 @@
       <v-img src="../../assets/img/auth-background.jpg" style="height: 100vh;" />
     </v-col>
     <v-col cols="12" md="8" class="d-flex pa-0 align-center justify-center">
+      <v-img src="../../assets/img/logo.png" width="80" style="position: absolute; top: 8px; left: 12px;" />
       <div style="max-width: 350px;">
 
         <div class="display-1 font-weight-thin text-center">ورود به اپلیکیشن</div>
