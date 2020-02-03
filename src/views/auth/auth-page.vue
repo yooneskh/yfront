@@ -1,54 +1,70 @@
 <template>
   <v-row class="ma-0">
-    <v-col cols="12" md="3" class="pa-0" style="z-index: 1">
-      <v-card flat tile elevation="8" dark color="primary" class="align-center d-flex" style="height: 100vh;">
-        <div class="mx-10" style="width: 100%;">
-
-          <y-form
-            v-if="mode === 'login'"
-            :target="this"
-            no-padding
-            :fields="[
-              { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', classes: 'ltred'}
-            ]"
-          />
-
-          <y-form
-            v-if="mode === 'register'"
-            :target="this"
-            no-padding
-            :fields="[
-              { key: 'firstName', type: 'text', title: 'نام'},
-              { key: 'lastName', type: 'text', title: 'نام خانوادگی'}
-            ]"
-          />
-
-          <y-form
-            v-if="mode === 'verify'"
-            :target="this"
-            no-padding
-            :fields="[
-              { key: 'verificationCode', type: 'text', title: 'کد تایید', classes: 'ltred'}
-            ]"
-          />
-
-          <v-btn v-if="mode === 'login'" block text large @click="doLogin()">ورود به حساب کاربری</v-btn>
-          <v-btn v-if="mode === 'register'" block text large @click="doRegister()">ایجاد حساب جدید</v-btn>
-          <v-btn v-if="mode === 'verify'" block text large @click="doVerify()">بررسی کد تایید</v-btn>
-
-        </div>
-      </v-card>
+    <v-col cols="12" md="4" class="pa-0" style="z-index: 1">
+      <v-img src="../../assets/img/auth-background.jpg" style="height: 100vh;" />
     </v-col>
-    <v-col cols="12" md="9" class="pa-0">
-      <v-img src="../../assets/img/auth-background.jpg" class="v-img--darken" style="height: 100vh; position: relative;">
-        <v-img src="../../assets/img/logo.png" width="52" style="position: absolute; top: 12px; left: 8px;" />
-        <div class="display-2 font-weight-thin white--text" style="position: absolute; top: 72px; right: 24px;">
-          به اپلیکیشن خوش آمدید!
+    <v-col cols="12" md="8" class="d-flex pa-0 align-center justify-center">
+      <div style="max-width: 350px;">
+
+        <div class="display-1 font-weight-thin text-center">ورود به اپلیکیشن</div>
+
+        <v-card-text class="mt-8">
+
+          <template v-if="mode === 'login'">
+            شماره تلفن خود را در زیر وارد کنید تا به حساب خود وارد شوید.
+            <y-form
+              class="pt-2"
+              :target="this"
+              no-padding
+              :fields="[
+                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', classes: 'ltred', hideDetails: true }
+              ]"
+            />
+          </template>
+
+          <template v-if="mode === 'register'">
+            شما قبلا حساب کاربری نساخته‌اید. لطفا اطلاعات زیر را وارد کرده تا حساب شما ساخته شود.
+            <y-form
+              class="pt-2"
+              :target="this"
+              no-padding
+              :fields="[
+                { key: 'firstName', type: 'text', title: 'نام' },
+                { key: 'lastName', type: 'text', title: 'نام خانوادگی', hideDetails: true }
+              ]"
+            />
+          </template>
+
+          <template v-if="mode === 'verify'">
+            کد تایید به شماره شما فرستاده شده است. لطفا آن را در زیر وارد کنید.
+            <y-form
+              class="pt-2"
+              :target="this"
+              no-padding
+              :fields="[
+                { key: 'verificationCode', type: 'text', title: 'کد تایید', classes: 'ltred', hideDetails: true }
+              ]"
+            />
+          </template>
+
+        </v-card-text>
+
+        <div class="mt-8 px-2 pb-2">
+          <template v-if="mode === 'login'">
+            <v-btn block depressed color="primary" large :loading="loading" @click="doLogin">ورود به حساب کاربری</v-btn>
+            <v-btn class="mt-2" text block>بازگشت به صفحه اصلی</v-btn>
+          </template>
+          <template v-if="mode === 'register'">
+            <v-btn block depressed color="primary" large :loading="loading" @click="doRegister">ایجاد حساب جدید</v-btn>
+            <v-btn class="mt-2" text block @click="phoneNumber = ''; mode = 'login';">بازگشت به وارد کردن شماره تلفن</v-btn>
+          </template>
+          <template v-if="mode === 'verify'">
+            <v-btn block depressed color="primary" large :loading="loading" @click="doVerify">بررسی کد تایید</v-btn>
+            <v-btn class="mt-2" text block @click="doLogin">کد رو دوباره بفرست</v-btn>
+          </template>
         </div>
-        <!-- <div class="caption white--text font-weight-black" style="position: absolute; left: 8px; bottom: 8px;">
-          بازگشت به صفحه اصلی
-        </div> -->
-      </v-img>
+
+      </div>
     </v-col>
   </v-row>
 </template>
