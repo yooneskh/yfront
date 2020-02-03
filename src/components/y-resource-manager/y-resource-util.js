@@ -19,7 +19,7 @@ export async function transformResourceToTitle(apiBase, resourceName, resourceId
   const titleableMetas = metas.filter(meta => meta.titleAble);
 
   const allTitles = await Promise.all(
-    titleableMetas.map(meta => new Promise((resolve, reject) => {
+    titleableMetas.map(meta => new Promise(resolve => {
       if (meta.ref) {
         transformResourceToTitle(apiBase, meta.ref, resource[meta.key]).then(resolve);
       }
