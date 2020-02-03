@@ -4,6 +4,7 @@ import YDialog from './ydialog';
 import UUIDV4 from 'uuid/v4';
 import YNetwork from 'ynetwork';
 import copyToClipboard from 'copy-to-clipboard';
+import UserPlaceholder from '../assets/img/user-placeholder.jpeg';
 
 // import VueAnalytics from 'vue-analytics';
 // Vue.use(VueAnalytics, { id: '---' });
@@ -33,6 +34,9 @@ Vue.filter('formatTime', formatTime);
 
 Vue.mixin({
   computed: {
+    $userPlaceholder() {
+      return UserPlaceholder;
+    },
     $isMobile() {
       return this.$vuetify && this.$vuetify.breakpoint.smAndDown;
     },

@@ -1,51 +1,56 @@
 <template>
-  <v-container fluid fill-height style="background: #EAEAEA">
-    <v-row align-center class="ma-0">
-      <v-col class="px-4">
-        
-        <v-card max-width="385" class="mx-auto" :loading="loading">
-          <v-card-title class="text-center d-block">ورود به اپلیکیشن</v-card-title>
-          <v-card-text class="pt-0 pb-0 px-4 mt-0">
+  <v-row class="ma-0">
+    <v-col cols="12" md="3" class="pa-0" style="z-index: 1">
+      <v-card flat tile elevation="8" dark color="primary" class="align-center d-flex" style="height: 100vh;">
+        <div class="mx-10" style="width: 100%;">
 
-            <y-form
-              v-if="mode === 'login'"
-              :target="this"
-              no-padding
-              :fields="[
-                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', classes: 'ltred'}
-              ]"
-            />
+          <y-form
+            v-if="mode === 'login'"
+            :target="this"
+            no-padding
+            :fields="[
+              { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', classes: 'ltred'}
+            ]"
+          />
 
-            <y-form
-              v-if="mode === 'register'"
-              :target="this"
-              no-padding
-              :fields="[
-                { key: 'firstName', type: 'text', title: 'نام'},
-                { key: 'lastName', type: 'text', title: 'نام خانوادگی'}
-              ]"
-            />
+          <y-form
+            v-if="mode === 'register'"
+            :target="this"
+            no-padding
+            :fields="[
+              { key: 'firstName', type: 'text', title: 'نام'},
+              { key: 'lastName', type: 'text', title: 'نام خانوادگی'}
+            ]"
+          />
 
-            <y-form
-              v-if="mode === 'verify'"
-              :target="this"
-              no-padding
-              :fields="[
-                { key: 'verificationCode', type: 'text', title: 'کد تایید', classes: 'ltred'}
-              ]"
-            />
+          <y-form
+            v-if="mode === 'verify'"
+            :target="this"
+            no-padding
+            :fields="[
+              { key: 'verificationCode', type: 'text', title: 'کد تایید', classes: 'ltred'}
+            ]"
+          />
 
-          </v-card-text>
-          <v-card-actions>
-            <v-btn v-if="mode === 'login'" block large depressed color="primary" @click="doLogin()">ورود به حساب کاربری</v-btn>
-            <v-btn v-if="mode === 'register'" block large depressed color="primary" @click="doRegister()">ایجاد حساب جدید</v-btn>
-            <v-btn v-if="mode === 'verify'" block large depressed color="primary" @click="doVerify()">بررسی کد تایید</v-btn>
-          </v-card-actions>
-        </v-card>
+          <v-btn v-if="mode === 'login'" block text large @click="doLogin()">ورود به حساب کاربری</v-btn>
+          <v-btn v-if="mode === 'register'" block text large @click="doRegister()">ایجاد حساب جدید</v-btn>
+          <v-btn v-if="mode === 'verify'" block text large @click="doVerify()">بررسی کد تایید</v-btn>
 
-      </v-col>
-    </v-row>
-  </v-container>
+        </div>
+      </v-card>
+    </v-col>
+    <v-col cols="12" md="9" class="pa-0">
+      <v-img src="../../assets/img/auth-background.jpg" class="v-img--darken" style="height: 100vh; position: relative;">
+        <v-img src="../../assets/img/logo.png" width="52" style="position: absolute; top: 12px; left: 8px;" />
+        <div class="display-2 font-weight-thin white--text" style="position: absolute; top: 72px; right: 24px;">
+          به اپلیکیشن خوش آمدید!
+        </div>
+        <!-- <div class="caption white--text font-weight-black" style="position: absolute; left: 8px; bottom: 8px;">
+          بازگشت به صفحه اصلی
+        </div> -->
+      </v-img>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
