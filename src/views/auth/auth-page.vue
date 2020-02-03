@@ -1,6 +1,6 @@
 <template>
   <v-row class="ma-0">
-    <v-col cols="12" md="4" class="pa-0" style="z-index: 1">
+    <v-col v-if="!$isMobile" cols="12" md="4" class="pa-0" style="z-index: 1">
       <v-img src="../../assets/img/auth-background.jpg" style="height: 100vh;" />
     </v-col>
     <v-col cols="12" md="8" class="d-flex pa-0 align-center justify-center">
