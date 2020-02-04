@@ -1,15 +1,19 @@
 <template>
   <v-row class="ma-0">
     <v-col v-if="!$isMobile" cols="12" md="4" class="pa-0" style="z-index: 1">
-      <v-img src="../../assets/img/auth-background.jpg" style="height: 100vh;" />
+      <v-card flat tile elevation="12" style="height: 100vh;">
+        <v-img src="../../assets/img/back-2.jpg" style="height: 100vh;" />
+      </v-card>
     </v-col>
-    <v-col cols="12" md="8" class="d-flex pa-0 align-center justify-center">
-      <v-img src="../../assets/img/logo.png" width="80" style="position: absolute; top: 8px; left: 12px;" />
-      <div style="max-width: 350px;">
+    <v-col cols="12" md="8" class="d-flex pa-0 grey lighten-3 flex-column align-center justify-center">
+      
+      <v-img src="../../assets/img/logo.png" width="80" style="position: absolute; top: 8px;" :style="{'left': $isMobile ? '50%' : '12px', 'transform': $isMobile ? 'translateX(-50%)' : ''}" />
+      
+      <v-card max-width="350" outlined>
 
-        <div class="display-1 font-weight-thin text-center">ورود به اپلیکیشن</div>
+        <v-card-title class="justify-center">ورود به اپلیکیشن</v-card-title>
 
-        <v-card-text class="mt-8">
+        <v-card-text class="mt-4">
 
           <template v-if="mode === 'login'">
             شماره تلفن خود را در زیر وارد کنید تا به حساب خود وارد شوید.
@@ -50,22 +54,32 @@
 
         </v-card-text>
 
-        <div class="mt-8 px-2 pb-2">
+        <div class="mt-4 px-2 pb-2">
           <template v-if="mode === 'login'">
             <v-btn block depressed color="primary" large :loading="loading" @click="doLogin">ورود به حساب کاربری</v-btn>
-            <v-btn class="mt-2" text block>بازگشت به صفحه اصلی</v-btn>
           </template>
           <template v-if="mode === 'register'">
             <v-btn block depressed color="primary" large :loading="loading" @click="doRegister">ایجاد حساب جدید</v-btn>
-            <v-btn class="mt-2" text block @click="phoneNumber = ''; mode = 'login';">بازگشت به وارد کردن شماره تلفن</v-btn>
           </template>
           <template v-if="mode === 'verify'">
             <v-btn block depressed color="primary" large :loading="loading" @click="doVerify">بررسی کد تایید</v-btn>
-            <v-btn class="mt-2" text block @click="doLogin">کد رو دوباره بفرست</v-btn>
           </template>
         </div>
 
+      </v-card>
+
+      <div>
+        <template v-if="mode === 'login'">
+          <v-btn class="mt-1" small text block>بازگشت به صفحه اصلی</v-btn>
+        </template>
+        <template v-if="mode === 'register'">
+          <v-btn class="mt-1" small text block @click="phoneNumber = ''; mode = 'login';">بازگشت به وارد کردن شماره تلفن</v-btn>
+        </template>
+        <template v-if="mode === 'verify'">
+          <v-btn class="mt-1" small text block @click="doLogin">کد رو دوباره بفرست</v-btn>
+        </template>
       </div>
+
     </v-col>
   </v-row>
 </template>
