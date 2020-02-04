@@ -4,7 +4,7 @@
 
       <v-list-item class="text-center py-4" @click="$router.push((toolbarItems[0] || { path: '/' }).path, () => {})">
         <v-list-item-title style="font-size: 1.5em; line-height: unset;">
-          اپلیکیشن من
+          {{ $options.Title }}
         </v-list-item-title>
       </v-list-item>
 
@@ -28,7 +28,7 @@
         </v-list-item-icon>
         <v-list-item-title>ورود</v-list-item-title>
       </v-list-item>
-      <v-menu v-else absolute min-width="200">
+      <v-menu v-else absolute top min-width="225">
 
         <template #activator="{ on }">
           <v-list-item v-on="on">
@@ -41,14 +41,20 @@
           </v-list-item>
         </template>
 
-        <v-list class="text-center" dense nav>
+        <v-list dense nav>
 
           <v-list-item :to="`/users/${$user._id}`">
+            <v-list-item-icon class="me-2">
+              <v-icon small>mdi-account</v-icon>
+            </v-list-item-icon>
             <v-list-item-title>مشاهده پروفایل</v-list-item-title>
           </v-list-item>
-          
-          <v-list-item class="mt-4" @click="$root.logout(); $router.replace('/auth')">
-            <v-list-item-title class="red--text">خروج از حساب کاربری</v-list-item-title>
+
+          <v-list-item @click="$root.logout(); $router.replace('/auth')">
+            <v-list-item-icon class="me-2">
+              <v-icon small color="red">mdi-delete</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title class="error--text">خروج از حساب کاربری</v-list-item-title>
           </v-list-item>
 
         </v-list>
@@ -68,13 +74,14 @@
 <script>
 
 import UserPlaceholder from '../../../assets/img/user-placeholder.jpeg';
-import { version as Version } from '../../../../package.json';
+import { version as Version, title as Title } from '../../../../package.json';
 import { groupBy } from 'lodash';
 
 export default {
   name: 'MainSidebar',
   UserPlaceholder,
   Version,
+  Title,
   props: {
     toolbarItems: Array
   },

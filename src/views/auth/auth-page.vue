@@ -11,7 +11,7 @@
       
       <v-card max-width="350" outlined>
 
-        <v-card-title class="justify-center">ورود به اپلیکیشن</v-card-title>
+        <v-card-title class="justify-center">ورود {{ $options.Title }}</v-card-title>
 
         <v-card-text class="mt-4">
 
@@ -87,9 +87,11 @@
 <script>
 
 import Api from '../../api';
+import { title as Title } from '../../../package.json';
 
 export default {
   name: 'AuthPage',
+  Title,
   data: () => ({
     mode: 'login',
     loading: false,
