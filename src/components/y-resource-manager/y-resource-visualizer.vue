@@ -56,7 +56,7 @@ export default {
       }
       else {
         this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
-          width: '400px',
+          width: '450px',
           modelName: this.model,
           baseResource: this.resource,
           readonly: true

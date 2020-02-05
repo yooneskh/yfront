@@ -22,7 +22,7 @@
               :target="this"
               no-padding
               :fields="[
-                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', classes: 'ltred', hideDetails: true }
+                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', classes: 'ltred', inputNumeric: true, hideDetails: true }
               ]"
             />
           </template>
@@ -47,7 +47,7 @@
               :target="this"
               no-padding
               :fields="[
-                { key: 'verificationCode', type: 'text', title: 'کد تایید', classes: 'ltred', hideDetails: true }
+                { key: 'verificationCode', type: 'text', title: 'کد تایید', classes: 'ltred', inputNumeric: true, autocomplete: 'one-time-password', hideDetails: true }
               ]"
             />
           </template>

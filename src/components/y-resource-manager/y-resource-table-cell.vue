@@ -64,14 +64,18 @@ export default {
       const targetName = (this.header.ref || this.header.relationTargetModel).toLowerCase();
       const sourceName = this.header.relationSourceModel.toLowerCase();
 
-      const { result: relationData } = await YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s/${this.data}`);
-      const { result: relations } = await YNetwork.get(`${this.$apiBase}/${sourceName}s/relations`);
+      const [{ result: relationData }, { result: relations }] = await Promise.all([
+        YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s/${this.data}`),
+        YNetwork.get(`${this.$apiBase}/${sourceName}s/relations`)
+      ]);
 
       const relationMeta = relations.find(relation => relation.targetModel === this.header.relationTargetModel);
       this.relationSourceId = relationData[this.header.relationSourceModel.toLowerCase()];
 
-      const sourceTitle = await transformResourceToTitle(this.$apiBase, this.header.relationSourceModel, this.relationSourceId);
-      const targetTitle = await transformResourceToTitle(this.$apiBase, this.header.relationTargetModel, relationData[this.header.relationTargetModel.toLowerCase()]);
+      const [sourceTitle, targetTitle] = await Promise.all([
+        transformResourceToTitle(this.$apiBase, this.header.relationSourceModel, this.relationSourceId),
+        transformResourceToTitle(this.$apiBase, this.header.relationTargetModel, relationData[this.header.relationTargetModel.toLowerCase()])
+      ]);
 
       this.relationTitle = sourceTitle + ' ' + targetTitle + ' ' + relationMeta.properties.filter(p => p.titleable).map(meta => relationData[meta.key]).join(' ');
 
@@ -86,7 +90,7 @@ export default {
       }
       else {
         this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
-          width: '400px',
+          width: '450px',
           modelName: this.header.relationSourceModel,
           baseResource: this.sourceResourceData,
           readonly: true

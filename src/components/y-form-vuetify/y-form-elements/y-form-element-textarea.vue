@@ -3,10 +3,13 @@
     :value="value"
     @input="$emit('input', $event)"
     :label="field.title"
+    :solo="field.solo || field.simple"
+    :flat="field.flat || field.simple"
     :placeholder="field.placeholder"
     :class="field.classes"
     :dir="field.dir"
-    auto-grow
+    :rows="field.rows"
+    :auto-grow="field.autoGrow"
     :hide-details="field.hideDetails" />
 </template>
 

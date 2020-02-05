@@ -71,15 +71,13 @@ export default {
   computed: {
     fields() {
       return this.metas.list.map(meta => ({
-        key: meta.key,
+        ...meta,
         title: meta.title || meta.key,
-        dir: meta.dir,
         type: this.mapMetaType(meta),
         wrapped: false, // for the file picker
         multiple: meta.isArray, // for select
-        addable: meta.isArray, // for select again :D
-        resource: meta.ref,
-        languages: meta.languages
+        addable: meta.isArray, // for select
+        resource: meta.ref
       }));
     },
     allLoading() {
@@ -190,7 +188,3 @@ export default {
 }
 
 </script>
-
-<style>
-
-</style>

@@ -73,12 +73,8 @@ export default {
       ].concat(this.relation.properties
         .filter(header => !header.hideInTable)
         .map(meta => ({
-          key: meta.key,
-          type: meta.type,
+          ...meta,
           text: meta.title || meta.key,
-          ref: meta.ref,
-          dir: meta.dir,
-          languages: meta.languages
         })))
         .concat([
           {
@@ -119,10 +115,8 @@ export default {
       const actionTitle = toEdit ? 'ویرایش' : `افزودن`;
 
       const fields = this.relation.properties.map(meta => ({
-        key: meta.key,
+        ...meta,
         title: meta.title || meta.key,
-        dir: meta.dir,
-        languages: meta.languages,
         type: this.mapMetaType(meta),
         wrapped: false, // for the file picker
         multiple: meta.isArray, // for select

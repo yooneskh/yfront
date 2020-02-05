@@ -1,7 +1,7 @@
 <template>
   <v-data-table class="no-wrap" :headers="datatableHeaders" @update:options="handleSort" :items="items" :server-items-length="serverItemsLength" :caption="caption" :itemid="itemKey" @update:page="$emit('update:page', $event)" :items-per-page="itemsPerPage" @update:items-per-page="$emit('update:items-per-page', $event)">
-    <template #item="{ item, index }">
-      <tr>
+    <template #item="{ item }">
+      <tr :key="item[itemKey]">
 
         <td v-for="header in rawHeaders" :key="header.value" :class="header.class">
           <slot :name="`item-${header.key}`" :item="item" :header="header" :data="item[header.value]">

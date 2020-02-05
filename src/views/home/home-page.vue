@@ -1,5 +1,5 @@
 <template>
-  <v-container class="home" fluid>
+  <v-container class="page" fluid>
 
     <v-card>
       <v-card-title>صفحه اصلی</v-card-title>
@@ -9,6 +9,8 @@
           :target="heh"
           :fields="[
             { key: 'name', type: 'text', title: 'نام', width: 6 },
+            { key: 'counts', type: 'text', number: true, title: 'Counts', width: 6 },
+            { key: 'pass', type: 'text', password: true, title: 'Password', width: 6 },
             { key: 'fruit', type: 'select', title: 'میوه‌ها', width: 6, items: ['سیب', 'موز', 'پرتقال'], multiple: false },
             { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] },
             { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', width: 6 },

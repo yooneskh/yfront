@@ -40,7 +40,7 @@ export default {
       appBarHeight: 64,
       color: 'primary',
       isDark: true,
-      stickyAppBar: true
+      stickyAppBar: false
     },
     toolbars: [
       { group: 'عمومی', title: 'خانه', icon: 'mdi-home', path: '/' },

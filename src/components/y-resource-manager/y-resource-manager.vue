@@ -80,12 +80,8 @@ export default {
       return this.metas.list
       .filter(header => !header.hideInTable)
       .map(meta => ({
-        key: meta.key,
+        ...meta,
         text: meta.title || meta.key,
-        type: meta.type,
-        ref: meta.ref,
-        dir: meta.dir,
-        languages: meta.languages
       }))
       .concat([
         {
@@ -148,8 +144,10 @@ export default {
       const limit = this.itemsPerPage;
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}?skip=${skip}&limit=${limit}&${filters}&${sorts}`);
-      const { status: s2, result: r2 } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/count?${filters}`);
+      const [{ status, result }, { status: s2, result: r2 }] = await Promise.all([
+        YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}?skip=${skip}&limit=${limit}&${filters}&${sorts}`),
+        YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/count?${filters}`)
+      ]);
       this.loading = false;
 
       if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
@@ -160,7 +158,7 @@ export default {
     },
     initEditor(resource) {
       this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
-        width: '400px',
+        width: '450px',
         modelName: this.modelName,
         baseResource: resource
       }).then(result => result && this.loadData());
