@@ -1,5 +1,5 @@
 <template>
-  <v-container class="home">
+  <v-container class="home" fluid>
 
     <v-card>
       <v-card-title>صفحه اصلی</v-card-title>

@@ -77,6 +77,9 @@ export default {
       height: 128px !important;
       ::v-deep .v-toolbar__extension {
         height: 64px !important;
+        .v-tab {
+          letter-spacing: 0;
+        }
       }
     }
   }

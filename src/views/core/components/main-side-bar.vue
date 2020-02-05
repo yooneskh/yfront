@@ -3,7 +3,8 @@
     <v-list nav dense height="100%" color="primary" dark>
 
       <v-list-item class="text-center py-4" @click="$router.push((toolbarItems[0] || { path: '/' }).path, () => {})">
-        <v-list-item-title style="font-size: 1.5em; line-height: unset;">
+        <v-list-item-title class="flex-row d-flex align-center" style="font-size: 1.5em; line-height: unset;">
+          <v-img src="../../../assets/img/logo.png" width="44" class="flex-grow-0 me-2" />
           {{ $options.Title }}
         </v-list-item-title>
       </v-list-item>
@@ -22,7 +23,7 @@
         </v-list-item-group>
       </div>
 
-      <v-list-item v-if="!$token" @click.stop>
+      <v-list-item v-if="!$token" to="/auth">
         <v-list-item-icon class="me-2">
           <v-icon small>mdi-login</v-icon>
         </v-list-item-icon>
