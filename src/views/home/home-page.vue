@@ -60,6 +60,12 @@
       </y-moveable>
     </v-card>
 
+    <v-card class="mt-4" style="width: 100%; height: 300px; overflow-y: auto;">
+      <v-card-text>
+        <y-rich-editor v-model="rich" />
+      </v-card-text>
+    </v-card>
+
     <v-card class="mt-4 mb-4">
       <v-card-title>نمونه جدول</v-card-title>
       <y-table
@@ -85,7 +91,8 @@
 export default {
   name: 'HomePage',
   components: {
-    'y-moveable': () => import('../../components/y-moveable' /* webpackChunkName: 'y-moveable' */)
+    'y-moveable': () => import('../../components/y-moveable' /* webpackChunkName: 'y-moveable' */),
+    'y-rich-editor': () => import('../../components/y-rich-editor' /* webpackChunkName: 'y-rich-editor' */)
   },
   data: () => ({
     heh: {
@@ -98,6 +105,7 @@ export default {
       freeTimes: [],
       freeNames: []
     },
+    rich: '-----title\nHiThereYouGoodMan\n\n-----text\nThis is the first paragraph in my own editing platform!!!! :D\n\n-----image\nhttps://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg',
     boxPosition: [0, 0]
   }),
   methods: {

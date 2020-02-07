@@ -3,7 +3,7 @@
     <v-list nav dense height="100%" color="primary" dark>
 
       <v-list-item class="text-center py-4" @click="$router.push((toolbarItems[0] || { path: '/' }).path, () => {})">
-        <v-list-item-title class="flex-row d-flex align-center" style="font-size: 1.5em; line-height: unset;">
+        <v-list-item-title class="flex-row d-flex align-center justify-center" style="font-size: 1.5em; line-height: unset;">
           <v-img src="../../../assets/img/logo.png" width="44" class="flex-grow-0 me-2" />
           {{ $options.Title }}
         </v-list-item-title>
