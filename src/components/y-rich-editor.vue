@@ -44,7 +44,10 @@ export default {
     'y-editable-text': YEditableText
   },
   props: {
-    value: String
+    value: {
+      type: String,
+      default: ''
+    }
   },
   data: () => ({
     parts: []
@@ -55,6 +58,12 @@ export default {
       handler() {
         this.generateParts();
       }
+    },
+    parts: {
+      deep: true,
+      handler() {
+        this.emitValue();
+      }
     }
   },
   methods: {
@@ -63,6 +72,11 @@ export default {
         type: line.split('\n')[0],
         content: line.split('\n')[1]
       }));
+      console.log('generate parts');
+    },
+    emitValue() {
+      console.log('emit value');
+      this.$emit('input', this.parts.map(part => `-----${part.type}\n${part.content}`).join('\n') )
     },
     async addImage() {
 

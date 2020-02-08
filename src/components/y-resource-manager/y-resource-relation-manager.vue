@@ -132,7 +132,7 @@ export default {
       });
       
       const form = await this.$dialog(() => import('../../dialogs/form-maker' /* webpackChunkName: 'form-maker-dialog' */), {
-        width: '400px',
+        width: '550px',
         title,
         actionTitle,
         fields,
@@ -191,7 +191,7 @@ export default {
       if (meta.isArray) return 'select';
 
       if (meta.languages) return 'text-multilang';
-      if (meta.richText) return 'textarea';
+      if (meta.richText) return 'editor';
 
       switch (meta.type) {
         case 'string': return 'text';

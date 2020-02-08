@@ -10,8 +10,7 @@
           :fields="[
             { key: 'name', type: 'text', title: 'نام', width: 6 },
             { key: 'counts', type: 'text', number: true, title: 'Counts', width: 6 },
-            // { key: 'pass', type: 'text', password: true, title: 'Password', width: 6 },
-            { key: 'fruit', type: 'select', title: 'میوه‌ها', width: 6, items: ['سیب', 'موز', 'پرتقال'], multiple: false },
+            { key: 'pass', type: 'text', password: true, title: 'Password', width: 6 },
             { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] },
             { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', width: 6 },
             { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
@@ -58,12 +57,6 @@
       <y-moveable v-model="boxPosition" style="background: #EAEAEA; padding: 30px; user-select: none; cursor: pointer;" >
         تکون بده!
       </y-moveable>
-    </v-card>
-
-    <v-card class="mt-4" style="width: 100%; height: 600px; overflow-y: auto;">
-      <v-card-text>
-        <y-rich-editor v-model="rich" />
-      </v-card-text>
     </v-card>
 
     <v-card class="mt-4 mb-4">

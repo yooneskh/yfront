@@ -158,7 +158,7 @@ export default {
     },
     initEditor(resource) {
       this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
-        width: '450px',
+        width: '550px',
         modelName: this.modelName,
         baseResource: resource
       }).then(result => result && this.loadData());
