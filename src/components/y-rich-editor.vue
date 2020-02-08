@@ -1,30 +1,41 @@
 <template>
   <div class="y-rich-editor">
     <div v-for="(part, index) in parts" :key="index" class="editor-item">
+
       <h2
         v-if="part.type === 'title'"
         class="title">
         <y-editable-text v-model="parts[index].content" lazy placeholder="Empty Text ..." />
       </h2>
+
       <p v-if="part.type === 'text'">
         <y-editable-text v-model="parts[index].content" lazy placeholder="Empty Text ..." />
       </p>
+
       <v-img
         v-if="part.type === 'image'"
         :src="part.content"
       />
-      <v-btn class="delete-button" icon x-small color="error" @click="parts.splice(index)">
+
+      <v-btn class="delete-button" icon x-small color="error" @click="parts.splice(index, 1)">
         <v-icon x-small>mdi-close</v-icon>
       </v-btn>
+
     </div>
-    <div class="d-flex flex-row jsutify-center align-center">
-      <!-- <v-btn icon -->
+
+    <div class="add-bar text-center mt-4 mx-auto grey lighten-4 py-1 px-4" style="width: 300px; border-radius: 32px;">
+      <span class="caption me-4">افزودن</span>
+      <v-btn class="ms-2" icon @click="parts.push({ type: 'title', content: '' })"> <v-icon>mdi-format-title</v-icon> </v-btn>
+      <v-btn class="ms-2" icon @click="parts.push({ type: 'text', content: '' })"> <v-icon>mdi-text-subject</v-icon> </v-btn>
+      <v-btn class="ms-2" icon @click="addImage"> <v-icon>mdi-image</v-icon> </v-btn>
     </div>
+
   </div>
 </template>
 
 <script>
 
+import Api from '../api';
 import YEditableText from './y-editable-text';
 
 export default {
@@ -52,6 +63,22 @@ export default {
         type: line.split('\n')[0],
         content: line.split('\n')[1]
       }));
+    },
+    async addImage() {
+
+      const form = await this.$dialog(() => import('../dialogs/form-maker' /* webpackChunkName: 'y-form-maker-dialog' */), {
+        fields: [
+          { key: 'file', type: 'file', title: 'فایل', wrapped: false }
+        ]
+      });
+      
+      if (!form || !form.file) return;
+
+      const { status, result } = await Api.Media.loadOne('', form.file);
+      if (this.$generalHandle(status, result)) return;
+
+      this.parts.push({ type: 'image', content: result.path });
+
     }
   }
 }
@@ -71,6 +98,9 @@ export default {
       &:hover .delete-button {
         opacity: 1;
       }
+    }
+    .add-bar .v-btn {
+      cursor: pointer !important;
     }
   }
 </style>
