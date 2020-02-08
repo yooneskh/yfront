@@ -10,7 +10,7 @@
           :fields="[
             { key: 'name', type: 'text', title: 'نام', width: 6 },
             { key: 'counts', type: 'text', number: true, title: 'Counts', width: 6 },
-            { key: 'pass', type: 'text', password: true, title: 'Password', width: 6 },
+            // { key: 'pass', type: 'text', password: true, title: 'Password', width: 6 },
             { key: 'fruit', type: 'select', title: 'میوه‌ها', width: 6, items: ['سیب', 'موز', 'پرتقال'], multiple: false },
             { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] },
             { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', width: 6 },
@@ -60,7 +60,7 @@
       </y-moveable>
     </v-card>
 
-    <v-card class="mt-4" style="width: 100%; height: 300px; overflow-y: auto;">
+    <v-card class="mt-4" style="width: 100%; height: 600px; overflow-y: auto;">
       <v-card-text>
         <y-rich-editor v-model="rich" />
       </v-card-text>
@@ -105,7 +105,7 @@ export default {
       freeTimes: [],
       freeNames: []
     },
-    rich: '-----title\nHiThereYouGoodMan\n\n-----text\nThis is the first paragraph in my own editing platform!!!! :D\n\n-----image\nhttps://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg',
+    rich: '-----title\nHiThereYouGoodMan\n\n-----text\nThis is the first paragra',
     boxPosition: [0, 0]
   }),
   methods: {

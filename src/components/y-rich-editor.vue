@@ -17,13 +17,13 @@
         :src="part.content"
       />
 
-      <v-btn class="delete-button" icon x-small color="error" @click="parts.splice(index, 1)">
-        <v-icon x-small>mdi-close</v-icon>
+      <v-btn class="delete-button" icon small color="error" @click="parts.splice(index, 1)">
+        <v-icon small>mdi-close</v-icon>
       </v-btn>
 
     </div>
 
-    <div class="add-bar text-center mt-4 mx-auto grey lighten-4 py-1 px-4" style="width: 300px; border-radius: 32px;">
+    <div class="add-bar text-center mt-4 mx-auto grey lighten-4 py-1 px-4 mb-4" style="width: 300px; border-radius: 32px;">
       <span class="caption me-4">افزودن</span>
       <v-btn class="ms-2" icon @click="parts.push({ type: 'title', content: '' })"> <v-icon>mdi-format-title</v-icon> </v-btn>
       <v-btn class="ms-2" icon @click="parts.push({ type: 'text', content: '' })"> <v-icon>mdi-text-subject</v-icon> </v-btn>
