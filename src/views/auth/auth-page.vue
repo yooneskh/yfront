@@ -24,6 +24,7 @@
               :fields="[
                 { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', classes: 'ltred', inputNumeric: true, hideDetails: true }
               ]"
+              @keyup.enter.native="doLogin"
             />
           </template>
 
@@ -37,6 +38,7 @@
                 { key: 'firstName', type: 'text', title: 'نام' },
                 { key: 'lastName', type: 'text', title: 'نام خانوادگی', hideDetails: true }
               ]"
+              @keyup.enter.native="doRegister"
             />
           </template>
 
@@ -49,6 +51,7 @@
               :fields="[
                 { key: 'verificationCode', type: 'text', title: 'کد تایید', classes: 'ltred', inputNumeric: true, autocomplete: 'one-time-password', hideDetails: true }
               ]"
+              @keyup.enter.native="doVerify"
             />
           </template>
 
