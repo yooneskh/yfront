@@ -84,8 +84,7 @@
 export default {
   name: 'HomePage',
   components: {
-    'y-moveable': () => import('../../components/y-moveable' /* webpackChunkName: 'y-moveable' */),
-    'y-rich-editor': () => import('../../components/y-rich-editor' /* webpackChunkName: 'y-rich-editor' */)
+    'y-moveable': () => import('../../components/y-moveable' /* webpackChunkName: 'y-moveable' */)
   },
   data: () => ({
     heh: {
@@ -101,6 +100,17 @@ export default {
     rich: '-----title\nHiThereYouGoodMan\n\n-----text\nThis is the first paragra',
     boxPosition: [0, 0]
   }),
+  mounted() {
+
+    // const testObject = {
+    //   a: {
+    //     gholam: '123'
+    //   }
+    // };
+
+    // this.$toast.success('Value Is: ' + testObject.b.gholam);
+
+  },
   methods: {
     async makeDialog() {
 
