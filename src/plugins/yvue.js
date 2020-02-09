@@ -38,13 +38,13 @@ Vue.mixin({
       return UserPlaceholder;
     },
     $isMobile() {
-      return this.$vuetify && this.$vuetify.breakpoint.smAndDown;
+      return !!this.$vuetify?.breakpoint.smAndDown;
     },
     $isTablet() {
-      return this.$vuetify && this.$vuetify.breakpoint.mdOnly;
+      return !!this.$vuetify?.breakpoint.mdOnly;
     },
     $isDesktop() {
-      return this.$vuetify && this.$vuetify.breakpoint.lgAndUp;
+      return !!this.$vuetify?.breakpoint.lgAndUp;
     }
   },
   methods: {

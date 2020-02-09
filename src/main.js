@@ -40,7 +40,7 @@ Vue.mixin({
       }
     },
     $hasAccess(access) {
-      return access && this.$user.permissions && this.$user.permissions.indexOf(access) >= 0; // TODO: handle regexiness
+      return access && this.$user.permissions?.indexOf(access) >= 0; // TODO: handle regexiness
     }
   }
 });

@@ -109,8 +109,8 @@ export default {
       const t = (options.sortBy || []).concat(options.sortDesc || []);
       let tt = {};
 
-      if (options.sortBy && options.sortBy[0]) tt = {[t[0]]: 1};
-      if (options.sortDesc && options.sortDesc[0]) tt = {[t[0]]: -1};
+      if (options.sortBy?.[0]) tt = {[t[0]]: 1};
+      if (options.sortDesc?.[0]) tt = {[t[0]]: -1};
 
       this.$emit('update:sorts', tt);
 
