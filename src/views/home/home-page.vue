@@ -101,13 +101,8 @@ export default {
   }),
   methods: {
     async makeDialog() {
-
-      const result = await this.$dialog(import('../../dialogs/confirm-delete'  /* webpackChunkName: 'confirm-delete-dialog' */), {
-        title: 'سیستم سرمایشی'
-      });
-
+      const result = await this.$confirmDeleteDialog('سیستم سرمایشی');
       console.log('result', result);
-
     },
     rand() {
       return Math.trunc(Math.random() * 10000000000);

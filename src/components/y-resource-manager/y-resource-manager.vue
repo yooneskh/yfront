@@ -164,7 +164,7 @@ export default {
       }).then(result => result && this.loadData());
     },
     async deleteResource(resource) {
-      if (await this.$dialog(import('../../dialogs/confirm-delete' /* webpackChunkName: 'confirm-delete' */))) {
+      if (await this.$confirmDeleteDialog()) {
 
         const { status, result } = await YNetwork.delete(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/${resource._id}`);
 

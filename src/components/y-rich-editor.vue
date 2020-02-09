@@ -72,19 +72,15 @@ export default {
         type: line.split('\n')[0],
         content: line.split('\n')[1]
       }));
-      console.log('generate parts');
     },
     emitValue() {
-      console.log('emit value');
       this.$emit('input', this.parts.map(part => `-----${part.type}\n${part.content}`).join('\n') )
     },
     async addImage() {
 
-      const form = await this.$dialog(import('../dialogs/form-maker' /* webpackChunkName: 'y-form-maker-dialog' */), {
-        fields: [
-          { key: 'file', type: 'file', title: 'فایل', wrapped: false }
-        ]
-      });
+      const form = await this.$formMakerDialog('افزودن تصویر', [
+        { key: 'file', type: 'file', title: 'فایل', wrapped: false }
+      ]);
       
       if (!form || !form.file) return;
 
