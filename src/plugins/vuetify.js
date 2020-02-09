@@ -13,7 +13,7 @@ Vue.use(Vuetify, {
 Vue.use(VuetifyToast, {
   x: 'center',
   queueable: true,
-  timeout: 300000
+  timeout: 3000
 });
 
 import en from 'vuetify/es5/locale/en';
