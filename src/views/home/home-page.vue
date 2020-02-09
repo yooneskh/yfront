@@ -97,20 +97,8 @@ export default {
       freeTimes: [],
       freeNames: []
     },
-    rich: '-----title\nHiThereYouGoodMan\n\n-----text\nThis is the first paragra',
     boxPosition: [0, 0]
   }),
-  mounted() {
-
-    // const testObject = {
-    //   a: {
-    //     gholam: '123'
-    //   }
-    // };
-
-    // this.$toast.success('Value Is: ' + testObject.b.gholam);
-
-  },
   methods: {
     async makeDialog() {
 
