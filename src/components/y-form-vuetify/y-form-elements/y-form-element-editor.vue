@@ -5,7 +5,7 @@
       :value="value"
       @input="$emit('input', $event)"
       :placeholder="field.placeholder"
-      class="grey lighten-5 py-2 px-2"
+      class="grey lighten-4 py-2 px-2"
       :class="field.classes"
       style="border-radius: 8px;"
     />

@@ -9,7 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@mdi/font": "^3.9.97",
+    "@mdi/font": "^4.9.95",
     "copy-to-clipboard": "^3.2.1",
     "core-js": "^2.6.11",
     "lodash": "^4.17.15",
@@ -19,7 +19,7 @@
     "vue": "^2.6.11",
     "vue-analytics": "^5.20.2",
     "vue-router": "^3.1.5",
-    "vuetify": "^2.2.9",
+    "vuetify": "^2.2.11",
     "vuetify-toast-snackbar": "^0.6.1",
     "ynetwork": "^2.5.0"
   },
