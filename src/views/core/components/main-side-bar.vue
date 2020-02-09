@@ -76,7 +76,7 @@
 
 import UserPlaceholder from '../../../assets/img/user-placeholder.jpeg';
 import { version as Version, title as Title } from '../../../../package.json';
-import { groupBy } from 'lodash';
+import groupBy from 'lodash/groupBy';
 
 export default {
   name: 'MainSidebar',

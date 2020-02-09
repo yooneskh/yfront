@@ -49,7 +49,7 @@ Vue.mixin({
   },
   methods: {
     $log(...args) {
-      console.log(...args);
+      alert(JSON.stringify(args));
     },
     $formatTime(time, format) {
       return formatTime(time, format);
