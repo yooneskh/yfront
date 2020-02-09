@@ -11,7 +11,7 @@
   "dependencies": {
     "@mdi/font": "^4.9.95",
     "copy-to-clipboard": "^3.2.1",
-    "core-js": "^2.6.11",
+    "core-js": "^3.6.4",
     "lodash": "^4.17.15",
     "moment-jalaali": "^0.9.1",
     "roboto-fontface": "*",
