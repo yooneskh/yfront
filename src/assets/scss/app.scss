@@ -14,14 +14,8 @@ html {
   direction: rtl;
 }
 
-.vts.v-snack > .v-snack__wrapper {
-  align-self: flex-end;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-// rtlize snackbar here because it is out of main app diretive
-.v-application--is-rtl + script + .vts.v-snack .vts__message {
+// rtlize snackbar here because it is out of main app directive
+.v-application--is-rtl ~ .vts.v-snack .vts__message {
   margin-right: unset;
   margin-left: auto;
   font-family: iryekan;

@@ -106,6 +106,8 @@ export default {
   methods: {
     async doLogin() {
 
+      if (this.phoneNumber.length !== 11) return this.$toast.error('شماره تلفن صحیح نیست!');
+
       this.loading = true;
       const { status, result } = await Api.Auth.login(`+98${this.phoneNumber.slice(1)}`);
       this.loading = false;
