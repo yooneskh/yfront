@@ -157,14 +157,14 @@ export default {
 
     },
     initEditor(resource) {
-      this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
+      this.$dialog(import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
         width: '550px',
         modelName: this.modelName,
         baseResource: resource
       }).then(result => result && this.loadData());
     },
     async deleteResource(resource) {
-      if (await this.$dialog(() => import('../../dialogs/confirm-delete' /* webpackChunkName: 'confirm-delete' */))) {
+      if (await this.$dialog(import('../../dialogs/confirm-delete' /* webpackChunkName: 'confirm-delete' */))) {
 
         const { status, result } = await YNetwork.delete(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/${resource._id}`);
 

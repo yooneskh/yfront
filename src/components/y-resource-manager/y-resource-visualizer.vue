@@ -55,7 +55,7 @@ export default {
         window.open(this.resource.path, '_blank');
       }
       else {
-        this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
+        this.$dialog(import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
           width: '450px',
           modelName: this.model,
           baseResource: this.resource,

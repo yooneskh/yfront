@@ -80,7 +80,7 @@ export default {
     },
     async addImage() {
 
-      const form = await this.$dialog(() => import('../dialogs/form-maker' /* webpackChunkName: 'y-form-maker-dialog' */), {
+      const form = await this.$dialog(import('../dialogs/form-maker' /* webpackChunkName: 'y-form-maker-dialog' */), {
         fields: [
           { key: 'file', type: 'file', title: 'فایل', wrapped: false }
         ]

@@ -89,7 +89,7 @@ export default {
         window.open(this.sourceResourceData.path, '_blank');
       }
       else {
-        this.$dialog(() => import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
+        this.$dialog(import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
           width: '450px',
           modelName: this.header.relationSourceModel,
           baseResource: this.sourceResourceData,

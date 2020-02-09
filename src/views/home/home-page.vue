@@ -102,7 +102,7 @@ export default {
   methods: {
     async makeDialog() {
 
-      const result = await this.$dialog(() => import('../../dialogs/confirm-delete'  /* webpackChunkName: 'confirm-delete-dialog' */), {
+      const result = await this.$dialog(import('../../dialogs/confirm-delete'  /* webpackChunkName: 'confirm-delete-dialog' */), {
         title: 'سیستم سرمایشی'
       });
 

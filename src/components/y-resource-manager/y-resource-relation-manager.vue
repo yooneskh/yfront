@@ -131,7 +131,7 @@ export default {
         title: this.relation.targetPropertyTitle
       });
       
-      const form = await this.$dialog(() => import('../../dialogs/form-maker' /* webpackChunkName: 'form-maker-dialog' */), {
+      const form = await this.$dialog(import('../../dialogs/form-maker' /* webpackChunkName: 'form-maker-dialog' */), {
         width: '550px',
         title,
         actionTitle,
@@ -170,7 +170,7 @@ export default {
 
     },
     async deleteRelation(relation) {
-      if (await this.$dialog(() => import('../../dialogs/confirm-delete' /* webpackChunkName: 'confirm-delete' */))) {
+      if (await this.$dialog(import('../../dialogs/confirm-delete' /* webpackChunkName: 'confirm-delete' */))) {
         
         const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${relation[this.relation.targetModel.toLowerCase()]}/${relation._id}`;
 
