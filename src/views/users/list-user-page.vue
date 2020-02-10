@@ -2,7 +2,7 @@
   <v-container fluid class="page" style="max-width: 1200px;">
     <y-resource-manager
       title="مدیریت کاربران"
-      model-name="Reservation"
+      model-name="User"
     />
   </v-container>
 </template>
