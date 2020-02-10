@@ -16,7 +16,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { transformResourceToTitle } from '../../y-resource-manager/y-resource-util';
+import { transformResourceToTitle, loadMetasFor, loadRelationsFor } from '../../y-resource-manager/y-resource-util';
 
 export default {
   name: 'YFormElementResource',
@@ -51,7 +51,12 @@ export default {
       const resourceUrl = this.field.resource.toLowerCase() + 's';
 
       const [{ result: metas }, { result: items }] = await Promise.all([
-        YNetwork.get(`${this.$apiBase}/${resourceUrl}/metas`),
+        new Promise(resolve =>
+          loadMetasFor(this.$apiBase, this.field.resource).then(rs => resolve({
+            status: 200,
+            result: rs
+          }))
+        ),
         YNetwork.get(`${this.$apiBase}/${resourceUrl}`)
       ]);
 
@@ -92,7 +97,12 @@ export default {
 
       const [{ result: allData }, { result: relations }] = await Promise.all([
         YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s`),
-        YNetwork.get(`${this.$apiBase}/${sourceName}s/relations`)
+        new Promise(resolve =>
+          loadRelationsFor(this.$apiBase, this.field.relationSourceModel).then(rs => resolve({
+            status: 200,
+            result: rs
+          }))
+        )
       ]);
 
       const relationMeta = relations.find(relation => relation.targetModel === this.field.relationTargetModel);

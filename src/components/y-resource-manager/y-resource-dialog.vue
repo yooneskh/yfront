@@ -37,6 +37,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
+import { loadMetasFor, loadRelationsFor } from './y-resource-util';
 
 export default {
   name: 'YResourceDialog',
@@ -101,15 +102,11 @@ export default {
     async loadMeta() {
 
       this.metasLoading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/metas`);
+      this.metas.list = await loadMetasFor(this.$apiBase, this.modelName);
       this.metasLoading = false;
 
-      if (this.$generalHandle(status, result)) return;
-
-      this.metas.list = result;
-
       if (!this.resource._id) {
-        for (const metaField of result) {
+        for (const metaField of this.metas.list) {
           if ('default' in metaField) {
             this.resource[metaField.key] = metaField.default;
           }
@@ -118,15 +115,11 @@ export default {
       
     },
     async loadRelations() {
-      
+
       this.relationsLoading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/relations`);
+      this.relations.list = await loadRelationsFor(this.$apiBase, this.modelName);
       this.relationsLoading = false;
-
-      if (this.$generalHandle(status, result)) return;
-
-      this.relations.list = result;
-
+      
       if (this.relations.list.length > 0) {
         this.$emit('update:width', '90%');
       }

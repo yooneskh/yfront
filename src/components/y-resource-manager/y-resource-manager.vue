@@ -44,6 +44,7 @@
 
 import YNetwork from 'ynetwork';
 import debounce from 'lodash/debounce';
+import { loadMetasFor } from './y-resource-util';
 
 export default {
   name: 'YResourceManager',
@@ -125,18 +126,10 @@ export default {
   },
   methods: {
     async loadMeta() {
-
-      this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/metas`);
-      this.loading = false;
-
-      if (this.$generalHandle(status, result)) return;
-
-      this.metas.list = result;
-
+      this.metas.list = await loadMetasFor(this.$apiBase, this.modelName);
     },
     async loadData() {
-      
+
       const filters = this.transformFilters(this.filters);
       const sorts = this.transformSorts(this.sorts);
 

@@ -37,7 +37,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { transformResourceToTitle } from './y-resource-util';
+import { transformResourceToTitle, loadRelationsFor } from './y-resource-util';
 
 export default {
   name: 'YResourceCell',
@@ -66,7 +66,12 @@ export default {
 
       const [{ result: relationData }, { result: relations }] = await Promise.all([
         YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s/${this.data}`),
-        YNetwork.get(`${this.$apiBase}/${sourceName}s/relations`)
+        new Promise(resolve =>
+          loadRelationsFor(this.$apiBase, this.header.relationSourceModel).then(rs => resolve({
+            status: 200,
+            result: rs
+          }))
+        )
       ]);
 
       const relationMeta = relations.find(relation => relation.targetModel === this.header.relationTargetModel);

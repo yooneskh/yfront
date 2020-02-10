@@ -52,13 +52,9 @@ export default {
   }),
   computed: {
     maxRelationsCount() {
-
       if (this.relation.singular) return 1;
-
       if (this.relation.maxCount) return this.relation.maxCount;
-
       return Infinity;
-
     },
     modelName() {
       return this.relation.relationModelName || this.relation.targetModel;
@@ -99,7 +95,7 @@ export default {
     async loadData() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}`);
+      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.sourceModel.toLowerCase()}s/${this.sourceId}/${this.modelName.toLowerCase()}s`);
       this.loading = false;
 
       if (this.$generalHandle(status, result)) return;
@@ -198,7 +194,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
