@@ -18,7 +18,7 @@
       </v-btn>
     </template>
     <template v-else>
-      <span v-if="header.timeFormat" :style="{'direction': header.dir}" class="d-inline-block">
+      <span v-if="header.timeFormat" :style="{'direction': header.dir}" class="d-inline-block text-center">
         {{ data === 0 ? '-' : $formatTime(data, header.timeFormat) }}
       </span>
       <template v-else-if="header.ref">
