@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'YFormElementTexts',
+  name: 'YFormElementText',
   props: {
     value: {
 
