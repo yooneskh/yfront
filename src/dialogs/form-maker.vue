@@ -6,7 +6,7 @@
     </v-card-title>
 
     <v-card-text class="pb-1">
-      لطفا اطلاعات خواسته شده را در زیر وارد کنید.
+      {{ description || 'لطفا اطلاعات خواسته شده را در زیر وارد کنید.' }}
     </v-card-text>
 
     <v-card-text class="pb-1">
@@ -28,6 +28,7 @@ export default {
   name: 'FormMakerDialog',
   props: {
     title: String,
+    description: String,
     actionTitle: String,
     fields: Array,
     values: Object

@@ -101,7 +101,7 @@ export default {
   }),
   methods: {
     async makeDialog() {
-      const result = await this.$confirmDeleteDialog('سیستم سرمایشی');
+      const result = await this.$dialogConfirmDelete('سیستم سرمایشی');
       console.log('result', result);
     },
     rand() {

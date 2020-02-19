@@ -30,7 +30,6 @@ export default {
         this.hasChanged = false;
       }
 
-
     },
     handleEnd(event) {
       if (this.hasChanged) {

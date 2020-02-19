@@ -78,7 +78,7 @@ export default {
     },
     async addImage() {
 
-      const form = await this.$formMakerDialog('افزودن تصویر', [
+      const form = await this.$dialogFormMaker('افزودن تصویر', [
         { key: 'file', type: 'file', title: 'فایل', wrapped: false }
       ]);
       

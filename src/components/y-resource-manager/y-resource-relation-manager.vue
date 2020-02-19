@@ -127,7 +127,7 @@ export default {
         title: this.relation.targetPropertyTitle
       });
       
-      const form = await this.$formMakerDialog(title, fields, actionTitle, relation, { width: 550 });
+      const form = await this.$dialogFormMaker(title, fields, actionTitle, relation, { width: 550 });
 
       const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${form[this.relation.targetModel.toLowerCase()]}`;
 
@@ -160,7 +160,7 @@ export default {
 
     },
     async deleteRelation(relation) {
-      if (await this.$confirmDeleteDialog()) {
+      if (await this.$dialogConfirmDelete()) {
         
         const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${relation[this.relation.targetModel.toLowerCase()]}/${relation._id}`;
 

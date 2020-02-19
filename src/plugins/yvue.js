@@ -63,22 +63,23 @@ Vue.mixin({
     $copy(text) {
       return copyToClipboard(text);
     },
-    $confirmDeleteDialog(title, options) {
+    $dialogConfirmDelete(title, options) {
       return this.$dialog(import('../dialogs/confirm-delete.vue' /* webpackChunkName: 'confirm-delete-dialog' */), {
         ...options,
         title
       });
     },
-    $formMakerDialog(title, fields, actionTitle, values, options) {
+    $dialogFormMaker(title, description, fields, actionTitle, values, options) {
       return this.$dialog(import('../dialogs/form-maker.vue' /* webpackChunkName: 'form-maker-dialog' */), {
         ...options,
         title,
+        description,
         fields,
         actionTitle,
         values
       });
     },
-    $listPickerDialog(title, items, options) {
+    $dialogListPicker(title, items, options) {
       return this.$dialog(import('../dialogs/list-picker.vue' /* webpackChunkName: 'list-picker-dialog' */), {
         ...options,
         title,
