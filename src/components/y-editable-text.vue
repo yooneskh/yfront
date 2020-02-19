@@ -17,15 +17,27 @@ export default {
     lazy: Boolean,
     placeholder: String
   },
+  data: () => ({
+    hasChanged: false
+  }),
   methods: {
     handleChange(event) {
+
+      this.hasChanged = true;
+
       if (!this.lazy) {
         this.$emit('input', event.target.innerText);
+        this.hasChanged = false;
       }
+
+
     },
     handleEnd(event) {
-      this.$emit('input', event.target.innerText);
-      this.$el.blur();
+      if (this.hasChanged) {
+        this.hasChanged = false;
+        this.$emit('input', event.target.innerText);
+        this.$el.blur();
+      }
     }
   }
 }
