@@ -1,9 +1,24 @@
 <template>
   <div class="y-rich-visualizer" :style="`padding: ${paddingVertical}px ${paddingHorizontal}px`">
     <div v-for="(part, index) in parts" :key="part.type + index">
-      <div v-if="part.type === 'title'" class="headline font-weight-bold">{{ part.content }}</div>
-      <p v-if="part.type === 'text'" class="body-1">{{ part.content }}</p>
-      <v-img v-if="part.type === 'image'" :src="part.content" style="max-width: unset;" :style="`margin: 0 -${paddingHorizontal}px`" />
+      <template v-if="part.type === 'title'">
+        <div class="headline font-weight-bold">
+          {{ part.content }}
+        </div>
+      </template>
+      <template v-if="part.type === 'text'">
+        <p class="body-1">
+          {{ part.content }}
+        </p>
+      </template>
+      <template v-if="part.type === 'image'">
+        <v-img
+          :src="part.content"
+          class="my-4"
+          style="max-width: unset;"
+          :style="`margin-left: -${paddingHorizontal}px; margin-right: -${paddingHorizontal}px;`"
+        />
+      </template>
     </div>
   </div>
 </template>
