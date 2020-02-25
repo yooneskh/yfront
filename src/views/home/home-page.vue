@@ -101,8 +101,7 @@ export default {
   }),
   methods: {
     async makeDialog() {
-      const result = await this.$dialogConfirmDelete('سیستم سرمایشی');
-      console.log('result', result);
+      await this.$dialogConfirmDelete('سیستم سرمایشی');
     },
     rand() {
       return Math.trunc(Math.random() * 10000000000);
