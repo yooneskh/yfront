@@ -28,15 +28,15 @@ export default {
     }
   },
   components: {
+    'y-form-element-text': require('./y-form-elements/y-form-element-text.vue').default,
+    'y-form-element-checkbox': require('./y-form-elements/y-form-element-checkbox.vue').default,
+    'y-form-element-select': require('./y-form-elements/y-form-element-select.vue').default,
+    'y-form-element-radios': require('./y-form-elements/y-form-element-radios.vue').default,
+    'y-form-element-file': require('./y-form-elements/y-form-element-file.vue').default,
+    'y-form-element-textarea': require('./y-form-elements/y-form-element-textarea.vue').default,
     'y-form-series': () => import('./y-form-series' /* webpackChunkName: 'y-form-series' */),
-    'y-form-element-text': () => import('./y-form-elements/y-form-element-text.vue' /* webpackChunkName: 'y-form-element-text' */),
     'y-form-element-text-multilang': () => import('./y-form-elements/y-form-element-text-multilang.vue' /* webpackChunkName: 'y-form-element-text-multilang' */),
-    'y-form-element-checkbox': () => import('./y-form-elements/y-form-element-checkbox.vue' /* webpackChunkName: 'y-form-element-checkbox' */),
-    'y-form-element-select': () => import('./y-form-elements/y-form-element-select.vue' /* webpackChunkName: 'y-form-element-select' */),
-    'y-form-element-radios': () => import('./y-form-elements/y-form-element-radios.vue' /* webpackChunkName: 'y-form-element-radios' */),
-    'y-form-element-file': () => import('./y-form-elements/y-form-element-file.vue' /* webpackChunkName: 'y-form-element-file' */),
     'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */),
-    'y-form-element-textarea': () => import('./y-form-elements/y-form-element-textarea.vue' /* webpackChunkName: 'y-form-element-textarea' */),
     'y-form-element-editor': () => import('./y-form-elements/y-form-element-editor.vue' /* webpackChunkName: 'y-form-element-editor' */)
   },
   methods: {
