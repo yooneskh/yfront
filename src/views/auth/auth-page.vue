@@ -22,7 +22,7 @@
               :target="this"
               no-padding
               :fields="[
-                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', classes: 'ltred', inputNumeric: true, hideDetails: true }
+                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', mask: '09## ### ####', classes: 'ltred', inputNumeric: true, hideDetails: true }
               ]"
               @keyup.enter.native="doLogin"
             />
@@ -49,7 +49,7 @@
               :target="this"
               no-padding
               :fields="[
-                { key: 'verificationCode', type: 'text', title: 'کد تایید', classes: 'ltred', inputNumeric: true, autocomplete: 'one-time-password', hideDetails: true }
+                { key: 'verificationCode', type: 'text', title: 'کد تایید', mask: '######',  classes: 'ltred', inputNumeric: true, autocomplete: 'one-time-password', hideDetails: true }
               ]"
               @keyup.enter.native="doVerify"
             />
@@ -98,18 +98,23 @@ export default {
   data: () => ({
     mode: 'login',
     loading: false,
-    phoneNumber: '',
+    phoneNumber: '09',
     firstName: '',
     lastName: '',
     verificationCode: ''
   }),
+  computed: {
+    cleanPhoneNumber() {
+      return this.phoneNumber.replace(/\s*/g, '');
+    },
+  },
   methods: {
     async doLogin() {
 
-      if (this.phoneNumber.length !== 11) return this.$toast.error('شماره تلفن صحیح نیست!');
+      if (this.cleanPhoneNumber.length !== 11) return this.$toast.error('شماره تلفن صحیح نیست!');
 
       this.loading = true;
-      const { status, result } = await Api.Auth.login(`+98${this.phoneNumber.slice(1)}`);
+      const { status, result } = await Api.Auth.login(`+98${this.cleanPhoneNumber.slice(1)}`);
       this.loading = false;
 
       if (status === 404) this.mode = 'register';
@@ -120,7 +125,7 @@ export default {
     async doRegister() {
 
       this.loading = true;
-      const { status, result } = await Api.Auth.register(`+98${this.phoneNumber.slice(1)}`, this.firstName, this.lastName);
+      const { status, result } = await Api.Auth.register(`+98${this.cleanPhoneNumber.slice(1)}`, this.firstName, this.lastName);
       this.loading = false;
 
       if (this.$generalHandle(status, result)) return;
@@ -131,7 +136,7 @@ export default {
     async doVerify() {
 
       this.loading = true;
-      const { status, result } = await Api.Auth.verify(`+98${this.phoneNumber.slice(1)}`, this.verificationCode);
+      const { status, result } = await Api.Auth.verify(`+98${this.cleanPhoneNumber.slice(1)}`, this.verificationCode);
       this.loading = false;
 
       if (this.$generalHandle(status, result)) return;

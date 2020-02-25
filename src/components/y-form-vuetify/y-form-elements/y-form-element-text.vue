@@ -5,6 +5,7 @@
     :solo="field.solo || field.simple"
     :flat="field.flat || field.simple"
     :dense="field.dense"
+    v-mask="field.mask"
     :inputmode="inputMode"
     :background-color="field.background"
     @input="$emit('input', $event)"
@@ -22,16 +23,20 @@
 </template>
 
 <script>
+
+import { mask } from 'vue-the-mask';
+
 export default {
   name: 'YFormElementText',
   props: {
-    value: {
-
-    },
+    value: { },
     field: {
       type: Object,
       required: true
     }
+  },
+  directives: {
+    mask
   },
   data: () => ({
     revealed: false
