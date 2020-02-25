@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@mdi/font": "^4.9.95",
-    "copy-to-clipboard": "^3.2.1",
+    "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.6.4",
     "lodash": "^4.17.15",
     "moment-jalaali": "^0.9.1",
@@ -20,7 +20,7 @@
     "vue-analytics": "^5.20.2",
     "vue-router": "^3.1.5",
     "vue-the-mask": "^0.11.1",
-    "vuetify": "^2.2.11",
+    "vuetify": "^2.2.14",
     "vuetify-toast-snackbar": "^0.6.1",
     "ynetwork": "^2.5.0"
   },
@@ -31,10 +31,10 @@
     "@vue/cli-service": "^4.2.2",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
-    "eslint-plugin-vue": "^6.1.2",
-    "sass": "^1.25.0",
+    "eslint-plugin-vue": "^6.2.1",
+    "sass": "^1.26.0",
     "sass-loader": "^8.0.2",
-    "vue-cli-plugin-vuetify": "^2.0.4",
+    "vue-cli-plugin-vuetify": "^2.0.5",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.4.3"
   }
