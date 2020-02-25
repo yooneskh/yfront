@@ -100,7 +100,7 @@ export default {
       ]);
     }
   },
-  async mounted() {
+  mounted() {
     this.loadMeta();
     this.loadData();
   },

@@ -1,6 +1,32 @@
 import YNetwork from 'ynetwork';
 import YCacher from '../../plugins/y-cacher';
 
+export async function loadMetasFor(apiBase, resourceName) {
+
+  if (YCacher.has([resourceName, 'Meta'])) return YCacher.get([resourceName, 'Meta']);
+
+  const { status, result } = await YNetwork.get(`${apiBase}/${resourceName.toLowerCase()}s/metas`);
+
+  if (status !== 200) return [];
+
+  YCacher.set([resourceName, 'Meta'], result);
+  return result;
+
+}
+
+export async function loadRelationsFor(apiBase, resourceName) {
+
+  if (YCacher.has([resourceName, 'Relation'])) return YCacher.get([resourceName, 'Relation']);
+
+  const { status, result } = await YNetwork.get(`${apiBase}/${resourceName.toLowerCase()}s/relations`);
+
+  if (status !== 200) return [];
+
+  YCacher.set([resourceName, 'Relation'], result);
+  return result;
+
+}
+
 export async function transformResourceToTitle(apiBase, resourceName, resourceId) {
 
   const modelUrl = resourceName.toLowerCase() + 's';
@@ -36,31 +62,5 @@ export async function transformResourceToTitle(apiBase, resourceName, resourceId
   );
 
   return allTitles.join(' ');
-
-}
-
-export async function loadMetasFor(apiBase, resourceName) {
-
-  if (YCacher.has([resourceName, 'Meta'])) return YCacher.get([resourceName, 'Meta']);
-
-  const { status, result } = await YNetwork.get(`${apiBase}/${resourceName.toLowerCase()}s/metas`);
-
-  if (status !== 200) return [];
-
-  YCacher.set([resourceName, 'Meta'], result);
-  return result;
-
-}
-
-export async function loadRelationsFor(apiBase, resourceName) {
-
-  if (YCacher.has([resourceName, 'Relation'])) return YCacher.get([resourceName, 'Relation']);
-
-  const { status, result } = await YNetwork.get(`${apiBase}/${resourceName.toLowerCase()}s/relations`);
-
-  if (status !== 200) return [];
-
-  YCacher.set([resourceName, 'Relation'], result);
-  return result;
 
 }

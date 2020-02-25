@@ -3,6 +3,6 @@ import { ENDPOINT_BASE } from './ApiBaseEndpoints';
 
 const ENDPOINT_ROOT = `${ENDPOINT_BASE}/paytickets`;
 
-export async function verifyTicket(ticketId) {
+export function verifyTicket(ticketId) {
   return YNetwork.post(`${ENDPOINT_ROOT}/verify/${ticketId}`);
 }

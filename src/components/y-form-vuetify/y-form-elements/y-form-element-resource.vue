@@ -70,12 +70,12 @@ export default {
 
               const arrayedValues = Array.isArray(item[fieldKey]) ? item[fieldKey] : [item[fieldKey]];
 
-              const meta = metas.find(meta => meta.key === fieldKey);
+              const meta = metas.find(m => m.key === fieldKey);
 
               if (!meta.ref) return arrayedValues.join(', ');
 
               return (await Promise.all(
-                arrayedValues.map(async value => transformResourceToTitle(this.$apiBase, meta.ref, value))
+                arrayedValues.map(value => transformResourceToTitle(this.$apiBase, meta.ref, value))
               )).join(', ');
 
             })
@@ -123,7 +123,7 @@ export default {
               if (!meta.ref) return arrayedValues.join(', ');
 
               return (await Promise.all(
-                arrayedValues.map(async value => transformResourceToTitle(this.$apiBase, meta.ref, value))
+                arrayedValues.map(value => transformResourceToTitle(this.$apiBase, meta.ref, value))
               )).join(', ');
 
             })

@@ -17,6 +17,6 @@ export function initUpload(token, fileName, fileExtension, fileSize) {
 
 }
 
-export async function loadOne(token, mediaId) {
+export function loadOne(token, mediaId) {
   return YNetwork.get(`${ENDPOINT_BASE}/medias/${mediaId}`);
 }

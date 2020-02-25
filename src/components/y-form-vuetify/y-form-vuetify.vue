@@ -52,7 +52,8 @@ export default {
         case 'radios': return 'y-form-element-radios';
         case 'file': return 'y-form-element-file';
         case 'resource': return 'y-form-element-resource';
-      } return '--no-such-form-element--';
+        default: return '--no-such-form-element--';
+      }
     },
     handleInput(field, text) {
 

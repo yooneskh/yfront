@@ -89,7 +89,7 @@ export default {
     }
   },
   methods: {
-    async showResource() {
+    showResource() {
       if (this.header.relationSourceModel === 'Media') {
         window.open(this.sourceResourceData.path, '_blank');
       }
@@ -101,7 +101,6 @@ export default {
           readonly: true
         });
       }
-
     }
   }
 }

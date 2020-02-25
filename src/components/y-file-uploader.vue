@@ -61,7 +61,7 @@ export default {
       this.processing = true;
       const { status, result } = await Api.Media.initUpload(this.$token, fileName, fileExtension, fileSize);
       
-      if (status == 200) {
+      if (status === 200) {
         this.currentFile = file;
         this.getTheFileData(file, result.fileToken);
       }
@@ -85,10 +85,9 @@ export default {
       this.stateInfo = "در حال آپلود ...";
 
       http.onreadystatechange = () => {
-        if (http.readyState == 4) {
-          if (http.status == 201) {
+        if (http.readyState === 4) {
+          if (http.status === 201) {
             this.processing = false;
-            console.log('result', http.response);
             this.handleResult(JSON.parse(http.response));
           }
           else {
