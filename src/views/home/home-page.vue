@@ -65,14 +65,15 @@
         :headers="[
           { key: 'name', text: 'نام' },
           { key: 'age', text: 'سن' },
+          { key: 'uuid', text: 'کد ویژه' },
           { key: 'time', text: 'زمان' }
         ]"
         :items="[
-          { name: 'یونس خوشقدم', age: 23, time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
-          { name: 'یونس خوشقدم', age: 23, time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
-          { name: 'زهرا سادات مطلبی', age: 23, time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
-          { name: 'یونس خوشقدم', age: 23, time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
-          { name: 'یونس خوشقدم', age: 23, time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') }
+          { name: 'یونس خوشقدم', age: 23, uuid: $uuid(), time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
+          { name: 'یونس خوشقدم', age: 23, uuid: $uuid(), time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
+          { name: 'زهرا سادات مطلبی', age: 23, uuid: $uuid(), time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
+          { name: 'یونس خوشقدم', age: 23, uuid: $uuid(), time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') },
+          { name: 'یونس خوشقدم', age: 23, uuid: $uuid(), time: $formatTime(Date.now() - rand(), 'jYYYY/jMMMM/jDD HH:mm:ss') }
         ]"
       />
     </v-card>
