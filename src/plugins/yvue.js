@@ -49,7 +49,8 @@ Vue.mixin({
   },
   methods: {
     $log(...args) {
-      alert(JSON.stringify(args));
+      // eslint-disable-next-line no-console
+      console.log(...args);
     },
     $formatTime(time, format) {
       return formatTime(time, format);
