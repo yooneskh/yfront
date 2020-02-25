@@ -9,7 +9,7 @@ import UserPlaceholder from '../assets/img/user-placeholder.jpeg';
 // import VueAnalytics from 'vue-analytics';
 // Vue.use(VueAnalytics, { id: '---' });
 
-YNetwork.debug = true;
+YNetwork.debug = process.env.NODE_ENV !== 'production';
 
 moment.loadPersian({ dialect: 'persian-modern' });
 
