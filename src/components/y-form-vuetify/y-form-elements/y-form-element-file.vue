@@ -14,7 +14,7 @@
 export default {
   name: 'YFormElementFile',
   components: {
-    'y-file-uploader': () => import('../../y-file-uploader.vue' /* webpackChunkName: 'y-file-uploader' */)
+    'y-file-uploader': require('../../y-file-uploader.vue').default
   },
   props: {
     value: {

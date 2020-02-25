@@ -97,7 +97,8 @@ export default {
   beforeDestroy() {
     document.querySelectorAll('html, body, .v-application').forEach(element => element.style.height = 'unset');
   }
-}
+};
+
 </script>
 
 <style lang="scss" scoped>

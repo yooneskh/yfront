@@ -84,7 +84,7 @@
 export default {
   name: 'HomePage',
   components: {
-    'y-moveable': () => import('../../components/y-moveable' /* webpackChunkName: 'y-moveable' */)
+    'y-moveable': require('../../components/y-moveable').default
   },
   data: () => ({
     heh: {

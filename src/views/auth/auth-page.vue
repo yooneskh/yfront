@@ -22,7 +22,7 @@
               :target="this"
               no-padding
               :fields="[
-                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', mask: '09## ### ####', classes: 'ltred', inputNumeric: true, hideDetails: true }
+                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', mask: '#### ### ####', classes: 'ltred', inputNumeric: true, hideDetails: true }
               ]"
               @keyup.enter.native="doLogin"
             />

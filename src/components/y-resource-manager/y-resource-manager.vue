@@ -49,8 +49,8 @@ import { loadMetasFor } from './y-resource-util';
 export default {
   name: 'YResourceManager',
   components: {
-    'y-resource-table-cell': () => import('./y-resource-table-cell' /* webpackChunkName: 'y-resource-table-cell' */),
-    'y-resource-filter': () => import('./y-resource-filter' /* webpackChunkName: 'y-resource-filter' */)
+    'y-resource-table-cell': require('./y-resource-table-cell').default,
+    'y-resource-filter': require('./y-resource-filter').default
   },
   props: {
     title: {
@@ -193,7 +193,3 @@ export default {
 }
 
 </script>
-
-<style>
-
-</style>

@@ -30,7 +30,7 @@
 export default {
   name: 'YFormSeries',
   components: {
-    'y-form': () => import('./y-form-vuetify' /* webpackChunkName: 'y-form' */),
+    'y-form': require('./y-form-vuetify').default
   },
   props: {
     target: {

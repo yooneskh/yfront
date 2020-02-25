@@ -28,11 +28,12 @@
 </template>
 
 <script>
+
 export default {
   name: 'MainBase',
   components: {
-    'main-app-bar': () => import('./components/main-app-bar' /* webpackChunkName: 'main-app-bar' */),
-    'main-side-bar': () => import('./components/main-side-bar' /* webpackChunkName: 'main-side-bar' */)
+    'main-app-bar': require('./components/main-app-bar').default,
+    'main-side-bar': require('./components/main-side-bar').default
   },
   data: () => ({
     config: {

@@ -13,13 +13,10 @@
 </template>
 
 <script>
-
-import Editor from '../../y-rich-editor';
-
 export default {
   name: 'YFormElementText',
   components: {
-    'y-rich-editor': Editor
+    'y-rich-editor': require('../../y-rich-editor').default
   },
   props: {
     value: {

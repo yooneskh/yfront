@@ -23,7 +23,7 @@
 export default {
   name: 'YResourceFilter',
   components: {
-    'y-filter-element': () => import('./y-resource-filter-element' /* webpackChunkName: 'y-resource-filter-element' */),
+    'y-filter-element': require('./y-resource-filter-element').default
   },
   props: {
     value: Array,
@@ -59,11 +59,6 @@ export default {
     }
     & > .part {
       flex-grow: 0;
-      // display: flex;
-      // flex-direction: row;
-      // & > * {
-      //   width: 150px;
-      // }
     }
   }
 </style>

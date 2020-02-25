@@ -36,12 +36,11 @@
 <script>
 
 import Api from '../api';
-import YEditableText from './y-editable-text';
 
 export default {
   name: 'YRichEditor',
   components: {
-    'y-editable-text': YEditableText
+    'y-editable-text': require('./y-editable-text').default
   },
   props: {
     value: {

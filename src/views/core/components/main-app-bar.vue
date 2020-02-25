@@ -67,7 +67,8 @@ export default {
     height: { type: Number, default: 64 },
     toolbarItems: Array
   }
-}
+};
+
 </script>
 
 <style lang="scss" scoped>

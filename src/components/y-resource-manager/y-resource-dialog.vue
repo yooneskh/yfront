@@ -42,7 +42,7 @@ import { loadMetasFor, loadRelationsFor } from './y-resource-util';
 export default {
   name: 'YResourceDialog',
   components: {
-    'y-resource-relation-manager': () => import('./y-resource-relation-manager' /* webpackChunkName: 'y-resource-relation-manager' */)
+    'y-resource-relation-manager': require('./y-resource-relation-manager').default
   },
   props: {
     modelName: {
