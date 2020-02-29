@@ -42,7 +42,7 @@ import { transformResourceToTitle, loadRelationsFor } from './y-resource-util';
 export default {
   name: 'YResourceCell',
   components: {
-    'y-resource-visualizer': () => import('./y-resource-visualizer' /* webpackChunkName: 'y-resource-visualizer' */)
+    'y-resource-visualizer': require('./y-resource-visualizer').default
   },
   props: {
     header: {},

@@ -36,7 +36,7 @@ import YNetwork from 'ynetwork';
 export default {
   name: 'YResourceRelationManager',
   components: {
-    'y-resource-table-cell': () => import('./y-resource-table-cell' /* webpackChunkName: 'y-resource-table-cell' */)
+    'y-resource-table-cell': require('./y-resource-table-cell').default
   },
   props: {
     sourceModel: String,
