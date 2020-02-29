@@ -6,17 +6,17 @@
     :hide-details="field.hideDetails"
     :multiple="field.multiple"
     :value="value"
+    :dir="field.dir"
     @input="$emit('input', $event)"
   />
   <v-combobox
     v-else
     :label="field.title"
     :items="field.items"
-    chips
-    deletable-chips
-    small-chips
+    chips deletable-chips small-chips
     :multiple="field.multiple"
     :value="value"
+    :dir="field.dir"
     @input="$emit('input', $event)" 
   />
 </template>

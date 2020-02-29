@@ -5,6 +5,7 @@
     :true-value="true"
     :false-value="false"
     :hide-details="field.hideDetails"
+    :dir="field.dir"
     @change="$emit('input', !!$event)"
   />
 </template>

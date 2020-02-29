@@ -7,6 +7,7 @@
     :dense="field.dense"
     :solo="field.simple"
     :flat="field.simple"
+    :dir="field.dir"
     :background-color="field.background"
     :hide-details="field.hideDetails"
     @input="$emit('input', $event)"

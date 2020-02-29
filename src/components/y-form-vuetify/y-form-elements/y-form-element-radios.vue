@@ -5,6 +5,7 @@
     :hide-details="field.hideDetails"
     :row="field.row"
     :value="value"
+    :dir="field.dir"
     @change="$emit('input', $event)"
     style="text-align: unset;">
     <v-radio
@@ -12,6 +13,7 @@
       :key="item.value"
       :label="item.text"
       :value="item.value"
+      :dir="field.dir"
       :class="{'ms-2': !field.row}"
     />
   </v-radio-group>
