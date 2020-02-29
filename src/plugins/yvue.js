@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import moment from 'moment-jalaali';
 import YDialog from './ydialog';
-import UUIDV4 from 'uuid/v4';
+import { v4 as UUIDV4 } from 'uuid';
 import YNetwork from 'ynetwork';
 import copyToClipboard from 'copy-to-clipboard';
 import UserPlaceholder from '../assets/img/user-placeholder.jpeg';

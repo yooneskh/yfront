@@ -4,6 +4,21 @@
       title="مدیریت کاربران"
       model-name="User"
     />
+    <y-resource-manager
+      title="Books"
+      model-name="Book"
+      class="mt-2"
+    />
+    <y-resource-manager
+      title="Pages"
+      model-name="Page"
+      class="mt-2"
+    />
+    <y-resource-manager
+      title="Authors"
+      model-name="Author"
+      class="mt-2"
+    />
   </v-container>
 </template>
 

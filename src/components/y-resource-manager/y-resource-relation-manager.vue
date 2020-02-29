@@ -21,7 +21,7 @@
       @delete="deleteRelation">
 
       <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ header, data }">
-        <y-resource-table-cell :key="header.key" :data="data" :header="header" />
+        <y-resource-table-cell :key="header.key + data" :data="data" :header="header" />
       </template>
 
     </y-table>
@@ -120,14 +120,18 @@ export default {
         resource: meta.ref
       }));
 
-      fields.unshift({
-        key: this.relation.targetModel.toLowerCase(),
-        type: 'resource',
-        resource: this.relation.targetModel,
-        title: this.relation.targetPropertyTitle
-      });
+      if (!toEdit) {
+        fields.unshift({
+          key: this.relation.targetModel.toLowerCase(),
+          type: 'resource',
+          resource: this.relation.targetModel,
+          title: this.relation.targetPropertyTitle
+        });
+      }
       
-      const form = await this.$dialogFormMaker(title, fields, actionTitle, relation, { width: 550 });
+      const form = await this.$dialogFormMaker(title, '', fields, actionTitle, relation);
+
+      if (!form) return;
 
       const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${form[this.relation.targetModel.toLowerCase()]}`;
 

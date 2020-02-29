@@ -60,7 +60,7 @@ export default {
         YNetwork.get(`${this.$apiBase}/${resourceUrl}`)
       ]);
 
-      const titleables = metas.filter(meta => meta.titleAble).map(meta => meta.key);
+      const titleables = metas.filter(meta => meta.titleable).map(meta => meta.key);
 
       this.items = await Promise.all(
         items.map(async item => {
