@@ -1,19 +1,23 @@
 const cache = new Map();
 const preempts = new Map();
 
+function clone(thing) {
+  return JSON.parse(JSON.stringify(thing));
+}
+
 export const YCacher = {
   has(keys) {
     return cache.has(keys.join('.')) || preempts.has(keys.join('.'));
   },
   set(keys, value) {
-    cache.set(keys.join('.'), JSON.parse(JSON.stringify(value)));
+    cache.set(keys.join('.'), clone(value));
   },
   async get(keys) {
     if (cache.has(keys.join('.'))) {
-      return JSON.parse(JSON.stringify( cache.get(keys.join('.')) ));
+      return clone( cache.get(keys.join('.')) );
     }
     else if (preempts.has(keys.join('.'))) {
-      return JSON.parse(JSON.stringify( await preempts.get(keys.join('.')) ));
+      return clone( await preempts.get(keys.join('.')) );
     }
   },
   delete(keys) {
