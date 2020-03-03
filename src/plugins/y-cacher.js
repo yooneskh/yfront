@@ -1,13 +1,47 @@
 const cache = new Map();
+const preempts = new Map();
 
-export default {
+export const YCacher = {
   has(keys) {
-    return cache.has(keys.join('.'));
+    return cache.has(keys.join('.')) || preempts.has(keys.join('.'));
   },
   set(keys, value) {
     cache.set(keys.join('.'), JSON.parse(JSON.stringify(value)));
   },
-  get(keys) {
-    return JSON.parse(JSON.stringify(cache.get(keys.join('.'))));
+  async get(keys) {
+    if (cache.has(keys.join('.'))) {
+      return JSON.parse(JSON.stringify( cache.get(keys.join('.')) ));
+    }
+    else if (preempts.has(keys.join('.'))) {
+      return JSON.parse(JSON.stringify( await preempts.get(keys.join('.')) ));
+    }
+  },
+  delete(keys) {
+    cache.delete(keys.join('.'));
+  },
+  preempt(keys, promise) {
+
+    if (cache.has(keys.join('.'))) {
+      return this.get(keys.join('.'));
+    }
+
+    if (preempts.has(keys.join('.'))) {
+      return preempts.get(keys.join('.'));
+    }
+
+    const preemptPromise = new Promise(resolve => {
+      promise().then(result => {
+
+        this.set(keys, result);
+        preempts.delete(keys);
+
+        resolve(this.get(keys));
+
+      });
+    });
+
+    preempts.set(keys.join('.'), preemptPromise);
+    return preemptPromise;
+
   }
 };

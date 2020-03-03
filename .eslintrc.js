@@ -17,7 +17,6 @@ module.exports = {
     'no-return-await': 'error',
     'no-useless-concat': 'error',
     'radix': 'error',
-    'require-await': 'error',
     'no-shadow': 'error',
     'no-use-before-define': 'error',
     'eqeqeq': ['error', 'always'],
