@@ -25,7 +25,7 @@
         @update:page="page = $event"
         :items-per-page="itemsPerPage"
         @update:items-per-page="itemsPerPage = $event"
-        @update:sorts="sorts = $event"
+        :sorts.sync="sorts"
         @edit="initEditor"
         @delete="deleteResource">
 
@@ -58,6 +58,10 @@ export default {
     modelName: {
       type: String,
       required: true
+    },
+    sortLatest: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
@@ -100,8 +104,14 @@ export default {
     }
   },
   mounted() {
+
     this.loadMeta();
     this.loadData();
+
+    if (this.sortLatest) {
+      this.sorts = { 'createdAt': -1 };
+    }
+
   },
   watch: {
     query() {

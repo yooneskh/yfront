@@ -1,5 +1,17 @@
 <template>
-  <v-data-table class="no-wrap" :headers="datatableHeaders" @update:options="handleSort" :items="items" :server-items-length="serverItemsLength" :caption="caption" :itemid="itemKey" @update:page="$emit('update:page', $event)" :items-per-page="itemsPerPage" @update:items-per-page="$emit('update:items-per-page', $event)">
+  <v-data-table
+    class="no-wrap"
+    :headers="datatableHeaders"
+    @update:options="handleSort"
+    :sort-by="sortBy"
+    :sort-desc="sortDesc"
+    :items="items"
+    :server-items-length="serverItemsLength"
+    :caption="caption"
+    :itemid="itemKey"
+    @update:page="$emit('update:page', $event)"
+    :items-per-page="itemsPerPage"
+    @update:items-per-page="$emit('update:items-per-page', $event)">
     <template #item="{ item }">
       <tr :key="item[itemKey]">
 
@@ -66,8 +78,16 @@ export default {
     actions: {
       type: Array,
       default: () => []
+    },
+    sorts: {
+      type: Object,
+      default: () => ({})
     }
   },
+  data: () => ({
+    sortBy: '',
+    sortDesc: ''
+  }),
   computed: {
     rawHeaders() {
 
@@ -101,6 +121,28 @@ export default {
     },
     showActions() {
       return this.actions.length > 0;
+    }
+  },
+  watch: {
+    sorts: {
+      deep: true,
+      immediate: true,
+      handler() {
+
+        console.log('11111111111111111111111111111111111 resorted');
+        
+        const sortKey = Object.keys(this.sorts)[0];
+
+        if (sortKey) {
+          this.sortBy = sortKey;
+          this.sortDesc = this.sorts[sortKey] === -1;
+        }
+        else {
+          this.sortBy = undefined;
+          this.sortDesc = false;
+        }
+
+      }
     }
   },
   methods: {

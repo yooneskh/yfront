@@ -3,6 +3,7 @@
     <y-resource-manager
       title="مدیریت کاربران"
       model-name="User"
+      sort-latest
     />
   </v-container>
 </template>
