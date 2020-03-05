@@ -132,10 +132,16 @@ export default {
       const payload = { ...this.resource };
 
       Object.keys(payload).forEach(key => {
-        if (!this.metas.list.find(meta => meta.key === key)) {
+        if (!this.metas.list.find(meta => meta.key === key) || this.baseResource[key] === this.resource[key]) {
           delete payload[key];
         }
       });
+
+      if (Object.keys(payload).length === 0) {
+        this.$toast('تغییری انجام نشده است!');
+        this.$emit('resolve', false);
+        return;
+      }
 
       if (this.resource._id) {
 
@@ -157,16 +163,13 @@ export default {
       this.loading = false;
 
       this.$toast.success('درخواست شما انجام شد.');
-
       this.$emit('resolve', true);
 
     },
     mapMetaType(meta) {
 
       if (meta.type === 'string' && meta.ref === 'Media') return 'file';
-
       if (meta.ref) return 'resource';
-
       if (meta.isArray) return 'select';
 
       switch (meta.type) {

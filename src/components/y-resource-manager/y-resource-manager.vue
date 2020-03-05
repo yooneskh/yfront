@@ -105,12 +105,12 @@ export default {
   },
   mounted() {
 
-    this.loadMeta();
-    this.loadData();
-
     if (this.sortLatest) {
       this.sorts = { 'createdAt': -1 };
     }
+
+    this.loadMeta();
+    this.loadData();
 
   },
   watch: {
