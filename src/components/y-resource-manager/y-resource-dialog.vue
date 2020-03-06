@@ -132,7 +132,7 @@ export default {
       const payload = { ...this.resource };
 
       Object.keys(payload).forEach(key => {
-        if (!this.metas.list.find(meta => meta.key === key) || this.baseResource[key] === this.resource[key]) {
+        if ( !this.metas.list.find(meta => meta.key === key) || ( this.baseResource && this.baseResource[key] === this.resource[key]) ) {
           delete payload[key];
         }
       });

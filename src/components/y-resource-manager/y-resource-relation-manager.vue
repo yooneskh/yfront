@@ -130,13 +130,27 @@ export default {
       }
       
       const form = await this.$dialogFormMaker(title, '', fields, actionTitle, relation);
-
       if (!form) return;
 
       const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${form[this.relation.targetModel.toLowerCase()]}`;
 
       const payload = { ...form };
       delete payload[this.modelName.toLowerCase()];
+      delete payload[this.relation.targetModel.toLowerCase()];
+
+      if (toEdit) {
+        Object.keys(payload).forEach(key => {
+          if (relation[key] === payload[key]) {
+            delete payload[key];
+          }
+        });
+      }
+
+      if (Object.keys(payload).length === 0) {
+        this.$toast('تغییری انجام نشده است!');
+        this.$emit('resolve', false);
+        return;
+      }
 
       if (!toEdit) {
 
@@ -160,7 +174,6 @@ export default {
         this.loadData();
 
       }
-
 
     },
     async deleteRelation(relation) {
