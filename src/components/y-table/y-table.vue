@@ -129,8 +129,6 @@ export default {
       immediate: true,
       handler() {
 
-        console.log('11111111111111111111111111111111111 resorted');
-        
         const sortKey = Object.keys(this.sorts)[0];
 
         if (sortKey) {

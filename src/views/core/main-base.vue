@@ -15,6 +15,7 @@
       v-if="appliedConfigMode === 'sidebar'"
       :toolbar-items="toolbars"
       class="main-sidebar"
+      :expanding-items="config.expandingSidebarItems"
     />
 
     <router-view
@@ -41,7 +42,8 @@ export default {
       appBarHeight: 64,
       color: 'primary',
       isDark: true,
-      stickyAppBar: false
+      stickyAppBar: false,
+      expandingSidebarItems: false
     },
     toolbars: [
       { group: 'عمومی', title: 'خانه', icon: 'mdi-home', path: '/' },

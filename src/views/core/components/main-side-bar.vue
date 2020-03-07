@@ -10,17 +10,44 @@
       </v-list-item>
 
       <div class="items-part no-scrollbar">
-        <v-list-item-group v-for="(items, groupName) in toolbarGroups" :key="groupName">
-          <v-subheader class="mb-1" style="height: 24px;">{{ groupName }}</v-subheader>
-          <v-list-item v-for="item in items" :key="item.title" :to="item.path">
-            <v-list-item-icon class="me-2">
-              <v-icon small>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
+
+        <template v-if="!expandingItems">
+          <v-list-item-group v-for="(items, groupName) in toolbarGroups" :key="groupName">
+            <v-subheader class="mb-1" style="height: 24px;">{{ groupName }}</v-subheader>
+            <v-list-item v-for="item in items" :key="item.title" :to="item.path">
+              <v-list-item-icon class="me-2">
+                <v-icon small>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </template>
+
+        <template v-if="expandingItems">
+          <v-expansion-panels multiple flat accordion tile hover :value="activeRouteGroup">
+            <v-expansion-panel v-for="(items, groupName) in toolbarGroups" :key="groupName" style="background: transparent;">
+              
+              <v-expansion-panel-header class="px-5 py-3" style="font-size: 0.85em; min-height: unset;">
+                {{ groupName }}
+              </v-expansion-panel-header>
+
+              <v-expansion-panel-content class="sidebar-panel-content">
+                <v-list-item v-for="item in items" :key="item.title" :to="item.path">
+                  <v-list-item-icon class="me-2">
+                    <v-icon small>{{ item.icon }}</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-expansion-panel-content>
+
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </template>
+
       </div>
 
       <v-list-item v-if="!$token" to="/auth">
@@ -84,11 +111,24 @@ export default {
   Version,
   Title,
   props: {
-    toolbarItems: Array
+    toolbarItems: Array,
+    expandingItems: Boolean
   },
   computed: {
     toolbarGroups() {
       return groupBy(this.toolbarItems, 'group');
+    },
+    activeRouteGroup() {
+      
+      const targetRoute = this.$route.matched.slice(-1)[0];
+      
+      for (const groupName in this.toolbarGroups) {
+        for (const item of this.toolbarGroups[groupName]) {
+          if (item.path === targetRoute.path) {
+            return [Object.keys(this.toolbarGroups).indexOf(groupName)];
+          }
+        }
+      } return [];
     }
   },
   mounted() {
@@ -120,6 +160,11 @@ export default {
           margin-top: 12px;
         }
       }
+    }
+  }
+  ::v-deep {
+    .sidebar-panel-content > .v-expansion-panel-content__wrap {
+      padding: 8px 8px;
     }
   }
 </style>
