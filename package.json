@@ -15,7 +15,7 @@
     "lodash": "^4.17.15",
     "moment-jalaali": "^0.9.1",
     "roboto-fontface": "*",
-    "uuid": "^7.0.1",
+    "uuid": "^7.0.2",
     "vue": "^2.6.11",
     "vue-analytics": "^5.20.2",
     "vue-input-facade": "^1.1.4",
