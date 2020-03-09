@@ -90,6 +90,10 @@ export default {
     },
     authenticated() {
       console.log('authenticated');
+      this.$socket.client.emit('subscribe', 'Resource.User.*');
+    },
+    'Resource.User.*'(...data) {
+      console.log(...data);
     }
   }
 }
