@@ -9,10 +9,14 @@ import { ENDPOINT_BASE } from './api/ApiBaseEndpoints';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import './fonts/iryekan/iryekan.css';
 import '@mdi/font/css/materialdesignicons.css';
-
 import './assets/scss/app.scss';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+// import { ENDPOINT_CORE } from './api/ApiBaseEndpoints';
+// import io from 'socket.io-client';
+// import VueSocketIO from 'vue-socket.io-extended';
+// Vue.use(VueSocketIO, io(`${ENDPOINT_CORE}`, { autoConnect: false }));
 
 Vue.mixin({
   computed: {

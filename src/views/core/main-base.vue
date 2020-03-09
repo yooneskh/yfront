@@ -52,9 +52,7 @@ export default {
   }),
   computed: {
     appliedConfigMode() {
-
       if (this.config.mode === 'appbar') return 'appbar';
-
       if (this.$isMobile || this.$isTablet) return 'appbar';
 
       return this.config.mode;
@@ -76,9 +74,23 @@ export default {
     if (!this.$token) {
       this.$router.replace('/auth');
     }
-    // else if (this.$route.name === 'MainBase') {
-    //   this.$router.replace(this.toolbars[0].path);
-    // }
+    else {
+
+      this.$socket.client.connect();
+
+      if (this.$route.name === 'MainBase') {
+        this.$router.replace(this.toolbars[0].path);
+      }
+
+    }
+  },
+  sockets: {
+    connect() {
+      this.$socket.client.emit('authenticate', { token: this.$token });
+    },
+    authenticated() {
+      console.log('authenticated');
+    }
   }
 }
 </script>
