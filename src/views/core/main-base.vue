@@ -76,7 +76,7 @@ export default {
     }
     else {
 
-      this.$socket.client.connect();
+      // this.$socket.client.connect();
 
       if (this.$route.name === 'MainBase') {
         this.$router.replace(this.toolbars[0].path);
@@ -84,18 +84,18 @@ export default {
 
     }
   },
-  sockets: {
-    connect() {
-      this.$socket.client.emit('authenticate', { token: this.$token });
-    },
-    authenticated() {
-      console.log('authenticated');
-      this.$socket.client.emit('subscribe', 'Resource.User.*');
-    },
-    'Resource.User.*'(...data) {
-      console.log(...data);
-    }
-  }
+  // sockets: {
+  //   connect() {
+  //     this.$socket.client.emit('authenticate', { token: this.$token });
+  //   },
+  //   authenticated() {
+  //     console.log('authenticated');
+  //     this.$socket.client.emit('subscribe', 'Resource.User.*');
+  //   },
+  //   'Resource.User.*'(...data) {
+  //     console.log('user data', ...data);
+  //   }
+  // }
 }
 </script>
 

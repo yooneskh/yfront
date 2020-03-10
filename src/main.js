@@ -13,10 +13,10 @@ import './assets/scss/app.scss';
 
 Vue.config.productionTip = false;
 
-import { ENDPOINT_CORE } from './api/ApiBaseEndpoints';
-import io from 'socket.io-client';
-import VueSocketIO from 'vue-socket.io-extended';
-Vue.use(VueSocketIO, io(`${ENDPOINT_CORE}`, { autoConnect: false }));
+// import { ENDPOINT_CORE } from './api/ApiBaseEndpoints';
+// import io from 'socket.io-client';
+// import VueSocketIO from 'vue-socket.io-extended';
+// Vue.use(VueSocketIO, io(`${ENDPOINT_CORE}`, { autoConnect: false }));
 
 Vue.mixin({
   computed: {
