@@ -141,7 +141,9 @@ export default {
 
       if (this.$generalHandle(status, result)) return;
       
-      localStorage.setItem('--user--', JSON.stringify(result));
+      localStorage.setItem('--user--', JSON.stringify(result.user));
+      localStorage.setItem('--token--', result.token);
+
       this.$root.resetCredentials();
 
       this.$router.replace('/');

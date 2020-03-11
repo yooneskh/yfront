@@ -24,7 +24,7 @@ Vue.mixin({
       return this.$root.user;
     },
     $token() {
-      return this.$root.user.token;
+      return this.$root.token;
     },
     $apiBase() {
       return ENDPOINT_BASE;
@@ -61,8 +61,8 @@ new Vue({
       profilePicture: {},
       permissions: [],
       phoneNumber: '',
-      token: ''
     },
+    token: '',
     dialogs: [] // TODO: make this in the plugin file
   },
   beforeMount() {
@@ -78,8 +78,9 @@ new Vue({
         profilePicture: {},
         permissions: [],
         phoneNumber: '',
-        token: ''
       }));
+
+      this.token = localStorage.getItem('--token--') || '';
 
       Api.setToken(this.$token);
 
