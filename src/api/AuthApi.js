@@ -11,11 +11,10 @@ export function login(phoneNumber) {
   });
 }
 
-export function register(phoneNumber, firstName, lastName) {
+export function register(phoneNumber, name) {
   return YNetwork.post(ENDPOINT_REGISTER, {
     phoneNumber,
-    firstName,
-    lastName
+    name
   });
 }
 

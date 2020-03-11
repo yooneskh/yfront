@@ -56,8 +56,7 @@ new Vue({
   data: {
     user: {
       _id: '',
-      firstName: '',
-      lastName: '',
+      name: '',
       profilePicture: {},
       permissions: [],
       phoneNumber: '',
@@ -73,8 +72,7 @@ new Vue({
 
       this.user = JSON.parse(localStorage.getItem('--user--') || JSON.stringify({
         _id: '',
-        firstName: '',
-        lastName: '',
+        name: '',
         profilePicture: {},
         permissions: [],
         phoneNumber: '',

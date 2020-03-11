@@ -65,7 +65,7 @@
                 <v-img :src="($user.profilePicture && $user.profilePicture.path) || $options.UserPlaceholder" />
               </v-avatar>
             </v-list-item-avatar>
-            <v-list-item-title>{{ $user.firstName + ' ' + $user.lastName }}</v-list-item-title>
+            <v-list-item-title>{{ $user.name }}</v-list-item-title>
           </v-list-item>
         </template>
 

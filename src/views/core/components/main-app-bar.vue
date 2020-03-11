@@ -17,7 +17,7 @@
       <template v-slot:activator="{ on }">
         <v-btn text v-on="on" class="px-0" style="min-width: unset;">
           <v-avatar size="24" class="mt-1 me-2 ms-2"> <img :src="$user.profilePicture && $user.profilePicture.path || $userPlaceholder" alt="owner image avatar" /> </v-avatar>
-          <span v-if="!$isMobile" class="pe-2 pt-1">{{ $user.firstName + ' ' + $user.lastName }}</span>
+          <span v-if="!$isMobile" class="pe-2 pt-1">{{ $user.name }}</span>
         </v-btn>
       </template>
 

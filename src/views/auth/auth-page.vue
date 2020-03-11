@@ -35,8 +35,7 @@
               :target="this"
               no-padding
               :fields="[
-                { key: 'firstName', type: 'text', title: 'نام' },
-                { key: 'lastName', type: 'text', title: 'نام خانوادگی', hideDetails: true }
+                { key: 'name', type: 'text', title: 'نام', hideDetails: true },
               ]"
               @keyup.enter.native="doRegister"
             />
@@ -99,8 +98,7 @@ export default {
     mode: 'login',
     loading: false,
     phoneNumber: '09',
-    firstName: '',
-    lastName: '',
+    name: '',
     verificationCode: ''
   }),
   computed: {
@@ -125,7 +123,7 @@ export default {
     async doRegister() {
 
       this.loading = true;
-      const { status, result } = await Api.Auth.register(`+98${this.cleanPhoneNumber.slice(1)}`, this.firstName, this.lastName);
+      const { status, result } = await Api.Auth.register(`+98${this.cleanPhoneNumber.slice(1)}`, this.name);
       this.loading = false;
 
       if (this.$generalHandle(status, result)) return;
