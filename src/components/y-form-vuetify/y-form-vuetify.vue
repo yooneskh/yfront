@@ -32,13 +32,11 @@ export default {
     'y-form-element-checkbox': require('./y-form-elements/y-form-element-checkbox.vue').default,
     'y-form-element-select': require('./y-form-elements/y-form-element-select.vue').default,
     'y-form-element-radios': require('./y-form-elements/y-form-element-radios.vue').default,
-    'y-form-element-file': require('./y-form-elements/y-form-element-file.vue').default,
     'y-form-element-textarea': require('./y-form-elements/y-form-element-textarea.vue').default,
     'y-form-series': () => import('./y-form-series' /* webpackChunkName: 'y-form-series' */),
     'y-form-element-text-multilang': () => import('./y-form-elements/y-form-element-text-multilang.vue' /* webpackChunkName: 'y-form-element-text-multilang' */),
-    'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */),
-    'y-form-element-editor': () => import('./y-form-elements/y-form-element-editor.vue' /* webpackChunkName: 'y-form-element-editor' */),
-    'y-form-element-color': () => import('./y-form-elements/y-form-element-color.vue' /* webpackChunkName: 'y-form-element-color' */)
+    'y-form-element-color': () => import('./y-form-elements/y-form-element-color.vue' /* webpackChunkName: 'y-form-element-color' */),
+    'y-form-element-date': () => import('./y-form-elements/y-form-element-date.vue' /* webpackChunkName: 'y-form-element-date' */)
   },
   methods: {
     mapElementType(field) {
@@ -46,13 +44,11 @@ export default {
         case 'series': return 'y-form-series';
         case 'text': return 'y-form-element-text';
         case 'textarea': return 'y-form-element-textarea';
-        case 'editor': return 'y-form-element-editor';
         case 'text-multilang': return 'y-form-element-text-multilang';
         case 'checkbox': return 'y-form-element-checkbox';
         case 'select': return 'y-form-element-select';
         case 'radios': return 'y-form-element-radios';
-        case 'file': return 'y-form-element-file';
-        case 'resource': return 'y-form-element-resource';
+        case 'date': return 'y-form-element-date';
         default: return '--no-such-form-element--';
       }
     },
