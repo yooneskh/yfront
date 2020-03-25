@@ -29,7 +29,7 @@
             :color="action.color"
             :icon="action.icon && !action.title"
             :small="!action.big"
-            class="mb-1"
+            class="mb-1 me-1"
             :class="{'mt-1': index === 0}"
             :to="action.link && action.link(item)"
             @click="$emit(action.key, item)">
