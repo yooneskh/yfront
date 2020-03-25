@@ -22,12 +22,12 @@
     "vue-input-facade": "^1.1.4",
     "vue-router": "^3.1.6",
     "vue-socket.io-extended": "^4.0.1",
-    "vuetify": "^2.2.18",
+    "vuetify": "^2.2.19",
     "vuetify-toast-snackbar": "^0.6.1",
     "ynetwork": "^2.5.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "@vue/cli-plugin-babel": "^4.2.3",
     "@vue/cli-plugin-eslint": "^4.2.3",
     "@vue/cli-service": "^4.2.3",
