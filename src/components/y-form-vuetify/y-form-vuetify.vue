@@ -38,7 +38,8 @@ export default {
     'y-form-element-text-multilang': () => import('./y-form-elements/y-form-element-text-multilang.vue' /* webpackChunkName: 'y-form-element-text-multilang' */),
     'y-form-element-color': () => import('./y-form-elements/y-form-element-color.vue' /* webpackChunkName: 'y-form-element-color' */),
     'y-form-element-date': () => import('./y-form-elements/y-form-element-date.vue' /* webpackChunkName: 'y-form-element-date' */),
-    'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */)
+    'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */),
+    'y-form-element-editor': () => import('./y-form-elements/y-form-element-editor.vue' /* webpackChunkName: 'y-form-element-editor' */),
   },
   methods: {
     mapElementType(field) {
@@ -53,6 +54,7 @@ export default {
         case 'radios': return 'y-form-element-radios';
         case 'date': return 'y-form-element-date';
         case 'resource': return 'y-form-element-resource';
+        case 'editor': return 'y-form-element-editor';
         default: return '--no-such-form-element--';
       }
     },
