@@ -113,8 +113,7 @@ export default {
 
     },
     async loadMedia() {
-
-      if (!this.value && !this.value._id) return;
+      if (!this.value || !this.value._id) return;
 
       const { status, result } = await Api.Media.loadOne(this.$token, this.wrapped ? this.value._id : this.value);
 

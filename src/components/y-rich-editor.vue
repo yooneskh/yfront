@@ -1,27 +1,31 @@
 <template>
   <div class="y-rich-editor">
-    <div v-for="(part, index) in parts" :key="index" class="editor-item">
+    
+    <drag-container @drop="handleDrop">
+      <drag-element v-for="(part, index) in parts" :key="index" class="editor-item">
 
-      <h2
-        v-if="part.type === 'title'"
-        class="title">
-        <y-editable-text v-model="parts[index].content" lazy placeholder="Empty Text ..." />
-      </h2>
+        <h2
+          v-if="part.type === 'title'"
+          class="title">
+          <y-editable-text v-model="parts[index].content" lazy placeholder="Empty Text ..." />
+        </h2>
 
-      <p v-if="part.type === 'text'">
-        <y-editable-text v-model="parts[index].content" lazy placeholder="Empty Text ..." />
-      </p>
+        <p v-if="part.type === 'text'">
+          <y-editable-text v-model="parts[index].content" lazy placeholder="Empty Text ..." />
+        </p>
 
-      <v-img
-        v-if="part.type === 'image'"
-        :src="part.content"
-      />
+        <v-img
+          v-if="part.type === 'image'"
+          :src="part.content"
+          class="my-4"
+        />
 
-      <v-btn class="delete-button" icon small color="error" @click="parts.splice(index, 1)">
-        <v-icon small>mdi-close</v-icon>
-      </v-btn>
+        <v-btn class="delete-button" icon small color="error" @click="parts.splice(index, 1)">
+          <v-icon small>mdi-close</v-icon>
+        </v-btn>
 
-    </div>
+      </drag-element>
+    </drag-container>
 
     <div class="add-bar text-center mt-4 mx-auto grey lighten-3 py-1 px-4 mb-4" style="width: 300px; border-radius: 32px;">
       <span class="caption me-4">افزودن</span>
@@ -37,10 +41,14 @@
 
 import Api from '../api';
 
+import { Container, Draggable } from "vue-smooth-dnd";
+
 export default {
   name: 'YRichEditor',
   components: {
-    'y-editable-text': require('./y-editable-text').default
+    'y-editable-text': require('./y-editable-text').default,
+    'drag-container': Container,
+    'drag-element': Draggable
   },
   props: {
     value: {
@@ -77,7 +85,7 @@ export default {
     },
     async addImage() {
 
-      const form = await this.$dialogFormMaker('افزودن تصویر', [
+      const form = await this.$dialogFormMaker('افزودن تصویر', 'لطفا فایل تصویر مورد نظر را انتخاب کنید.', [
         { key: 'file', type: 'file', title: 'فایل', wrapped: false }
       ]);
       
@@ -87,6 +95,13 @@ export default {
       if (this.$generalHandle(status, result)) return;
 
       this.parts.push({ type: 'image', content: result.path });
+
+    },
+    handleDrop(dropResult) {
+
+      const { removedIndex, addedIndex } = dropResult;
+
+      this.parts.splice(addedIndex, 0, this.parts.splice(removedIndex, 1)[0] );
 
     }
   }
