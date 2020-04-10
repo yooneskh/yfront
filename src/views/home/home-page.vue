@@ -12,9 +12,13 @@
             { key: 'counts', type: 'text', number: true, title: 'Counts', width: 6 },
             { key: 'pass', type: 'text', password: true, title: 'Password', width: 6 },
             { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] },
-            { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', width: 6 },
             { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
+            { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', width: 6 },
             { key: 'job', type: 'radios', title: 'شغل', width: 6, items: [
+              { value: 'mech', text: 'مکانیک' },
+              { value: 'comp', text: 'کامپیوتری' }
+            ] },
+            { key: 'job', type: 'radios', title: 'شغل', width: 6, horizontal: true, items: [
               { value: 'mech', text: 'مکانیک' },
               { value: 'comp', text: 'کامپیوتری' }
             ] },

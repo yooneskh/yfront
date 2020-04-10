@@ -1,7 +1,7 @@
 <template>
   <v-form class="y-form y-form-vuetify" @submit.prevent>
     <v-row>
-      <v-col v-for="field in fields" class="pt-0" :key="field.key" cols="12" :md="field.width || 12">
+      <v-col v-for="field in fields" class="pt-0" :key="field.key" cols="12" :md="field.width || 12" style="position: relative;">
         <component
           :is="mapElementType(field)"
           :target="target"
@@ -34,7 +34,7 @@ export default {
     'y-form-element-radios': require('./y-form-elements/y-form-element-radios.vue').default,
     'y-form-element-textarea': require('./y-form-elements/y-form-element-textarea.vue').default,
     'y-form-element-file': require('./y-form-elements/y-form-element-file.vue').default,
-    'y-form-series': () => import('./y-form-series' /* webpackChunkName: 'y-form-series' */),
+    'y-form-element-series': () => import('./y-form-series' /* webpackChunkName: 'y-form-series' */),
     'y-form-element-text-multilang': () => import('./y-form-elements/y-form-element-text-multilang.vue' /* webpackChunkName: 'y-form-element-text-multilang' */),
     'y-form-element-color': () => import('./y-form-elements/y-form-element-color.vue' /* webpackChunkName: 'y-form-element-color' */),
     'y-form-element-date': () => import('./y-form-elements/y-form-element-date.vue' /* webpackChunkName: 'y-form-element-date' */),
@@ -43,20 +43,7 @@ export default {
   },
   methods: {
     mapElementType(field) {
-      switch (field.type) {
-        case 'series': return 'y-form-series';
-        case 'text': return 'y-form-element-text';
-        case 'textarea': return 'y-form-element-textarea';
-        case 'text-multilang': return 'y-form-element-text-multilang';
-        case 'checkbox': return 'y-form-element-checkbox';
-        case 'file': return 'y-form-element-file';
-        case 'select': return 'y-form-element-select';
-        case 'radios': return 'y-form-element-radios';
-        case 'date': return 'y-form-element-date';
-        case 'resource': return 'y-form-element-resource';
-        case 'editor': return 'y-form-element-editor';
-        default: return '--no-such-form-element--';
-      }
+      return `y-form-element-${field.type}`;
     },
     handleInput(field, text) {
 

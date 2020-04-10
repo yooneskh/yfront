@@ -1,20 +1,21 @@
 <template>
   <v-radio-group
     class="mt-0"
+    :class="{'horizontal': field.horizontal}"
     :label="field.title"
     :hide-details="field.hideDetails"
-    :row="field.row"
+    :row="field.horizontal"
     :value="value"
     :dir="field.dir"
     @change="$emit('input', $event)"
     style="text-align: unset;">
     <v-radio
-      v-for="item in field.items"
+      v-for="(item, index) in field.items"
       :key="item.value"
       :label="item.text"
       :value="item.value"
       :dir="field.dir"
-      :class="{'ms-2': !field.row}"
+      :class="{'mt-1': !field.horizontal && index === 0, 'ms-0 me-4 mb-2': field.horizontal, 'ms-6': field.horizontal && index === 0}"
     />
   </v-radio-group>
 </template>
@@ -33,3 +34,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  ::v-deep.v-input.horizontal legend {
+    margin-bottom: 8px !important;
+    padding: 0;
+  }
+</style>

@@ -3,6 +3,7 @@
     <template #activator="{ on }">
       <v-text-field
         readonly
+        filled
         :class="inputClass"
         :label="label"
         :placeholder="placeholder"

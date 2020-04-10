@@ -1,6 +1,7 @@
 <template>
   <v-select
     v-if="!field.addable"
+    filled
     :label="field.title"
     :items="field.items"
     :hide-details="field.hideDetails"
@@ -11,6 +12,7 @@
   />
   <v-combobox
     v-else
+    filled
     :label="field.title"
     :items="field.items"
     chips deletable-chips small-chips

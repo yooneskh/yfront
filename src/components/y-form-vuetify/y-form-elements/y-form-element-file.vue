@@ -1,13 +1,11 @@
 <template>
-  <div class="file-element mb-4">
-    <y-file-uploader
-      :label="field.title"
-      :wrapped="field.wrapped"
-      :class="field.classes"
-      :value="value"
-      @input="$emit('input', $event)"
-    />
-  </div>
+  <y-file-uploader
+    :label="field.title"
+    :wrapped="field.wrapped"
+    :class="field.classes"
+    :value="value"
+    @input="$emit('input', $event)"
+  />
 </template>
 
 <script>

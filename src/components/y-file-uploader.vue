@@ -1,8 +1,9 @@
 <template>
-  <div class="y-file-uploader">
+  <div class="y-file-uploader" style="width: 100%;">
     <v-text-field
       readonly
       :label="label"
+      filled
       hide-details
       :value="stateInfo"
       prepend-inner-icon="mdi-paperclip"
@@ -113,7 +114,7 @@ export default {
 
     },
     async loadMedia() {
-      if (!this.value || !this.value._id) return;
+      if (!this.value && !this.value._id) return;
 
       const { status, result } = await Api.Media.loadOne(this.$token, this.wrapped ? this.value._id : this.value);
 

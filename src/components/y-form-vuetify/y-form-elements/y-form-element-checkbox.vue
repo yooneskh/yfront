@@ -6,7 +6,9 @@
     :false-value="false"
     :hide-details="field.hideDetails"
     :dir="field.dir"
+    class="mt-0 pt-0"
     @change="$emit('input', !!$event)"
+    style="position: absolute; top: 50%; transform: translateY(-70%);"
   />
 </template>
 
