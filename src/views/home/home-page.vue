@@ -3,8 +3,8 @@
 
     <v-card>
       <v-card-title>صفحه اصلی</v-card-title>
-      <v-card-text>
 
+      <v-card-text>
         <y-form
           :target="heh"
           :fields="[
@@ -46,8 +46,8 @@
             }
           ]"
         />
-
       </v-card-text>
+
       <v-card-actions>
         <v-btn text color="primary" class="ms-2" @click="$toast('سلااااام به تو!')">پیام بده!</v-btn>
         <v-btn text color="warning" class="ms-2" @click="$toast.warning('سلااااام به تو!')">پیام بده!</v-btn>
@@ -55,6 +55,7 @@
         <v-spacer />
         <v-btn text color="error" @click="makeDialog">حذف کن</v-btn>
       </v-card-actions>
+
     </v-card>
 
     <v-card class="moveable-section mt-4" style="width: 100%; height: 300px; position: relative; overflow: auto;">

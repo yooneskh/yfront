@@ -1,7 +1,7 @@
 <template>
   <v-form class="y-form y-form-vuetify" @submit.prevent>
-    <v-row>
-      <v-col v-for="field in fields" class="pt-0" :key="field.key" cols="12" :md="field.width || 12" style="position: relative;">
+    <v-row class="ma-0 me-n3">
+      <v-col v-for="field in fields" class="pt-0 ps-0" :key="field.key" cols="12" :md="field.width || 12" style="position: relative;">
         <component
           :is="mapElementType(field)"
           :target="target"
