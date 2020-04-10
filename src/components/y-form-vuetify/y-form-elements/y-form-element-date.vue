@@ -8,7 +8,6 @@
     :label-format="field.labelFormat"
     :placeholder="field.placeholder"
     :background-color="field.background"
-    :hide-details="field.hideDetails"
     :dense="field.dense"
     :locale="field.locale"
     :first-day-of-week="field.firstDayOfWeek"

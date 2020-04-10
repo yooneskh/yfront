@@ -10,7 +10,7 @@
     :flat="field.simple"
     :dir="field.dir"
     :background-color="field.background"
-    :hide-details="field.hideDetails"
+    hide-details
     @input="$emit('input', $event)"
   />
 </template>

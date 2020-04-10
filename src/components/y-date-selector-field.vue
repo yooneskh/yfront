@@ -1,5 +1,5 @@
 <template>
-  <v-menu :close-on-content-click="!multiple && !range">
+  <v-menu :close-on-content-click="!multiple && !range" absolute>
     <template #activator="{ on }">
       <v-text-field
         readonly
@@ -7,7 +7,7 @@
         :class="inputClass"
         :label="label"
         :placeholder="placeholder"
-        :hide-details="hideDetails"
+        hide-details
         :dense="dense"
         :solo="solo"
         :flat="flat"

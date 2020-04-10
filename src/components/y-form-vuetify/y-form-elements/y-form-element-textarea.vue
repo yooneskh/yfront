@@ -11,7 +11,8 @@
     :dir="field.dir"
     :rows="field.rows"
     :auto-grow="field.autoGrow"
-    :hide-details="field.hideDetails" />
+    hide-details
+  />
 </template>
 
 <script>

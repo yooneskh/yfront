@@ -3,7 +3,7 @@
     class="mt-0"
     :class="{'horizontal': field.horizontal}"
     :label="field.title"
-    :hide-details="field.hideDetails"
+    hide-details
     :row="field.horizontal"
     :value="value"
     :dir="field.dir"
@@ -15,7 +15,7 @@
       :label="item.text"
       :value="item.value"
       :dir="field.dir"
-      :class="{'mt-1': !field.horizontal && index === 0, 'ms-0 me-4 mb-2': field.horizontal, 'ms-6': field.horizontal && index === 0}"
+      :class="{'mt-1': !field.horizontal && index === 0, 'ms-0 me-3 mb-2': field.horizontal, 'ms-6': field.horizontal && index === 0}"
     />
   </v-radio-group>
 </template>

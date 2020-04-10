@@ -4,7 +4,7 @@
     :input-value="value"
     :true-value="true"
     :false-value="false"
-    :hide-details="field.hideDetails"
+    hide-details
     :dir="field.dir"
     class="mt-0 pt-0"
     @change="$emit('input', !!$event)"

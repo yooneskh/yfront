@@ -1,9 +1,9 @@
 <template>
   <div class="y-form-element-editor">
 
-    <div class="caption">{{ field.title }}</div>
+    <v-label>{{ field.title }}</v-label>
 
-    <v-btn depressed class="mt-1" color="primary" block @click="windowOpened = true">
+    <v-btn depressed class="mt-2" color="primary" block @click="windowOpened = true">
       باز کردن ویرایشگر
     </v-btn>
 

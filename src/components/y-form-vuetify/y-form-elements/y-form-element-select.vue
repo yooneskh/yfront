@@ -4,7 +4,7 @@
     filled
     :label="field.title"
     :items="field.items"
-    :hide-details="field.hideDetails"
+    hide-details
     :multiple="field.multiple"
     :value="value"
     :dir="field.dir"
@@ -17,6 +17,7 @@
     :items="field.items"
     chips deletable-chips small-chips
     :multiple="field.multiple"
+    hide-details
     :value="value"
     :dir="field.dir"
     @input="$emit('input', $event)" 

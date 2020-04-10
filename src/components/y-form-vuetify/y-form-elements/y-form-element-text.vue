@@ -16,7 +16,7 @@
     :pattern="field.pattern"
     :autocomplete="field.autocomplete"
     :dir="field.dir"
-    :hide-details="field.hideDetails">
+    hide-details>
     <template v-if="field.password" #append>
       <v-icon  @click="revealed = !revealed">{{ revealed ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
     </template>

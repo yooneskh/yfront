@@ -9,16 +9,27 @@
           :target="heh"
           :fields="[
             { key: 'name', type: 'text', title: 'نام', width: 6 },
-            { key: 'counts', type: 'text', number: true, title: 'Counts', width: 6 },
-            { key: 'pass', type: 'text', password: true, title: 'Password', width: 6 },
+            { key: 'counts', type: 'text', number: true, title: 'تعداد', width: 6 },
+            { key: 'pass', type: 'text', password: true, title: 'رمز عبور', width: 6 },
             { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] },
             { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
             { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', width: 6 },
+            { key: 'from', type: 'date', title: 'تاریخ ورود', labelFormat: 'jDD jMMMM jYYYY', width: 6 },
+            { key: 'body', type: 'editor', title: 'متن تاریخی', width: 6 },
+            { key: 'bodies', type: 'textarea', title: 'متن کمتر تاریخی', width: 6 },
             { key: 'job', type: 'radios', title: 'شغل', width: 6, items: [
               { value: 'mech', text: 'مکانیک' },
               { value: 'comp', text: 'کامپیوتری' }
             ] },
-            { key: 'job', type: 'radios', title: 'شغل', width: 6, horizontal: true, items: [
+            { key: 'newJob', type: 'radios', title: 'شغل جدید', width: 6, horizontal: true, items: [
+              { value: 'mech', text: 'مکانیک' },
+              { value: 'comp', text: 'کامپیوتری' }
+            ] },
+            { key: 'items', type: 'checkboxes', title: 'آیتم‌ها', width: 6, items: [
+              { value: 'mech', text: 'مکانیک' },
+              { value: 'comp', text: 'کامپیوتری' }
+            ] },
+            { key: 'newItems', type: 'checkboxes', title: 'آیتم‌های جدید', horizontal: true, width: 6, items: [
               { value: 'mech', text: 'مکانیک' },
               { value: 'comp', text: 'کامپیوتری' }
             ] },
@@ -101,7 +112,8 @@ export default {
       media: '',
       job: 'comp',
       freeTimes: [],
-      freeNames: []
+      freeNames: [],
+      items: []
     },
     boxPosition: [0, 0]
   }),

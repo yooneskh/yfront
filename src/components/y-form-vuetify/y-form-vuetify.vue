@@ -7,7 +7,7 @@
           :target="target"
           :field="field"
           :value="(field.getter && field.getter()) || (field.key && target[field.key])"
-          @input="handleInput(field, $event)"
+          @input="handleInput(field, ...arguments)"
         />
       </v-col>
     </v-row>
@@ -30,6 +30,7 @@ export default {
   components: {
     'y-form-element-text': require('./y-form-elements/y-form-element-text.vue').default,
     'y-form-element-checkbox': require('./y-form-elements/y-form-element-checkbox.vue').default,
+    'y-form-element-checkboxes': require('./y-form-elements/y-form-element-checkboxes.vue').default,
     'y-form-element-select': require('./y-form-elements/y-form-element-select.vue').default,
     'y-form-element-radios': require('./y-form-elements/y-form-element-radios.vue').default,
     'y-form-element-textarea': require('./y-form-elements/y-form-element-textarea.vue').default,
@@ -45,7 +46,22 @@ export default {
     mapElementType(field) {
       return `y-form-element-${field.type}`;
     },
-    handleInput(field, text) {
+    handleInput(field, text, auxiliaryValue) {
+
+      if (field.type === 'checkboxes' || field.type === 'switches') {
+        if (text) {
+          this.$set(this.target, field.key, [
+            ...(this.target[field.key] || []),
+            text
+          ]);
+        }
+        else {
+          if (this.target[field.key]) {
+            console.log(auxiliaryValue);
+            this.target[field.key].splice( this.target[field.key].indexOf(auxiliaryValue) , 1);
+          }
+        } return;
+      }
 
       const value = field.number ? parseInt(text || field.defaultNumber || '0', field.radix || 10) : text;
 

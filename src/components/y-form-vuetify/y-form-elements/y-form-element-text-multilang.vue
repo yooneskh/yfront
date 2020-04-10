@@ -5,10 +5,10 @@
     :value="value[currentLanguage]"
     @input="$set(value, currentLanguage, $event); $emit('input', value)"
     :label="field.title"
+    hide-details
     :placeholder="field.placeholder"
     :class="field.classes"
-    :dir="field.dir"
-    :hide-details="field.hideDetails">
+    :dir="field.dir">
     <template #append>
       <v-menu>
         <template #activator="{ on }">
