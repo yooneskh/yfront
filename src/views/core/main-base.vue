@@ -75,13 +75,7 @@ export default {
       this.$router.replace('/auth');
     }
     else {
-
       // this.$socket.client.connect();
-
-      if (this.$route.name === 'MainBase') {
-        this.$router.replace(this.toolbars[0].path);
-      }
-
     }
   },
   // sockets: {

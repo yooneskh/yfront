@@ -9,7 +9,6 @@ export default new Router({
   routes: [
     {
       path: '/auth',
-      name: 'Auth',
       component: () => import('./views/auth/auth-page.vue' /* webpackChunkName: 'auth-page' */)
     },
     {
@@ -18,24 +17,20 @@ export default new Router({
       children: [
         {
           path: '/',
-          name: 'Home',
           component: () => import('./views/home/home-page.vue' /* webpackChunkName: 'home-page' */)
         },
         {
           path: 'users/list',
-          name: 'ListUsers',
           component: () => import('./views/users/list-user-page.vue' /* webpackChunkName: 'list-user-page' */)
         },
       ]
     },
     {
       path: '/payment/verify',
-      name: 'VerifyPayment',
       component: () => import('./views/general/verify-payment-page.vue' /* webpackChunkName: 'verify-payment' */)
     },
     {
       path: '*',
-      name: 'NotFound',
       component: () => import('./views/general/404-page' /* webpackChunkName: '404-page' */)
     }
   ]

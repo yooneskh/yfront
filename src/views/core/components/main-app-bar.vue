@@ -42,7 +42,7 @@
     </v-menu>
 
     <template v-if="toolbarItems && toolbarItems.length > 0" #extension>
-      <v-tabs background-color="transparent" icons-and-text>
+      <v-tabs background-color="transparent" icons-and-text show-arrows>
         <v-tab v-for="item in toolbarItems" :key="item.title + item.path" :to="item.path">
           {{ item.title }}
           <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
