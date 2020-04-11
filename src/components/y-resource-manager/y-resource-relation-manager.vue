@@ -198,6 +198,7 @@ export default {
       if (meta.isArray) return 'select';
 
       if (meta.languages) return 'text-multilang';
+      if (meta.longText) return 'textarea';
       if (meta.richText) return 'editor';
 
       switch (meta.type) {
