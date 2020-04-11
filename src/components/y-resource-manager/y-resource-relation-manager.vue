@@ -114,6 +114,7 @@ export default {
         ...meta,
         title: meta.title || meta.key,
         type: this.mapMetaType(meta),
+        number: meta.type === 'number',
         wrapped: false, // for the file picker
         multiple: meta.isArray, // for select
         addable: meta.isArray, // for select again :D
