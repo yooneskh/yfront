@@ -23,6 +23,7 @@
       class="small-text"
       :target="filter"
       :fields="valueField"
+      no-bottom-padding
       style="width: 110px;"
     />
 
@@ -68,13 +69,13 @@ export default {
       if (!this.currentMeta) return [];
 
       if (this.currentMeta.ref) {
-        return [ { key: 'value', type: 'resource', resource: this.currentMeta.ref, hideDetails: true, dense: true, simple: true, background: 'transparent' } ];
+        return [ { key: 'value', type: 'resource', resource: this.currentMeta.ref, dense: true, simple: true, background: 'transparent', unfilled: true } ];
       }
       else if (this.currentMeta.type === 'boolean') {
-        return [ { key: 'value', type: 'checkbox', hideDetails: true, title: 'مقدار' } ];
+        return [ { key: 'value', type: 'checkbox', title: 'مقدار' } ];
       }
       else {
-        return [ { key: 'value', type: 'text', placeholder: 'جستجو', number: this.currentMeta.type === 'number', hideDetails: true, dense: true, simple: true, background: 'transparent' } ];
+        return [ { key: 'value', type: 'text', placeholder: 'جستجو', number: this.currentMeta.type === 'number', dense: true, simple: true, background: 'transparent', unfilled: true } ];
       }
 
     }

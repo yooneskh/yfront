@@ -1,7 +1,7 @@
 <template>
   <v-text-field
     type="text"
-    filled
+    :filled="!field.unfilled"
     :value="value[currentLanguage]"
     @input="$set(value, currentLanguage, $event); $emit('input', value)"
     :label="field.title"

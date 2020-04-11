@@ -24,6 +24,7 @@
     :multiple="field.multiple"
     :range="field.range"
     :seperator="field.seperator"
+    :unfilled="field.unfilled"
     :value-format="field.valueFormat"
     @input="$emit('input', $event)"
   />

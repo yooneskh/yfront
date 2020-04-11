@@ -1,6 +1,6 @@
 <template>
   <v-autocomplete
-    filled 
+    :filled="!field.unfilled"
     :label="field.title"
     :items="items"
     :multiple="field.multiple"

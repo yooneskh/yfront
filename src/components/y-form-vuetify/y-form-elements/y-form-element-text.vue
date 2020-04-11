@@ -2,7 +2,7 @@
   <v-text-field
     :type="type"
     :value="value"
-    filled
+    :filled="!field.unfilled"
     :solo="field.solo || field.simple"
     :flat="field.flat || field.simple"
     :dense="field.dense"

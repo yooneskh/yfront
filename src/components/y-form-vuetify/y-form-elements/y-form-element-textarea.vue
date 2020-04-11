@@ -2,7 +2,7 @@
   <v-textarea
     :value="value"
     @input="$emit('input', $event)"
-    filled
+    :filled="!field.unfilled"
     :label="field.title"
     :solo="field.solo || field.simple"
     :flat="field.flat || field.simple"

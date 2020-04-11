@@ -3,7 +3,7 @@
     <v-text-field
       readonly
       :label="label"
-      filled
+      :filled="!unfilled"
       hide-details
       :value="stateInfo"
       prepend-inner-icon="mdi-paperclip"
@@ -28,7 +28,8 @@ export default {
     wrapped: {
       type: Boolean,
       default: true
-    }
+    },
+    unfilled: Boolean
   },
   data: () => ({
     processing: false,

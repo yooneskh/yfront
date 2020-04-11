@@ -3,7 +3,7 @@
     <template #activator="{ on }">
       <v-text-field
         readonly
-        filled
+        :filled="!unfilled"
         :class="inputClass"
         :label="label"
         :placeholder="placeholder"
@@ -54,6 +54,7 @@ export default {
     labelFormat: String,
     placeholder: String,
     hideDetails: Boolean,
+    unfilled: Boolean,
     dense: Boolean,
     solo: Boolean,
     flat: Boolean,

@@ -1,7 +1,7 @@
 <template>
   <v-select
     v-if="!field.addable"
-    filled
+    :filled="!field.unfilled"
     :label="field.title"
     :items="field.items"
     hide-details

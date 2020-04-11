@@ -13,14 +13,13 @@
 
         <v-card-title class="justify-center">ورود {{ $options.Title }}</v-card-title>
 
-        <v-card-text class="mt-4">
+        <v-card-text class="mt-2">
 
           <template v-if="mode === 'login'">
             شماره تلفن خود را در زیر وارد کنید تا به حساب خود وارد شوید.
             <y-form
-              class="pt-2"
+              class="pt-4"
               :target="this"
-              no-padding
               :fields="[
                 { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', mask: '#### ### ####', classes: 'ltred', inputNumeric: true, hideDetails: true }
               ]"
@@ -31,9 +30,8 @@
           <template v-if="mode === 'register'">
             شما قبلا حساب کاربری نساخته‌اید. لطفا اطلاعات زیر را وارد کرده تا حساب شما ساخته شود.
             <y-form
-              class="pt-2"
+              class="pt-4"
               :target="this"
-              no-padding
               :fields="[
                 { key: 'name', type: 'text', title: 'نام', hideDetails: true },
               ]"
@@ -44,9 +42,8 @@
           <template v-if="mode === 'verify'">
             کد تایید به شماره شما فرستاده شده است. لطفا آن را در زیر وارد کنید.
             <y-form
-              class="pt-2"
+              class="pt-4"
               :target="this"
-              no-padding
               :fields="[
                 { key: 'verificationCode', type: 'text', title: 'کد تایید', mask: '######',  classes: 'ltred', inputNumeric: true, autocomplete: 'one-time-password', hideDetails: true }
               ]"
@@ -56,7 +53,7 @@
 
         </v-card-text>
 
-        <div class="mt-4 px-2 pb-2">
+        <div class="px-2 pb-2">
           <template v-if="mode === 'login'">
             <v-btn block depressed color="primary" large :loading="loading" @click="doLogin">ورود به حساب کاربری</v-btn>
           </template>

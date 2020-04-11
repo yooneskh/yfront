@@ -3,6 +3,7 @@
     :label="field.title"
     :wrapped="field.wrapped"
     :class="field.classes"
+    :unfilled="field.unfilled"
     :value="value"
     @input="$emit('input', $event)"
   />
