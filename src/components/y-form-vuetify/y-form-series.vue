@@ -9,7 +9,7 @@
     </v-subheader>
 
     <v-row>
-      <v-col v-for="(item, index) in target[field.key]" :key="ids[index]" class="series-item py-0" :cols="field.itemWidth || 12">
+      <v-col v-for="(item, index) in target[field.key]" :key="ids[index]" class="series-item py-0" :cols="field.itemWidth || 12" :style="{ 'margin-top': index > 0 ? `${field.itemTopMargin}px` : '' }">
 
         <y-form
           :target="item"
