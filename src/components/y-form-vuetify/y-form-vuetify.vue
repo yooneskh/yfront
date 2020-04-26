@@ -58,7 +58,6 @@ export default {
         }
         else {
           if (this.target[field.key]) {
-            console.log(auxiliaryValue);
             this.target[field.key].splice( this.target[field.key].indexOf(auxiliaryValue) , 1);
           }
         } return;
