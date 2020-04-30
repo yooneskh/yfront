@@ -59,7 +59,7 @@ export default {
       const { status, result } = await Api.Payment.verifyTicket(this.$route.query.ticket);
       this.loading = false;
 
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, result, true)) return;
 
       this.success = true;
 
