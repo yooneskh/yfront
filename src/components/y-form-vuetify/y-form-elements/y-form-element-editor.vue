@@ -3,7 +3,7 @@
 
     <v-label>{{ field.title }}</v-label>
 
-    <v-btn depressed class="mt-2" color="primary" block @click="windowOpened = true">
+    <v-btn depressed class="mt-2" color="primary" :disabled="field.disabled" block @click="windowOpened = true">
       باز کردن ویرایشگر
     </v-btn>
 
@@ -24,6 +24,7 @@
         @input="$emit('input', $event)"
         :placeholder="field.placeholder"
         :class="field.classes"
+        :readonly="field.readonly"
         class="mb-10"
         style="width: 100%; max-width: 800px; margin: 0 auto;"
       />
@@ -59,7 +60,7 @@ export default {
   .global-window {
     position: fixed;
     top: 0; left: 0; bottom: 0; right: 0;
-    z-index: 1000;
+    z-index: 1;
     background: grey;
   }
 </style>

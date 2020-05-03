@@ -7,6 +7,8 @@
     :row="field.horizontal"
     :value="value"
     :dir="field.dir"
+    :disabled="field.disabled"
+    :readonly="field.readonly"
     @change="$emit('input', $event)"
     style="text-align: unset;">
     <v-radio

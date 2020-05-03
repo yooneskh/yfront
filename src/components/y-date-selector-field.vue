@@ -16,7 +16,7 @@
         :value="fieldTitle"
         :dir="dir"
         :style="inputStyle"
-        v-on="on"
+        v-on="!readonly && on"
       />
     </template>
     <v-date-picker

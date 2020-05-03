@@ -12,6 +12,8 @@
       :label="item.text"
       :value="item.value"
       :dir="field.dir"
+      :disabled="field.disabled"
+      :readonly="field.readonly"
       class="mt-0"
       :class="{
         'mt-2': index === 0 && !field.horizontal,

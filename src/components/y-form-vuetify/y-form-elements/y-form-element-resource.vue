@@ -10,6 +10,8 @@
     :flat="field.simple"
     :dir="field.dir"
     :background-color="field.background"
+    :disabled="field.disabled"
+    :readonly="field.readonly"
     hide-details
     @input="$emit('input', $event)"
   />

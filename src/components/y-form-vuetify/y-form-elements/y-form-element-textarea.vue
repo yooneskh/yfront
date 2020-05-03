@@ -11,6 +11,8 @@
     :dir="field.dir"
     :rows="field.rows"
     :auto-grow="field.autoGrow"
+    :disabled="field.disabled"
+    :readonly="field.readonly"
     hide-details
   />
 </template>

@@ -8,6 +8,8 @@
     :multiple="field.multiple"
     :value="value"
     :dir="field.dir"
+    :disabled="field.disabled"
+    :readonly="field.readonly"
     @input="$emit('input', $event)"
   />
   <v-combobox
@@ -20,6 +22,8 @@
     hide-details
     :value="value"
     :dir="field.dir"
+    :disabled="field.disabled"
+    :readonly="field.readonly"
     @input="$emit('input', $event)" 
   />
 </template>

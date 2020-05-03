@@ -9,7 +9,7 @@
           :target="heh"
           :fields="[
             { key: 'name', type: 'text', title: 'نام', width: 6 },
-            { key: 'counts', type: 'text', number: true, title: 'تعداد', width: 6 },
+            { key: 'counts', type: 'text', number: true, title: 'تعداد', readonly: true, disabled: true, width: 6 },
             { key: 'pass', type: 'text', password: true, title: 'رمز عبور', width: 6 },
             { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] },
             { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
@@ -38,9 +38,10 @@
               type: 'series',
               title: 'زمان‌های خالی',
               width: 8,
+              readonly: true,
               base: { begin: '12:00', end: '', fruits: ['سیب'] },
               itemFields: [
-                { key: 'begin', type: 'text', title: 'زمان شروع', width: 3, dir: 'ltr' },
+                { key: 'begin', type: 'text', title: 'زمان شروع', width: 3, disabled: true, dir: 'ltr' },
                 { key: 'end', type: 'text', title: 'زمان پایان', width: 3, dir: 'ltr' },
                 { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] }
               ]

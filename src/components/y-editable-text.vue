@@ -1,7 +1,7 @@
 <template>
   <span
     class="y-editable-text"
-    contenteditable
+    :contenteditable="!readonly"
     v-text="value || placeholder"
     @keyup="handleChange"
     @blur="handleEnd"
@@ -15,6 +15,7 @@ export default {
   props: {
     value: String,
     lazy: Boolean,
+    readonly: Boolean,
     placeholder: String
   },
   data: () => ({

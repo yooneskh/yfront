@@ -8,7 +8,9 @@
     hide-details
     :placeholder="field.placeholder"
     :class="field.classes"
-    :dir="field.dir">
+    :dir="field.dir"
+    :disabled="field.disabled"
+    :readonly="field.readonly">
     <template #append>
       <v-menu>
         <template #activator="{ on }">

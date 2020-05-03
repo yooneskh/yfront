@@ -3,7 +3,7 @@
 
     <v-subheader class="px-0">
       {{ field.title }}
-      <v-btn class="ms-2" small icon @click="addItem">
+      <v-btn v-if="!field.readonly && !field.disabled" class="ms-2" small icon @click="addItem">
         <v-icon small>mdi-plus</v-icon>
       </v-btn>
     </v-subheader>
@@ -13,10 +13,10 @@
 
         <y-form
           :target="item"
-          :fields="field.itemFields"
+          :fields="injectedItemFields"
         />
 
-        <v-btn class="series-remove" icon x-small @click="removeItem(index)">
+        <v-btn v-if="!field.readonly && !field.disabled" class="series-remove" icon x-small @click="removeItem(index)">
           <v-icon color="error" x-small>mdi-close</v-icon>
         </v-btn>
 
@@ -45,6 +45,15 @@ export default {
   data: () => ({
     ids: []
   }),
+  computed: {
+    injectedItemFields() {
+      return this.field.itemFields.map(field => ({
+        ...field,
+        readonly: this.field.readonly ?? field.readonly,
+        disabled: this.field.disabled ?? field.disabled
+      }));
+    }
+  },
   mounted() {
     this.ids = this.target[this.field.key].map(() => this.$uuid())
   },

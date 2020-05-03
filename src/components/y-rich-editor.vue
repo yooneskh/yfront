@@ -1,17 +1,17 @@
 <template>
   <div class="y-rich-editor">
     
-    <drag-container @drop="handleDrop">
+    <drag-container @drop="handleDrop" :drag-handle-selector="readonly ? '#non-existant-id' : undefined">
       <drag-element v-for="(part, index) in parts" :key="index" class="editor-item">
 
         <h2
           v-if="part.type === 'title'"
           class="title">
-          <y-editable-text v-model="parts[index].content" lazy placeholder="Empty Text ..." />
+          <y-editable-text v-model="parts[index].content" lazy :readonly="readonly" placeholder="Empty Text ..." />
         </h2>
 
         <p v-if="part.type === 'text'">
-          <y-editable-text v-model="parts[index].content" lazy placeholder="Empty Text ..." />
+          <y-editable-text v-model="parts[index].content" lazy :readonly="readonly" placeholder="Empty Text ..." />
         </p>
 
         <v-img
@@ -20,14 +20,14 @@
           class="my-4"
         />
 
-        <v-btn class="delete-button" icon small color="error" @click="parts.splice(index, 1)">
+        <v-btn v-if="!readonly" class="delete-button" icon small color="error" @click="parts.splice(index, 1)">
           <v-icon small>mdi-close</v-icon>
         </v-btn>
 
       </drag-element>
     </drag-container>
 
-    <div class="add-bar text-center mt-4 mx-auto grey lighten-3 py-1 px-4 mb-4" style="width: 300px; border-radius: 32px;">
+    <div v-if="!readonly" class="add-bar text-center mt-4 mx-auto grey lighten-3 py-1 px-4 mb-4" style="width: 300px; border-radius: 32px;">
       <span class="caption me-4">افزودن</span>
       <v-btn class="ms-2" icon @click="parts.push({ type: 'title', content: '' })"> <v-icon>mdi-format-title</v-icon> </v-btn>
       <v-btn class="ms-2" icon @click="parts.push({ type: 'text', content: '' })"> <v-icon>mdi-text-subject</v-icon> </v-btn>
@@ -54,7 +54,8 @@ export default {
     value: {
       type: String,
       default: ''
-    }
+    },
+    readonly: Boolean
   },
   data: () => ({
     parts: []

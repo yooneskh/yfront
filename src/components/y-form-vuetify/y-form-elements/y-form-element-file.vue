@@ -5,6 +5,8 @@
     :class="field.classes"
     :unfilled="field.unfilled"
     :value="value"
+    :disabled="field.disabled"
+    :readonly="field.readonly"
     @input="$emit('input', $event)"
   />
 </template>

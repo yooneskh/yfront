@@ -13,6 +13,8 @@
       :hide-mode-switch="!showModeSwitch"
       :show-swatches="showSwatches"
       :swatches="field.swatches"
+      :disabled="field.disabled"
+      :readonly="field.readonly"
       mode="rgba"
     />
   </div>

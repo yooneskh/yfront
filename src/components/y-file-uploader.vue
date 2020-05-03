@@ -9,7 +9,8 @@
       prepend-inner-icon="mdi-paperclip"
       :append-icon="path ? 'mdi-open-in-new' : undefined"
       flat
-      @click="$refs.theFile.click()"
+      :disabled="disabled"
+      @click="!readonly && $refs.theFile.click()"
       @click:append="openPath"
     />
     <input class="input" ref="theFile" type="file" @change.passive="theChange" style="display: none;" />
@@ -29,7 +30,9 @@ export default {
       type: Boolean,
       default: true
     },
-    unfilled: Boolean
+    unfilled: Boolean,
+    readonly: Boolean,
+    disabled: Boolean
   },
   data: () => ({
     processing: false,

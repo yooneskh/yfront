@@ -79,7 +79,8 @@ export default {
         wrapped: false, // for the file picker
         multiple: meta.isArray, // for select
         addable: meta.isArray, // for select
-        resource: meta.ref
+        resource: meta.ref,
+        readonly: this.readonly
       }));
     },
     allLoading() {
