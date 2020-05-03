@@ -43,7 +43,7 @@
 
 import YNetwork from 'ynetwork';
 import debounce from 'lodash/debounce';
-import { loadMetasFor } from './y-resource-util';
+import { loadMetasFor, transformFilters, transformSorts } from './y-resource-util';
 
 export default {
   name: 'YResourceManager',
@@ -139,8 +139,8 @@ export default {
     },
     async loadData() {
 
-      const filters = this.transformFilters(this.filters);
-      const sorts = this.transformSorts(this.sorts);
+      const filters = transformFilters(this.filters);
+      const sorts = transformSorts(this.sorts);
 
       const skip = (this.page - 1) * this.itemsPerPage;
       const limit = this.itemsPerPage;
@@ -177,26 +177,6 @@ export default {
         this.loadData();
 
       }
-    },
-    transformFilters(filters) {
-
-      if (!filters) return '';
-
-      return 'filters=' + filters.map(
-        filter => `${filter.key}:${filter.operator}:${filter.value}`
-      ).join(',');
-
-    },
-    transformSorts(sorts) {
-
-      const entries = Object.entries(sorts || {});
-
-      if (entries.length === 0) return '';
-
-      return 'sorts=' + entries.map(
-        sort => `${sort[0]}:${sort[1]}`
-      ).join(',');
-
     }
   }
 }

@@ -66,3 +66,23 @@ export async function transformResourceToTitle(apiBase, resourceName, resourceId
   return allTitles.join(' ');
 
 }
+
+export function transformFilters(filters) {
+  if (!filters) return '';
+
+  return 'filters=' + filters.map(filter =>
+    `${filter.key}:${filter.operator}:${filter.value}`
+  ).join(',');
+
+}
+
+export function transformSorts(sorts) {
+
+  const entries = Object.entries(sorts || {});
+  if (entries.length === 0) return '';
+
+  return 'sorts=' + entries.map(sort =>
+    `${sort[0]}:${sort[1]}`
+  ).join(',');
+
+}

@@ -1,5 +1,5 @@
 <template>
-  <v-autocomplete
+  <!-- <v-autocomplete
     :filled="!field.unfilled"
     :label="field.title"
     :items="items"
@@ -14,6 +14,21 @@
     :readonly="field.readonly"
     hide-details
     @input="$emit('input', $event)"
+  /> -->
+  <v-text-field
+    :filled="!field.unfilled"
+    :label="field.title"
+    :value="resourceTitle"
+    :loading="loading"
+    :dense="field.dense"
+    :solo="field.simple"
+    :flat="field.simple"
+    :dir="field.dir"
+    :background-color="field.background"
+    :disabled="field.disabled"
+    readonly
+    hide-details
+    @click.native="openSelectResourceDialog"
   />
 </template>
 
@@ -34,22 +49,53 @@ export default {
     }
   },
   data: () => ({
-    items: []
+    items: [],
+    loading: false,
+    resourceTitle: ''
   }),
+  watch: {
+    'value': {
+      immediate: true,
+      handler() {
+        this.makeResourceTitle();
+      }
+    }
+  },
   computed: {
     isRelation() {
       return this.field.relationSourceModel && this.field.relationTargetModel;
     }
   },
   mounted() {
-    if (this.isRelation) {
-      this.loadRelationicData();
-    }
-    else {
-      this.loadData();
-    }
+    // if (this.isRelation) {
+    //   this.loadRelationicData();
+    // }
+    // else {
+    //   this.loadData();
+    // }
   },
   methods: {
+    async makeResourceTitle() {
+
+      this.resourceTitle = '---';
+      if (!this.value) return;
+
+      this.loading = true;
+      this.resourceTitle = await transformResourceToTitle(this.$apiBase, this.field.resource, this.value);
+      this.loading = false;
+
+    },
+    async openSelectResourceDialog() {
+      if (this.field.readonly) return;
+
+      const result = await this.$dialog(import('../../y-resource-manager/y-resource-select-dialog'), {
+        modelName: this.field.resource,
+        width: '700px'
+      }); if (!result) return;
+
+      this.$emit('input', result);
+
+    },
     async loadData() {
 
       const resourceUrl = this.field.resource.toLowerCase() + 's';
