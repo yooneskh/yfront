@@ -110,7 +110,7 @@ export default {
         YNetwork.get(`${this.$apiBase}/${resourceUrl}`)
       ]);
 
-      const titleables = metas.filter(meta => meta.titleable).map(meta => meta.key);
+      const titleables = metas.filter(meta => meta.titleAble).map(meta => meta.key);
 
       this.items = await Promise.all(
         items.map(async item => {
@@ -166,7 +166,7 @@ export default {
           ]);
 
           const otherDataTitles = await Promise.all(
-            relationMeta.properties.filter(p => p.titleable).map(async meta => {
+            relationMeta.properties.filter(p => p.titleAble).map(async meta => {
 
               const arrayedValues = Array.isArray(item[meta.key]) ? item[meta.key] : [item[meta.key]];
 

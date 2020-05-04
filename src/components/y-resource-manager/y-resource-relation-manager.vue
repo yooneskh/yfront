@@ -77,13 +77,13 @@ export default {
             key: 'createdAt',
             text: 'زمان ایجاد',
             timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
-            class: 'text-center ltred'
+            dir: 'ltr'
           },
           {
             key: 'updatedAt',
             text: 'زمان تغییر',
             timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
-            class: 'text-center ltred'
+            dir: 'ltr'
           }
         ]);
     }
@@ -136,10 +136,8 @@ export default {
       const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${form[this.relation.targetModel.toLowerCase()]}`;
 
       const payload = { ...form };
-      delete payload[this.modelName.toLowerCase()];
-      delete payload[this.relation.targetModel.toLowerCase()];
 
-      if (toEdit) {
+      if (toEdit) {  
         Object.keys(payload).forEach(key => {
           if (relation[key] === payload[key]) {
             delete payload[key];
@@ -152,6 +150,9 @@ export default {
         this.$emit('resolve', false);
         return;
       }
+
+      delete payload[this.modelName.toLowerCase()];
+      delete payload[this.relation.targetModel.toLowerCase()];
 
       if (!toEdit) {
 

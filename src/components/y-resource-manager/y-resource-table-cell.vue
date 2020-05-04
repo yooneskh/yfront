@@ -82,7 +82,7 @@ export default {
         transformResourceToTitle(this.$apiBase, this.header.relationTargetModel, relationData[this.header.relationTargetModel.toLowerCase()])
       ]);
 
-      this.relationTitle = sourceTitle + ' ' + targetTitle + ' ' + relationMeta.properties.filter(p => p.titleable).map(meta => relationData[meta.key]).join(' ');
+      this.relationTitle = sourceTitle + ' ' + targetTitle + ' ' + relationMeta.properties.filter(p => p.titleAble).map(meta => relationData[meta.key]).join(' ');
 
       this.sourceResourceData = (await YNetwork.get(`${this.$apiBase}/${sourceName}s/${this.relationSourceId}`)).result;
 
