@@ -53,16 +53,21 @@ export default {
   methods: {
     async makeResourceTitle() {
 
-      this.resourceTitle = '---';
+      this.resourceTitle = '';
       if (!this.value) return;
 
       this.loading = true;
 
-      if (this.isRelation) {
-        this.resourceTitle = await transformRelationToTitle(this.$apiBase, this.field.resource, this.value, this.field.relationSourceModel, this.field.relationTargetModel);
+      const titleMaker = this.isRelation ?
+        async (id) => transformRelationToTitle(this.$apiBase, this.field.resource, id, this.field.relationSourceModel, this.field.relationTargetModel)
+        :
+        async (id) => transformResourceToTitle(this.$apiBase, this.field.resource, id);
+
+      if (!this.field.multiple) {
+        this.resourceTitle = await titleMaker(this.value);
       }
       else {
-        this.resourceTitle = await transformResourceToTitle(this.$apiBase, this.field.resource, this.value);
+        this.resourceTitle = (await Promise.all(this.value.map(titleMaker))).join(' -- ');
       }
 
       this.loading = false;
@@ -75,7 +80,8 @@ export default {
         width: '700px',
         modelName: this.field.resource,
         relationSourceModel: this.field.relationSourceModel,
-        relationTargetModel: this.field.relationTargetModel
+        relationTargetModel: this.field.relationTargetModel,
+        multiple: this.field.multiple
       }); if (!result) return;
 
       this.$emit('input', result);

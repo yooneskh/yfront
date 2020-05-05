@@ -1,21 +1,46 @@
 <template>
   <v-card :loading="loading">
     
+    <v-card-title>
+      انتخاب آیتم
+      <v-spacer />
+      <v-btn v-if="multiple" text color="primary" @click="$emit('resolve', selectedItems.map(item => item._id))">
+        انتخاب
+        <v-icon right>mdi-check</v-icon>
+      </v-btn>
+    </v-card-title>
     <y-resource-filter v-model="filters" :metas="metas" />
 
     <div v-if="items.length === 0" class="pa-6 text-center">
       <span class="caption">هیچ داده‌ای موجود نیست.</span>
     </div>
-    <v-list v-else>
-      <v-list-item v-for="item in items" :key="item._id" @click="$emit('resolve', item._id)">
-        <v-list-item-icon class="me-4">
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+    <div v-else>
+
+      <div v-if="multiple && selectedItems.length > 0">
+        <v-list class="grey lighten-4">
+          <v-list-item v-for="(item, index) in selectedItems" :key="item._id" @click="selectedItems.splice(index, 1)">
+            <v-list-item-icon class="me-4">
+              <v-icon>mdi-check</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </div>
+
+      <v-list>
+        <v-list-item v-for="item in notSelectedItems" :key="item._id" @click="handleItemClick(item)">
+          <v-list-item-icon class="me-4">
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+    </div>
 
   </v-card>
 </template>
@@ -37,16 +62,20 @@ export default {
       required: true
     },
     relationSourceModel: String,
-    relationTargetModel: String
+    relationTargetModel: String,
+    multiple: Boolean
   },
   data: () => ({
     loading: false,
     filters: [],
     metas: [],
-    items: []
+    items: [],
+    selectedItems: []
   }),
   computed: {
-
+    notSelectedItems() {
+      return this.items.filter(item => !this.selectedItems.find(si => si._id === item._id));
+    }
   },
   watch: {
     filters: {
@@ -141,6 +170,16 @@ export default {
       this.loading = false;
 
       this.items = result;
+
+    },
+    handleItemClick(item) {
+
+      if (!this.multiple) {
+        this.$emit('resolve', item._id);
+        return;
+      }
+
+      this.selectedItems.push(item);
 
     }
   }
