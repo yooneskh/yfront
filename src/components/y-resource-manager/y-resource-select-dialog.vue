@@ -52,7 +52,7 @@ export default {
     filters: {
       deep: true,
       handler: debounce(function() {
-        this.loaddata();
+        this.loadData();
       }, 500)
     }
   },
