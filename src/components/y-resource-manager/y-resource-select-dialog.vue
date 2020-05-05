@@ -23,7 +23,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { loadMetasFor, transformResourceToTitle, transformFilters } from './y-resource-util';
+import { loadMetasFor, transformResourceToTitle, transformFilters, transformRelationToTitle } from './y-resource-util';
 import debounce from 'lodash/debounce';
 
 export default {
@@ -35,7 +35,9 @@ export default {
     modelName: {
       type: String,
       required: true
-    }
+    },
+    relationSourceModel: String,
+    relationTargetModel: String
   },
   data: () => ({
     loading: false,
@@ -50,18 +52,32 @@ export default {
     filters: {
       deep: true,
       handler: debounce(function() {
-        this.loadData();
+        this.loaddata();
       }, 500)
     }
   },
   async mounted() {
-
-    this.metas = await loadMetasFor(this.$apiBase, this.modelName);
-    this.loadData();
-
+    this.setup();
   },
   methods: {
+    async setup() {
+      if (this.relationSourceModel && this.relationTargetModel) {
+        this.setupRelations();
+      }
+      else {
+        this.loadNormalData();
+        this.metas = await loadMetasFor(this.$apiBase, this.modelName);
+      }
+    },
     async loadData() {
+      if (this.relationSourceModel && this.relationTargetModel) {
+        this.loadRelationsData();
+      }
+      else {
+        this.loadNormalData();
+      }
+    },
+    async loadNormalData() {
 
       const transformedFilters = transformFilters(this.filters);
 
@@ -78,6 +94,54 @@ export default {
 
       this.items = result;
       
+    },
+    async setupRelations() {
+
+      this.loadRelationsData();
+
+      const { result } = await YNetwork.get(`${this.$apiBase}/${this.relationSourceModel.toLowerCase()}s/relations`);
+
+      const relation = result.find(r => r.targetModel === this.relationTargetModel);
+
+      this.metas = [
+        {
+          key: this.relationSourceModel.toLowerCase(),
+          type: 'string',
+          ref: this.relationSourceModel,
+          title: relation.sourcePropertyTitle || this.relationSourceModel,
+          required: true
+        },
+        {
+          key: this.relationTargetModel.toLowerCase(),
+          type: 'string',
+          ref: this.relationTargetModel,
+          title: relation.targetPropertyTitle,
+          required: true
+        },
+        ...relation.properties
+      ];
+
+    },
+    async loadRelationsData() {
+
+      const transformedFilters = transformFilters(this.filters);
+
+      const targetName = (this.modelName || this.relationTargetModel).toLowerCase();
+      const sourceName = this.relationSourceModel.toLowerCase();
+
+      this.loading = true;
+      const { result } = await YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s?${transformedFilters}&selects=_id`)
+
+      await Promise.all(
+        result.map(async resource => {
+          resource.title = await transformRelationToTitle(this.$apiBase, this.modelName, resource._id, this.relationSourceModel, this.relationTargetModel);
+        })
+      );
+
+      this.loading = false;
+
+      this.items = result;
+
     }
   }
 }

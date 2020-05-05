@@ -67,6 +67,46 @@ export async function transformResourceToTitle(apiBase, resourceName, resourceId
 
 }
 
+export async function transformRelationToTitle(apiBase, resourceModel, relationId, relationSourceModel, relationTargetModel) {
+
+  const targetName = (resourceModel || relationTargetModel).toLowerCase();
+  const sourceName = relationSourceModel.toLowerCase();
+
+  const [{ result: item }, { result: relations }] = await Promise.all([
+    YNetwork.get(`${apiBase}/${sourceName}s/${targetName}s/${relationId}`),
+    new Promise(resolve =>
+      loadRelationsFor(apiBase, relationSourceModel).then(rs => resolve({
+        status: 200,
+        result: rs
+      }))
+    )
+  ]);
+
+  const relationMeta = relations.find(relation => relation.targetModel === relationTargetModel);
+
+  const [sourceTitle, targetTitle] = await Promise.all([
+    transformResourceToTitle(apiBase, relationSourceModel, item[relationSourceModel.toLowerCase()]),
+    transformResourceToTitle(apiBase, relationTargetModel, item[relationTargetModel.toLowerCase()])
+  ]);
+
+  const otherDataTitles = await Promise.all(
+    relationMeta.properties.filter(p => p.titleAble).map(async meta => {
+
+      const arrayedValues = Array.isArray(item[meta.key]) ? item[meta.key] : [item[meta.key]];
+
+      if (!meta.ref) return arrayedValues.join(', ');
+
+      return (await Promise.all(
+        arrayedValues.map(value => transformResourceToTitle(apiBase, meta.ref, value))
+      )).join(', ');
+
+    })
+  );
+
+  return [sourceTitle, targetTitle, ...otherDataTitles].join(' ');
+
+}
+
 export function transformFilters(filters) {
   if (!filters) return '';
 

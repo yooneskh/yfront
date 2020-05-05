@@ -1,20 +1,4 @@
 <template>
-  <!-- <v-autocomplete
-    :filled="!field.unfilled"
-    :label="field.title"
-    :items="items"
-    :multiple="field.multiple"
-    :value="value"
-    :dense="field.dense"
-    :solo="field.simple"
-    :flat="field.simple"
-    :dir="field.dir"
-    :background-color="field.background"
-    :disabled="field.disabled"
-    :readonly="field.readonly"
-    hide-details
-    @input="$emit('input', $event)"
-  /> -->
   <v-text-field
     :filled="!field.unfilled"
     :label="field.title"
@@ -35,13 +19,13 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { transformResourceToTitle, loadMetasFor, loadRelationsFor } from '../../y-resource-manager/y-resource-util';
+import { transformResourceToTitle, loadMetasFor, loadRelationsFor, transformRelationToTitle } from '../../y-resource-manager/y-resource-util';
 
 export default {
   name: 'YFormElementResource',
   props: {
     value: {
-
+      type: String
     },
     field: {
       type: Object,
@@ -54,11 +38,8 @@ export default {
     resourceTitle: ''
   }),
   watch: {
-    'value': {
-      immediate: true,
-      handler() {
-        this.makeResourceTitle();
-      }
+    'value'() {
+      this.makeResourceTitle();
     }
   },
   computed: {
@@ -67,12 +48,7 @@ export default {
     }
   },
   mounted() {
-    // if (this.isRelation) {
-    //   this.loadRelationicData();
-    // }
-    // else {
-    //   this.loadData();
-    // }
+    this.makeResourceTitle();
   },
   methods: {
     async makeResourceTitle() {
@@ -81,7 +57,14 @@ export default {
       if (!this.value) return;
 
       this.loading = true;
-      this.resourceTitle = await transformResourceToTitle(this.$apiBase, this.field.resource, this.value);
+
+      if (this.isRelation) {
+        this.resourceTitle = await transformRelationToTitle(this.$apiBase, this.field.resource, this.value, this.field.relationSourceModel, this.field.relationTargetModel);
+      }
+      else {
+        this.resourceTitle = await transformResourceToTitle(this.$apiBase, this.field.resource, this.value);
+      }
+
       this.loading = false;
 
     },
@@ -89,8 +72,10 @@ export default {
       if (this.field.readonly) return;
 
       const result = await this.$dialog(import('../../y-resource-manager/y-resource-select-dialog'), {
+        width: '700px',
         modelName: this.field.resource,
-        width: '700px'
+        relationSourceModel: this.field.relationSourceModel,
+        relationTargetModel: this.field.relationTargetModel
       }); if (!result) return;
 
       this.$emit('input', result);

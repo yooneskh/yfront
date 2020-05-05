@@ -70,6 +70,7 @@ export default {
       }
       else {
         this.$set(this.target, field.key, value);
+        this.$forceUpdate(); // TODO: remove this !!
       }
 
     }
