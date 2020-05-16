@@ -50,7 +50,7 @@ export async function transformResourceToTitle(apiBase, resourceName, resourceId
   const metas = result[0].result;
   const resource = result[1].result;
 
-  const titleableMetas = metas.filter(meta => meta.titleAble);
+  const titleableMetas = metas.filter(meta => meta.titleable);
 
   const allTitles = await Promise.all(
     titleableMetas.map(meta => new Promise(resolve => {
@@ -90,7 +90,7 @@ export async function transformRelationToTitle(apiBase, resourceModel, relationI
   ]);
 
   const otherDataTitles = await Promise.all(
-    relationMeta.properties.filter(p => p.titleAble).map(async meta => {
+    relationMeta.properties.filter(p => p.titleable).map(async meta => {
 
       const arrayedValues = Array.isArray(item[meta.key]) ? item[meta.key] : [item[meta.key]];
 
