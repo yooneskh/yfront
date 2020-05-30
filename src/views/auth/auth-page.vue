@@ -87,6 +87,7 @@
 
 import Api from '../../api';
 import { title as Title } from '../../../package.json';
+import { Config } from '../../global/config';
 
 export default {
   name: 'AuthPage',
@@ -112,9 +113,15 @@ export default {
       const { status, result } = await Api.Auth.login(`+98${this.cleanPhoneNumber.slice(1)}`);
       this.loading = false;
 
-      if (status === 404) this.mode = 'register';
-      else if (this.$generalHandle(status, result)) return;
-      else this.mode = 'verify';
+      if (status === 404 && Config.auth.registerEnabled) {
+        this.mode = 'register';
+      }
+      else if (this.$generalHandle(status, result)) {
+        return;
+      }
+      else {
+        this.mode = 'verify';
+      }
 
     },
     async doRegister() {

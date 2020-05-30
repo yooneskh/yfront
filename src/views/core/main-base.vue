@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { Config } from '../../global/config';
 
 export default {
   name: 'MainBase',
@@ -38,12 +39,12 @@ export default {
   },
   data: () => ({
     config: {
-      mode: 'sidebar', // or appbar
-      appBarHeight: 64,
-      color: 'primary',
-      isDark: true,
-      stickyAppBar: false,
-      expandingSidebarItems: false
+      mode: Config.baseLayout.defaultBarMode,
+      appBarHeight: Config.baseLayout.appBarHeight,
+      color: Config.baseLayout.barColor,
+      isDark: Config.baseLayout.isBarColorDark,
+      stickyAppBar: Config.baseLayout.isAppBarSticky,
+      expandingSidebarItems: Config.baseLayout.expandingSidebarItems
     },
     toolbars: [
       { group: 'عمومی', title: 'خانه', icon: 'mdi-home', path: '/' },
@@ -59,37 +60,38 @@ export default {
 
     },
     contentTopPadding() {
+      if (this.appliedConfigMode !== 'appbar') return Config.baseLayout.mainContemtAreaTopSpacing;
+      if (!this.config.stickyAppBar) return Config.baseLayout.mainContemtAreaTopSpacing;
 
-      if (this.appliedConfigMode !== 'appbar') return 12;
+      if (!this.toolbars || this.toolbars.length === 0) {
+        return this.config.appBarHeight + Config.baseLayout.mainContemtAreaTopSpacing;
+      }
 
-      if (!this.config.stickyAppBar) return 12;
-
-      if (!this.toolbars || this.toolbars.length === 0) return this.config.appBarHeight + 12;
-
-      return this.config.appBarHeight + 64 + 12;
+      return this.config.appBarHeight + Config.baseLayout.appBarToolbarHeight + Config.baseLayout.mainContemtAreaTopSpacing;
 
     }
   },
   beforeMount() {
-    if (!this.$token) {
+    if (!this.$token && Config.auth.isAuthMandatory) {
       this.$router.replace('/auth');
     }
-    else {
-      // this.$socket.client.connect();
+    else if (Config.socket.enabled && (!Config.socket.needsAuthentication || this.$token)) {
+      this.$socket.client.connect();
     }
   },
-  // sockets: {
-  //   connect() {
-  //     this.$socket.client.emit('authenticate', { token: this.$token });
-  //   },
-  //   authenticated() {
-  //     console.log('authenticated');
-  //     this.$socket.client.emit('subscribe', 'Resource.User.*');
-  //   },
-  //   'Resource.User.*'(...data) {
-  //     console.log('user data', ...data);
-  //   }
-  // }
+  sockets: {
+    connect() {
+      if (Config.socket.needsAuthentication) {
+        this.$socket.client.emit('authenticate', { token: this.$token });
+      }
+    },
+    authenticated() {
+    //   this.$socket.client.emit('subscribe', 'Resource.User.*');
+    },
+    // 'Resource.User.*'(...data) {
+    // 
+    // }
+  }
 }
 </script>
 

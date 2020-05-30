@@ -4,7 +4,10 @@ import router from './router'
 import vuetify from './plugins/vuetify';
 import './plugins/yvue';
 import Api from './api';
-import { ENDPOINT_BASE } from './api/ApiBaseEndpoints';
+import { ENDPOINT_BASE, ENDPOINT_CORE } from './api/ApiBaseEndpoints';
+import { Config } from './global/config';
+import io from 'socket.io-client';
+import VueSocketIO from 'vue-socket.io-extended';
 
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import './fonts/iryekan/iryekan.css';
@@ -13,10 +16,9 @@ import './assets/scss/app.scss';
 
 Vue.config.productionTip = false;
 
-// import { ENDPOINT_CORE } from './api/ApiBaseEndpoints';
-// import io from 'socket.io-client';
-// import VueSocketIO from 'vue-socket.io-extended';
-// Vue.use(VueSocketIO, io(`${ENDPOINT_CORE}`, { autoConnect: false }));
+if (Config.socket.enabled) {
+  Vue.use(VueSocketIO, io(`${ENDPOINT_CORE}`, { autoConnect: false }));
+}
 
 Vue.mixin({
   computed: {

@@ -9,7 +9,7 @@
 export default {
   name: 'ApplicationBase',
   components: {
-    'y-dialog-container': () => import('./plugins/ydialog-container.vue' /* webpackChunkName: 'y-dialog-container' */)
+    'y-dialog-container': require('./plugins/ydialog-container.vue').default
   }
 };
 </script>
