@@ -145,7 +145,7 @@ export default {
         });
       }
       
-      const form = await this.$dialogFormMaker(title, '', fields, actionTitle, relation);
+      const form = await this.$dialogFormMaker(title, '', fields, actionTitle, JSON.parse(JSON.stringify(relation)));
       if (!form) return;
 
       const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${form[this.relation.targetModel.toLowerCase()]}`;

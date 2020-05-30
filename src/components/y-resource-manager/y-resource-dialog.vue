@@ -95,7 +95,8 @@ export default {
     this.loadMeta();
 
     if (this.baseResource) {
-      Object.assign(this.resource, this.baseResource);
+      // Object.assign(this.resource, this.baseResource);
+      this.resource = JSON.parse(JSON.stringify(this.baseResource));
       this.loadRelations();
     }
 

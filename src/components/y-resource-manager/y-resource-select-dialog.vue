@@ -38,7 +38,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { loadMetasFor, transformFilters, transformResourceToTitle } from './y-resource-util';
+import { loadMetasFor, transformFilters, transformResourceToTitle, transformRelationToTitle } from './y-resource-util';
 import debounce from 'lodash/debounce';
 
 export default {
@@ -112,7 +112,12 @@ export default {
         this.selectedItems = this.preSelection;
         
         this.preSelection.forEach(async selection => {
-          this.$set(this.titles, selection, await transformResourceToTitle(this.$apiBase, this.modelName, selection));
+          if (this.relationSourceModel && this.relationTargetModel) {
+            this.$set(this.titles, selection, await transformRelationToTitle(this.$apiBase, this.modelName, selection, this.relationSourceModel, this.relationTargetModel));
+          }
+          else {
+            this.$set(this.titles, selection, await transformResourceToTitle(this.$apiBase, this.modelName, selection));
+          }
         });
         
       }
@@ -182,8 +187,6 @@ export default {
       const { result } = await YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s?${transformedFilters}`)
       this.loading = false;
 
-      //     resource.title = await transformRelationToTitle(this.$apiBase, this.modelName, resource._id, this.relationSourceModel, this.relationTargetModel);
-
       this.items = result;
 
     },
@@ -195,7 +198,13 @@ export default {
       }
 
       this.selectedItems.push(item._id);
-      this.$set(this.titles, item._id, await transformResourceToTitle(this.$apiBase, this.modelName, item._id));
+
+      if (this.relationSourceModel && this.relationTargetModel) {
+        this.$set(this.titles, item._id, await transformRelationToTitle(this.$apiBase, this.modelName, item._id, this.relationSourceModel, this.relationTargetModel));
+      }
+      else {
+        this.$set(this.titles, item._id, await transformResourceToTitle(this.$apiBase, this.modelName, item._id));
+      }
 
     }
   }
