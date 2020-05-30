@@ -23,7 +23,7 @@
         <y-resource-relation-manager
           v-for="relation in relations.list"
           :key="relation.relationModelName || relation.targetName"
-          class="mt-2"
+          class="mb-2"
           :source-model="modelName"
           :source-id="resource._id"
           :relation="relation"

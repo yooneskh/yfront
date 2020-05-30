@@ -5,18 +5,15 @@
       {{ relation.title || relation.relationModelName || relation.targetModel }}
       <v-spacer />
       <v-btn color="primary" small text :disabled="resources.list.length >= maxRelationsCount" @click="initEditor(undefined)">
-        افزودن &nbsp;
-        <v-icon small>mdi-plus</v-icon>
+        افزودن
+        <v-icon right small>mdi-plus</v-icon>
       </v-btn>
     </v-card-title>
 
     <y-table
       :headers="headers"
       :items="resources.list"
-      :actions="[
-        { key: 'edit', icon: 'mdi-pen' },
-        { key: 'delete', icon: 'mdi-delete', color: 'error' }
-      ]"
+      :actions="tableActions"
       @edit="initEditor"
       @delete="deleteRelation">
 
@@ -41,7 +38,9 @@ export default {
   props: {
     sourceModel: String,
     sourceId: String,
-    relation: { required: true }
+    relation: {
+      required: true
+    }
   },
   data: () => ({
     loading: false,
@@ -58,6 +57,9 @@ export default {
     },
     modelName() {
       return this.relation.relationModelName || this.relation.targetModel;
+    },
+    hasRelationProperties() {
+      return (this.relation.properties || []).filter(property => !property.hideInTable).length > 0;
     },
     headers() {
       return [
@@ -86,6 +88,19 @@ export default {
             dir: 'ltr'
           }
         ]);
+    },
+    tableActions() {
+
+      const result = [];
+
+      if (this.hasRelationProperties) {
+        result.push({ key: 'edit', icon: 'mdi-pen' });
+      }
+
+      result.push({ key: 'delete', icon: 'mdi-delete', color: 'error' });
+
+      return result;
+
     }
   },
   mounted() {
