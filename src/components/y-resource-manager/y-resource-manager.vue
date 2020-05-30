@@ -7,7 +7,7 @@
         <v-spacer />
         <v-btn text color="primary" @click="initEditor(undefined)">
           افزودن
-          &nbsp; <v-icon small class="mt-1">mdi-plus</v-icon>
+          <v-icon right class="mt-1">mdi-plus</v-icon>
         </v-btn>
       </v-card-title>
 
