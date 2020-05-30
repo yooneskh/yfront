@@ -28,13 +28,13 @@
             text
             :color="action.color"
             :icon="action.icon && !action.title"
-            :small="!action.big"
+            :small="!action.large"
             class="mb-1 me-1"
             :class="{'mt-1': index === 0}"
             :to="action.link && action.link(item)"
             @click="$emit(action.key, item)">
 
-            <v-icon small v-if="action.icon">{{ action.icon }}</v-icon>
+            <v-icon :small="!action.large" v-if="action.icon">{{ action.icon }}</v-icon>
             {{ action.title }}
 
           </v-btn>    

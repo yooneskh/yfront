@@ -48,6 +48,9 @@ Vue.mixin({
     }
   },
   methods: {
+    $alert(thing) {
+      alert(thing);
+    },
     $log(...args) {
       // eslint-disable-next-line no-console
       console.log(...args);

@@ -24,9 +24,7 @@ import { transformResourceToTitle, loadMetasFor, loadRelationsFor, transformRela
 export default {
   name: 'YFormElementResource',
   props: {
-    value: {
-      type: String
-    },
+    value: { },
     field: {
       type: Object,
       required: true
@@ -77,11 +75,13 @@ export default {
       if (this.field.readonly) return;
 
       const result = await this.$dialog(import('../../y-resource-manager/y-resource-select-dialog'), {
-        width: '700px',
+        width: '900px',
         modelName: this.field.resource,
+        title: this.field.title,
         relationSourceModel: this.field.relationSourceModel,
         relationTargetModel: this.field.relationTargetModel,
-        multiple: this.field.multiple
+        multiple: this.field.multiple,
+        preSelection: this.value
       }); if (!result) return;
 
       this.$emit('input', result);

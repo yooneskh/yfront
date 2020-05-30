@@ -7,7 +7,7 @@
         <v-spacer />
         <v-btn text color="primary" @click="initEditor(undefined)">
           افزودن
-          <v-icon right class="mt-1">mdi-plus</v-icon>
+          <v-icon right>mdi-plus</v-icon>
         </v-btn>
       </v-card-title>
 
@@ -82,25 +82,25 @@ export default {
   computed: {
     headers() {
       return this.metas.list
-      .filter(header => !header.hideInTable)
-      .map(meta => ({
-        ...meta,
-        text: meta.title || meta.key,
-      }))
-      .concat([
-        {
-          key: 'createdAt',
-          text: 'زمان ایجاد',
-          timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
-          dir: 'ltr'
-        },
-        {
-          key: 'updatedAt',
-          text: 'زمان تغییر',
-          timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
-          dir: 'ltr'
-        }
-      ]);
+        .filter(header => !header.hideInTable)
+        .map(meta => ({
+          ...meta,
+          text: meta.title || meta.key,
+        }))
+        .concat([
+          {
+            key: 'createdAt',
+            text: 'زمان ایجاد',
+            timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
+            dir: 'ltr'
+          },
+          {
+            key: 'updatedAt',
+            text: 'زمان تغییر',
+            timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
+            dir: 'ltr'
+          }
+        ]);
     }
   },
   mounted() {
