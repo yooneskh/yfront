@@ -16,6 +16,7 @@
         :value="fieldTitle"
         :dir="dir"
         :style="inputStyle"
+        :autofocus="autofocus"
         v-on="!readonly && on"
       />
     </template>
@@ -54,6 +55,7 @@ export default {
     labelFormat: String,
     placeholder: String,
     hideDetails: Boolean,
+    autofocus: Boolean,
     unfilled: Boolean,
     dense: Boolean,
     solo: Boolean,

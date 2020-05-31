@@ -18,6 +18,7 @@
     :dir="field.dir"
     :disabled="field.disabled"
     :readonly="field.readonly"
+    :autofocus="field.autofocus"
     hide-details>
     <template v-if="field.password" #append>
       <v-icon v-if="!field.disabled" @click="revealed = !revealed">{{ revealed ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>

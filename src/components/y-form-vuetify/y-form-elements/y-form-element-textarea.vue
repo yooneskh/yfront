@@ -13,6 +13,7 @@
     :auto-grow="field.autoGrow"
     :disabled="field.disabled"
     :readonly="field.readonly"
+    :autofocus="field.autofocus"
     hide-details
   />
 </template>

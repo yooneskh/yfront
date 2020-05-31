@@ -10,6 +10,7 @@
     :dir="field.dir"
     :disabled="field.disabled"
     :readonly="field.readonly"
+    :autofocus="field.autofocus"
     @input="$emit('input', $event)"
   />
   <v-combobox
@@ -24,6 +25,7 @@
     :dir="field.dir"
     :disabled="field.disabled"
     :readonly="field.readonly"
+    :autofocus="field.autofocus"
     @input="$emit('input', $event)" 
   />
 </template>

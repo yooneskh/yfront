@@ -7,6 +7,7 @@
     :value="value"
     :disabled="field.disabled"
     :readonly="field.readonly"
+    :autofocus="field.autofocus"
     @input="$emit('input', $event)"
   />
 </template>

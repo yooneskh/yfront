@@ -8,7 +8,7 @@
         <y-form
           :target="heh"
           :fields="[
-            { key: 'name', type: 'text', title: 'نام', width: 6 },
+            { key: 'name', type: 'text', title: 'نام', autofocus: true, width: 6 },
             { key: 'counts', type: 'text', number: true, title: 'تعداد', readonly: true, disabled: true, width: 6 },
             { key: 'pass', type: 'text', password: true, title: 'رمز عبور', width: 6 },
             { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] },
@@ -17,6 +17,7 @@
             { key: 'from', type: 'date', title: 'تاریخ ورود', labelFormat: 'jDD jMMMM jYYYY', width: 6 },
             { key: 'body', type: 'editor', title: 'متن تاریخی', width: 6 },
             { key: 'bodies', type: 'textarea', title: 'متن کمتر تاریخی', width: 6 },
+            { key: 'color', type: 'color', title: 'رنگ پس‌زمینه', width: 12 },
             { key: 'job', type: 'radios', title: 'شغل', width: 6, items: [
               { value: 'mech', text: 'مکانیک' },
               { value: 'comp', text: 'کامپیوتری' }

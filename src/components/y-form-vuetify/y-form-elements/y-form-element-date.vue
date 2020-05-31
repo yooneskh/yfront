@@ -25,6 +25,7 @@
     :range="field.range"
     :seperator="field.seperator"
     :unfilled="field.unfilled"
+    :autofocus="field.autofocus"
     :value-format="field.valueFormat"
     @input="$emit('input', $event)"
   />

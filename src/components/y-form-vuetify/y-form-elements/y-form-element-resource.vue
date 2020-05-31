@@ -12,6 +12,7 @@
     :disabled="field.disabled"
     readonly
     hide-details
+    :autofocus="field.autofocus"
     @click.native="openSelectResourceDialog"
   />
 </template>

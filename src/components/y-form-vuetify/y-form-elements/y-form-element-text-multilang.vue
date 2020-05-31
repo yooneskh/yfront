@@ -10,7 +10,8 @@
     :class="field.classes"
     :dir="field.dir"
     :disabled="field.disabled"
-    :readonly="field.readonly">
+    :readonly="field.readonly"
+    :autofocus="field.autofocus">
     <template #append>
       <v-menu>
         <template #activator="{ on }">

@@ -10,7 +10,10 @@
       :append-icon="path ? 'mdi-open-in-new' : undefined"
       flat
       :disabled="disabled"
+      :autofocus="autofocus"
       @click="!readonly && $refs.theFile.click()"
+      @keyup.space="!readonly && $refs.theFile.click()"
+      @keyup.enter="!readonly && $refs.theFile.click()"
       @click:append="openPath"
     />
     <input class="input" ref="theFile" type="file" @change.passive="theChange" style="display: none;" />
@@ -31,6 +34,7 @@ export default {
       default: true
     },
     unfilled: Boolean,
+    autofocus: Boolean,
     readonly: Boolean,
     disabled: Boolean
   },

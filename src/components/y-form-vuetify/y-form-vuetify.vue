@@ -4,6 +4,7 @@
       <v-col v-for="field in fields" class="pt-0 ps-0" :key="field.key" cols="12" :md="field.width || 12" :class="{ 'pb-0': noBottomPadding }" style="position: relative;">
         <component
           :is="mapElementType(field)"
+          :target="target"
           :field="field"
           :value="(field.getter && field.getter()) || (field.key && target[field.key])"
           @input="handleInput(field, ...arguments)"
