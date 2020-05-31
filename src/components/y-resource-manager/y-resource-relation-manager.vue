@@ -176,7 +176,8 @@ export default {
         this.loading = false;
   
         if (this.$generalHandle(status, result)) return;
-  
+
+        this.$toast.success('افزودن با موفقیت انجام شد.');
         this.loadData();
 
       }
@@ -188,6 +189,7 @@ export default {
   
         if (this.$generalHandle(status, result)) return;
   
+        this.$toast.success('ویرایش با موفقیت انجام شد.');
         this.loadData();
 
       }
@@ -199,9 +201,9 @@ export default {
         const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${relation[this.relation.targetModel.toLowerCase()]}/${relation._id}`;
 
         const { status, result } = await YNetwork.delete(url);
-
         if (this.$generalHandle(status, result)) return;
 
+        this.$toast.success('حذف با موفقیت انجام شد');
         this.loadData();
 
       }
