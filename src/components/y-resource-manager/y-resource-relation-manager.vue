@@ -1,7 +1,7 @@
 <template>
   <div class="y-resource-relation-manager">
 
-    <v-card-title>
+    <v-card-title class="pe-3">
       {{ relation.title || relation.relationModelName || relation.targetModel }}
       <v-spacer />
       <v-btn color="primary" small text :disabled="resources.list.length >= maxRelationsCount" @click="initEditor(undefined)">

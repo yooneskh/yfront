@@ -2,7 +2,7 @@
   <div class="y-resource-manager">
     <v-card :loading="loading">
 
-      <v-card-title v-if="title">
+      <v-card-title v-if="title" class="pe-3">
         {{ title }}
         <v-spacer />
         <v-btn text color="primary" @click="initEditor(undefined)">
