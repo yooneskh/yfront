@@ -4,9 +4,9 @@
     <v-card-title class="pe-3">
       {{ relation.title || relation.relationModelName || relation.targetModel }}
       <v-spacer />
-      <v-btn color="primary" small text :disabled="resources.list.length >= maxRelationsCount" @click="initEditor(undefined)">
+      <v-btn color="primary" text :disabled="resources.list.length >= maxRelationsCount" @click="initEditor(undefined)">
         افزودن
-        <v-icon right small>mdi-plus</v-icon>
+        <v-icon right>mdi-plus</v-icon>
       </v-btn>
     </v-card-title>
 
@@ -145,7 +145,7 @@ export default {
         });
       }
       
-      const form = await this.$dialogFormMaker(title, '', fields, actionTitle, JSON.parse(JSON.stringify(relation)));
+      const form = await this.$dialogFormMaker(title, '', fields, actionTitle, relation && JSON.parse(JSON.stringify(relation)));
       if (!form) return;
 
       const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${form[this.relation.targetModel.toLowerCase()]}`;
