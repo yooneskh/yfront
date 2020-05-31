@@ -59,7 +59,7 @@ export default {
     }
   },
   async mounted() {
-    if (this.isRelation) {
+    if (!Array.isArray(this.data) && this.isRelation) {
 
       const targetName = (this.header.ref || this.header.relationTargetModel).toLowerCase();
       const sourceName = this.header.relationSourceModel.toLowerCase();

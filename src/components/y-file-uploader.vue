@@ -111,22 +111,19 @@ export default {
 
     },
     handleResult(result) {
-
       this.$emit('input', this.wrapped ? { _id: result.mediaId } : result.mediaId);
-
-      this.loadMedia();
-
     },
     async loadMedia() {
-      if (!this.value && !this.value._id) return;
+      if (this.value || this.value._id) {
 
-      const { status, result } = await Api.Media.loadOne(this.$token, this.wrapped ? this.value._id : this.value);
+        const { status, result } = await Api.Media.loadOne(this.$token, this.wrapped ? this.value._id : this.value);
+  
+        if (this.$generalHandle(status, result)) return;
+  
+        this.stateInfo = `${result.name.toLowerCase()}.${result.extension.toLowerCase()}`;
+        this.path = result.path;
 
-      if (this.$generalHandle(status, result)) return;
-
-      this.stateInfo = `${result.name.toLowerCase()}.${result.extension.toLowerCase()}`;
-      this.path = result.path;
-
+      }
     },
     openPath() {
       window.open(this.path, '_blank');

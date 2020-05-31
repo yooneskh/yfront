@@ -95,7 +95,6 @@ export default {
     this.loadMeta();
 
     if (this.baseResource) {
-      // Object.assign(this.resource, this.baseResource);
       this.resource = JSON.parse(JSON.stringify(this.baseResource));
       this.loadRelations();
     }
@@ -150,22 +149,21 @@ export default {
 
         const { status, result } = await YNetwork.patch(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/${this.resource._id}`, payload);
         this.loading = false;
-
         if (this.$generalHandle(status, result)) return;
+
+        this.$toast.success('ویرایش انجام شد.');
 
       }
       else {
         
         const { status, result } = await YNetwork.post(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}`, payload);
         this.loading = false;
-
         if (this.$generalHandle(status, result)) return;
+
+        this.$toast.success('افزودن انجام شد.');
 
       }
 
-      this.loading = false;
-
-      this.$toast.success('درخواست شما انجام شد.');
       this.$emit('resolve', true);
 
     },

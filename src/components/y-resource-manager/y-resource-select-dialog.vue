@@ -12,8 +12,8 @@
 
     <y-resource-filter v-model="filters" :metas="metas" />
 
-    <div v-if="multiple && selectedItems.length > 0" class="pa-2">
-      <v-chip v-for="(item, index) in selectedItems" :key="item._id" small class="me-2" close @click:close="selectedItems.splice(index, 1)">
+    <div v-if="multiple && selectedItems.length > 0" class="pa-2 pb-1">
+      <v-chip v-for="(item, index) in selectedItems" :key="item._id" small class="me-2 mb-1" close @click:close="selectedItems.splice(index, 1)">
         {{ titles[item] || '---' }}
       </v-chip>
     </div>
