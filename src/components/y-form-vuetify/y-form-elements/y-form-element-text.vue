@@ -19,7 +19,11 @@
     :disabled="field.disabled"
     :readonly="field.readonly"
     :autofocus="field.autofocus"
-    hide-details>
+    @blur="validateValue"
+    :error="field.error"
+    :success="field.success"
+    :messages="field.message"
+    :hide-details="!field.message">
     <template v-if="field.password" #append>
       <v-icon v-if="!field.disabled" @click="revealed = !revealed">{{ revealed ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
     </template>
@@ -64,6 +68,31 @@ export default {
       return '';
 
     }
+  },
+  methods: {
+    validateValue() {
+      if (!this.field.rules || this.field.rules.length === 0) {
+        this.$emit('validate', undefined);
+        return;
+      }
+
+      for (const rule of this.field.rules || []) {
+        const result = rule(this.value);
+        if (typeof result === 'boolean' && !result || typeof result === 'string') {
+          this.$emit('validate', result);
+          return;
+        }
+      } this.$emit('validate', true);
+
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  ::v-deep {
+    .v-text-field__details {
+      margin-bottom: 0 !important;
+    }
+  }
+</style>

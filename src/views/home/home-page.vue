@@ -8,7 +8,7 @@
         <y-form
           :target="heh"
           :fields="[
-            { key: 'name', type: 'text', title: 'نام', autofocus: true, width: 6 },
+            { key: 'name', type: 'text', title: 'نام', autofocus: true, rules: [v => !!v || 'نام باید وارد شود!'], width: 6 },
             { key: 'counts', type: 'text', number: true, title: 'تعداد', readonly: true, disabled: true, width: 6 },
             { key: 'pass', type: 'text', password: true, title: 'رمز عبور', width: 6 },
             { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] },

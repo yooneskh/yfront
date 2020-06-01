@@ -1,13 +1,14 @@
 <template>
   <v-form class="y-form y-form-vuetify" @submit.prevent>
     <v-row class="ma-0 me-n3">
-      <v-col v-for="field in fields" class="pt-0 ps-0" :key="field.key" cols="12" :md="field.width || 12" :class="{ 'pb-0': noBottomPadding }" style="position: relative;">
+      <v-col v-for="field in validatedFields" class="pt-0 ps-0" :key="field.key" cols="12" :md="field.width || 12" :class="{ 'pb-0': noBottomPadding }" style="position: relative;">
         <component
           :is="mapElementType(field)"
           :target="target"
           :field="field"
           :value="(field.getter && field.getter()) || (field.key && target[field.key])"
           @input="handleInput(field, ...arguments)"
+          @validate="$set(validations, field.key, $event)"
         />
       </v-col>
     </v-row>
@@ -42,6 +43,19 @@ export default {
     'y-form-element-date': () => import('./y-form-elements/y-form-element-date.vue' /* webpackChunkName: 'y-form-element-date' */),
     'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */),
     'y-form-element-editor': () => import('./y-form-elements/y-form-element-editor.vue' /* webpackChunkName: 'y-form-element-editor' */),
+  },
+  data: () => ({
+    validations: {}
+  }),
+  computed: {
+    validatedFields() {
+      return this.fields.map(field => ({
+        ...field,
+        error: this.validations[field.key] === false || typeof this.validations[field.key] === 'string',
+        success: this.validations[field.key] === true,
+        message: typeof this.validations[field.key] === 'string' ? (this.validations[field.key] || 'مقدار وارد شده صحیح نیست!') : undefined
+      }));
+    }
   },
   methods: {
     mapElementType(field) {
