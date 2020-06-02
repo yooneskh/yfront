@@ -3,13 +3,16 @@
     class="mt-0"
     :class="{'horizontal': field.horizontal}"
     :label="field.title"
-    hide-details
+    hide-details="auto"
     :row="field.horizontal"
     :value="value"
     :dir="field.dir"
     :disabled="field.disabled"
     :readonly="field.readonly"
-    @change="$emit('input', $event)"
+    :error="field.error"
+    :success="field.success"
+    :messages="field.message"
+    @change="handleChange"
     style="text-align: unset;">
     <v-radio
       v-for="(item, index) in field.items"
@@ -32,6 +35,27 @@ export default {
     field: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    handleChange(value) {
+      this.$emit('input', value);
+      setImmediate(this.validateValue);
+    },
+    validateValue() {
+      if (!this.field.rules || this.field.rules.length === 0) {
+        this.$emit('validate', undefined);
+        return;
+      }
+
+      for (const rule of this.field.rules || []) {
+        const result = rule(this.value);
+        if (typeof result === 'boolean' && !result || typeof result === 'string') {
+          this.$emit('validate', result);
+          return;
+        }
+      } this.$emit('validate', true);
+
     }
   }
 }

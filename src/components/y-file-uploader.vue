@@ -4,17 +4,20 @@
       readonly
       :label="label"
       :filled="!unfilled"
-      hide-details
+      hide-details="auto"
+      :error="error"
+      :success="success"
+      :messages="message"
       :value="stateInfo"
       prepend-inner-icon="mdi-paperclip"
       :append-icon="path ? 'mdi-open-in-new' : undefined"
-      flat
       :disabled="disabled"
       :autofocus="autofocus"
       @click="!readonly && $refs.theFile.click()"
       @keyup.space="!readonly && $refs.theFile.click()"
       @keyup.enter="!readonly && $refs.theFile.click()"
       @click:append="openPath"
+      @blur="$emit('blur', $event)"
     />
     <input class="input" ref="theFile" type="file" @change.passive="theChange" style="display: none;" />
   </div>
@@ -36,11 +39,13 @@ export default {
     unfilled: Boolean,
     autofocus: Boolean,
     readonly: Boolean,
-    disabled: Boolean
+    disabled: Boolean,
+    success: Boolean,
+    error: Boolean,
+    message: String
   },
   data: () => ({
     processing: false,
-    error: false,
     mediaId: null,
     stateInfo: '',
     currentFile: null,
@@ -98,9 +103,6 @@ export default {
           if (http.status === 201) {
             this.processing = false;
             this.handleResult(JSON.parse(http.response));
-          }
-          else {
-            this.error = true;
           }
         }
       };

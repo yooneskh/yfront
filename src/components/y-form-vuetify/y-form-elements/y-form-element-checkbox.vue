@@ -5,13 +5,16 @@
       :input-value="value"
       :true-value="true"
       :false-value="false"
-      hide-details
       :dir="field.dir"
       :disabled="field.disabled"
       :readonly="field.readonly"
       class="mt-0 pt-0"
-      @change="$emit('input', !!$event)"
-      style="position: absolute; top: 50%; transform: translateY(-70%);"
+      @change="handleChange"
+      :style="`position: absolute; top: 50%; transform: translateY(${field.message ? '-50%' : '-70%'});`"
+      :error="field.error"
+      :success="field.success"
+      :messages="field.message"
+      hide-details="auto"
     />
   </div>
 </template>
@@ -26,6 +29,27 @@ export default {
     field: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    handleChange(value) {
+      this.$emit('input', !!value);
+      setImmediate(() => this.validateValue())
+    },
+    validateValue() {
+      if (!this.field.rules || this.field.rules.length === 0) {
+        this.$emit('validate', undefined);
+        return;
+      }
+
+      for (const rule of this.field.rules || []) {
+        const result = rule(this.value);
+        if (typeof result === 'boolean' && !result || typeof result === 'string') {
+          this.$emit('validate', result);
+          return;
+        }
+      } this.$emit('validate', true);
+
     }
   }
 }

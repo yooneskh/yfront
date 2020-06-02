@@ -23,7 +23,7 @@
     :error="field.error"
     :success="field.success"
     :messages="field.message"
-    :hide-details="!field.message">
+    hide-details="auto">
     <template v-if="field.password" #append>
       <v-icon v-if="!field.disabled" @click="revealed = !revealed">{{ revealed ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
     </template>

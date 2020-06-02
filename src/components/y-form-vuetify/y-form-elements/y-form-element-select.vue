@@ -4,7 +4,6 @@
     :filled="!field.unfilled"
     :label="field.title"
     :items="field.items"
-    hide-details
     :multiple="field.multiple"
     :value="value"
     :dir="field.dir"
@@ -12,6 +11,11 @@
     :readonly="field.readonly"
     :autofocus="field.autofocus"
     @input="$emit('input', $event)"
+    @blur="validateValue"
+    :error="field.error"
+    :success="field.success"
+    :messages="field.message"
+    hide-details="auto"
   />
   <v-combobox
     v-else
@@ -20,13 +24,17 @@
     :items="field.items"
     chips deletable-chips small-chips
     :multiple="field.multiple"
-    hide-details
     :value="value"
     :dir="field.dir"
     :disabled="field.disabled"
     :readonly="field.readonly"
     :autofocus="field.autofocus"
     @input="$emit('input', $event)" 
+    @blur="validateValue"
+    :error="field.error"
+    :success="field.success"
+    :messages="field.message"
+    hide-details="auto"
   />
 </template>
 
@@ -40,6 +48,23 @@ export default {
     field: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    validateValue() {
+      if (!this.field.rules || this.field.rules.length === 0) {
+        this.$emit('validate', undefined);
+        return;
+      }
+
+      for (const rule of this.field.rules || []) {
+        const result = rule(this.value);
+        if (typeof result === 'boolean' && !result || typeof result === 'string') {
+          this.$emit('validate', result);
+          return;
+        }
+      } this.$emit('validate', true);
+
     }
   }
 }

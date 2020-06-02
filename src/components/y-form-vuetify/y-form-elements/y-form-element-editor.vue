@@ -7,13 +7,17 @@
       باز کردن ویرایشگر
     </v-btn>
 
+    <div v-if="field.message" class="caption mt-1 ms-2" :class="{ 'error--text': field.error, 'success--text': field.success }">
+      {{ field.message }}
+    </div>
+
     <div class="global-window grey lighten-4 py-2 px-2" v-if="windowOpened" style="overflow-y: auto;">
 
       <v-toolbar class="mb-8">
         <v-toolbar-title>ویرایشگر</v-toolbar-title>
         <v-spacer />
         <v-toolbar-items>
-          <v-btn icon @click="windowOpened = false">
+          <v-btn icon @click="windowOpened = false; validateValue()">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-toolbar-items>
@@ -51,7 +55,24 @@ export default {
   },
   data: () => ({
     windowOpened: false
-  })
+  }),
+  methods: {
+    validateValue() {
+      if (!this.field.rules || this.field.rules.length === 0) {
+        this.$emit('validate', undefined);
+        return;
+      }
+
+      for (const rule of this.field.rules || []) {
+        const result = rule(this.value);
+        if (typeof result === 'boolean' && !result || typeof result === 'string') {
+          this.$emit('validate', result);
+          return;
+        }
+      } this.$emit('validate', true);
+
+    }
+  }
 }
 
 </script>

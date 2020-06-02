@@ -7,7 +7,6 @@
         :class="inputClass"
         :label="label"
         :placeholder="placeholder"
-        hide-details
         :dense="dense"
         :solo="solo"
         :flat="flat"
@@ -17,7 +16,11 @@
         :dir="dir"
         :style="inputStyle"
         :autofocus="autofocus"
-        v-on="!readonly && on"
+        v-on="!readonly && { ...on, blur: () => $emit('blur') }"
+        :error="error"
+        :success="success"
+        :messages="message"
+        hide-details="auto"
       />
     </template>
     <v-date-picker
@@ -81,7 +84,10 @@ export default {
     valueFormat: {
       type: String,
       default: 'YYYY-MM-DD'
-    }
+    },
+    error: Boolean,
+    success: Boolean,
+    message: String
   },
   computed: {
     insideValueFormat() {
@@ -118,13 +124,14 @@ export default {
       if (this.multiple || this.range) return;
 
       this.$emit('input', moment(time, this.insideValueFormat).format(this.valueFormat));
+      setImmediate(() => this.$emit('blur'));
 
     },
     handleInput(times) {
       if (!this.multiple && !this.range) return;
 
       this.$emit('input', times.map(time => moment(time, this.insideValueFormat).format(this.valueFormat)));
-      
+
     }
   }
 }

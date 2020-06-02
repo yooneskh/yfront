@@ -27,7 +27,11 @@
     :unfilled="field.unfilled"
     :autofocus="field.autofocus"
     :value-format="field.valueFormat"
+    :error="field.error"
+    :success="field.success"
+    :message="field.message"
     @input="$emit('input', $event)"
+    @blur="validateValue"
   />
 </template>
 
@@ -42,6 +46,23 @@ export default {
     field: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    validateValue() {
+      if (!this.field.rules || this.field.rules.length === 0) {
+        this.$emit('validate', undefined);
+        return;
+      }
+
+      for (const rule of this.field.rules || []) {
+        const result = rule(this.value);
+        if (typeof result === 'boolean' && !result || typeof result === 'string') {
+          this.$emit('validate', result);
+          return;
+        }
+      } this.$emit('validate', true);
+
     }
   }
 }

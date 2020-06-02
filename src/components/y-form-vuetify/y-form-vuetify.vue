@@ -27,6 +27,10 @@ export default {
       type: Array,
       required: true
     },
+    valid: {
+      type: Boolean,
+      default: true
+    },
     noBottomPadding: Boolean
   },
   components: {
@@ -55,6 +59,17 @@ export default {
         success: this.validations[field.key] === true,
         message: typeof this.validations[field.key] === 'string' ? (this.validations[field.key] || 'مقدار وارد شده صحیح نیست!') : undefined
       }));
+    }
+  },
+  watch: {
+    validations: {
+      deep: true,
+      handler() {
+        this.$emit(
+          'update:valid',
+          Object.values(this.validations).filter(v => v !== undefined).every(v => v === true)
+        );
+      }
     }
   },
   methods: {

@@ -2,23 +2,28 @@
   <v-container class="page" fluid>
 
     <v-card>
-      <v-card-title>صفحه اصلی</v-card-title>
+
+      <v-card-title>
+        صفحه اصلی
+        <small class="ms-2 caption">وضعیت فرم {{ JSON.stringify(formValid) }}</small>
+      </v-card-title>
 
       <v-card-text>
         <y-form
           :target="heh"
+          :valid.sync="formValid"
           :fields="[
             { key: 'name', type: 'text', title: 'نام', autofocus: true, rules: [v => !!v || 'نام باید وارد شود!'], width: 6 },
             { key: 'counts', type: 'text', number: true, title: 'تعداد', readonly: true, disabled: true, width: 6 },
             { key: 'pass', type: 'text', password: true, title: 'رمز عبور', width: 6 },
-            { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] },
-            { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
-            { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', width: 6 },
-            { key: 'from', type: 'date', title: 'تاریخ ورود', labelFormat: 'jDD jMMMM jYYYY', width: 6 },
+            { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, rules: [v => !!v && v.length > 0 || 'میوه باید وارد شود!'], items: ['سیب', 'موز', 'پرتقال'] },
+            { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', rules: [v => !!v], width: 6 },
+            { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', rules: [v => v === true || 'باید قبول کنید!'], width: 6 },
+            { key: 'from', type: 'date', title: 'تاریخ ورود', rules: [v => !!v || 'تاریخ ورودت چیه؟'], labelFormat: 'jDD jMMMM jYYYY', width: 6 },
             { key: 'body', type: 'editor', title: 'متن تاریخی', width: 6 },
             { key: 'bodies', type: 'textarea', title: 'متن کمتر تاریخی', width: 6 },
-            { key: 'color', type: 'color', title: 'رنگ پس‌زمینه', width: 12 },
-            { key: 'job', type: 'radios', title: 'شغل', width: 6, items: [
+            { key: 'color', type: 'color', title: 'رنگ پس‌زمینه', error2: true, rules: [v => !!v], width: 6 },
+            { key: 'job', type: 'radios', title: 'شغل', rules: [v => v === 'mech' || 'قانون من'], width: 6, items: [
               { value: 'mech', text: 'مکانیک' },
               { value: 'comp', text: 'کامپیوتری' }
             ] },
@@ -117,6 +122,7 @@ export default {
       freeNames: [],
       items: []
     },
+    formValid: undefined,
     boxPosition: [0, 0]
   }),
   methods: {
