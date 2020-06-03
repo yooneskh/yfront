@@ -14,6 +14,7 @@
         <y-form
           :target="item"
           :fields="injectedItemFields"
+          @update:valid="$set(validations, ids[index], $event)"
         />
 
         <v-btn v-if="!field.readonly && !field.disabled" class="series-remove" icon x-small @click="removeItem(index)">
@@ -30,7 +31,7 @@
 export default {
   name: 'YFormSeries',
   components: {
-    'y-form': require('./y-form-vuetify').default
+
   },
   props: {
     target: {
@@ -43,7 +44,8 @@ export default {
     }
   },
   data: () => ({
-    ids: []
+    ids: [],
+    validations: {}
   }),
   computed: {
     injectedItemFields() {
@@ -54,7 +56,19 @@ export default {
       }));
     }
   },
-  mounted() {
+  watch: {
+    validations: {
+      deep: true,
+      handler() {
+
+        const isValid = Object.values(this.validations).every(Boolean);
+
+        this.$emit('update:valid', isValid);
+
+      }
+    }
+  },
+  created() {
     this.ids = this.target[this.field.key].map(() => this.$uuid())
   },
   methods: {
