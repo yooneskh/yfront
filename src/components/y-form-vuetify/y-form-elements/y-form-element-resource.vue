@@ -40,17 +40,18 @@ export default {
     loading: false,
     resourceTitle: ''
   }),
-  watch: {
-    'value'() {
-      this.makeResourceTitle();
-    }
-  },
   computed: {
     isRelation() {
       return this.field.relationSourceModel && this.field.relationTargetModel;
     }
   },
+  watch: {
+    'value'() {
+      this.makeResourceTitle();
+    }
+  },
   mounted() {
+    if (this.value !== undefined) this.validateValue();
     this.makeResourceTitle();
   },
   methods: {

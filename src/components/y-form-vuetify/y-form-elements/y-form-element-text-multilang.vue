@@ -49,6 +49,9 @@ export default {
   created() {
     this.currentLanguage = Object.keys(this.field.languages)[0];
   },
+  mounted() {
+    if (this.value !== undefined) this.validateValue();
+  },
   methods: {
     validateValue() {
       if (!this.field.rules || this.field.rules.length === 0) {

@@ -48,6 +48,9 @@ export default {
       required: true
     }
   },
+  mounted() {
+    if (this.value !== undefined) this.validateValue();
+  },
   methods: {
     validateValue() {
       if (!this.field.rules || this.field.rules.length === 0) {

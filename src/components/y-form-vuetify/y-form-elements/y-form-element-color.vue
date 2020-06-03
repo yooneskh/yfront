@@ -9,7 +9,7 @@
 
     <v-color-picker
       :value="value"
-      @update:color="$emit('input', $event.hex)"
+      @update:color="handleChange"
       :class="field.classes"
       :flat="field.flat"
       :hide-canvas="!field.showCanvas"
@@ -22,7 +22,6 @@
       width="100%"
       mode="rgba"
       class="mt-1"
-      @blur="validateValue"
     />
 
     <transition name="slide-from-up">
@@ -46,7 +45,14 @@ export default {
       required: true
     }
   },
+  mounted() {
+    if (this.value !== undefined) this.validateValue();
+  },
   methods: {
+    handleChange(value) {
+      this.$emit('input', value.hex);
+      setImmediate(this.validateValue);
+    },
     validateValue() {
       if (!this.field.rules || this.field.rules.length === 0) {
         this.$emit('validate', undefined);

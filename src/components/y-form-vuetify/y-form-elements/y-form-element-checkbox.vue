@@ -31,6 +31,9 @@ export default {
       required: true
     }
   },
+  mounted() {
+    if (this.value !== undefined) this.validateValue();
+  },
   methods: {
     handleChange(value) {
       this.$emit('input', !!value);
