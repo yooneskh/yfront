@@ -33,3 +33,18 @@ html {
 .v-img--darken > .v-image__image {
   filter: brightness(70%);
 }
+
+.slide-from-up-enter-active, .slide-from-up-leave-active {
+  transition: all 0.2s ease-out;
+  backface-visibility: hidden;
+}
+
+.slide-from-up-enter, .slide-from-up-leave-to {
+  height: 0;
+  opacity: 0;
+}
+
+.slide-from-up-enter-to, .slide-from-up-leave {
+  height: 20px;
+  opacity: 1;
+}

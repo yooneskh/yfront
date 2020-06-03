@@ -23,12 +23,14 @@
         'd-inline-block me-3 mb-2': field.horizontal,
         'ms-6': field.horizontal && index === 0
       }"
-      @change="$emit('input', $event, item.value); validateValue();"
+      @change="handleChange($event, item)"
     />
 
-    <div v-if="field.message" class="caption mt-1 ms-2" :class="{ 'error--text': field.error, 'success--text': field.success }">
-      {{ field.message }}
-    </div>
+    <transition name="slide-from-up">
+      <div v-if="field.message" class="caption mt-1 ms-2" :class="{ 'error--text': field.error, 'success--text': field.success }">
+        {{ field.message }}
+      </div>
+    </transition>
 
   </div>
 </template>
@@ -46,6 +48,10 @@ export default {
     }
   },
   methods: {
+    handleChange(value, item) {
+      this.$emit('input', value, item.value);
+      setImmediate(this.validateValue);
+    },
     validateValue() {
       if (!this.field.rules || this.field.rules.length === 0) {
         this.$emit('validate', undefined);

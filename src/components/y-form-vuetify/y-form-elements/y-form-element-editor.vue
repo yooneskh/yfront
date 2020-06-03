@@ -7,9 +7,11 @@
       باز کردن ویرایشگر
     </v-btn>
 
-    <div v-if="field.message" class="caption mt-1 ms-2" :class="{ 'error--text': field.error, 'success--text': field.success }">
-      {{ field.message }}
-    </div>
+    <transition name="slide-from-up">
+      <div v-if="field.message" class="caption mt-1 ms-2" :class="{ 'error--text': field.error, 'success--text': field.success }">
+        {{ field.message }}
+      </div>
+    </transition>
 
     <div class="global-window grey lighten-4 py-2 px-2" v-if="windowOpened" style="overflow-y: auto;">
 

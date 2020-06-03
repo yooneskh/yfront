@@ -31,7 +31,7 @@
               { value: 'mech', text: 'مکانیک' },
               { value: 'comp', text: 'کامپیوتری' }
             ] },
-            { key: 'items', type: 'checkboxes', title: 'آیتم‌ها', width: 6, items: [
+            { key: 'items', type: 'checkboxes', title: 'آیتم‌ها', width: 6, rules: [v => !!v && v.length == 2 || 'همه اش مهمه!!'], items: [
               { value: 'mech', text: 'مکانیک' },
               { value: 'comp', text: 'کامپیوتری' }
             ] },
