@@ -44,11 +44,10 @@
               type: 'series',
               title: 'زمان‌های خالی',
               width: 8,
-              readonly: true,
               base: { begin: '12:00', end: '', fruits: ['سیب'] },
               itemFields: [
                 { key: 'begin', type: 'text', title: 'زمان شروع', width: 3, disabled: true, dir: 'ltr' },
-                { key: 'end', type: 'text', title: 'زمان پایان', width: 3, dir: 'ltr' },
+                { key: 'end', type: 'text', title: 'زمان پایان', rules: [v => !!v && v.length === 5 || 'زمان را صحیح وارد کنید!'], width: 3, dir: 'ltr' },
                 { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, items: ['سیب', 'موز', 'پرتقال'] }
               ]
             },

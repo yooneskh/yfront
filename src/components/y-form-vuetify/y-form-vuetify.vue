@@ -8,7 +8,7 @@
           :field="field"
           :value="(field.getter && field.getter()) || (field.key && target[field.key])"
           @input="handleInput(field, ...arguments)"
-          @validate="$set(validations, field.key, $event)"
+          @update:valid="$set(validations, field.key, $event)"
         />
       </v-col>
     </v-row>

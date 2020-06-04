@@ -37,17 +37,17 @@ export default {
   methods: {
     validateValue() {
       if (!this.field.rules || this.field.rules.length === 0) {
-        this.$emit('validate', undefined);
+        this.$emit('update:valid', undefined);
         return;
       }
 
       for (const rule of this.field.rules || []) {
         const result = rule(this.field.wrapped ? this.value?._id : this.value);
         if (typeof result === 'boolean' && !result || typeof result === 'string') {
-          this.$emit('validate', result);
+          this.$emit('update:valid', result);
           return;
         }
-      } this.$emit('validate', true);
+      } this.$emit('update:valid', true);
 
     }
   }

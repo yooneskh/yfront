@@ -61,7 +61,9 @@ export default {
       deep: true,
       handler() {
 
-        const isValid = Object.values(this.validations).every(Boolean);
+        const isValid = Object.values(this.validations).every(v => v === true);
+        console.log(2222222222, this.validations, isValid);
+        
 
         this.$emit('update:valid', isValid);
 
