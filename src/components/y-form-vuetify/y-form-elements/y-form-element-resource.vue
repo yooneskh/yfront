@@ -25,6 +25,7 @@
 
 import YNetwork from 'ynetwork';
 import { transformResourceToTitle, loadMetasFor, loadRelationsFor, transformRelationToTitle } from '../../y-resource-manager/y-resource-util';
+import { YFormElementMixin } from '../mixins/y-form-element-mixin';
 
 export default {
   name: 'YFormElementResource',
@@ -35,6 +36,7 @@ export default {
       required: true
     }
   },
+  mixins: [YFormElementMixin],
   data: () => ({
     items: [],
     loading: false,
@@ -51,7 +53,6 @@ export default {
     }
   },
   mounted() {
-    if (this.value !== undefined) this.validateValue();
     this.makeResourceTitle();
   },
   methods: {
@@ -183,21 +184,6 @@ export default {
 
         })
       );
-
-    },
-    validateValue() {
-      if (!this.field.rules || this.field.rules.length === 0) {
-        this.$emit('update:valid', undefined);
-        return;
-      }
-
-      for (const rule of this.field.rules || []) {
-        const result = rule(this.value);
-        if (typeof result === 'boolean' && !result || typeof result === 'string') {
-          this.$emit('update:valid', result);
-          return;
-        }
-      } this.$emit('update:valid', true);
 
     }
   }

@@ -32,6 +32,9 @@
 </template>
 
 <script>
+
+import { YFormElementMixin } from '../mixins/y-form-element-mixin';
+
 export default {
   name: 'YFormElementTextMultilang',
   props: {
@@ -43,31 +46,13 @@ export default {
       required: true
     }
   },
+  mixins: [YFormElementMixin],
   data: () => ({
     currentLanguage: ''
   }),
   created() {
     this.currentLanguage = Object.keys(this.field.languages)[0];
-  },
-  mounted() {
-    if (this.value !== undefined) this.validateValue();
-  },
-  methods: {
-    validateValue() {
-      if (!this.field.rules || this.field.rules.length === 0) {
-        this.$emit('update:valid', undefined);
-        return;
-      }
-
-      for (const rule of this.field.rules || []) {
-        const result = rule(this.value);
-        if (typeof result === 'boolean' && !result || typeof result === 'string') {
-          this.$emit('update:valid', result);
-          return;
-        }
-      } this.$emit('update:valid', true);
-
-    }
   }
 }
+
 </script>

@@ -36,6 +36,9 @@
 </template>
 
 <script>
+
+import { YFormElementMixin } from '../mixins/y-form-element-mixin';
+
 export default {
   name: 'YFormElementCheckboxes',
   props: {
@@ -47,29 +50,13 @@ export default {
       required: true
     }
   },
-  mounted() {
-    if (this.value !== undefined) this.validateValue();
-  },
+  mixins: [YFormElementMixin],
   methods: {
     handleChange(value, item) {
       this.$emit('input', value, item.value);
       setImmediate(this.validateValue);
-    },
-    validateValue() {
-      if (!this.field.rules || this.field.rules.length === 0) {
-        this.$emit('update:valid', undefined);
-        return;
-      }
-
-      for (const rule of this.field.rules || []) {
-        const result = rule(this.value);
-        if (typeof result === 'boolean' && !result || typeof result === 'string') {
-          this.$emit('update:valid', result);
-          return;
-        }
-      } this.$emit('update:valid', true);
-
     }
   }
 }
+
 </script>

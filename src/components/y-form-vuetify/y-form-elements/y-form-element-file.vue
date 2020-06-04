@@ -17,6 +17,9 @@
 </template>
 
 <script>
+
+import { YFormElementMixin } from '../mixins/y-form-element-mixin'
+
 export default {
   name: 'YFormElementFile',
   components: {
@@ -31,25 +34,7 @@ export default {
       required: true
     }
   },
-  mounted() {
-    if (this.value !== undefined) this.validateValue();
-  },
-  methods: {
-    validateValue() {
-      if (!this.field.rules || this.field.rules.length === 0) {
-        this.$emit('update:valid', undefined);
-        return;
-      }
-
-      for (const rule of this.field.rules || []) {
-        const result = rule(this.field.wrapped ? this.value?._id : this.value);
-        if (typeof result === 'boolean' && !result || typeof result === 'string') {
-          this.$emit('update:valid', result);
-          return;
-        }
-      } this.$emit('update:valid', true);
-
-    }
-  }
+  mixins: [YFormElementMixin]
 }
+
 </script>
