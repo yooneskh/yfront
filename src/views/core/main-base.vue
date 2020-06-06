@@ -60,14 +60,14 @@ export default {
 
     },
     contentTopPadding() {
-      if (this.appliedConfigMode !== 'appbar') return Config.baseLayout.mainContemtAreaTopSpacing;
-      if (!this.config.stickyAppBar) return Config.baseLayout.mainContemtAreaTopSpacing;
+      if (this.appliedConfigMode !== 'appbar') return Config.baseLayout.mainContentAreaTopSpacing;
+      if (!this.config.stickyAppBar) return Config.baseLayout.mainContentAreaTopSpacing;
 
       if (!this.toolbars || this.toolbars.length === 0) {
-        return this.config.appBarHeight + Config.baseLayout.mainContemtAreaTopSpacing;
+        return this.config.appBarHeight + Config.baseLayout.mainContentAreaTopSpacing;
       }
 
-      return this.config.appBarHeight + Config.baseLayout.appBarToolbarHeight + Config.baseLayout.mainContemtAreaTopSpacing;
+      return this.config.appBarHeight + Config.baseLayout.appBarToolbarHeight + Config.baseLayout.mainContentAreaTopSpacing;
 
     }
   },

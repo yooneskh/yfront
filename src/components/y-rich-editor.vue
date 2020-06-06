@@ -92,7 +92,7 @@ export default {
       
       if (!form || !form.file) return;
 
-      const { status, result } = await Api.Media.loadOne('', form.file);
+      const { status, result } = await Api.Media.loadOne(form.file);
       if (this.$generalHandle(status, result)) return;
 
       this.parts.push({ type: 'image', content: result.path });

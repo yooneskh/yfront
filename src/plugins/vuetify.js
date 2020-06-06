@@ -16,12 +16,15 @@ Vue.use(VuetifyToast, {
   timeout: 3000
 });
 
-import en from 'vuetify/es5/locale/en';
+// import en from 'vuetify/es5/locale/en';
 import fa from 'vuetify/es5/locale/fa';
 
 export default new Vuetify({
   lang: {
-    locales: { en, fa },
+    locales: {
+      // en,
+      fa
+    },
     current: 'fa'
   },
   icons: {

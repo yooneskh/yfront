@@ -73,7 +73,7 @@ export default {
       const fileSize = file.size;
 
       this.processing = true;
-      const { status, result } = await Api.Media.initUpload(this.$token, fileName, fileExtension, fileSize);
+      const { status, result } = await Api.Media.initUpload(fileName, fileExtension, fileSize);
       
       if (status === 200) {
         this.currentFile = file;
@@ -122,7 +122,7 @@ export default {
     async loadMedia() {
       if (this.value || this.value._id) {
 
-        const { status, result } = await Api.Media.loadOne(this.$token, this.wrapped ? this.value._id : this.value);
+        const { status, result } = await Api.Media.loadOne(this.wrapped ? this.value._id : this.value);
   
         if (this.$generalHandle(status, result)) return;
   

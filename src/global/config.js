@@ -10,7 +10,7 @@ export const Config = {
     isBarColorDark: true,
     isAppBarSticky: false,
     expandingSidebarItems: false,
-    mainContemtAreaTopSpacing: 12,
+    mainContentAreaTopSpacing: 12,
     appBarToolbarHeight: 64
   },
   socket: {

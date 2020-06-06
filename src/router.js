@@ -31,7 +31,7 @@ export default new Router({
     },
     {
       path: '*',
-      component: () => import('./views/general/404-page' /* webpackChunkName: '404-page' */)
+      component: () => import('./views/error/404-page' /* webpackChunkName: '404-page' */)
     }
   ]
 });
