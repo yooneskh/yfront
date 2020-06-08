@@ -1,7 +1,7 @@
 <template>
   <v-app class="app-base">
     <router-view />
-    <y-dialog-container v-if="$root.dialogs.length > 0" style="position: fixed;" />
+    <y-dialog-container v-if="$root.dialogs.length > 0" />
   </v-app>
 </template>
 
