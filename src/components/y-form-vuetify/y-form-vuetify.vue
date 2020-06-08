@@ -44,9 +44,10 @@ export default {
     'y-form-element-series': () => import('./y-form-series' /* webpackChunkName: 'y-form-series' */),
     'y-form-element-text-multilang': () => import('./y-form-elements/y-form-element-text-multilang.vue' /* webpackChunkName: 'y-form-element-text-multilang' */),
     'y-form-element-color': () => import('./y-form-elements/y-form-element-color.vue' /* webpackChunkName: 'y-form-element-color' */),
+    'y-form-element-time': () => import('./y-form-elements/y-form-element-time.vue' /* webpackChunkName: 'y-form-element-time' */),
     'y-form-element-date': () => import('./y-form-elements/y-form-element-date.vue' /* webpackChunkName: 'y-form-element-date' */),
     'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */),
-    'y-form-element-editor': () => import('./y-form-elements/y-form-element-editor.vue' /* webpackChunkName: 'y-form-element-editor' */),
+    'y-form-element-editor': () => import('./y-form-elements/y-form-element-editor.vue' /* webpackChunkName: 'y-form-element-editor' */)
   },
   data: () => ({
     validations: {}
