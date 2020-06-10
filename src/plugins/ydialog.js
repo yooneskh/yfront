@@ -6,7 +6,7 @@ export default {
           return new Promise((resolve, reject) => {
             this.$root.dialogs.push({
               id: this.$uuid(),
-              component: () => component,
+              component: typeof component === 'object' ? component : () => component,
               options: options || {},
               resolve,
               reject
