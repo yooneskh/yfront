@@ -1,5 +1,5 @@
 <template>
-  <y-date-selector-field
+  <y-datetime-selector-field
     :input-class="field.inputClass"
     :input-style="field.inputStyle"
     :label="field.title"
@@ -42,7 +42,7 @@ import { YFormElementMixin } from '../mixins/y-form-element-mixin'
 export default {
   name: 'YFormElementDate',
   components: {
-    'y-date-selector-field': require('../../y-date-selector-field').default
+    'y-datetime-selector-field': require('../../y-datetime-selector-field').default
   },
   props: {
     value: { },
