@@ -68,7 +68,7 @@
       </v-card>
 
       <div>
-        <template v-if="mode === 'login'">
+        <template v-if="mode === 'login' && (!isMandatory || $token)">
           <v-btn class="mt-1" small text block>بازگشت به صفحه اصلی</v-btn>
         </template>
         <template v-if="mode === 'register'">
