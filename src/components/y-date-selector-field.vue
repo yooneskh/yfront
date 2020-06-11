@@ -1,5 +1,5 @@
 <template>
-  <v-menu :close-on-content-click="!multiple && !range" absolute>
+  <v-menu :close-on-content-click="false" absolute>
     <template #activator="{ on }">
       <v-text-field
         readonly
@@ -23,22 +23,19 @@
         hide-details="auto"
       />
     </template>
-    <v-date-picker
+    <persian-date-picker
+      inline
+      :type="type || 'date'"
       :locale="locale"
-      :first-day-of-week="firstDayOfWeek"
-      :value="mappedValue"
-      no-title
-      :allowed-dates="allowedDates"
-      :color="color"
-      :dark="dark"
-      :disabled="disabled"
+      :disable="disabledDates"
+      :view="startupView"
       :max="max"
       :min="min"
-      :multiple="multiple"
-      :range="range"
-      :readonly="readonly"
-      :type="type"
-      @change="handleChange"
+      :color="color"
+      :value="value"
+      :input-format="inputFormat"
+      :display-format="labelFormat"
+      :format="valueFormat"
       @input="handleInput"
     />
   </v-menu>
@@ -50,6 +47,9 @@ import moment from 'moment-jalaali';
 
 export default {
   name: 'YDateSelectorField',
+  components: {
+    'persian-date-picker': require('vue-persian-datetime-picker').default
+  },
   props: {
     inputClass: String,
     inputStyle: String,
@@ -65,9 +65,10 @@ export default {
     flat: Boolean,
     locale: String,
     backgroundColor: String,
-    firstDayOfWeek: Number,
     value: {},
-    allowedDates: Function,
+    disabledDates: Function,
+    startupView: String,
+    inputFormat: String,
     color: String,
     dark: Boolean,
     disabled: Boolean,
@@ -77,63 +78,31 @@ export default {
     type: String,
     multiple: Boolean,
     range: Boolean,
-    seperator: {
-      type: String,
-      default: ' - '
-    },
-    valueFormat: {
-      type: String,
-      default: 'YYYY-MM-DD'
-    },
+    valueFormat: String,
     error: Boolean,
     success: Boolean,
     message: String
   },
   computed: {
-    insideValueFormat() {
-      return this.type === 'month' ? 'YYYY-MM' : 'YYYY-MM-DD';
-    },
-    mappedValue() {
-      if (!this.value || this.value.length === 0) return (this.multiple || this.range) ? [] : undefined;
-
-      if (this.multiple || this.range) {
-        return this.value.map(time => moment(time, this.valueFormat).format(this.insideValueFormat));
-      }
-      else {
-        return moment(this.value, this.valueFormat).format(this.insideValueFormat);
-      }
-
-    },
     fieldTitle() {
-      if (!this.value || this.value.length === 0) return undefined;
-      
-      if (this.multiple) {
-        return this.value.map(time => moment(time, this.valueFormat).format(this.labelFormat)).join(this.seperator);
-      }
-      if (this.range) {
-        return (this.value[0] ? moment(this.value[0], this.valueFormat).format(this.labelFormat) : '---') + this.seperator + (this.value[1] ? moment(this.value[1], this.valueFormat).format(this.labelFormat) : '---');
-      }
-      else {
-        return moment(this.value, this.valueFormat).format(this.labelFormat);
-      }
-
+      if (!this.value) return '';
+      return moment(this.value, this.inputFormat || this.valueFormat).format(this.labelFormat);
     }
   },
   methods: {
-    handleChange(time) {
-      if (this.multiple || this.range) return;
-
-      this.$emit('input', moment(time, this.insideValueFormat).format(this.valueFormat));
+    handleInput(value) {
+      this.$emit('input', value);
       setImmediate(() => this.$emit('blur'));
-
-    },
-    handleInput(times) {
-      if (!this.multiple && !this.range) return;
-
-      this.$emit('input', times.map(time => moment(time, this.insideValueFormat).format(this.valueFormat)));
-
     }
   }
 }
 
 </script>
+
+<style lang="scss" scoped>
+  ::v-deep {
+    .vpd-input-group {
+      display: none;
+    }
+  }
+</style>
