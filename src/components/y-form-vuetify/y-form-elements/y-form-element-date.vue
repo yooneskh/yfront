@@ -22,7 +22,7 @@
     :max="field.max"
     :min="field.min"
     :readonly="field.readonly"
-    :type="field.type"
+    :type="field.selectorType"
     :multiple="field.multiple"
     :range="field.range"
     :unfilled="field.unfilled"

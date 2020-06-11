@@ -1,5 +1,5 @@
 <template>
-  <v-menu :close-on-content-click="false" absolute>
+  <v-menu :close-on-content-click="false" absolute v-model="menuOpened">
     <template #activator="{ on }">
       <v-text-field
         readonly
@@ -25,6 +25,7 @@
     </template>
     <persian-date-picker
       inline
+      :class="[`type-${type}`]"
       :type="type || 'date'"
       :locale="locale"
       :disable="disabledDates"
@@ -83,16 +84,22 @@ export default {
     success: Boolean,
     message: String
   },
+  data: () => ({
+    menuOpened: false
+  }),
   computed: {
     fieldTitle() {
       if (!this.value) return '';
-      return moment(this.value, this.inputFormat || this.valueFormat).format(this.labelFormat);
+      return moment(this.value, this.inputFormat || this.valueFormat).format(this.labelFormat || this.valueFormat);
     }
   },
   methods: {
     handleInput(value) {
       this.$emit('input', value);
-      setImmediate(() => this.$emit('blur'));
+      setImmediate(() => {
+        this.$emit('blur');
+        this.menuOpened = false;
+      });
     }
   }
 }
@@ -103,6 +110,11 @@ export default {
   ::v-deep {
     .vpd-input-group {
       display: none;
+    }
+    .type-date {
+      .vpd-actions {
+        display: none;
+      }
     }
   }
 </style>
