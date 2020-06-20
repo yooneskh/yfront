@@ -95,7 +95,11 @@ export default {
           if (this.target[field.key]) {
             this.target[field.key].splice( this.target[field.key].indexOf(auxiliaryValue) , 1);
           }
-        } return;
+        }
+        
+        this.$emit('update:key', field.key, this.target[field.key]);
+        return;
+
       }
 
       const value = field.number ? parseInt(text || field.defaultNumber || '0', field.radix || 10) : text;
@@ -107,6 +111,8 @@ export default {
         this.$set(this.target, field.key, value);
         this.$forceUpdate(); // TODO: remove this !!
       }
+
+      this.$emit('update:key', field.key, this.target[field.key]);
 
     }
   }
