@@ -1,12 +1,12 @@
 <template>
   <div class="y-form-series">
 
-    <v-subheader class="px-0">
+    <v-label>
       {{ field.title }}
       <v-btn v-if="!field.readonly && !field.disabled" class="ms-2" small icon @click="addItem">
         <v-icon small>mdi-plus</v-icon>
       </v-btn>
-    </v-subheader>
+    </v-label>
 
     <v-row>
       <v-col v-for="(item, index) in target[field.key]" :key="ids[index]" class="series-item py-0" :cols="field.itemWidth || 12" :style="{ 'margin-top': index > 0 ? `${field.itemTopMargin}px` : '' }">
