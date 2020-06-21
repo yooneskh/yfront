@@ -10,16 +10,10 @@ Vue.use(Vuetify, {
   }
 });
 
-Vue.use(VuetifyToast, {
-  x: 'center',
-  queueable: true,
-  timeout: 3000
-});
-
 // import en from 'vuetify/es5/locale/en';
 import fa from 'vuetify/es5/locale/fa';
 
-export default new Vuetify({
+const vuetify = new Vuetify({
   lang: {
     locales: {
       // en,
@@ -44,4 +38,13 @@ export default new Vuetify({
       }
     }
   }
+});
+
+export default vuetify;
+
+Vue.use(VuetifyToast, {
+  $vuetify: vuetify.framework,
+  x: 'center',
+  queueable: true,
+  timeout: 3000
 });
