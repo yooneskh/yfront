@@ -25,7 +25,9 @@
     :messages="field.message"
     hide-details="auto">
     <template v-if="field.password" #append>
-      <v-icon v-if="!field.disabled" @click="revealed = !revealed">{{ revealed ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
+      <v-icon v-if="!field.disabled" class="ms-2" @click="revealed = !revealed">
+        {{ revealed ? 'mdi-eye-off' : 'mdi-eye' }}
+      </v-icon>
     </template>
   </v-text-field>
 </template>
