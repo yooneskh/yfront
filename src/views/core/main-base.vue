@@ -16,6 +16,8 @@
       :toolbar-items="toolbars"
       class="main-sidebar"
       :expanding-items="config.expandingSidebarItems"
+      :color="config.color"
+      :appbar-height="config.appBarHeight"
     />
 
     <router-view

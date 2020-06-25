@@ -21,7 +21,7 @@
               class="pt-4"
               :target="this"
               :fields="[
-                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', mask: '#### ### ####', classes: 'ltred', inputNumeric: true, hideDetails: true }
+                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', mask: '#### ### ####', classes: 'ltred', inputNumeric: true }
               ]"
               @keyup.enter.native="doLogin"
             />
@@ -33,7 +33,7 @@
               class="pt-4"
               :target="this"
               :fields="[
-                { key: 'name', type: 'text', title: 'نام', hideDetails: true },
+                { key: 'name', type: 'text', title: 'نام' },
               ]"
               @keyup.enter.native="doRegister"
             />
@@ -45,7 +45,7 @@
               class="pt-4"
               :target="this"
               :fields="[
-                { key: 'verificationCode', type: 'text', title: 'کد تایید', mask: '######',  classes: 'ltred', inputNumeric: true, autocomplete: 'one-time-password', hideDetails: true }
+                { key: 'verificationCode', type: 'text', title: 'کد تایید', mask: '######',  classes: 'ltred', inputNumeric: true, autocomplete: 'one-time-password' }
               ]"
               @keyup.enter.native="doVerify"
             />
@@ -154,7 +154,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>
