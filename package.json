@@ -24,12 +24,12 @@
     "vue-router": "^3.3.4",
     "vue-smooth-dnd": "^0.8.1",
     "vue-socket.io-extended": "^4.0.3",
-    "vuetify": "^2.3.2",
+    "vuetify": "^2.3.3",
     "vuetify-toast-snackbar": "^0.6.1",
     "ynetwork": "^2.5.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-optional-chaining": "^7.10.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.10.4",
     "@vue/cli-plugin-babel": "^4.4.6",
     "@vue/cli-plugin-eslint": "^4.4.6",
     "@vue/cli-service": "^4.4.6",
