@@ -55,13 +55,13 @@
 
         <div class="px-2 pb-2">
           <template v-if="mode === 'login'">
-            <v-btn block depressed color="primary" large :loading="loading" @click="doLogin">ورود به حساب کاربری</v-btn>
+            <v-btn block depressed color="primary" large :disabled="!phoneNumber" :loading="loading" @click="doLogin">ورود به حساب کاربری</v-btn>
           </template>
           <template v-if="mode === 'register'">
-            <v-btn block depressed color="primary" large :loading="loading" @click="doRegister">ایجاد حساب جدید</v-btn>
+            <v-btn block depressed color="primary" large :disabled="!name" :loading="loading" @click="doRegister">ایجاد حساب جدید</v-btn>
           </template>
           <template v-if="mode === 'verify'">
-            <v-btn block depressed color="primary" large :loading="loading" @click="doVerify">بررسی کد تایید</v-btn>
+            <v-btn block depressed color="primary" large :disabled="!verificationCode" :loading="loading" @click="doVerify">بررسی کد تایید</v-btn>
           </template>
         </div>
 
