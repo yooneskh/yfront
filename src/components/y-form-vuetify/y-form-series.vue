@@ -15,6 +15,7 @@
           :target="item"
           :fields="injectedItemFields"
           @update:valid="$set(validations, ids[index], $event)"
+          @update:key="$emit('update:key', field.key, target[field.key])"
         />
 
         <v-btn v-if="!field.readonly && !field.disabled" class="series-remove" icon x-small @click="removeItem(index)">
@@ -70,12 +71,20 @@ export default {
   },
   methods: {
     addItem() {
+
       this.ids.push(this.$uuid());
       this.target[this.field.key].push(JSON.parse(JSON.stringify(this.field.base)));
+
+      this.$emit('update:key', this.field.key, this.target[this.field.key]);
+
     },
     removeItem(index) {
+
       this.target[this.field.key].splice(index, 1);
       this.ids.splice(index, 1);
+
+      this.$emit('update:key', this.field.key, this.target[this.field.key]);
+
     }
   }
 }
