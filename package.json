@@ -12,7 +12,7 @@
     "@mdi/font": "^5.3.45",
     "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.6.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment-jalaali": "^0.9.2",
     "roboto-fontface": "*",
     "socket.io-client": "^2.3.0",
@@ -24,7 +24,7 @@
     "vue-router": "^3.3.4",
     "vue-smooth-dnd": "^0.8.1",
     "vue-socket.io-extended": "^4.0.3",
-    "vuetify": "^2.3.3",
+    "vuetify": "^2.3.4",
     "vuetify-toast-snackbar": "^0.6.1",
     "ynetwork": "^2.5.0"
   },
@@ -36,8 +36,8 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^7.4.0",
     "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.26.9",
-    "sass-loader": "^9.0.1",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.2",
     "vue-cli-plugin-vuetify": "^2.0.6",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.5.0"
