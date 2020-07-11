@@ -3,7 +3,7 @@
 
     <v-label>
       {{ field.title }}
-      <v-btn v-if="!field.readonly && !field.disabled" class="ms-2" small icon @click="addItem">
+      <v-btn v-if="!field.readonly && !field.disabled && !field.unaddable" class="ms-2" small icon @click="addItem">
         <v-icon small>mdi-plus</v-icon>
       </v-btn>
     </v-label>
