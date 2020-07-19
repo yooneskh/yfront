@@ -67,10 +67,15 @@ export default {
     }
   },
   created() {
-    this.ids = this.target[this.field.key].map(() => this.$uuid())
+    this.ids = (this.target[this.field.key] || []).map(() => this.$uuid())
   },
   methods: {
-    addItem() {
+    async addItem() {
+
+      if (!this.target[this.field.key]) {
+        this.$set(this.target, this.field.key, []);
+        await this.$nextTick();
+      }
 
       this.ids.push(this.$uuid());
       this.target[this.field.key].push(JSON.parse(JSON.stringify(this.field.base)));
