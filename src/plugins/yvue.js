@@ -67,10 +67,11 @@ Vue.mixin({
     $copy(text) {
       return copyToClipboard(text);
     },
-    $dialogConfirmDelete(title, options) {
+    $dialogConfirmDelete(title, message, options) {
       return this.$dialog(import('../dialogs/confirm-delete.vue' /* webpackChunkName: 'confirm-delete-dialog' */), {
         ...options,
-        title
+        title,
+        message
       });
     },
     $dialogFormMaker(title, description, fields, actionTitle, values, options) {
