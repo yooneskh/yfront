@@ -1,6 +1,11 @@
 <template>
   <div class="y-resource-cell">
-    <template v-if="Array.isArray(data)">
+    <template v-if="header.type === 'series'">
+      <v-btn small text color="primary" @click="showSeriesData(header, data)">
+        نمایش مجموعه داده
+      </v-btn>
+    </template>
+    <template v-else-if="Array.isArray(data)">
       <YResourceCell v-for="dataElement in data" :key="dataElement" class="me-2 d-inline-block" :header="header" :data="dataElement" />
     </template>
     <template v-else-if="header.languages">
@@ -27,7 +32,7 @@
       <template v-else-if="header.type === 'boolean'">
         <v-icon :color="data ? 'success' : 'error'" >{{ data ? 'mdi-check' : 'mdi-close' }}</v-icon>
       </template>
-      <span v-else :style="{'direction': header.dir}" class="d-inline-block">
+      <span v-else :style="{'direction': header.dir}" class="d-inline-block" :class="{'ltred': header.type === 'number'}">
         {{ data }}
       </span>
     </template>
@@ -101,6 +106,13 @@ export default {
           readonly: true
         });
       }
+    },
+    async showSeriesData(meta, data) {
+      this.$dialog(require('./y-resource-series-visualizer-dialog').default, {
+        width: 768,
+        meta,
+        data
+      });
     }
   }
 }

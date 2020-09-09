@@ -126,3 +126,38 @@ export function transformSorts(sorts) {
   ).join(',');
 
 }
+
+export function mapMetaType(meta) {
+
+  if (meta.type === 'string' && meta.ref === 'Media') return 'file';
+  if (meta.type === 'series') return 'series';
+  if (meta.ref) return 'resource';
+  if (meta.isArray) return 'select';
+
+  switch (meta.type) {
+    case 'string': return meta.languages ? 'text-multilang' : (meta.richText ? 'editor' : (meta.longText ? 'textarea' : 'text'));
+    case 'number': return 'text';
+    case 'boolean': return 'checkbox';
+    default: return 'text';
+  }
+
+}
+
+export function mapMetaToFormFields(metas, readonly = false) {
+  if (!metas) return;
+
+  return metas.map(meta => ({
+    ...meta,
+    title: meta.title || meta.key,
+    type: mapMetaType(meta),
+    resource: meta.ref,
+    number: meta.type === 'number',
+    itemFields: mapMetaToFormFields(meta.serieSchema), // for series
+    base: meta.serieBase, // for series
+    multiple: meta.isArray, // for select
+    addable: meta.isArray, // for select
+    wrapped: false, // for the file picker
+    readonly
+  }));
+
+}

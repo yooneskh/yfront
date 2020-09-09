@@ -48,7 +48,7 @@ export default {
     }
   },
   watch: {
-    'value'() {
+    value() {
       this.makeResourceTitle();
     }
   },

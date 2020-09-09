@@ -67,7 +67,13 @@ export default {
     }
   },
   created() {
-    this.ids = (this.target[this.field.key] || []).map(() => this.$uuid())
+
+    if (!this.target[this.field.key]) {
+      this.$set(this.target, this.field.key, []);
+    }
+
+    this.ids = this.target[this.field.key].map(() => this.$uuid());
+
   },
   methods: {
     async addItem() {

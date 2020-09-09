@@ -28,11 +28,9 @@
         :sorts.sync="sorts"
         @edit="initEditor"
         @delete="deleteResource">
-
         <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ header, data }">
           <y-resource-table-cell :key="header.key + data" :data="data" :header="header" />
         </template>
-
       </y-table>
 
     </v-card>

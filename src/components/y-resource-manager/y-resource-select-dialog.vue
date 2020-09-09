@@ -21,15 +21,18 @@
     <y-table
       :headers="headers"
       :items="notSelectedItems"
+      :server-items-length="allItemsCount"
+      :sorts.sync="sorts"
+      @update:page="page = $event"
+      :items-per-page="itemsPerPage"
+      @update:items-per-page="itemsPerPage = $event"
       :actions="[
         { key: 'select', icon: 'mdi-plus', color: 'primary' }
       ]"
       @select="handleItemClick">
-
       <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ header, data }">
         <y-resource-table-cell :key="header.key + data" :data="data" :header="header" />
       </template>
-
     </y-table>
 
   </v-card>
@@ -38,7 +41,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { loadMetasFor, transformFilters, transformResourceToTitle, transformRelationToTitle } from './y-resource-util';
+import { loadMetasFor, transformFilters, transformSorts, transformResourceToTitle, transformRelationToTitle } from './y-resource-util';
 import debounce from 'lodash/debounce';
 
 export default {
@@ -60,7 +63,11 @@ export default {
   },
   data: () => ({
     loading: false,
+    allItemsCount: 0,
     filters: [],
+    sorts: {},
+    page: 1,
+    itemsPerPage: 5,
     metas: [],
     items: [],
     selectedItems: [],
@@ -94,6 +101,15 @@ export default {
     }
   },
   watch: {
+    page() {
+      this.loadData();
+    },
+    itemsPerPage() {
+      this.loadData();
+    },
+    sorts() {
+      this.loadData();
+    },
     filters: {
       deep: true,
       handler: debounce(function() {
@@ -142,12 +158,20 @@ export default {
     async loadNormalData() {
 
       const transformedFilters = transformFilters(this.filters);
+      const sorts = transformSorts(this.sorts);
+      const skip = (this.page - 1) * this.itemsPerPage;
+      const limit = this.itemsPerPage;
 
       this.loading = true;
-      const { result } = await YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase()}s?${transformedFilters}`)
+      const [{ status, result }, { status: s2, result: r2 }] = await Promise.all([
+        YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase()}s?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
+        YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase()}s/count?${transformFilters}`)
+      ]);
       this.loading = false;
+      if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
 
       this.items = result;
+      this.allItemsCount = r2;
       
     },
     async setupRelations() {
@@ -179,15 +203,23 @@ export default {
     async loadRelationsData() {
 
       const transformedFilters = transformFilters(this.filters);
+      const sorts = transformSorts(this.sorts);
+      const skip = (this.page - 1) * this.itemsPerPage;
+      const limit = this.itemsPerPage;
 
       const targetName = (this.modelName || this.relationTargetModel).toLowerCase();
       const sourceName = this.relationSourceModel.toLowerCase();
 
       this.loading = true;
-      const { result } = await YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s?${transformedFilters}`)
+      const [{ status, result }, { status: s2, result: r2 }] = await Promise.all([
+        YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
+        YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s/count?${transformedFilters}`)
+      ]);
       this.loading = false;
+      if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
 
       this.items = result;
+      this.allItemsCount = r2;
 
     },
     async handleItemClick(item) {
