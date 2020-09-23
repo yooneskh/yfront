@@ -18,6 +18,7 @@
     :error="field.error"
     :success="field.success"
     :messages="field.message"
+    :hint="field.hint"
     prepend-icon=""
     prepend-inner-icon="mdi-paperclip"
     hide-details="auto"

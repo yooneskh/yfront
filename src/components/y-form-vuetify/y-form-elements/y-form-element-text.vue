@@ -23,6 +23,7 @@
     :error="field.error"
     :success="field.success"
     :messages="field.message"
+    :hint="field.hint"
     hide-details="auto">
     <template v-if="field.password" #append>
       <v-icon v-if="!field.disabled" class="ms-2" @click="revealed = !revealed">

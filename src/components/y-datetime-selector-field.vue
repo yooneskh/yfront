@@ -20,6 +20,7 @@
         :error="error"
         :success="success"
         :messages="message"
+        :hint="hint"
         hide-details="auto"
       />
     </template>
@@ -82,7 +83,8 @@ export default {
     valueFormat: String,
     error: Boolean,
     success: Boolean,
-    message: String
+    message: String,
+    hint: String
   },
   data: () => ({
     menuOpened: false

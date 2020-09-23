@@ -8,6 +8,7 @@
       :error="error"
       :success="success"
       :messages="message"
+      :hint="hint"
       :value="stateInfo"
       prepend-inner-icon="mdi-paperclip"
       :append-icon="path ? 'mdi-open-in-new' : undefined"
@@ -42,7 +43,8 @@ export default {
     disabled: Boolean,
     success: Boolean,
     error: Boolean,
-    message: String
+    message: String,
+    hint: String
   },
   data: () => ({
     processing: false,

@@ -7,6 +7,10 @@
       باز کردن ویرایشگر
     </v-btn>
 
+    <div v-if="field.hint" class="caption mt-1 ms-2">
+      {{ field.hint }}
+    </div>
+
     <transition name="slide-from-up">
       <div v-if="field.message" class="caption mt-1 ms-2" :class="{ 'error--text': field.error, 'success--text': field.success }">
         {{ field.message }}

@@ -13,6 +13,7 @@
     :error="field.error"
     :success="field.success"
     :message="field.message"
+    :hint="field.hint"
   />
 </template>
 
