@@ -16,7 +16,7 @@
       :actions="tableActions"
       @edit="initEditor"
       @delete="deleteRelation">
-      <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ header, data }">
+      <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ data }">
         <y-resource-table-cell :key="header.key + data" :data="data" :header="header" />
       </template>
     </y-table>
@@ -134,7 +134,7 @@ export default {
           title: this.relation.targetPropertyTitle
         });
       }
-      
+
       const form = await this.$dialogFormMaker(title, '', fields, actionTitle, relation && JSON.parse(JSON.stringify(relation)));
       if (!form) return;
 
@@ -142,7 +142,7 @@ export default {
 
       const payload = { ...form };
 
-      if (toEdit) {  
+      if (toEdit) {
         Object.keys(payload).forEach(key => {
           if (relation[key] === payload[key]) {
             delete payload[key];
@@ -164,7 +164,7 @@ export default {
         this.loading = true;
         const { status, result } = await YNetwork.post(url, payload);
         this.loading = false;
-  
+
         if (this.$generalHandle(status, result)) return;
 
         this.$toast.success('افزودن با موفقیت انجام شد.');
@@ -176,9 +176,9 @@ export default {
         this.loading = true;
         const { status, result } = await YNetwork.patch(url + '/' + relation._id, payload);
         this.loading = false;
-  
+
         if (this.$generalHandle(status, result)) return;
-  
+
         this.$toast.success('ویرایش با موفقیت انجام شد.');
         this.loadData();
 
@@ -187,7 +187,7 @@ export default {
     },
     async deleteRelation(relation) {
       if (await this.$dialogConfirmDelete()) {
-        
+
         const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${relation[this.relation.targetModel.toLowerCase()]}/${relation._id}`;
 
         const { status, result } = await YNetwork.delete(url);

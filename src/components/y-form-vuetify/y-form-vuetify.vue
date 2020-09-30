@@ -96,10 +96,18 @@ export default {
         }
         else {
           if (this.target[field.key]) {
-            this.target[field.key].splice( this.target[field.key].indexOf(auxiliaryValue) , 1);
+
+            const index = this.target[field.key].indexOf(auxiliaryValue);
+
+            this.$set(
+              this.target,
+              this.field.key,
+              this.target[field.key].filter((it, itIndex) => index !== itIndex)
+            );
+
           }
         }
-        
+
         this.$emit('update:key', field.key, this.target[field.key]);
         return;
 

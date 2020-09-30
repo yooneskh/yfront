@@ -85,16 +85,28 @@ export default {
 
       this.ids.push(this.$uuid());
 
-      this.target[this.field.key].push(JSON.parse(JSON.stringify(
-        typeof this.field.base === 'function' ? this.field.base() : this.field.base
-      )));
+      this.$set(
+        this.target,
+        this.field.key,
+        [
+          ...this.target[this.field.key],
+          JSON.parse(JSON.stringify(
+            typeof this.field.base === 'function' ? this.field.base() : this.field.base
+          ))
+        ]
+      );
 
       this.$emit('update:key', this.field.key, this.target[this.field.key]);
 
     },
     removeItem(index) {
 
-      this.target[this.field.key].splice(index, 1);
+      this.$set(
+        this.target,
+        this.field.key,
+        this.target[this.field.key].filter((it, itIndex) => index !== itIndex)
+      );
+
       this.ids.splice(index, 1);
 
       this.$emit('update:key', this.field.key, this.target[this.field.key]);

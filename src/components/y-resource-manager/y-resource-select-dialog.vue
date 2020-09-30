@@ -1,6 +1,6 @@
 <template>
   <v-card :loading="loading">
-    
+
     <v-card-title class="pe-3">
       انتخاب {{ title || 'آیتم' }}
       <v-spacer />
@@ -30,7 +30,7 @@
         { key: 'select', icon: 'mdi-plus', color: 'primary' }
       ]"
       @select="handleItemClick">
-      <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ header, data }">
+      <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ data }">
         <y-resource-table-cell :key="header.key + data" :data="data" :header="header" />
       </template>
     </y-table>
@@ -126,7 +126,7 @@ export default {
       if (this.preSelection && this.multiple) {
 
         this.selectedItems = this.preSelection;
-        
+
         this.preSelection.forEach(async selection => {
           if (this.relationSourceModel && this.relationTargetModel) {
             this.$set(this.titles, selection, await transformRelationToTitle(this.$apiBase, this.modelName, selection, this.relationSourceModel, this.relationTargetModel));
@@ -135,7 +135,7 @@ export default {
             this.$set(this.titles, selection, await transformResourceToTitle(this.$apiBase, this.modelName, selection));
           }
         });
-        
+
       }
     },
     async setup() {
@@ -172,7 +172,7 @@ export default {
 
       this.items = result;
       this.allItemsCount = r2;
-      
+
     },
     async setupRelations() {
 

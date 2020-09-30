@@ -5,8 +5,9 @@
       class="small-text"
       dense solo flat hide-details
       background-color="transparent"
-      v-model="filter.key"
       :items="metas.map(meta => ({ value: meta.key, text: meta.title }))"
+      :value="value.key"
+      @input="$emit('input', { ...value, key: $event })"
       style="width: 110px;"
     />
 
@@ -15,13 +16,14 @@
       dense solo flat hide-details
       background-color="transparent"
       :items="currentOperators"
-      v-model="filter.operator"
+      :value="value.operator"
+      @input="$emit('input', { ...value, operator: $event })"
       style="width: 90px;"
     />
 
     <y-form
       class="small-text"
-      :target="filter"
+      :target="value"
       :fields="valueField"
       no-bottom-padding
       style="width: 110px;"
@@ -35,11 +37,11 @@ export default {
   name: 'YResourceFilterElement',
   props: {
     metas: Array,
-    filter: Object
+    value: Object
   },
   computed: {
     currentMeta() {
-      return this.metas.find(meta => meta.key === this.filter.key);
+      return this.metas.find(meta => meta.key === this.value.key);
     },
     currentOperators() {
 

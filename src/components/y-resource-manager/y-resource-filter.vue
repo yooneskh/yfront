@@ -36,11 +36,17 @@ export default {
 
       const hasNotContain = !!meta.timeformat || !!meta.ref;
 
-      this.value.push({ key: this.metas[0].key, operator: hasNotContain ? '=' : '~=', value: '' })
+      this.$emit(
+        'input',
+        [
+          ...this.value,
+          { key: this.metas[0].key, operator: hasNotContain ? '=' : '~=', value: '' }
+        ]
+      );
 
     },
     removeLastFilter() {
-      this.value.pop();
+      this.$emit('input', this.value.filter((it, index) => index !== this.value.length - 1));
     }
   }
 }
