@@ -15,6 +15,7 @@
     :error="field.error"
     :success="field.success"
     :messages="field.message"
+    :hint="field.hint"
     hide-details="auto">
     <template #append>
       <v-menu>

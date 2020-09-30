@@ -37,7 +37,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { loadMetasFor, loadRelationsFor } from './y-resource-util';
+import { loadMetasFor, loadRelationsFor, mapMetaToFormFields } from './y-resource-util';
 
 export default {
   name: 'YResourceDialog',
@@ -71,17 +71,7 @@ export default {
   }),
   computed: {
     fields() {
-      return this.metas.list.map(meta => ({
-        ...meta,
-        title: meta.title || meta.key,
-        type: this.mapMetaType(meta),
-        number: meta.type === 'number',
-        wrapped: false, // for the file picker
-        multiple: meta.isArray, // for select
-        addable: meta.isArray, // for select
-        resource: meta.ref,
-        readonly: this.readonly
-      }));
+      return mapMetaToFormFields(this.metas.list, this.readonly);
     },
     allLoading() {
       return this.loading || this.metasLoading || this.relationsLoading;
@@ -165,20 +155,6 @@ export default {
       }
 
       this.$emit('resolve', true);
-
-    },
-    mapMetaType(meta) {
-
-      if (meta.type === 'string' && meta.ref === 'Media') return 'file';
-      if (meta.ref) return 'resource';
-      if (meta.isArray) return 'select';
-
-      switch (meta.type) {
-        case 'string': return meta.languages ? 'text-multilang' : (meta.richText ? 'editor' : (meta.longText ? 'textarea' : 'text'));
-        case 'number': return 'text';
-        case 'boolean': return 'checkbox';
-        default: return 'text';
-      }
 
     }
   }

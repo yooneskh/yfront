@@ -20,6 +20,7 @@
         :error="error"
         :success="success"
         :messages="message"
+        :hint="hint"
         hide-details="auto"
       />
     </template>
@@ -70,6 +71,7 @@ export default {
     error: Boolean,
     success: Boolean,
     message: String,
+    hint: String,
     allowedHours: {},
     allowedMinutes: {},
     allowedSeconds: {},

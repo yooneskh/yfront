@@ -67,7 +67,13 @@ export default {
     }
   },
   created() {
-    this.ids = (this.target[this.field.key] || []).map(() => this.$uuid())
+
+    if (!this.target[this.field.key]) {
+      this.$set(this.target, this.field.key, []);
+    }
+
+    this.ids = this.target[this.field.key].map(() => this.$uuid());
+
   },
   methods: {
     async addItem() {
@@ -78,7 +84,10 @@ export default {
       }
 
       this.ids.push(this.$uuid());
-      this.target[this.field.key].push(JSON.parse(JSON.stringify(this.field.base)));
+
+      this.target[this.field.key].push(JSON.parse(JSON.stringify(
+        typeof this.field.base === 'function' ? this.field.base() : this.field.base
+      )));
 
       this.$emit('update:key', this.field.key, this.target[this.field.key]);
 

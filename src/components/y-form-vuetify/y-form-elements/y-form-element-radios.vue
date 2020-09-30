@@ -12,13 +12,14 @@
     :error="field.error"
     :success="field.success"
     :messages="field.message"
+    :hint="field.hint"
     @change="handleChange"
     style="text-align: unset;">
     <v-radio
       v-for="(item, index) in field.items"
-      :key="item.value"
-      :label="item.text"
-      :value="item.value"
+      :key="item.value || item"
+      :label="item.text || item"
+      :value="item.value || item"
       :dir="field.dir"
       :class="{
         'mt-1': !field.horizontal && index === 0,

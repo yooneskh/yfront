@@ -16,11 +16,9 @@
       :actions="tableActions"
       @edit="initEditor"
       @delete="deleteRelation">
-
       <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ header, data }">
         <y-resource-table-cell :key="header.key + data" :data="data" :header="header" />
       </template>
-
     </y-table>
 
   </div>
@@ -29,6 +27,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
+import { mapMetaToFormFields } from './y-resource-util';
 
 export default {
   name: 'YResourceRelationManager',
@@ -125,16 +124,7 @@ export default {
       const title = toEdit ? 'ویرایش' : `افزودن`;
       const actionTitle = toEdit ? 'ویرایش' : `افزودن`;
 
-      const fields = this.relation.properties.map(meta => ({
-        ...meta,
-        title: meta.title || meta.key,
-        type: this.mapMetaType(meta),
-        number: meta.type === 'number',
-        wrapped: false, // for the file picker
-        multiple: meta.isArray, // for select
-        addable: meta.isArray, // for select again :D
-        resource: meta.ref
-      }));
+      const fields = mapMetaToFormFields(this.relation.properties);
 
       if (!toEdit) {
         fields.unshift({
@@ -207,26 +197,6 @@ export default {
         this.loadData();
 
       }
-    },
-    mapMetaType(meta) {
-
-      if (meta.type === 'string' && meta.ref === 'Media') return 'file';
-
-      if (meta.ref) return 'resource';
-
-      if (meta.isArray) return 'select';
-
-      if (meta.languages) return 'text-multilang';
-      if (meta.longText) return 'textarea';
-      if (meta.richText) return 'editor';
-
-      switch (meta.type) {
-        case 'string': return 'text';
-        case 'number': return 'text';
-        case 'boolean': return 'checkbox';
-        default: return 'text';
-      }
-
     }
   }
 }

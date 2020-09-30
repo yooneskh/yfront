@@ -17,6 +17,7 @@
     :error="field.error"
     :success="field.success"
     :messages="field.message"
+    :hint="field.hint"
     hide-details="auto"
   />
 </template>
@@ -48,7 +49,7 @@ export default {
     }
   },
   watch: {
-    'value'() {
+    value() {
       this.makeResourceTitle();
     }
   },

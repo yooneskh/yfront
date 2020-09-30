@@ -30,6 +30,7 @@
     :error="field.error"
     :success="field.success"
     :message="field.message"
+    :hint="field.hint"
     @input="$emit('input', $event)"
     @blur="validateValue"
   />

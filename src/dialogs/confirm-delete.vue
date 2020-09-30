@@ -6,7 +6,7 @@
     </v-card-title>
 
     <v-card-text>
-      آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟
+      {{ message || 'آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟' }}
     </v-card-text>
 
     <v-card-actions>
@@ -22,7 +22,8 @@
 export default {
   name: 'ConfirmDeleteDialog',
   props: {
-    title: String
+    title: String,
+    message: String
   }
 }
 </script>
