@@ -18,6 +18,7 @@
     :success="field.success"
     :messages="field.message"
     :hint="field.hint"
+    persistent-hint
     hide-details="auto"
   />
 </template>
@@ -137,7 +138,7 @@ export default {
 
         })
       );
-      
+
     },
     async loadRelationicData() {
 
@@ -158,7 +159,7 @@ export default {
 
       this.items = await Promise.all(
         allData.map(async item => {
-          
+
           const [sourceTitle, targetTitle] = await Promise.all([
             transformResourceToTitle(this.$apiBase, this.field.relationSourceModel, item[this.field.relationSourceModel.toLowerCase()]),
             transformResourceToTitle(this.$apiBase, this.field.relationTargetModel, item[this.field.relationTargetModel.toLowerCase()])

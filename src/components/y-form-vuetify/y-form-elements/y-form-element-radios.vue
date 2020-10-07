@@ -13,6 +13,7 @@
     :success="field.success"
     :messages="field.message"
     :hint="field.hint"
+    persistent-hint
     @change="handleChange"
     style="text-align: unset;">
     <v-radio

@@ -16,6 +16,7 @@
     :success="field.success"
     :messages="field.message"
     :hint="field.hint"
+    persistent-hint
     hide-details="auto"
   />
   <v-combobox
@@ -30,12 +31,13 @@
     :disabled="field.disabled"
     :readonly="field.readonly"
     :autofocus="field.autofocus"
-    @input="$emit('input', $event)" 
+    @input="$emit('input', $event)"
     @blur="validateValue"
     :error="field.error"
     :success="field.success"
     :messages="field.message"
     :hint="field.hint"
+    persistent-hint
     hide-details="auto"
   />
 </template>

@@ -19,6 +19,7 @@
     :success="field.success"
     :messages="field.message"
     :hint="field.hint"
+    persistent-hint
     prepend-icon=""
     prepend-inner-icon="mdi-paperclip"
     hide-details="auto"

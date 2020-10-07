@@ -15,6 +15,7 @@
       :success="field.success"
       :messages="field.message"
       :hint="field.hint"
+      persistent-hint
       hide-details="auto"
     />
   </div>

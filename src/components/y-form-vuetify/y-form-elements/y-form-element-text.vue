@@ -24,6 +24,7 @@
     :success="field.success"
     :messages="field.message"
     :hint="field.hint"
+    persistent-hint
     hide-details="auto">
     <template v-if="field.password" #append>
       <v-icon v-if="!field.disabled" class="ms-2" @click="revealed = !revealed">
@@ -56,7 +57,7 @@ export default {
   }),
   computed: {
     type() {
-      
+
       if (this.field.password && !this.revealed) return 'password';
       if (this.field.number) return 'number';
 

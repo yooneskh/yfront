@@ -20,6 +20,7 @@
       :error="field.error"
       :messages="field.message"
       :hint="field.hint"
+      persistent-hint
       @click="!field.readonly && $refs.fileInput.click()"
       @keyup.space="!field.readonly && $refs.fileInput.click()"
       @keyup.enter="!field.readonly && $refs.fileInput.click()"
@@ -67,7 +68,7 @@ export default {
       const file = event.target.files[0];
       if (!file) return;
 
-      if (this.field.fileValidator && !this.field.fileValidator(file)) return; 
+      if (this.field.fileValidator && !this.field.fileValidator(file)) return;
 
       const xhr = new XMLHttpRequest();
       xhr.open('post', `${ENDPOINT_BASE}/media`, true);
