@@ -50,7 +50,7 @@ export default {
     },
     toolbars: [
       { group: 'عمومی', title: 'خانه', icon: 'mdi-home', path: '/' },
-      { group: 'کاربران', title: 'مدیریت کاربران', icon: 'mdi-account-group', path: '/users/list' }
+      { group: 'کاربران', title: 'مدیریت کاربران', icon: 'mdi-account-group', path: '/users' }
     ]
   }),
   computed: {
@@ -91,7 +91,7 @@ export default {
     //   this.$socket.client.emit('subscribe', 'Resource.User.*');
     },
     // 'Resource.User.*'(...data) {
-    // 
+    //
     // }
   }
 }

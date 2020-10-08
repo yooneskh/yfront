@@ -20,7 +20,7 @@ export default new Router({
           component: () => import('./views/home/home-page.vue' /* webpackChunkName: 'home-page' */)
         },
         {
-          path: 'users/list',
+          path: 'users',
           component: () => import('./views/users/list-user-page.vue' /* webpackChunkName: 'list-user-page' */)
         },
       ]
