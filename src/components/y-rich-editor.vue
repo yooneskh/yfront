@@ -1,26 +1,26 @@
 <template>
   <div class="y-rich-editor">
-    
+
     <drag-container @drop="handleDrop" :drag-handle-selector="readonly ? '#non-existant-id' : undefined">
-      <drag-element v-for="(part, index) in parts" :key="index" class="editor-item">
+      <drag-element v-for="(part, index) in parsedValue.parts" :key="part._id" class="editor-item">
 
         <h2
           v-if="part.type === 'title'"
           class="title">
-          <y-editable-text v-model="parts[index].content" lazy :readonly="readonly" placeholder="Empty Text ..." />
+          <y-editable-text :value="part.title" @input="updatePart(index, { title: $event })" lazy :readonly="readonly" placeholder="جای متن شما ..." />
         </h2>
 
         <p v-if="part.type === 'text'">
-          <y-editable-text v-model="parts[index].content" lazy :readonly="readonly" placeholder="Empty Text ..." />
+          <y-editable-text :value="part.text" @input="updatePart(index, { text: $event })" lazy :readonly="readonly" placeholder="جای متن شما ..." />
         </p>
 
         <v-img
           v-if="part.type === 'image'"
-          :src="part.content"
+          :src="part.path"
           class="my-4"
         />
 
-        <v-btn v-if="!readonly" class="delete-button" icon small color="error" @click="parts.splice(index, 1)">
+        <v-btn v-if="!readonly" class="delete-button" icon small color="error" @click="deletePart(index)">
           <v-icon small>mdi-close</v-icon>
         </v-btn>
 
@@ -29,8 +29,8 @@
 
     <div v-if="!readonly" class="add-bar text-center mt-4 mx-auto grey lighten-3 py-1 px-4 mb-4" style="width: 300px; border-radius: 32px;">
       <span class="caption me-4">افزودن</span>
-      <v-btn class="ms-2" icon @click="parts.push({ type: 'title', content: '' })"> <v-icon>mdi-format-title</v-icon> </v-btn>
-      <v-btn class="ms-2" icon @click="parts.push({ type: 'text', content: '' })"> <v-icon>mdi-text-subject</v-icon> </v-btn>
+      <v-btn class="ms-2" icon @click="appendPart({ type: 'title', title: '' })"> <v-icon>mdi-format-title</v-icon> </v-btn>
+      <v-btn class="ms-2" icon @click="appendPart({ type: 'text', title: '' })"> <v-icon>mdi-text-subject</v-icon> </v-btn>
       <v-btn class="ms-2" icon @click="addImage"> <v-icon>mdi-image</v-icon> </v-btn>
     </div>
 
@@ -52,57 +52,72 @@ export default {
   },
   props: {
     value: {
-      type: String,
-      default: ''
+      type: String
     },
     readonly: Boolean
   },
-  data: () => ({
-    parts: []
-  }),
-  watch: {
-    value: {
-      immediate: true,
-      handler() {
-        this.generateParts();
-      }
-    },
-    parts: {
-      deep: true,
-      handler() {
-        this.emitValue();
-      }
+  computed: {
+    parsedValue() {
+      return JSON.parse(this.value || '{"parts":[],"config":{}}');
     }
   },
   methods: {
-    generateParts() {
-      this.parts = this.value.split(/\s*-----/g).filter(Boolean).map(line => ({
-        type: line.split('\n')[0],
-        content: line.split('\n')[1]
+    appendPart(newPart) {
+      this.$emit('input', JSON.stringify({
+        ...this.parsedValue,
+        parts: [
+          ...this.parsedValue.parts,
+          {
+            ...newPart,
+            _id: this.$uuid()
+          }
+        ]
       }));
     },
-    emitValue() {
-      this.$emit('input', this.parts.map(part => `-----${part.type}\n${part.content}`).join('\n') )
+    updatePart(index, updates) {
+      this.$emit(
+        'input',
+        JSON.stringify({
+          ...this.parsedValue,
+          parts: this.parsedValue.parts.map((it, itIndex) => itIndex === index ? ({ ...it, ...updates }) : it)
+        })
+      );
+    },
+    deletePart(index) {
+      this.$emit(
+        'input',
+        JSON.stringify({
+          ...this.parsedValue,
+          parts: this.parsedValue.parts.filter((it, itIndex) => itIndex !== index)
+        })
+      );
     },
     async addImage() {
 
       const form = await this.$dialogFormMaker('افزودن تصویر', 'لطفا فایل تصویر مورد نظر را انتخاب کنید.', [
         { key: 'file', type: 'file', title: 'فایل', wrapped: false }
-      ]);
-      
-      if (!form || !form.file) return;
+      ]); if (!form || !form.file) return;
 
       const { status, result } = await Api.Media.loadOne(form.file);
       if (this.$generalHandle(status, result)) return;
 
-      this.parts.push({ type: 'image', content: result.path });
+      this.appendPart({ type: 'image', path: result.path });
 
     },
     handleDrop(dropResult) {
 
       const { removedIndex, addedIndex } = dropResult;
 
-      this.parts.splice(addedIndex, 0, this.parts.splice(removedIndex, 1)[0] );
+      const array = [...this.parsedValue.parts];
+      array.splice(addedIndex, 0, array.splice(removedIndex, 1)[0] );
+
+      this.$emit(
+        'input',
+        JSON.stringify({
+          ...this.parsedValue,
+          parts: array
+        })
+      );
 
     }
   }
