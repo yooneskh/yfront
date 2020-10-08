@@ -7,7 +7,8 @@
       :flat="field.flat || field.simple"
       :outlined="field.outlined"
       :dense="field.dense"
-      :value="title"
+      :loading="loading"
+      :value="loading ? loadingText : title"
       :background-color="field.background"
       :label="field.title"
       :placeholder="field.placeholder"
@@ -35,8 +36,7 @@
 
 <script>
 
-import YNetwork from 'ynetwork';
-import { ENDPOINT_BASE } from '../../../api/ApiBaseEndpoints';
+import Api from '../../../api';
 import { YFormElementMixin } from '../mixins/y-form-element-mixin'
 
 export default {
@@ -50,6 +50,8 @@ export default {
   },
   mixins: [YFormElementMixin],
   data: () => ({
+    loading: false,
+    loadingText: '',
     error: false,
     title: '',
     path: undefined
@@ -63,44 +65,55 @@ export default {
     }
   },
   methods: {
-    handleUpdate(event) {
+    async handleUpdate(event) {
 
       const file = event.target.files[0];
       if (!file) return;
 
       if (this.field.fileValidator && !this.field.fileValidator(file)) return;
 
+      const fileName = file.name.slice(0, file.name.lastIndexOf('.'));
+      const fileExtension = file.name.slice(file.name.lastIndexOf('.') + 1);
+      const fileSize = file.size;
+
+      this.loading = true;
+      this.loadingText = '---';
+      const { status, result } = await Api.Media.initUpload(fileName, fileExtension, fileSize);
+      if (status !== 200) {
+        this.loading = false;
+        return;
+      }
+
+      const { fileToken } = result;
+
       const xhr = new XMLHttpRequest();
-      xhr.open('post', `${ENDPOINT_BASE}/media`, true);
-      xhr.setRequestHeader('Authorization', this.$token);
+      const url = `${Api.Media.ENDPOINT_UPLOAD_PATH}/${fileToken}`;
 
-      const formData = new FormData();
-      formData.append('file', file);
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
 
-      xhr.send(formData);
-      this.error = false;
+          this.loading = false;
+          if (xhr.status !== 201) return;
 
-      xhr.onload = () => {
-        if (xhr.status === 200) {
-          const { mediaId } = JSON.parse(xhr.response);
-          this.$emit('input', mediaId);
-        }
-        else {
-          this.title = '';
-          this.error = true;
+          const uploadResult = JSON.parse(xhr.response);
+          this.$emit('input', uploadResult.mediaId);
+
         }
       };
 
-      const app = this;
-      xhr.onprogress = (uploadEvent) => {
-        app.title = Math.trunc(uploadEvent.loaded * 100 / (uploadEvent.total + 1)) + '%'
-      }
+      xhr.upload.onprogress = (progressEvent) => {
+        this.loadingText = +( (progressEvent.loaded) * 100 / progressEvent.total ).toFixed(2) + '%';
+      };
+
+      xhr.open('POST', url, true);
+      xhr.setRequestHeader('Authorization', this.$token);
+      xhr.send(file);
 
     },
     async loadMedia() {
       if (!this.value) return;
 
-      const { status, result } = await YNetwork.get(`${ENDPOINT_BASE}/media/${this.value}/info`);
+      const { status, result } = await Api.Media.loadOne(this.value);
       if (this.$generalHandle(status, result)) return;
 
       this.title = result.name;
