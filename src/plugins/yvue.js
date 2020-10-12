@@ -90,6 +90,18 @@ Vue.mixin({
         title,
         items
       });
+    },
+    $dialogYesNo(title, message, danger, yesText, noText, yesValue, noValue, options) {
+      return this.$dialog(import('../dialogs/yes-no-dialog.vue' /* webpackChunkName: 'yes-no-dialog' */), {
+        ...options,
+        title,
+        message,
+        danger,
+        yesText,
+        noText,
+        yesValue,
+        noValue
+      });
     }
   }
 });
