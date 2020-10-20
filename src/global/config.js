@@ -9,7 +9,6 @@ export const Config = {
     barColor: 'primary',
     isBarColorDark: true,
     isAppBarSticky: false,
-    expandingSidebarItems: false,
     mainContentAreaTopSpacing: 12,
     appBarToolbarHeight: 64
   },

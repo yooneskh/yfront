@@ -13,11 +13,10 @@
 
     <main-side-bar
       v-if="appliedConfigMode === 'sidebar'"
-      :toolbar-items="toolbars"
       class="main-sidebar"
-      :expanding-items="config.expandingSidebarItems"
-      :color="config.color"
-      :appbar-height="config.appBarHeight"
+      :toolbar-items="toolbars"
+      :bar-color="config.color"
+      :is-color-dark="config.isDark"
     />
 
     <router-view
@@ -45,12 +44,15 @@ export default {
       appBarHeight: Config.baseLayout.appBarHeight,
       color: Config.baseLayout.barColor,
       isDark: Config.baseLayout.isBarColorDark,
-      stickyAppBar: Config.baseLayout.isAppBarSticky,
-      expandingSidebarItems: Config.baseLayout.expandingSidebarItems
+      stickyAppBar: Config.baseLayout.isAppBarSticky
     },
     toolbars: [
-      { group: 'عمومی', title: 'خانه', icon: 'mdi-home', path: '/' },
-      { group: 'کاربران', title: 'مدیریت کاربران', icon: 'mdi-account-group', path: '/users' }
+      { groupTitle: 'عمومی', groupIcon: 'mdi-home' , children: [
+        { title: 'خانه', icon: 'mdi-home', path: '/' },
+      ]},
+      { groupTitle: 'کاربران', groupIcon: 'mdi-account-group' , children: [
+        { title: 'مدیریت کاربران', icon: 'mdi-account-group', path: '/users' },
+      ]}
     ]
   }),
   computed: {
