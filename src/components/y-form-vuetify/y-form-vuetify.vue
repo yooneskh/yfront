@@ -68,22 +68,25 @@ export default {
     validations: {
       deep: true,
       handler() {
-
-        const isValid = Object.values(this.validations).filter(v => v !== undefined).every(v => v === true);
-
-        const allFieldKeysWithRules = this.fields.filter(field => !!field.rules && field.rules.length > 0).map(f => f.key);
-        const validatedFieldKeys = Object.keys(this.validations);
-        const nonValidatedField = allFieldKeysWithRules.filter(key => !validatedFieldKeys.includes(key));
-        const isAnyUnvalidated = nonValidatedField.length === 0;
-
-        this.$emit('update:valid', isValid && isAnyUnvalidated);
-
+        this.checkValidations();
       }
     }
   },
   methods: {
     mapElementType(field) {
       return `y-form-element-${field.type}`;
+    },
+    checkValidations() {
+
+      const isValid = Object.values(this.validations).filter(v => v !== undefined).every(v => v === true);
+
+      const allFieldKeysWithRules = this.fields.filter(field => !!field.rules && field.rules.length > 0).map(f => f.key);
+      const validatedFieldKeys = Object.keys(this.validations);
+      const nonValidatedField = allFieldKeysWithRules.filter(key => !validatedFieldKeys.includes(key));
+      const isAnyUnvalidated = nonValidatedField.length === 0;
+
+      this.$emit('update:valid', isValid && isAnyUnvalidated);
+
     },
     handleInput(field, text, auxiliaryValue) {
 
