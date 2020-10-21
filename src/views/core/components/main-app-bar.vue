@@ -1,7 +1,7 @@
 <template>
-  <v-app-bar :class="{'has-tabs': toolbarItems && toolbarItems.length > 0}" :color="color || 'primary'" :height="height" :elevate-on-scroll="sticky" :fixed="sticky" :dark="dark">
+  <v-app-bar :class="{'has-tabs': joinedToolbarItems && joinedToolbarItems.length > 0}" :color="color || 'primary'" :height="height" :elevate-on-scroll="sticky" :fixed="sticky" :dark="dark">
 
-    <v-toolbar-title class="flex-row d-flex align-center me-4" @click="$router.push((toolbarItems[0] || { path: '/' }).path, () => {})" style="cursor: pointer;">
+    <v-toolbar-title class="flex-row d-flex align-center me-4" @click="$router.push((joinedToolbarItems[0] || { path: '/' }).path, () => {})" style="cursor: pointer;">
       <v-img height="36" width="36" class="me-2" src="../../../assets/img/logo.png" />
       {{ $options.Title }}
     </v-toolbar-title>
@@ -11,7 +11,7 @@
     <v-btn icon v-if="!$token" to="/auth">
       <v-icon>mdi-login</v-icon>
     </v-btn>
-    
+
     <v-menu min-width="225" v-else>
 
       <template v-slot:activator="{ on }">
@@ -29,7 +29,7 @@
           </v-list-item-icon>
           <v-list-item-title>مشاهده پروفایل</v-list-item-title>
         </v-list-item>
-        
+
         <v-list-item @click="$root.logout(); $router.replace('/auth')">
           <v-list-item-icon class="me-2">
             <v-icon small color="error">mdi-delete</v-icon>
@@ -41,9 +41,9 @@
 
     </v-menu>
 
-    <template v-if="toolbarItems && toolbarItems.length > 0" #extension>
+    <template v-if="joinedToolbarItems && joinedToolbarItems.length > 0" #extension>
       <v-tabs background-color="transparent" icons-and-text show-arrows>
-        <v-tab v-for="item in toolbarItems" :key="item.title + item.path" :to="item.path">
+        <v-tab v-for="item in joinedToolbarItems" :key="item.title + item.path" :to="item.path">
           {{ item.title }}
           <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
         </v-tab>
@@ -66,6 +66,17 @@ export default {
     dark: Boolean,
     height: { type: Number, default: 64 },
     toolbarItems: Array
+  },
+  computed: {
+    joinedToolbarItems() {
+      return this.toolbarItems.flatMap(it =>
+        it.children.map(child => ({
+          ...it,
+          children: undefined,
+          ...child
+        }))
+      )
+    }
   }
 };
 

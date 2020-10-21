@@ -30,6 +30,7 @@
 </template>
 
 <script>
+
 import { Config } from '../../global/config';
 
 export default {

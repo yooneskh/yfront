@@ -2,7 +2,7 @@
   <v-sheet elevation="1" width="285" class="ma-0 grey lighten-5 d-flex flex-column">
     <div class="sidebar-header flex-grow-0">
       <v-card outlined :color="barColor" :dark="isColorDark" class="d-flex flex-row align-center ma-2 pa-2 rounded-sm" :to="(toolbarItems[0][0] || { path: '/' }).path">
-        <v-img src="../../../assets/img/logo.png" width="24" class="flex-grow-0 me-4 ms-2" />
+        <v-img src="../../../assets/img/logo.png" width="40" class="flex-grow-0 me-4 ms-2" />
         <div class="titles">
           <div class="text-h6 font-weight-bold">
             {{ $options.Title }}
@@ -46,7 +46,7 @@
           </v-card>
         </v-menu>
 
-        <v-tooltip v-for="group of toolbarItems" :key="group.groupTitle" fixed left>
+        <v-tooltip v-for="group of toolbarItems" :key="group.groupTitle" fixed :left="$vuetify.rtl" :right="!$vuetify.rtl">
           <template #activator="{ on }">
             <v-btn
               text
