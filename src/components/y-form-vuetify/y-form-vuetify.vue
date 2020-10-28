@@ -1,7 +1,7 @@
 <template>
   <v-form class="y-form y-form-vuetify" @submit.prevent>
     <v-row class="ma-0 me-n3">
-      <v-col v-for="field in validatedFields" class="pt-0 ps-0" :key="field.key" cols="12" :md="field.width || 12" :class="{ 'pb-0': noBottomPadding }" style="position: relative;">
+      <v-col v-for="field in filteredValidatedFields" class="pt-0 ps-0" :key="field.key" cols="12" :md="field.width || 12" :class="{ 'pb-0': noBottomPadding }" style="position: relative;">
         <component
           :is="mapElementType(field)"
           :target="target"
@@ -62,6 +62,9 @@ export default {
         success: this.validations[field.key] === true,
         message: typeof this.validations[field.key] === 'string' ? (this.validations[field.key] || 'مقدار وارد شده صحیح نیست!') : undefined
       }));
+    },
+    filteredValidatedFields() {
+      return this.validatedFields.filter(it => !it.vIf || it.vIf(this.target));
     }
   },
   watch: {
@@ -112,6 +115,7 @@ export default {
         }
 
         this.$emit('update:key', field.key, this.target[field.key]);
+        this.trimTarget();
         return;
 
       }
@@ -127,6 +131,18 @@ export default {
       }
 
       this.$emit('update:key', field.key, this.target[field.key]);
+      this.trimTarget();
+
+    },
+    trimTarget() {
+
+      const validTargetKeys = this.filteredValidatedFields.map(it => it.key);
+
+      for (const key of Object.keys(this.target)) {
+        if (!validTargetKeys.includes(key)) {
+          this.$delete(this.target, key);
+        }
+      }
 
     }
   }
