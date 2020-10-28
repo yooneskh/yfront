@@ -55,16 +55,16 @@ export default {
     validations: {}
   }),
   computed: {
-    validatedFields() {
-      return this.fields.map(field => ({
+    filteredFields() {
+      return this.fields.filter(it => !it.vIf || it.vIf(this.target));
+    },
+    filteredValidatedFields() {
+      return this.filteredFields.map(field => ({
         ...field,
         error: this.validations[field.key] === false || typeof this.validations[field.key] === 'string',
         success: this.validations[field.key] === true,
         message: typeof this.validations[field.key] === 'string' ? (this.validations[field.key] || 'مقدار وارد شده صحیح نیست!') : undefined
       }));
-    },
-    filteredValidatedFields() {
-      return this.validatedFields.filter(it => !it.vIf || it.vIf(this.target));
     }
   },
   watch: {
@@ -83,7 +83,7 @@ export default {
 
       const isValid = Object.values(this.validations).filter(v => v !== undefined).every(v => v === true);
 
-      const allFieldKeysWithRules = this.fields.filter(field => !!field.rules && field.rules.length > 0).map(f => f.key);
+      const allFieldKeysWithRules = this.filteredFields.filter(field => !!field.rules && field.rules.length > 0).map(f => f.key);
       const validatedFieldKeys = Object.keys(this.validations);
       const nonValidatedField = allFieldKeysWithRules.filter(key => !validatedFieldKeys.includes(key));
       const isAnyUnvalidated = nonValidatedField.length === 0;
@@ -136,7 +136,7 @@ export default {
     },
     trimTarget() {
 
-      const validTargetKeys = this.filteredValidatedFields.map(it => it.key);
+      const validTargetKeys = this.filteredFields.map(it => it.key);
 
       for (const key of Object.keys(this.target)) {
         if (!validTargetKeys.includes(key)) {
