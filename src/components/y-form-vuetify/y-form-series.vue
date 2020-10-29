@@ -64,6 +64,14 @@ export default {
         const isValid = Object.values(this.validations).every(v => v === true);
         this.$emit('update:valid', isValid);
       }
+    },
+    target: {
+      deep: true,
+      async handler() {
+        if (this.target[this.field.key] && this.target[this.field.key].length !== this.ids.length) {
+          this.redoIds();
+        }
+      }
     }
   },
   created() {
@@ -72,10 +80,13 @@ export default {
       this.$set(this.target, this.field.key, []);
     }
 
-    this.ids = this.target[this.field.key].map(() => this.$uuid());
+    this.redoIds();
 
   },
   methods: {
+    redoIds() {
+      this.ids = this.target[this.field.key].map(() => this.$uuid());
+    },
     async addItem() {
 
       if (!this.target[this.field.key]) {
