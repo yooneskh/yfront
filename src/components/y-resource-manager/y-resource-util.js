@@ -1,14 +1,16 @@
 import YNetwork from 'ynetwork';
 import { YCacher } from '../../plugins/y-cacher';
 
-export async function loadMetasFor(apiBase, resourceName) {
+export async function loadMetasFor(apiBase, resourceName, pathSuffix) {
   if (YCacher.has([resourceName, 'Meta'])) return YCacher.get([resourceName, 'Meta']);
 
   return YCacher.preempt([resourceName, 'Meta'], async () => {
 
-    const { status, result } = await YNetwork.get(`${apiBase}/${resourceName.toLowerCase()}s/metas`);
+    const urlPathSuffix = pathSuffix || `/${resourceName.toLowerCase()}s`;
+
+    const { status, result } = await YNetwork.get(`${apiBase}${urlPathSuffix}/metas`);
     if (status !== 200) return [];
-  
+
     return result;
 
   });
@@ -19,10 +21,10 @@ export async function loadRelationsFor(apiBase, resourceName) {
   if (YCacher.has([resourceName, 'Relation'])) return YCacher.get([resourceName, 'Relation']);
 
   return YCacher.preempt([resourceName, 'Relation'], async () => {
-    
+
     const { status, result } = await YNetwork.get(`${apiBase}/${resourceName.toLowerCase()}s/relations`);
     if (status !== 200) return [];
-  
+
     return result;
 
   });

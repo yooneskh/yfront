@@ -2,8 +2,8 @@
   <div class="y-resource-manager">
     <v-card :loading="loading">
 
-      <v-card-title v-if="title" class="pe-3">
-        {{ title }}
+      <v-card-title class="pe-3">
+        <v-icon v-if="icon" class="me-3">{{ icon }}</v-icon>
         <v-spacer />
         <v-btn text color="primary" @click="initEditor(undefined)">
           افزودن
