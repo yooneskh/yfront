@@ -3,7 +3,7 @@
     v-if="!field.addable"
     :filled="!field.unfilled"
     :label="field.title"
-    :items="field.items"
+    :items="fieldItems"
     :multiple="field.multiple"
     :value="value"
     :dir="field.dir"
@@ -23,7 +23,7 @@
     v-else
     filled
     :label="field.title"
-    :items="field.items"
+    :items="fieldItems"
     chips deletable-chips small-chips
     :multiple="field.multiple"
     :value="value"
@@ -52,12 +52,26 @@ export default {
     value: {
 
     },
+    target: {
+
+    },
     field: {
       type: Object,
       required: true
     }
   },
-  mixins: [YFormElementMixin]
+  mixins: [YFormElementMixin],
+  computed: {
+    fieldItems() {
+
+      if (typeof this.field.items === 'function') {
+        return this.field.items(this.target);
+      }
+
+      return this.field.items;
+
+    }
+  }
 }
 
 </script>

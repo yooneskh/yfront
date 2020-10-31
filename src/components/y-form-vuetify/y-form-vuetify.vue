@@ -52,11 +52,12 @@ export default {
     'y-form-element-editor': () => import('./y-form-elements/y-form-element-editor.vue' /* webpackChunkName: 'y-form-element-editor' */)
   },
   data: () => ({
-    validations: {}
+    validations: {},
+    recomputeKey: 1
   }),
   computed: {
     filteredFields() {
-      return this.fields.filter(it => !it.vIf || it.vIf(this.target));
+      return this.recomputeKey && this.fields.filter(it => !it.vIf || it.vIf(this.target));
     },
     filteredValidatedFields() {
       return this.filteredFields.map(field => ({
@@ -115,7 +116,7 @@ export default {
         }
 
         this.$emit('update:key', field.key, this.target[field.key]);
-        this.trimTarget();
+        this.recomputeKey = Math.random() + 0.44;
         return;
 
       }
@@ -131,7 +132,7 @@ export default {
       }
 
       this.$emit('update:key', field.key, this.target[field.key]);
-      this.trimTarget();
+      this.recomputeKey = Math.random() + 0.44;
 
     },
     trimTarget() {
