@@ -4,6 +4,7 @@
 
       <v-card-title class="pe-3">
         <v-icon v-if="icon" class="me-3">{{ icon }}</v-icon>
+        {{ title }}
         <v-spacer />
         <v-btn text color="primary" @click="initEditor(undefined)">
           افزودن
@@ -51,6 +52,9 @@ export default {
   },
   props: {
     title: {
+      type: String
+    },
+    icon: {
       type: String
     },
     modelName: {

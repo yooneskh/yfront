@@ -51,8 +51,8 @@ export default {
       { groupTitle: 'عمومی', groupIcon: 'mdi-home' , children: [
         { title: 'خانه', icon: 'mdi-home', path: '/' },
       ]},
-      { groupTitle: 'کاربران', groupIcon: 'mdi-account-group' , children: [
-        { title: 'مدیریت کاربران', icon: 'mdi-account-group', path: '/users' },
+      { groupTitle: 'مدیریت', groupIcon: 'mdi-cog' , children: [
+        { title: 'مدیریت کاربران', icon: 'mdi-account', path: '/users' },
       ]}
     ]
   }),
