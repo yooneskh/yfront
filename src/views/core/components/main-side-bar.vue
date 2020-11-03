@@ -14,8 +14,7 @@
       </v-card>
     </div>
     <div class="sidebar-items d-flex flex-row flex-grow-1" style="border-top: 1px solid rgba(0, 0, 0, 0.15);">
-      <div class="sidebar-items-groups d-flex flex-column px-3 pt-3" style="height: 100%; border-left: 1px solid rgba(0, 0, 0, 0.15);">
-
+      <div class="sidebar-items-groups d-flex flex-column px-3 pt-3" style="height: 100%;" :style="`border-${$vuetify.rtl ? 'left' : 'right'}: 1px solid rgba(0, 0, 0, 0.15);`">
         <v-menu>
           <template #activator="{ on }">
             <v-btn text class="flex-grow-0 px-0 mb-1" width="48" height="48" v-on="on" style="min-width: 0;">
