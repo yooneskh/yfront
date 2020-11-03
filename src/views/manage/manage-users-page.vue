@@ -2,6 +2,7 @@
   <v-container fluid class="page" style="max-width: 1200px;">
     <y-resource-manager
       title="مدیریت کاربران"
+      icon="mdi-account"
       model-name="User"
       sort-latest
     />

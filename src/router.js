@@ -21,7 +21,7 @@ export default new Router({
         },
         {
           path: 'users',
-          component: () => import('./views/users/list-user-page.vue' /* webpackChunkName: 'list-user-page' */)
+          component: () => import('./views/manage/manage-users-page.vue' /* webpackChunkName: 'manage-users-page' */)
         },
       ]
     },
