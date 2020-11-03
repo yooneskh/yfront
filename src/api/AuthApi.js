@@ -20,3 +20,11 @@ export function verify(phoneNumber, verificationCode) {
     verificationCode
   });
 }
+
+export function logout() {
+  return YNetwork.post(`${ENDPOINT_BASE}/auth/logout`);
+}
+
+export function getIdentity() {
+  return YNetwork.get(`${ENDPOINT_BASE}/auth/identity`);
+}

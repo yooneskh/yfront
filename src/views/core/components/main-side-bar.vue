@@ -17,11 +17,16 @@
       <div class="sidebar-items-groups d-flex flex-column px-3 pt-3" style="height: 100%;" :style="`border-${$vuetify.rtl ? 'left' : 'right'}: 1px solid rgba(0, 0, 0, 0.15);`">
         <v-menu>
           <template #activator="{ on }">
-            <v-btn text class="flex-grow-0 px-0 mb-1" width="48" height="48" v-on="on" style="min-width: 0;">
-              <v-avatar size="36">
-                <v-img :src="($user.profilePicture && $user.profilePicture.path) || $options.UserPlaceholder" />
-              </v-avatar>
-            </v-btn>
+            <v-tooltip fixed :left="$vuetify.rtl" :right="!$vuetify.rtl">
+              <template #activator="{ on: tooltipOn }">
+                <v-btn text class="flex-grow-0 px-0 mb-1" width="48" height="48" v-on="{ ...on, ...tooltipOn }" style="min-width: 0;">
+                  <v-avatar size="36">
+                    <v-img :src="($user.profile && $user.profile.path) || $options.UserPlaceholder" />
+                  </v-avatar>
+                </v-btn>
+              </template>
+              <span>{{ $user.name }}</span>
+            </v-tooltip>
           </template>
           <v-card dark flat min-width="285">
             <v-list dense nav>
@@ -33,7 +38,7 @@
                   <v-list-item-title>مشاهده پروفایل</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item class="red mt-2" @click="$root.logout()">
+              <v-list-item class="red mt-2" @click="$root.logout(); $router.replace('/auth');">
                 <v-list-item-icon class="me-3">
                   <v-icon color="white">mdi-logout</v-icon>
                 </v-list-item-icon>

@@ -6,9 +6,9 @@
       </v-card>
     </v-col>
     <v-col cols="12" md="8" class="d-flex pa-0 grey lighten-3 flex-column align-center justify-center">
-      
+
       <v-img src="../../assets/img/logo.png" width="80" style="position: absolute; top: 8px;" :style="{'left': $isMobile ? '50%' : '12px', 'transform': $isMobile ? 'translateX(-50%)' : ''}" />
-      
+
       <v-card max-width="350" outlined>
 
         <v-card-title class="justify-center">ورود {{ $options.Title }}</v-card-title>
@@ -93,6 +93,7 @@ export default {
   name: 'AuthPage',
   Title,
   data: () => ({
+    isMandatory: Config.auth.isAuthMandatory,
     mode: 'login',
     loading: false,
     phoneNumber: '09',
@@ -131,7 +132,7 @@ export default {
       this.loading = false;
 
       if (this.$generalHandle(status, result)) return;
-      
+
       this.mode = 'verify';
 
     },
@@ -140,14 +141,12 @@ export default {
       this.loading = true;
       const { status, result } = await Api.Auth.verify(`+98${this.cleanPhoneNumber.slice(1)}`, this.verificationCode);
       this.loading = false;
-
       if (this.$generalHandle(status, result)) return;
-      
-      localStorage.setItem('--user--', JSON.stringify(result.user));
+
+      this.$root.user = result.user;
       localStorage.setItem('--token--', result.token);
 
       this.$root.resetCredentials();
-
       this.$router.replace('/');
 
     }

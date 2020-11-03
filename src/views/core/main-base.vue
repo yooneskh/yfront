@@ -1,37 +1,44 @@
 <template>
   <div class="main-base" :class="{ 'sidebar': appliedConfigMode === 'sidebar' }">
+    <template v-if="loading">
+      <v-img src="../../assets/img/logo.png" class="flex-grow-0" contain width="60" height="60" />
+      <v-progress-circular indeterminate color="primary" size="24" width="2" class="mt-4" />
+    </template>
+    <template v-else>
 
-    <main-app-bar
-      v-if="appliedConfigMode === 'appbar'"
-      class="main-bar"
-      :toolbar-items="toolbars"
-      :color="config.color"
-      :height="config.appBarHeight"
-      :dark="config.isDark"
-      :sticky="config.stickyAppBar"
-    />
+      <main-app-bar
+        v-if="appliedConfigMode === 'appbar'"
+        class="main-bar"
+        :toolbar-items="toolbars"
+        :color="config.color"
+        :height="config.appBarHeight"
+        :dark="config.isDark"
+        :sticky="config.stickyAppBar"
+      />
 
-    <main-side-bar
-      v-if="appliedConfigMode === 'sidebar'"
-      class="main-sidebar"
-      :toolbar-items="toolbars"
-      :bar-color="config.color"
-      :is-color-dark="config.isDark"
-    />
+      <main-side-bar
+        v-if="appliedConfigMode === 'sidebar'"
+        class="main-sidebar"
+        :toolbar-items="toolbars"
+        :bar-color="config.color"
+        :is-color-dark="config.isDark"
+      />
 
-    <router-view
-      class="main-content"
-      :style="{
-        'padding-top': `${contentTopPadding}px`
-      }"
-    />
+      <router-view
+        class="main-content"
+        :style="{
+          'padding-top': `${contentTopPadding}px`
+        }"
+      />
 
+    </template>
   </div>
 </template>
 
 <script>
 
 import { Config } from '../../global/config';
+import Api from '../../api';
 
 export default {
   name: 'MainBase',
@@ -40,6 +47,8 @@ export default {
     'main-side-bar': require('./components/main-side-bar').default
   },
   data: () => ({
+    loading: false,
+    error: false,
     config: {
       mode: Config.baseLayout.defaultBarMode,
       appBarHeight: Config.baseLayout.appBarHeight,
@@ -76,13 +85,23 @@ export default {
 
     }
   },
-  beforeMount() {
+  async beforeMount() {
+
     if (!this.$token && Config.auth.isAuthMandatory) {
       this.$router.replace('/auth');
+      return;
     }
-    else if (Config.socket.enabled && (!Config.socket.needsAuthentication || this.$token)) {
+
+    if (Config.socket.enabled && (!Config.socket.needsAuthentication || this.$token)) {
       this.$socket.client.connect();
     }
+
+    if (this.$token) {
+      this.loading = true;
+      await this.loadData();
+      this.loading = false;
+    }
+
   },
   sockets: {
     connect() {
@@ -96,6 +115,18 @@ export default {
     // 'Resource.User.*'(...data) {
     //
     // }
+  },
+  methods: {
+    async loadData() {
+      const identityApi = await Api.Auth.getIdentity();
+      if (identityApi.status !== 200) return this.onLoadDataError();
+      this.$root.user = identityApi.result;
+    },
+    async onLoadDataError() {
+      this.$toast.error('مشکلی در گرفتن اطلاعات شما وجود دارد. لطفا دوباره تلاش کنید.');
+      this.$root.logout();
+      this.$router.replace('/auth');
+    }
   }
 }
 </script>
@@ -103,6 +134,10 @@ export default {
 <style lang="scss" scoped>
   .main-base {
     background: #EAEAEA;
+    .loading-container {
+      position: fixed;
+      top: 0; right: 0; bottom: 0; left: 0;
+    }
     &:not(.sidebar) {
       min-height: 100%;
     }

@@ -33,16 +33,10 @@ Vue.mixin({
     }
   },
   methods: {
-    // eslint-disable-next-line no-unused-vars
-    $generalHandle(status, result, silent) {
+    $generalHandle(status, result, silent) { // eslint-disable no-unused-vars
       if (status !== 200) {
-
-        if (!silent) {
-          this.$toast.error('مشکلی پیش آمده است! لطفا دوباره امتحان کنید.');
-        }
-        
+        if (!silent) this.$toast.error('There was a problem. Please try again.');
         return true;
-
       }
     },
     $hasAccess(access) {
@@ -56,37 +50,20 @@ new Vue({
   vuetify,
   render: h => h(App),
   data: {
-    user: {
-      _id: '',
-      name: '',
-      profilePicture: {},
-      permissions: [],
-      phoneNumber: '',
-    },
+    user: {},
     token: '',
-    dialogs: [] // TODO: make this in the plugin file
+    dialogs: []
   },
   beforeMount() {
     this.resetCredentials();
   },
   methods: {
     resetCredentials() {
-
-      this.user = JSON.parse(localStorage.getItem('--user--') || JSON.stringify({
-        _id: '',
-        name: '',
-        profilePicture: {},
-        permissions: [],
-        phoneNumber: '',
-      }));
-
       this.token = localStorage.getItem('--token--') || '';
-
       Api.setToken(this.$token);
-
     },
     logout() {
-      localStorage.removeItem('--user--');
+      Api.Auth.logout();
       localStorage.removeItem('--token--');
       this.resetCredentials();
     }
