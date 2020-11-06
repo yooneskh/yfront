@@ -35,7 +35,7 @@ Vue.mixin({
   methods: {
     $generalHandle(status, result, silent) { // eslint-disable no-unused-vars
       if (status !== 200) {
-        if (!silent) this.$toast.error('There was a problem. Please try again.');
+        if (!silent) this.$toast.error('مشکلی پیش آمده. لطفا دوباره تلاش کنید.');
         return true;
       }
     },

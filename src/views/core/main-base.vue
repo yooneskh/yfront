@@ -1,9 +1,9 @@
 <template>
   <div class="main-base" :class="{ 'sidebar': appliedConfigMode === 'sidebar' }">
-    <template v-if="loading">
+    <div v-if="loading" class="d-flex flex-column align-center justify-center" style="position: fixed; top: 0; left: 0; bottom: 0; right: 0;">
       <v-img src="../../assets/img/logo.png" class="flex-grow-0" contain width="60" height="60" />
       <v-progress-circular indeterminate color="primary" size="24" width="2" class="mt-4" />
-    </template>
+    </div>
     <template v-else>
 
       <main-app-bar
