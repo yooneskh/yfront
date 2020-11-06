@@ -33,7 +33,6 @@ export default {
     addFilter() {
 
       const meta = this.metas[0];
-
       const hasNotContain = !!meta.timeformat || !!meta.ref;
 
       this.$emit(

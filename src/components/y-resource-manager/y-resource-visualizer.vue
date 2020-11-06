@@ -12,7 +12,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { transformResourceToTitle } from './y-resource-util'
+import { pluralizeModelName, transformResourceToTitle } from './y-resource-util'
 
 export default {
   name: 'YResourceVisualizer',
@@ -33,11 +33,9 @@ export default {
   }),
   async mounted() {
 
-    const modelUrl = this.model.toLowerCase() + 's';
-
     const result = await Promise.all([
       transformResourceToTitle(this.$apiBase, this.model, this.id),
-      YNetwork.get(`${this.$apiBase}/${modelUrl}/${this.id}`)
+      YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.model)}/${this.id}`)
     ]);
 
     if (result[0] === '---' || result[1].status !== 200) {

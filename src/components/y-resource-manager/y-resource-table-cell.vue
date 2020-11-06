@@ -42,7 +42,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { transformResourceToTitle, loadRelationsFor } from './y-resource-util';
+import { transformResourceToTitle, loadRelationsFor, pluralizeModelName } from './y-resource-util';
 
 export default {
   name: 'YResourceCell',
@@ -66,11 +66,11 @@ export default {
   async mounted() {
     if (!Array.isArray(this.data) && this.isRelation) {
 
-      const targetName = (this.header.ref || this.header.relationTargetModel).toLowerCase();
-      const sourceName = this.header.relationSourceModel.toLowerCase();
+      const targetName = pluralizeModelName(this.header.ref || this.header.relationTargetModel);
+      const sourceName = pluralizeModelName(this.header.relationSourceModel);
 
       const [{ result: relationData }, { result: relations }] = await Promise.all([
-        YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s/${this.data}`),
+        YNetwork.get(`${this.$apiBase}/${sourceName}/${targetName}/${this.data}`),
         new Promise(resolve =>
           loadRelationsFor(this.$apiBase, this.header.relationSourceModel).then(rs => resolve({
             status: 200,
@@ -88,8 +88,7 @@ export default {
       ]);
 
       this.relationTitle = sourceTitle + ' ' + targetTitle + ' ' + relationMeta.properties.filter(p => p.titleable).map(meta => relationData[meta.key]).join(' ');
-
-      this.sourceResourceData = (await YNetwork.get(`${this.$apiBase}/${sourceName}s/${this.relationSourceId}`)).result;
+      this.sourceResourceData = (await YNetwork.get(`${this.$apiBase}/${sourceName}/${this.relationSourceId}`)).result;
 
     }
   },

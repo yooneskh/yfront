@@ -41,7 +41,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { loadMetasFor, transformFilters, transformSorts, transformResourceToTitle, transformRelationToTitle } from './y-resource-util';
+import { loadMetasFor, transformFilters, transformSorts, transformResourceToTitle, transformRelationToTitle, pluralizeModelName } from './y-resource-util';
 import debounce from 'lodash/debounce';
 
 export default {
@@ -164,8 +164,8 @@ export default {
 
       this.loading = true;
       const [{ status, result }, { status: s2, result: r2 }] = await Promise.all([
-        YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase()}s?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
-        YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase()}s/count?${transformFilters}`)
+        YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
+        YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/count?${transformFilters}`)
       ]);
       this.loading = false;
       if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
@@ -178,7 +178,7 @@ export default {
 
       this.loadRelationsData();
 
-      const { result } = await YNetwork.get(`${this.$apiBase}/${this.relationSourceModel.toLowerCase()}s/relations`);
+      const { result } = await YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.relationSourceModel)}/relations`);
       const relation = result.find(r => r.targetModel === this.relationTargetModel);
 
       this.metas = [
@@ -207,13 +207,13 @@ export default {
       const skip = (this.page - 1) * this.itemsPerPage;
       const limit = this.itemsPerPage;
 
-      const targetName = (this.modelName || this.relationTargetModel).toLowerCase();
-      const sourceName = this.relationSourceModel.toLowerCase();
+      const targetName = pluralizeModelName(this.modelName || this.relationTargetModel);
+      const sourceName = pluralizeModelName(this.relationSourceModel);
 
       this.loading = true;
       const [{ status, result }, { status: s2, result: r2 }] = await Promise.all([
-        YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
-        YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s/count?${transformedFilters}`)
+        YNetwork.get(`${this.$apiBase}/${sourceName}/${targetName}?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
+        YNetwork.get(`${this.$apiBase}/${sourceName}/${targetName}/count?${transformedFilters}`)
       ]);
       this.loading = false;
       if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;

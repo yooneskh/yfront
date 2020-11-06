@@ -42,7 +42,7 @@
 
 import YNetwork from 'ynetwork';
 import debounce from 'lodash/debounce';
-import { loadMetasFor, transformFilters, transformSorts } from './y-resource-util';
+import { loadMetasFor, pluralizeModelName, transformFilters, transformSorts } from './y-resource-util';
 
 export default {
   name: 'YResourceManager',
@@ -149,11 +149,10 @@ export default {
 
       this.loading = true;
       const [{ status, result }, { status: s2, result: r2 }] = await Promise.all([
-        YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}?skip=${skip}&limit=${limit}&${filters}&${sorts}`),
-        YNetwork.get(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/count?${filters}`)
+        YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}?skip=${skip}&limit=${limit}&${filters}&${sorts}`),
+        YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/count?${filters}`)
       ]);
       this.loading = false;
-
       if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
 
       this.resources.list = result;
@@ -168,17 +167,14 @@ export default {
       }).then(result => result && this.loadData());
     },
     async deleteResource(resource) {
-      if (await this.$dialogConfirmDelete()) {
+      if (!await this.$dialogConfirmDelete()) return;
 
-        const { status, result } = await YNetwork.delete(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/${resource._id}`);
+      const { status, result } = await YNetwork.delete(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/${resource._id}`);
+      if (this.$generalHandle(status, result)) return;
 
-        if (this.$generalHandle(status, result)) return;
+      this.$toast('حذف با موفقیت انجام شد');
+      this.loadData();
 
-        this.$toast('حذف با موفقیت انجام شد');
-
-        this.loadData();
-
-      }
     }
   }
 }

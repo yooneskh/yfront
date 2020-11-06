@@ -1,7 +1,7 @@
 <template>
   <v-card :loading="allLoading">
     <v-row no-gutters>
-      
+
       <v-col :cols="!showRelations ? 12 : 4">
         <v-card-title>
           {{ readonly ? ('مشاهده') : (resource._id ? 'ویرایش' : 'افزودن') }} مورد
@@ -37,7 +37,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { loadMetasFor, loadRelationsFor, mapMetaToFormFields } from './y-resource-util';
+import { loadMetasFor, loadRelationsFor, mapMetaToFormFields, pluralizeModelName } from './y-resource-util';
 
 export default {
   name: 'YResourceDialog',
@@ -81,7 +81,7 @@ export default {
     }
   },
   mounted() {
-    
+
     this.loadMeta();
 
     if (this.baseResource) {
@@ -104,18 +104,18 @@ export default {
           }
         }
       }
-      
+
     },
     async loadRelations() {
 
       this.relationsLoading = true;
       this.relations.list = await loadRelationsFor(this.$apiBase, this.modelName);
       this.relationsLoading = false;
-      
+
       if (this.relations.list.length > 0) {
         this.$emit('update:width', '90%');
       }
-      
+
     },
     async submit() {
 
@@ -137,7 +137,7 @@ export default {
 
       if (this.resource._id) {
 
-        const { status, result } = await YNetwork.patch(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}/${this.resource._id}`, payload);
+        const { status, result } = await YNetwork.patch(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/${this.resource._id}`, payload);
         this.loading = false;
         if (this.$generalHandle(status, result)) return;
 
@@ -145,8 +145,8 @@ export default {
 
       }
       else {
-        
-        const { status, result } = await YNetwork.post(`${this.$apiBase}/${this.modelName.toLowerCase() + 's'}`, payload);
+
+        const { status, result } = await YNetwork.post(`${this.$apiBase}/${pluralizeModelName(this.modelName)}`, payload);
         this.loading = false;
         if (this.$generalHandle(status, result)) return;
 

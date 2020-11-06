@@ -27,7 +27,7 @@
 <script>
 
 import YNetwork from 'ynetwork';
-import { mapMetaToFormFields } from './y-resource-util';
+import { mapMetaToFormFields, pluralizeModelName } from './y-resource-util';
 
 export default {
   name: 'YResourceRelationManager',
@@ -109,9 +109,8 @@ export default {
     async loadData() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.sourceModel.toLowerCase()}s/${this.sourceId}/${this.modelName.toLowerCase()}s`);
+      const { status, result } = await YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.sourceModel)}/${this.sourceId}/${pluralizeModelName(this.modelName)}`);
       this.loading = false;
-
       if (this.$generalHandle(status, result)) return;
 
       this.resources.list = result;
@@ -120,10 +119,8 @@ export default {
     async initEditor(relation) {
 
       const toEdit = !!relation;
-
       const title = toEdit ? 'ویرایش' : `افزودن`;
       const actionTitle = toEdit ? 'ویرایش' : `افزودن`;
-
       const fields = mapMetaToFormFields(this.relation.properties);
 
       if (!toEdit) {
@@ -138,7 +135,7 @@ export default {
       const form = await this.$dialogFormMaker(title, '', fields, actionTitle, relation && JSON.parse(JSON.stringify(relation)));
       if (!form) return;
 
-      const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${form[this.relation.targetModel.toLowerCase()]}`;
+      const url = `${this.$apiBase}/${pluralizeModelName(this.sourceModel)}/${this.sourceId}/${pluralizeModelName(this.modelName)}/${form[this.relation.targetModel.toLowerCase()]}`;
 
       const payload = { ...form };
 
@@ -164,7 +161,6 @@ export default {
         this.loading = true;
         const { status, result } = await YNetwork.post(url, payload);
         this.loading = false;
-
         if (this.$generalHandle(status, result)) return;
 
         this.$toast.success('افزودن با موفقیت انجام شد.');
@@ -176,7 +172,6 @@ export default {
         this.loading = true;
         const { status, result } = await YNetwork.patch(url + '/' + relation._id, payload);
         this.loading = false;
-
         if (this.$generalHandle(status, result)) return;
 
         this.$toast.success('ویرایش با موفقیت انجام شد.');
@@ -186,17 +181,16 @@ export default {
 
     },
     async deleteRelation(relation) {
-      if (await this.$dialogConfirmDelete()) {
+      if (!await this.$dialogConfirmDelete()) return;
 
-        const url = `${this.$apiBase}/${this.sourceModel.toLowerCase() + 's'}/${this.sourceId}/${this.modelName.toLowerCase() + 's'}/${relation[this.relation.targetModel.toLowerCase()]}/${relation._id}`;
+      const url = `${this.$apiBase}/${pluralizeModelName(this.sourceModel)}/${this.sourceId}/${pluralizeModelName(this.modelName)}/${relation[this.relation.targetModel.toLowerCase()]}/${relation._id}`;
 
-        const { status, result } = await YNetwork.delete(url);
-        if (this.$generalHandle(status, result)) return;
+      const { status, result } = await YNetwork.delete(url);
+      if (this.$generalHandle(status, result)) return;
 
-        this.$toast.success('حذف با موفقیت انجام شد');
-        this.loadData();
+      this.$toast.success('حذف با موفقیت انجام شد.');
+      this.loadData();
 
-      }
     }
   }
 }

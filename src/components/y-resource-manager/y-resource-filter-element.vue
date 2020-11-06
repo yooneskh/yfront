@@ -67,7 +67,6 @@ export default {
 
     },
     valueField() {
-
       if (!this.currentMeta) return [];
 
       if (this.currentMeta.ref) {
