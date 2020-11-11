@@ -4,6 +4,7 @@
       <v-col v-for="field in filteredValidatedFields" class="pt-0 ps-0" :key="field.key" cols="12" :md="field.width || 12" :class="{ 'pb-0': noBottomPadding }" style="position: relative;">
         <component
           :is="mapElementType(field)"
+          ref="fieldElements"
           :target="target"
           :field="field"
           :value="(field.getter && field.getter()) || (field.key && target[field.key])"
@@ -79,6 +80,12 @@ export default {
   methods: {
     mapElementType(field) {
       return `y-form-element-${field.type}`;
+    },
+    revalidateAll() {
+      this.$refs.fieldElements?.forEach(it => {
+        it.revalidateAll?.();
+        it.validateValue?.();
+      });
     },
     checkValidations() {
 

@@ -14,6 +14,7 @@
         <y-form
           :target="item"
           :fields="injectedItemFields"
+          ref="nestedForms"
           @update:valid="$set(validations, ids[index], $event)"
           @update:key="$emit('update:key', field.key, target[field.key])"
         />
@@ -86,6 +87,9 @@ export default {
   methods: {
     redoIds() {
       this.ids = this.target[this.field.key].map(() => this.$uuid());
+    },
+    revalidateAll() {
+      this.$refs.nestedForms.forEach(it => it.revalidateAll?.());
     },
     async addItem() {
 
