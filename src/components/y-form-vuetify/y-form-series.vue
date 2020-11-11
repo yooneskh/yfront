@@ -122,8 +122,10 @@ export default {
         this.target[this.field.key].filter((it, itIndex) => index !== itIndex)
       );
 
+      this.$delete(this.validations, this.ids[index]);
       this.ids.splice(index, 1);
 
+      this.revalidateAll();
       this.$emit('update:key', this.field.key, this.target[this.field.key]);
 
     }
