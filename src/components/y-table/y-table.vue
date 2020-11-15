@@ -17,7 +17,7 @@
 
         <td v-for="header in rawHeaders" :key="header.value" :class="header.class">
           <slot :name="`item-${header.key}`" :item="item" :header="header" :data="item[header.value]">
-            {{ item[header.value] }}
+            <span :class="header.itemClass">{{ item[header.value] }}</span>
           </slot>
         </td>
 
@@ -37,7 +37,7 @@
             <v-icon :small="!action.large" v-if="action.icon">{{ action.icon }}</v-icon>
             {{ action.title }}
 
-          </v-btn>    
+          </v-btn>
         </td>
 
       </tr>
@@ -105,7 +105,7 @@ export default {
 
     },
     datatableHeaders() {
-      
+
       if (this.actions.length === 0) return this.rawHeaders;
 
       return [
