@@ -89,7 +89,7 @@ export default {
       const xhr = new XMLHttpRequest();
       const url = `${Api.Media.ENDPOINT_UPLOAD_PATH}/${fileToken}`;
 
-      xhr.onreadystatechange = () => {
+      xhr.onreadystatechange = async () => {
         if (xhr.readyState === 4) {
 
           this.loading = false;
@@ -97,6 +97,9 @@ export default {
 
           const uploadResult = JSON.parse(xhr.response);
           this.$emit('input', uploadResult.mediaId);
+
+          await this.$nextTick();
+          this.validateValue();
 
         }
       };
