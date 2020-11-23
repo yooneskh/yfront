@@ -41,7 +41,12 @@ export default {
   }),
   created() {
     if (this.values) {
-      Object.assign(this.form, this.values);
+      try {
+        this.form = JSON.parse(JSON.stringify(this.values));
+      }
+      catch {
+        console.error('could not load form values');
+      }
     }
   },
   mounted() {
