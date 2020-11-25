@@ -44,9 +44,7 @@ export default {
       try {
         this.form = JSON.parse(JSON.stringify(this.values));
       }
-      catch {
-        console.error('could not load form values');
-      }
+      catch { } // eslint-disable-line no-empty
     }
   },
   mounted() {
