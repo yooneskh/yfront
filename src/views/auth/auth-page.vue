@@ -147,7 +147,7 @@ export default {
       localStorage.setItem('--token--', result.token);
 
       this.$root.resetCredentials();
-      this.$router.replace('/');
+      this.$router.replace(this.$route.query.next || '/');
 
     }
   }
