@@ -12,7 +12,7 @@
       <v-icon>mdi-login</v-icon>
     </v-btn>
 
-    <v-menu dark min-width="225" v-else>
+    <v-menu dark min-width="225" offset-y bottom v-else>
 
       <template v-slot:activator="{ on }">
         <v-tooltip fixed :left="!$vuetify.rtl" :right="$vuetify.rtl">
