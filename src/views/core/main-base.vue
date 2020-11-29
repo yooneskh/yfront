@@ -7,7 +7,7 @@
     <template v-else>
 
       <main-app-bar
-        v-if="appliedConfigMode === 'appbar'"
+        v-if="appliedConfigMode === 'appbar' && !$route.meta.hideNavbar"
         class="main-bar"
         :toolbar-items="toolbars"
         :color="config.color"
@@ -17,7 +17,7 @@
       />
 
       <main-side-bar
-        v-if="appliedConfigMode === 'sidebar'"
+        v-if="appliedConfigMode === 'sidebar' && !$route.meta.hideNavbar"
         class="main-sidebar"
         :toolbar-items="toolbars"
         :bar-color="config.color"
