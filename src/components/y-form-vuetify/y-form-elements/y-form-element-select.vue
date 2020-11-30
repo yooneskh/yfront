@@ -1,9 +1,10 @@
 <template>
-  <v-select
-    v-if="!field.addable"
-    :filled="!field.unfilled"
+  <v-combobox
+    v-if="field.addable"
+    filled
     :label="field.title"
     :items="fieldItems"
+    chips deletable-chips small-chips
     :multiple="field.multiple"
     :value="value"
     :dir="field.dir"
@@ -19,12 +20,32 @@
     persistent-hint
     hide-details="auto"
   />
-  <v-combobox
-    v-else
+  <v-autocomplete
+    v-else-if="field.searchable"
     filled
     :label="field.title"
     :items="fieldItems"
     chips deletable-chips small-chips
+    :multiple="field.multiple"
+    :value="value"
+    :dir="field.dir"
+    :disabled="field.disabled"
+    :readonly="field.readonly"
+    :autofocus="field.autofocus"
+    @input="$emit('input', $event)"
+    @blur="validateValue"
+    :error="field.error"
+    :success="field.success"
+    :messages="field.message"
+    :hint="field.hint"
+    persistent-hint
+    hide-details="auto"
+  />
+  <v-select
+    v-else
+    :filled="!field.unfilled"
+    :label="field.title"
+    :items="fieldItems"
     :multiple="field.multiple"
     :value="value"
     :dir="field.dir"
