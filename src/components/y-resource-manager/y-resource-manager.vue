@@ -6,7 +6,7 @@
         <v-icon v-if="icon" class="me-3">{{ icon }}</v-icon>
         {{ title }}
         <v-spacer />
-        <v-btn text color="primary" @click="initEditor(undefined)">
+        <v-btn text color="primary" @click="(newUrl && $router.push(newUrl)) || initEditor(undefined)">
           افزودن
           <v-icon right>mdi-plus</v-icon>
         </v-btn>
@@ -64,6 +64,9 @@ export default {
     sortLatest: {
       type: Boolean,
       default: false
+    },
+    newUrl: {
+      type: String
     }
   },
   data: () => ({
