@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="page" style="max-width: 1200px;">
+  <v-container fluid class="page">
     <y-resource-manager
       title="مدیریت کاربران"
       icon="mdi-account"
