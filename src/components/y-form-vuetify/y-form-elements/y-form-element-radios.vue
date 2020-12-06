@@ -60,12 +60,12 @@ export default {
 
 <style lang="scss" scoped>
   ::v-deep.v-input.horizontal {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    padding-top: 10px;
     legend {
       padding: 0;
-      margin-top: -8px;
+    }
+    .v-radio {
+      margin-bottom: 0 !important;
     }
   }
 </style>
