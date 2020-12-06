@@ -59,8 +59,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  ::v-deep.v-input.horizontal legend {
-    margin-bottom: 8px !important;
-    padding: 0;
+  ::v-deep.v-input.horizontal {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    legend {
+      padding: 0;
+      margin-top: -8px;
+    }
   }
 </style>
