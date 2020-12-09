@@ -25,7 +25,7 @@
     :messages="field.message"
     :hint="field.hint"
     persistent-hint
-    hide-details="auto">
+    :hide-details="!field.message">
     <template v-if="field.password" #append>
       <v-icon v-if="!field.disabled" class="ms-2" @click="revealed = !revealed">
         {{ revealed ? 'mdi-eye-off' : 'mdi-eye' }}

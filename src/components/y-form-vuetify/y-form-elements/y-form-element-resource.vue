@@ -19,7 +19,7 @@
     :messages="field.message"
     :hint="field.hint"
     persistent-hint
-    hide-details="auto"
+    :hide-details="!field.message"
   />
 </template>
 

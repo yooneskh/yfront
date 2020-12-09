@@ -18,7 +18,7 @@
     :messages="field.message"
     :hint="field.hint"
     persistent-hint
-    hide-details="auto"
+    :hide-details="!field.message"
   />
   <v-autocomplete
     v-else-if="field.searchable"
