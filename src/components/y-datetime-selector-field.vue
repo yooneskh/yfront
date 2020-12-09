@@ -22,7 +22,7 @@
         :messages="message"
         :hint="hint"
         persistent-hint
-        :hide-details="!field.message"
+        :hide-details="!message && !hint"
       />
     </template>
     <persian-date-picker

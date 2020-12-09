@@ -4,7 +4,7 @@
     filled
     :label="field.title"
     :items="fieldItems"
-    chips deletable-chips small-chips
+    :chips="field.multiple" deletable-chips :small-chips="field.multiple"
     :multiple="field.multiple"
     :value="value"
     :dir="field.dir"
@@ -18,14 +18,14 @@
     :messages="field.message"
     :hint="field.hint"
     persistent-hint
-    :hide-details="!field.message"
+    :hide-details="!field.message && !field.hint"
   />
   <v-autocomplete
     v-else-if="field.searchable"
     filled
     :label="field.title"
     :items="fieldItems"
-    chips deletable-chips small-chips
+    :chips="field.multiple" deletable-chips :small-chips="field.multiple"
     :multiple="field.multiple"
     :value="value"
     :dir="field.dir"
@@ -39,7 +39,7 @@
     :messages="field.message"
     :hint="field.hint"
     persistent-hint
-    hide-details="auto"
+    :hide-details="!field.message && !field.hint"
   />
   <v-select
     v-else
@@ -59,7 +59,7 @@
     :messages="field.message"
     :hint="field.hint"
     persistent-hint
-    hide-details="auto"
+    :hide-details="!field.message && !field.hint"
   />
 </template>
 

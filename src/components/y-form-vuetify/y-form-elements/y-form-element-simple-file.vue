@@ -22,7 +22,7 @@
     persistent-hint
     prepend-icon=""
     prepend-inner-icon="mdi-paperclip"
-    :hide-details="!field.message"
+    :hide-details="!field.message && !field.hint"
   />
 </template>
 

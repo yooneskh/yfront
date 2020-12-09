@@ -3,7 +3,7 @@
     class="mt-0"
     :class="{'horizontal': field.horizontal}"
     :label="field.title"
-    :hide-details="!field.message"
+    :hide-details="!field.message && !field.hint"
     :row="field.horizontal"
     :value="value"
     :dir="field.dir"
