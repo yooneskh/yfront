@@ -8,7 +8,7 @@
 
     <v-spacer />
 
-    <v-btn icon v-if="!$token" to="/auth">
+    <v-btn icon v-if="!$token" :to="`/auth?next=${$route.path}`">
       <v-icon>mdi-login</v-icon>
     </v-btn>
 
