@@ -96,7 +96,7 @@ export default {
       this.$socket.client.connect();
     }
 
-    if (this.$token) {
+    if (this.$token && Config.auth.refreshIdentityOnLoad) {
       this.loading = true;
       await this.loadData();
       this.loading = false;

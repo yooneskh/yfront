@@ -1,7 +1,8 @@
 export const Config = {
   auth: {
     registerEnabled: true,
-    isAuthMandatory: true
+    isAuthMandatory: true,
+    refreshIdentityOnLoad: true
   },
   baseLayout: {
     defaultBarMode: 'sidebar', // or 'sidebar'
