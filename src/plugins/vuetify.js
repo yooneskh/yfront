@@ -13,6 +13,10 @@ Vue.use(Vuetify, {
 // import en from 'vuetify/es5/locale/en';
 import fa from 'vuetify/es5/locale/fa';
 
+// import 'roboto-fontface/css/roboto/roboto-fontface.css';
+import '../fonts/iryekan/iryekan.css';
+import '@mdi/font/css/materialdesignicons.css';
+
 const vuetify = new Vuetify({
   lang: {
     locales: {

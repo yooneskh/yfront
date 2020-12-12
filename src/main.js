@@ -9,9 +9,6 @@ import { Config } from './global/config';
 import io from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io-extended';
 
-import 'roboto-fontface/css/roboto/roboto-fontface.css';
-import './fonts/iryekan/iryekan.css';
-import '@mdi/font/css/materialdesignicons.css';
 import './assets/scss/app.scss';
 
 Vue.config.productionTip = false;
