@@ -17,7 +17,7 @@
     :messages="field.message"
     :hint="field.hint"
     persistent-hint
-    hide-details="auto">
+    :hide-details="!field.message && !field.hint">
     <template #append>
       <v-menu>
         <template #activator="{ on }">

@@ -22,7 +22,7 @@
         :messages="message"
         :hint="hint"
         persistent-hint
-        hide-details="auto"
+        :hide-details="!message && !hint"
       />
     </template>
     <v-time-picker

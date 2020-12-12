@@ -3,7 +3,7 @@
     class="mt-0"
     :class="{'horizontal': field.horizontal}"
     :label="field.title"
-    hide-details="auto"
+    :hide-details="!field.message && !field.hint"
     :row="field.horizontal"
     :value="value"
     :dir="field.dir"
@@ -59,8 +59,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  ::v-deep.v-input.horizontal legend {
-    margin-bottom: 8px !important;
-    padding: 0;
+  ::v-deep.v-input.horizontal {
+    padding-top: 10px;
+    legend {
+      padding: 0;
+    }
+    .v-radio {
+      margin-bottom: 0 !important;
+    }
   }
 </style>

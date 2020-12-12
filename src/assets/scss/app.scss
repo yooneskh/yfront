@@ -1,5 +1,5 @@
 html {
-  overflow-y: unset;  
+  overflow-y: unset;
 }
 
 .v-application--is-rtl {
@@ -47,4 +47,8 @@ html {
 .slide-from-up-enter-to, .slide-from-up-leave {
   height: 20px;
   opacity: 1;
+}
+
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+  margin-bottom: 0;
 }

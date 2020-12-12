@@ -14,7 +14,7 @@
       </v-card>
     </div>
     <div class="sidebar-items d-flex flex-row flex-grow-1" style="border-top: 1px solid rgba(0, 0, 0, 0.15);">
-      <div class="sidebar-items-groups d-flex flex-column px-3 pt-3" style="height: 100%;" :style="`border-${$vuetify.rtl ? 'left' : 'right'}: 1px solid rgba(0, 0, 0, 0.15);`">
+      <div class="sidebar-items-groups d-flex flex-column px-2 pt-2" style="height: 100%;" :style="`border-${$vuetify.rtl ? 'left' : 'right'}: 1px solid rgba(0, 0, 0, 0.15);`">
         <v-menu>
           <template #activator="{ on }">
             <v-tooltip fixed :left="$vuetify.rtl" :right="!$vuetify.rtl">
@@ -75,7 +75,7 @@
         </div>
 
       </div>
-      <div class="sidebar-items-children grey lighten-4 pa-3 flex-grow-1">
+      <div class="sidebar-items-children grey lighten-4 pa-2 flex-grow-1">
         <v-list dense nav class="pa-0" style="background: transparent;">
           <v-list-item v-for="child of (selectedGroup || activeGroup || {}).children" :key="child.path" :to="child.path">
             <v-list-item-icon v-if="child.icon" class="me-2">

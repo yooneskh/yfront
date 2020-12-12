@@ -8,14 +8,14 @@
 
     <v-spacer />
 
-    <v-btn icon v-if="!$token" to="/auth">
+    <v-btn icon v-if="!$token" :to="`/auth?next=${$route.path}`">
       <v-icon>mdi-login</v-icon>
     </v-btn>
 
-    <v-menu dark min-width="225" offset-y bottom v-else>
+    <v-menu dark min-width="225" nudge-bottom="8" offset-y bottom v-else>
 
       <template v-slot:activator="{ on }">
-        <v-tooltip fixed :left="!$vuetify.rtl" :right="$vuetify.rtl">
+        <v-tooltip :disabled="!$isMobile" fixed :left="!$vuetify.rtl" :right="$vuetify.rtl">
           <template #activator="{ on: tooltipOn }">
             <v-btn text v-on="{ ...on, ...tooltipOn }" class="px-0" style="min-width: unset;">
               <v-avatar size="24" class="mt-1 me-2 ms-2"> <img :src="$user.profile && $user.profile.path || $userPlaceholder" alt="owner image avatar" /> </v-avatar>

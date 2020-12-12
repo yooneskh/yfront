@@ -16,7 +16,7 @@
       :dir="field.dir"
       :disabled="field.disabled"
       :autofocus="field.autofocus"
-      hide-details="auto"
+      :hide-details="!field.message && !field.hint"
       :success="field.success"
       :error="field.error"
       :messages="field.message"
