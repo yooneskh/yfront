@@ -77,7 +77,7 @@
       </div>
       <div class="sidebar-items-children grey lighten-4 pa-2 flex-grow-1">
         <v-list dense nav class="pa-0" style="background: transparent;">
-          <v-list-item v-for="child of (selectedGroup || activeGroup || {}).children" :key="child.path" :to="!child.path.startsWith('http') && child.path" :href="child.path.startsWith('http') && child.path" :target="child.path.startsWith('http') && '_blank'">
+          <v-list-item v-for="child of (selectedGroup || activeGroup || {}).children" :key="child.path" :to="!child.path.startsWith('http') ? child.path : undefined" :href="child.path.startsWith('http') ? child.path : undefined" :target="child.path.startsWith('http') ? '_blank' : undefined">
             <v-list-item-icon v-if="child.icon" class="me-2">
               <v-icon small>{{ child.icon }}</v-icon>
             </v-list-item-icon>
