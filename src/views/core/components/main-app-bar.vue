@@ -48,7 +48,11 @@
 
     <template v-if="joinedToolbarItems && joinedToolbarItems.length > 0" #extension>
       <v-tabs background-color="transparent" icons-and-text show-arrows>
-        <v-tab v-for="item in joinedToolbarItems" :key="item.title + item.path" :to="item.path">
+        <v-tab
+          v-for="item in joinedToolbarItems" :key="item.title + item.path"
+          :to="!item.path.startsWith('http') && item.path"
+          :href="item.path.startsWith('http') && item.path"
+          :target="item.path.startsWith('http') && '_blank'">
           {{ item.title }}
           <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
         </v-tab>
