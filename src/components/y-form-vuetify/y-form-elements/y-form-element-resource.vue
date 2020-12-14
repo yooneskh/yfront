@@ -81,7 +81,7 @@ export default {
 
     },
     async openSelectResourceDialog() {
-      if (this.field.readonly) return;
+      if (this.field.readonly || this.field.disabled) return;
 
       const result = await this.$dialog(import('../../y-resource-manager/y-resource-select-dialog'), {
         width: '900px',
