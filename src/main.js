@@ -62,7 +62,10 @@ new Vue({
     logout() {
       Api.Auth.logout();
       localStorage.removeItem('--token--');
+      this.$root.token = '';
+      this.$root.user = {};
       this.resetCredentials();
+      this.$router.replace('/auth');
     }
   }
 }).$mount('#app')
