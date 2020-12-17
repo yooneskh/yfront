@@ -7,7 +7,7 @@
           ref="fieldElements"
           :target="target"
           :field="field"
-          :value="(field.getter && field.getter()) || (field.key && target[field.key])"
+          :value="(field.getter && field.getter(target, targetIndex)) || (field.key && target[field.key])"
           @input="handleInput(field, ...arguments)"
           @update:valid="$set(validations, field.key, $event)"
           @update:key="$emit('update:key', arguments[0], arguments[1])"
@@ -33,6 +33,7 @@ export default {
       type: Boolean,
       default: true
     },
+    targetIndex: Number,
     noBottomPadding: Boolean
   },
   components: {
@@ -43,6 +44,7 @@ export default {
     'y-form-element-radios': require('./y-form-elements/y-form-element-radios.vue').default,
     'y-form-element-textarea': require('./y-form-elements/y-form-element-textarea.vue').default,
     'y-form-element-file': require('./y-form-elements/y-form-element-file.vue').default,
+    'y-form-element-file-array': require('./y-form-elements/y-form-element-file-array.vue').default,
     'y-form-element-simple-file': require('./y-form-elements/y-form-element-simple-file.vue').default,
     'y-form-element-series': () => import('./y-form-series' /* webpackChunkName: 'y-form-series' */),
     'y-form-element-text-multilang': () => import('./y-form-elements/y-form-element-text-multilang.vue' /* webpackChunkName: 'y-form-element-text-multilang' */),
@@ -131,7 +133,7 @@ export default {
       const value = field.number ? parseInt(text || field.defaultNumber || '0', field.radix || 10) : text;
 
       if (field.setter) {
-        field.setter(value);
+        field.setter(this.target, value, this.targetIndex);
       }
       else {
         this.$set(this.target, field.key, value);

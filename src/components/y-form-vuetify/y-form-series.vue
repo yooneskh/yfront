@@ -14,6 +14,7 @@
         <y-form
           :target="item"
           :fields="injectedItemFields"
+          :target-index="index"
           ref="nestedForms"
           @update:valid="$set(validations, ids[index], $event)"
           @update:key="$emit('update:key', field.key, target[field.key])"
