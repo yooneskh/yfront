@@ -27,7 +27,7 @@
         :items-per-page="itemsPerPage"
         @update:items-per-page="itemsPerPage = $event"
         :sorts.sync="sorts"
-        @edit="initEditor"
+        @edit="editHandler ? editHandler($event) : initEditor($event)"
         @delete="deleteResource">
         <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ data }">
           <y-resource-table-cell :key="header.key + data" :data="data" :header="header" />
@@ -67,6 +67,9 @@ export default {
     },
     newUrl: {
       type: String
+    },
+    editHandler: {
+      type: Function
     }
   },
   data: () => ({
