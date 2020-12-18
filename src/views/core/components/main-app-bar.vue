@@ -2,7 +2,7 @@
   <v-app-bar :class="{'has-tabs': joinedToolbarItems && joinedToolbarItems.length > 0}" :color="color || 'primary'" :height="height" :elevate-on-scroll="sticky" :fixed="sticky" :dark="dark">
 
     <v-toolbar-title class="flex-row d-flex align-center me-4" @click="$router.push((joinedToolbarItems[0] || { path: '/' }).path, () => {})" style="cursor: pointer;">
-      <v-img height="36" width="36" class="me-2" src="../../../assets/img/logo.png" />
+      <v-img height="36" width="36" class="me-2" src="../../../assets/img/logo.png" contain />
       {{ $options.Title }}
     </v-toolbar-title>
 
