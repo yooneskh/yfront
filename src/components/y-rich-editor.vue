@@ -94,9 +94,13 @@ export default {
     },
     async addImage() {
 
-      const form = await this.$dialogFormMaker('افزودن تصویر', 'لطفا فایل تصویر مورد نظر را انتخاب کنید.', [
-        { key: 'file', type: 'file', title: 'فایل', wrapped: false }
-      ]); if (!form || !form.file) return;
+      const form = await this.$dialogFormMaker({
+        title: 'افزودن تصویر',
+        description: 'لطفا فایل تصویر مورد نظر را انتخاب کنید.',
+        fields: [
+          { key: 'file', type: 'file', title: 'فایل', wrapped: false }
+        ]
+      }); if (!form || !form.file) return;
 
       const { status, result } = await Api.Media.loadOne(form.file);
       if (this.$generalHandle(status, result)) return;

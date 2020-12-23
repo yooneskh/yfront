@@ -132,8 +132,12 @@ export default {
         });
       }
 
-      const form = await this.$dialogFormMaker(title, '', fields, actionTitle, relation && JSON.parse(JSON.stringify(relation)));
-      if (!form) return;
+      const form = await this.$dialogFormMaker({
+        title,
+        fields,
+        actionTitle,
+        values: relation && JSON.parse(JSON.stringify(relation))
+      }); if (!form) return;
 
       const url = `${this.$apiBase}/${pluralizeModelName(this.sourceModel)}/${this.sourceId}/${pluralizeModelName(this.modelName)}/${form[this.relation.targetModel.toLowerCase()]}`;
 
