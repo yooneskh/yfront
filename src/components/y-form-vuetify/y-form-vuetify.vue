@@ -77,6 +77,9 @@ export default {
       handler() {
         this.checkValidations();
       }
+    },
+    recomputeKey() {
+      this.checkValidations();
     }
   },
   methods: {
