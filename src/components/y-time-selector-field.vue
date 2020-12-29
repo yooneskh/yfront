@@ -42,7 +42,8 @@
       :use-seconds="useSeconds"
       :width="width"
       :value="value"
-      @input="handleInput"
+      @input="$emit('input', $event)"
+      @change="handleChange"
     />
   </v-menu>
 </template>
@@ -89,12 +90,13 @@ export default {
     menuOpened: false
   }),
   methods: {
-    handleInput(value) {
-      this.$emit('input', value);
-      setImmediate(() => {
-        this.$emit('blur');
-        this.menuOpened = false;
-      });
+    async handleChange() {
+
+      await this.$nextTick();
+
+      this.$emit('blur');
+      this.menuOpened = false;
+
     }
   }
 }
