@@ -6,7 +6,7 @@
 
         <h2
           v-if="part.type === 'title'"
-          class="title">
+          class="text-h5">
           <y-editable-text :value="part.title" @input="updatePart(index, { title: $event })" lazy :readonly="readonly" placeholder="جای متن شما ..." />
         </h2>
 
@@ -20,7 +20,7 @@
           class="my-4"
         />
 
-        <v-btn v-if="!readonly" class="delete-button" icon small color="error" @click="deletePart(index)">
+        <v-btn v-if="!readonly" class="delete-button" icon small color="error" @click="deletePart(index)" :style="{[$vuetify.rtl ? 'left' : 'right']: '4px'}">
           <v-icon small>mdi-close</v-icon>
         </v-btn>
 
@@ -30,7 +30,7 @@
     <div v-if="!readonly" class="add-bar text-center mt-4 mx-auto grey lighten-3 py-1 px-4 mb-4" style="width: 300px; border-radius: 32px;">
       <span class="caption me-4">افزودن</span>
       <v-btn class="ms-2" icon @click="appendPart({ type: 'title', title: '' })"> <v-icon>mdi-format-title</v-icon> </v-btn>
-      <v-btn class="ms-2" icon @click="appendPart({ type: 'text', title: '' })"> <v-icon>mdi-text-subject</v-icon> </v-btn>
+      <v-btn class="ms-2" icon @click="appendPart({ type: 'text', text: '' })"> <v-icon>mdi-text-subject</v-icon> </v-btn>
       <v-btn class="ms-2" icon @click="addImage"> <v-icon>mdi-image</v-icon> </v-btn>
     </div>
 
@@ -136,7 +136,6 @@ export default {
       & > .delete-button {
         position: absolute;
         top: 4px;
-        left: 4px;
         opacity: 0;
       }
       &:hover .delete-button {

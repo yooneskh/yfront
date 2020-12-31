@@ -23,6 +23,22 @@
         <v-toolbar-title>ویرایشگر</v-toolbar-title>
         <v-spacer />
         <v-toolbar-items>
+
+          <v-menu v-if="field.languages" absolute>
+            <template #activator="{ on, attrs }">
+              <v-btn text v-on="on" v-bind="attrs">
+                {{ currentLanguage }}
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item v-for="(value, key) of field.languages" :key="key" @click="changeLanguageTo(key)">
+                <v-list-item-content>
+                  <v-list-item-title>{{ key }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+
           <v-btn icon @click="windowOpened = false; validateValue()">
             <v-icon>mdi-close</v-icon>
           </v-btn>
@@ -30,8 +46,8 @@
       </v-toolbar>
 
       <y-rich-editor
-        :value="value"
-        @input="$emit('input', $event)"
+        :value="currentValue"
+        @input="handleInput"
         :placeholder="field.placeholder"
         :class="field.classes"
         :readonly="field.readonly"
@@ -54,18 +70,55 @@ export default {
     'y-rich-editor': require('../../y-rich-editor').default
   },
   props: {
-    value: {
-
-    },
+    value: { },
     field: {
       type: Object,
       required: true
     }
   },
+  mixins: [YFormElementMixin],
   data: () => ({
-    windowOpened: false
+    windowOpened: false,
+    currentLanguage: '',
+    currentLanguageChanged: false
   }),
-  mixins: [YFormElementMixin]
+  computed: {
+    currentValue() {
+      if (!this.field.languages) return this.value;
+
+      if (!this.value) return '';
+      return this.value[this.currentLanguage];
+
+    }
+  },
+  created() {
+    if (this.field.languages) {
+      this.currentLanguage = Object.keys(this.field.languages)[0];
+      if (!this.value) this.$emit('input', {});
+    }
+  },
+  methods: {
+    changeLanguageTo(language) {
+
+      this.currentLanguageChanged = true;
+      setTimeout(() => this.currentLanguageChanged = false, 200);
+
+      this.currentLanguage = language;
+
+    },
+    handleInput(text) {
+      if (this.currentLanguageChanged) return;
+
+      if (this.field.languages) {
+        this.$set(this.value, this.currentLanguage, text);
+        this.$emit('input', this.value);
+        return;
+      }
+
+      this.$emit('input', text);
+
+    }
+  }
 }
 
 </script>

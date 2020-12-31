@@ -22,7 +22,7 @@
             { key: 'from', type: 'date', title: 'تاریخ ورود', rules: [v => !!v || 'تاریخ ورودت چیه؟'], labelFormat: 'jDD jMMMM jYYYY', width: 6 },
             { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', rules: [v => v === true || 'باید قبول کنید!'], width: 6 },
             { key: 'bodies', type: 'textarea', title: 'متن کمتر تاریخی', languages: { en: {}, fa: {}, fr: {} }, width: 6 },
-            { key: 'body', type: 'editor', title: 'متن تاریخی', width: 6 },
+            { key: 'body', type: 'editor', title: 'متن تاریخی', languages: { en: {}, fa: {}, fr: {} }, width: 6 },
             { key: 'color', type: 'color', title: 'رنگ پس‌زمینه', rules: [v => !!v], width: 6 },
             { key: 'job', type: 'radios', title: 'شغل', rules: [v => v === 'mech' || 'قانون من'], width: 6, items: [
               { value: 'mech', text: 'مکانیک' },
