@@ -120,6 +120,9 @@ export default {
       fruit: 'سیب',
       fruits: [],
       media: '',
+      bodies: {
+        en: 'This is the body!'
+      },
       job: 'comp',
       freeTimes: [],
       freeNames: [],
