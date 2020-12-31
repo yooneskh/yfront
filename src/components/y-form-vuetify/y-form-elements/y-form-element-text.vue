@@ -1,7 +1,7 @@
 <template>
   <v-text-field
     :type="type"
-    :value="value"
+    :value="currentValue"
     :filled="!field.unfilled"
     :solo="field.solo || field.simple"
     :flat="field.flat || field.simple"
@@ -9,7 +9,7 @@
     v-facade="field.mask"
     :inputmode="inputMode"
     :background-color="field.background"
-    @input="$emit('input', $event)"
+    @input="handleInput"
     :label="field.title"
     :placeholder="field.placeholder"
     :class="field.classes"
@@ -26,10 +26,27 @@
     :hint="field.hint"
     persistent-hint
     :hide-details="!field.message && !field.hint">
-    <template v-if="field.password" #append>
-      <v-icon v-if="!field.disabled" class="ms-2" @click="revealed = !revealed">
+    <template v-if="field.password || field.languages" #append>
+
+      <v-icon v-if="field.password && !field.disabled" class="ms-2" @click="revealed = !revealed">
         {{ revealed ? 'mdi-eye-off' : 'mdi-eye' }}
       </v-icon>
+
+      <v-menu v-if="field.languages" absolute>
+        <template #activator="{ on, attrs }">
+          <v-btn rounded small text v-on="on" v-bind="attrs" class="px-2" min-width="0">
+            {{ currentLanguage }}
+          </v-btn>
+        </template>
+        <v-list dense>
+          <v-list-item v-for="(value, key) of field.languages" :key="key" @click="changeLanguageTo(key)">
+            <v-list-item-content>
+              <v-list-item-title>{{ key }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
     </template>
   </v-text-field>
 </template>
@@ -53,7 +70,9 @@ export default {
   },
   mixins: [YFormElementMixin],
   data: () => ({
-    revealed: false
+    revealed: false,
+    currentLanguage: '',
+    currentLanguageChanged: false
   }),
   computed: {
     type() {
@@ -72,6 +91,41 @@ export default {
       if (this.field.inputUrl) return 'url';
 
       return '';
+
+    },
+    currentValue() {
+      if (!this.field.languages) return this.value;
+
+      if (!this.value) return '';
+      return this.value[this.currentLanguage];
+
+    }
+  },
+  created() {
+    if (this.field.languages) {
+      this.currentLanguage = Object.keys(this.field.languages)[0];
+      if (!this.value) this.$emit('input', {});
+    }
+  },
+  methods: {
+    changeLanguageTo(language) {
+
+      this.currentLanguageChanged = true;
+      setTimeout(() => this.currentLanguageChanged = false, 200);
+
+      this.currentLanguage = language;
+
+    },
+    handleInput(text) {
+      if (this.currentLanguageChanged) return;
+
+      if (this.field.languages) {
+        this.$set(this.value, this.currentLanguage, text);
+        this.$emit('input', this.value);
+        return;
+      }
+
+      this.$emit('input', text);
 
     }
   }

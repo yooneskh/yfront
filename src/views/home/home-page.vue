@@ -14,14 +14,15 @@
           :valid.sync="formValid"
           :fields="[
             { key: 'name', type: 'text', title: 'نام', autofocus: true, rules: [v => !!v || 'نام باید وارد شود!'], width: 6 },
+            { key: 'textMulti', type: 'text', title: 'متن', languages: { en: {}, fa: {}, fr: {} }, width: 6 },
             { key: 'counts', type: 'text', number: true, title: 'تعداد', readonly: true, disabled: true, width: 6 },
             { key: 'pass', type: 'text', password: true, title: 'رمز عبور', width: 6 },
             { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, rules: [v => !!v && v.length > 0 || 'میوه باید وارد شود!'], items: ['سیب', 'موز', 'پرتقال'] },
             { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
-            { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', rules: [v => v === true || 'باید قبول کنید!'], width: 6 },
             { key: 'from', type: 'date', title: 'تاریخ ورود', rules: [v => !!v || 'تاریخ ورودت چیه؟'], labelFormat: 'jDD jMMMM jYYYY', width: 6 },
-            { key: 'body', type: 'editor', title: 'متن تاریخی', width: 6 },
+            { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', rules: [v => v === true || 'باید قبول کنید!'], width: 6 },
             { key: 'bodies', type: 'textarea', title: 'متن کمتر تاریخی', width: 6 },
+            { key: 'body', type: 'editor', title: 'متن تاریخی', width: 6 },
             { key: 'color', type: 'color', title: 'رنگ پس‌زمینه', rules: [v => !!v], width: 6 },
             { key: 'job', type: 'radios', title: 'شغل', rules: [v => v === 'mech' || 'قانون من'], width: 6, items: [
               { value: 'mech', text: 'مکانیک' },
@@ -112,6 +113,9 @@ export default {
   data: () => ({
     heh: {
       name: '',
+      textMulti: {
+        fa: 'این متن است!'
+      },
       isMale: true,
       fruit: 'سیب',
       fruits: [],
