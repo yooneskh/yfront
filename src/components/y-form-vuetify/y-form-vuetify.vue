@@ -1,7 +1,7 @@
 <template>
   <v-form class="y-form y-form-vuetify" @submit.prevent>
     <v-row class="ma-0 me-n3">
-      <v-col v-for="field in filteredValidatedFields" class="pt-0 ps-0" :key="field.key" cols="12" :md="field.width || 12" :class="{ 'pb-0': noBottomPadding }" style="position: relative;">
+      <v-col v-for="field in filteredValidatedFields" class="pt-0 ps-0" :key="field.key" :cols="field.preemptWidth ? field.width || 12 : 12" :md="field.width || 12" :class="{ 'pb-0': noBottomPadding }" style="position: relative;">
         <component
           :is="mapElementType(field)"
           ref="fieldElements"
