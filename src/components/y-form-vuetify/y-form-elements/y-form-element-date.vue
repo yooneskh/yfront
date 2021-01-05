@@ -30,7 +30,7 @@
     :error="field.error"
     :success="field.success"
     :message="field.message"
-    :hint="field.hint"
+    :hint="typeof field.hint === 'function' ? field.hint(value) : field.hint"
     @input="$emit('input', $event)"
     @blur="validateValue"
   />

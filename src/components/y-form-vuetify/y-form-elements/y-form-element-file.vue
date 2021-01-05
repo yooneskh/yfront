@@ -20,7 +20,7 @@
       :success="field.success"
       :error="field.error"
       :messages="field.message"
-      :hint="field.hint"
+      :hint="typeof field.hint === 'function' ? field.hint(value) : field.hint"
       persistent-hint
       @click="!field.readonly && $refs.fileInput.click()"
       @keyup.space="!field.readonly && $refs.fileInput.click()"

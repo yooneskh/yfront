@@ -12,7 +12,7 @@
     :error="field.error"
     :success="field.success"
     :messages="field.message"
-    :hint="field.hint"
+    :hint="typeof field.hint === 'function' ? field.hint(value) : field.hint"
     persistent-hint
     @change="handleChange"
     style="text-align: unset;">

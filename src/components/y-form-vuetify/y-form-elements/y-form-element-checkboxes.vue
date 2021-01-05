@@ -27,7 +27,7 @@
     />
 
     <div v-if="field.hint" class="caption mt-1 ms-2">
-      {{ field.hint }}
+      {{ typeof field.hint === 'function' ? field.hint(value) : field.hint }}
     </div>
 
     <transition name="slide-from-up">

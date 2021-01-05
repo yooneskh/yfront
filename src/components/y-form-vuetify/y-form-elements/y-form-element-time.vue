@@ -22,7 +22,7 @@
     :error="field.error"
     :success="field.success"
     :message="field.message"
-    :hint="field.hint"
+    :hint="typeof field.hint === 'function' ? field.hint(value) : field.hint"
     :allowed-hours="field.allowedHours"
     :allowed-minutes="field.allowedMinutes"
     :allowed-seconds="field.allowedSeconds"
