@@ -21,7 +21,66 @@ export default new Router({
         },
         {
           path: 'users',
-          component: () => import('./views/manage/manage-users-page.vue' /* webpackChunkName: 'manage-users-page' */)
+          component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
+          meta: {
+            title: 'مدیریت کاربران',
+            icon: 'mdi-account',
+            model: 'User'
+          }
+        },
+        {
+          path: 'factors',
+          component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
+          meta: {
+            title: 'مدیریت فاکتورها',
+            icon: 'mdi-cash-register',
+            model: 'Factor'
+          }
+        },
+        {
+          path: 'paytickets',
+          component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
+          meta: {
+            title: 'مدیریت پرداخت‌ها',
+            icon: 'mdi-cash',
+            model: 'Payticket'
+          }
+        },
+        {
+          path: 'accounts',
+          component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
+          meta: {
+            title: 'مدیریت حساب‌ها',
+            icon: 'mdi-bank',
+            model: 'Account'
+          }
+        },
+        {
+          path: 'transactions',
+          component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
+          meta: {
+            title: 'مدیریت تراکنش‌ها',
+            icon: 'mdi-cash-check',
+            model: 'Transaction'
+          }
+        },
+        {
+          path: 'transfers',
+          component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
+          meta: {
+            title: 'مدیریت انتقال‌ها',
+            icon: 'mdi-bank-transfer',
+            model: 'Transfer'
+          }
+        },
+        {
+          path: 'updates',
+          component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
+          meta: {
+            title: 'مدیریت آپدیت‌ها',
+            icon: 'mdi-update',
+            model: 'Update'
+          }
         },
       ]
     },

@@ -26,6 +26,7 @@
 
       <router-view
         class="main-content"
+        :key="$route.path"
         :style="{
           'padding-top': `${contentTopPadding}px`
         }"
@@ -62,6 +63,12 @@ export default {
       ]},
       { groupTitle: 'مدیریت', groupIcon: 'mdi-cog' , children: [
         { title: 'مدیریت کاربران', icon: 'mdi-account', path: '/users' },
+        { title: 'مدیریت فاکتورها', icon: 'mdi-cash-register', path: '/factors' },
+        { title: 'مدیریت پرداخت‌ها', icon: 'mdi-cash', path: '/paytickets' },
+        { title: 'مدیریت حساب‌ها', icon: 'mdi-bank', path: '/accounts' },
+        { title: 'مدیریت تراکنش‌ها', icon: 'mdi-cash-check', path: '/transactions' },
+        { title: 'مدیریت انتقال‌ها', icon: 'mdi-bank-transfer', path: '/transfers' },
+        { title: 'مدیریت آپدیت‌ها', icon: 'mdi-update', path: '/updates' }
       ]}
     ]
   }),
@@ -133,7 +140,7 @@ export default {
 
 <style lang="scss" scoped>
   .main-base {
-    background: #F5F5F5;
+    background: #EAEAEA;
     .loading-container {
       position: fixed;
       top: 0; right: 0; bottom: 0; left: 0;

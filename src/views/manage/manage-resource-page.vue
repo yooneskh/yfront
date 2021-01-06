@@ -1,9 +1,9 @@
 <template>
   <v-container fluid class="page">
     <y-resource-manager
-      title="مدیریت کاربران"
-      icon="mdi-account"
-      model-name="User"
+      :title="$route.meta.title"
+      :icon="$route.meta.icon"
+      :model-name="$route.meta.model"
       sort-latest
     />
   </v-container>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'ListUsersPage',
+  name: 'ListResourcePage',
   components: {
     'y-resource-manager': require('../../components/y-resource-manager/y-resource-manager.vue').default
   }
