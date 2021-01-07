@@ -22,8 +22,8 @@
 
         <div class="actions-container" :style="{[$vuetify.rtl ? 'left' : 'right']: '8px'}">
 
-          <v-btn v-if="!field.readonly && !field.disabled" icon x-small v-handle>
-            <v-icon color="info" x-small>mdi-plus</v-icon>
+          <v-btn v-if="!field.readonly && !field.disabled" icon x-small v-handle style="cursor: grab;">
+            <v-icon x-small>mdi-menu</v-icon>
           </v-btn>
 
           <v-btn v-if="!field.readonly && !field.disabled" icon x-small @click="removeItem(index)">
