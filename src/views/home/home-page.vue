@@ -44,7 +44,8 @@
               key: 'freeTimes',
               type: 'series',
               title: 'زمان‌های خالی',
-              width: 8,
+              width: 12,
+              itemWidth: 4,
               base: { begin: '12:00', end: '', fruits: ['سیب'] },
               itemFields: [
                 { key: 'begin', type: 'text', title: 'زمان شروع', width: 3, disabled: true, dir: 'ltr' },
@@ -56,7 +57,7 @@
               key: 'freeNames',
               type: 'series',
               title: 'نام‌های قابل استفاده',
-              width: 4,
+              width: 12,
               base: { names: [] },
               itemFields: [
                 { key: 'names', type: 'select', title: 'نام‌ها', multiple: true, addable: true },

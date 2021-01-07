@@ -8,8 +8,8 @@
       </v-btn>
     </v-label>
 
-    <v-row class="my-0 mx-n3">
-      <v-col v-for="(item, index) in target[field.key]" :key="ids[index]" class="series-item py-0" :cols="field.itemWidth || 12" :style="{ 'margin-top': index > 0 ? `${field.itemTopMargin}px` : '' }">
+    <drag-container class="row my-0 mx-n3" :value="target[field.key]" :axis="field.itemWidth < 12 ? 'xy' : 'y'" use-drag-handle @input="$set(target, field.key, $event)">
+      <drag-element v-for="(item, index) in target[field.key]" :index="index" :key="ids[index]" class="col series-item py-0" :class="[`col-${field.itemWidth || 12}`]" :style="{ 'margin-top': index > 0 ? `${field.itemTopMargin}px` : '' }">
 
         <y-form
           :target="item"
@@ -20,21 +20,36 @@
           @update:key="$emit('update:key', field.key, target[field.key])"
         />
 
-        <v-btn v-if="!field.readonly && !field.disabled" class="series-remove" icon x-small @click="removeItem(index)">
-          <v-icon color="error" x-small>mdi-close</v-icon>
-        </v-btn>
+        <div class="actions-container" :style="{[$vuetify.rtl ? 'left' : 'right']: '8px'}">
 
-      </v-col>
-    </v-row>
+          <v-btn v-if="!field.readonly && !field.disabled" icon x-small v-handle>
+            <v-icon color="info" x-small>mdi-plus</v-icon>
+          </v-btn>
+
+          <v-btn v-if="!field.readonly && !field.disabled" icon x-small @click="removeItem(index)">
+            <v-icon color="error" x-small>mdi-close</v-icon>
+          </v-btn>
+
+        </div>
+
+      </drag-element>
+    </drag-container>
 
   </div>
 </template>
 
 <script>
+
+import { SlickList, SlickItem, HandleDirective } from 'vue-slicksort';
+
 export default {
   name: 'YFormSeries',
   components: {
-
+    'drag-container': SlickList,
+    'drag-element': SlickItem
+  },
+  directives: {
+    'handle': HandleDirective
   },
   props: {
     target: {
@@ -137,16 +152,15 @@ export default {
 <style lang="scss" scoped>
   .series-item {
     position: relative;
-    .series-remove {
+    .actions-container {
       position: absolute;
       top: 0px;
-      left: 8px;
       opacity: 0;
       pointer-events: none;
       transition: all 0.2s ease-in-out;
     }
   }
-  .series-item:hover .series-remove {
+  .series-item:hover .actions-container {
     opacity: 1;
     pointer-events: all;
   }
