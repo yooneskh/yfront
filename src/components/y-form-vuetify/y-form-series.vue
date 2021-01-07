@@ -8,8 +8,8 @@
       </v-btn>
     </v-label>
 
-    <drag-container class="row my-0 mx-n3" :value="target[field.key]" :axis="field.itemWidth < 12 ? 'xy' : 'y'" use-drag-handle @input="$set(target, field.key, $event)">
-      <drag-element v-for="(item, index) in target[field.key]" :index="index" :key="ids[index]" class="col series-item py-0" :class="[`col-${field.itemWidth || 12}`]" :style="{ 'margin-top': index > 0 ? `${field.itemTopMargin}px` : '' }">
+    <v-row class="my-0 mx-n3">
+      <v-col v-for="(item, index) in target[field.key]" :key="ids[index]" class="series-item py-0" :cols="field.preemptWidth ? field.itemWidth || 12 : 12" :md="field.itemWidth || 12" :style="{ 'margin-top': index > 0 ? `${field.itemTopMargin}px` : '' }">
 
         <y-form
           :target="item"
@@ -22,8 +22,12 @@
 
         <div class="actions-container" :style="{[$vuetify.rtl ? 'left' : 'right']: '8px'}">
 
-          <v-btn v-if="!field.readonly && !field.disabled" icon x-small v-handle style="cursor: grab;">
-            <v-icon x-small>mdi-menu</v-icon>
+          <v-btn v-if="!field.readonly && !field.disabled && index > 0" icon x-small @click="moveIndexBack(index)">
+            <v-icon>mdi-chevron-up</v-icon>
+          </v-btn>
+
+          <v-btn v-if="!field.readonly && !field.disabled && index < (target[field.key] || []).length - 1" icon x-small @click="moveIndexForward(index)">
+            <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
 
           <v-btn v-if="!field.readonly && !field.disabled" icon x-small @click="removeItem(index)">
@@ -32,25 +36,15 @@
 
         </div>
 
-      </drag-element>
-    </drag-container>
+      </v-col>
+    </v-row>
 
   </div>
 </template>
 
 <script>
-
-import { SlickList, SlickItem, HandleDirective } from 'vue-slicksort';
-
 export default {
   name: 'YFormSeries',
-  components: {
-    'drag-container': SlickList,
-    'drag-element': SlickItem
-  },
-  directives: {
-    'handle': HandleDirective
-  },
   props: {
     target: {
       type: Object,
@@ -144,9 +138,43 @@ export default {
       this.revalidateAll();
       this.$emit('update:key', this.field.key, this.target[this.field.key]);
 
+    },
+    moveIndexBack(index) {
+
+      const value = this.target[this.field.key][index];
+      const valueBefore = this.target[this.field.key][index - 1];
+
+      this.$set(this.target[this.field.key], index - 1, value);
+      this.$set(this.target[this.field.key], index, valueBefore);
+
+      const id = this.ids[index];
+      const idBefore = this.ids[index - 1];
+
+      this.$set(this.ids, index - 1, id);
+      this.$set(this.ids, index, idBefore);
+
+      this.$emit('update:key', this.field.key, this.target[this.field.key]);
+
+    },
+    moveIndexForward(index) {
+
+      const value = this.target[this.field.key][index];
+      const valueBefore = this.target[this.field.key][index + 1];
+
+      this.$set(this.target[this.field.key], index + 1, value);
+      this.$set(this.target[this.field.key], index, valueBefore);
+
+      const id = this.ids[index];
+      const idBefore = this.ids[index + 1];
+
+      this.$set(this.ids, index + 1, id);
+      this.$set(this.ids, index, idBefore);
+
+      this.$emit('update:key', this.field.key, this.target[this.field.key]);
+
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
