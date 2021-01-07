@@ -29,7 +29,20 @@
 
 <script>
 export default {
-  name: 'DialogWrapper'
+  name: 'DialogWrapper',
+  mounted() {
+    window.addEventListener('popstate', this.handleBrowserBackButton);
+  },
+  beforeDestroy() {
+    window.removeEventListener('popstate', this.handleBrowserBackButton);
+  },
+  methods: {
+    handleBrowserBackButton() {
+      for (const dialog of this.$root.dialogs) {
+        dialog.resolve(undefined);
+      } this.$root.dialogs = [];
+    }
+  }
 }
 </script>
 
