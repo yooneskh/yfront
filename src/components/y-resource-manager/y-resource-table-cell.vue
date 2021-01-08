@@ -1,9 +1,9 @@
 <template>
   <div class="y-resource-cell">
     <template v-if="header.type === 'series'">
-      <v-btn small text color="primary" @click="showSeriesData(header, data)">
+      <span class="primary--text caption text-decoration-underline" style="cursor: pointer" @click="showSeriesData(header, data)">
         نمایش مجموعه داده
-      </v-btn>
+      </span>
     </template>
     <template v-else-if="Array.isArray(data)">
       <YResourceCell v-for="dataElement in data" :key="dataElement" class="me-2 d-inline-block" :header="header" :data="dataElement" />
@@ -18,9 +18,9 @@
       </v-chip>
     </template>
     <template v-else-if="isRelation">
-      <v-btn small text @click="showResource">
+      <span class="primary--text caption text-decoration-underline" style="cursor: pointer" @click="showResource">
         {{ relationTitle }}
-      </v-btn>
+      </span>
     </template>
     <template v-else>
       <span v-if="header.timeFormat" :style="{'direction': header.dir}" class="d-inline-block text-center">

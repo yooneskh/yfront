@@ -1,12 +1,12 @@
 <template>
-  <v-btn text small :icon="error" color="primary" :title="model === 'Media' && title" class="y-resource-visualizer" @click="!error && goToResource()">
-    <v-icon v-if="error" small :color="error ? 'red': undefined">
+  <span :title="model === 'Media' && title" class="y-resource-visualizer primary--text caption text-decoration-underline" style="cursor: pointer" @click="!error && goToResource()">
+    <v-icon v-if="error" small color="red">
       mdi-alert-circle-outline
     </v-icon>
     <template v-else>
       {{ model === 'Media' ? 'Media File' : title }}
     </template>
-  </v-btn>
+  </span>
 </template>
 
 <script>
