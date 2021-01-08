@@ -17,10 +17,7 @@
       <y-table
         :headers="headers"
         :items="resources.list"
-        :actions="[
-          { key: 'edit', icon: 'mdi-pen' },
-          { key: 'delete', icon: 'mdi-delete', color: 'error' }
-        ]"
+        :actions="tableActions"
         :loading="loading"
         :server-items-length="resources.allCount"
         @update:page="page = $event"
@@ -28,7 +25,8 @@
         @update:items-per-page="itemsPerPage = $event"
         :sorts.sync="sorts"
         @edit="editHandler ? editHandler($event) : initEditor($event)"
-        @delete="deleteResource">
+        @delete="deleteResource"
+        v-on="customActionListeners">
         <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ data }">
           <y-resource-table-cell :key="header.key + data" :data="data" :header="header" />
         </template>
@@ -70,6 +68,9 @@ export default {
     },
     editHandler: {
       type: Function
+    },
+    customActions: {
+      type: Array
     }
   },
   data: () => ({
@@ -109,6 +110,31 @@ export default {
             dir: 'ltr'
           }
         ]);
+    },
+    tableActions() {
+
+      const actions = [];
+
+      actions.push(...(this.customActions || []));
+
+      actions.push(
+        { key: 'edit', icon: 'mdi-pen' },
+        { key: 'delete', icon: 'mdi-delete', color: 'error' }
+      );
+
+      return actions;
+
+    },
+    customActionListeners() {
+
+      const listeners = {};
+
+      for (const action of this.customActions || []) {
+        listeners[action.key] = (item) => this.$emit(action.key, item);
+      }
+
+      return listeners;
+
     }
   },
   mounted() {
