@@ -106,7 +106,6 @@ export default {
     handleInput(field, text, auxiliaryValue) {
 
       if (field.type === 'checkboxes' || field.type === 'switches') {
-        debugger;
         if (text) {
           this.$set(this.target, field.key, [
             ...(this.target[field.key] || []),
