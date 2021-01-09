@@ -31,7 +31,7 @@
     :success="field.success"
     :message="field.message"
     :hint="typeof field.hint === 'function' ? field.hint(value) : field.hint"
-    @input="$emit('input', $event)"
+    @input="$emit('input', $event); !field.lazy && $nextTick().then(validateValue)"
     @blur="validateValue"
   />
 </template>

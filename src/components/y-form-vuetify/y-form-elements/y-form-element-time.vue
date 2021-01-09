@@ -32,7 +32,7 @@
     :no-title="field.noTitle"
     :use-seconds="field.useSeconds"
     :width="field.clockWidth"
-    @input="$emit('input', $event)"
+    @input="$emit('input', $event); !field.lazy && $nextTick().then(validateValue)"
     @blur="validateValue"
   />
 </template>

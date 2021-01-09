@@ -6,7 +6,7 @@
     :flat="field.flat || field.simple"
     :dense="field.dense"
     :background-color="field.background"
-    @change="$emit('input', $event)"
+    @change="$emit('input', $event); !field.lazy && $nextTick().then(validateValue);"
     :label="field.title"
     :placeholder="field.placeholder"
     :class="field.classes"

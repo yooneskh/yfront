@@ -95,6 +95,9 @@ export default {
 
       this.$emit('input', result);
 
+      await this.$nextTick();
+      this.validateValue();
+
     },
     async loadData() {
 

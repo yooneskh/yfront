@@ -116,26 +116,22 @@ export default {
       this.currentLanguage = language;
 
     },
-    handleInput(text) {
+    async handleInput(text) {
       if (this.currentLanguageChanged) return;
 
       if (this.field.languages) {
         this.$set(this.value, this.currentLanguage, text);
         this.$emit('input', this.value);
+        await this.$nextTick();
+        if (!this.field.lazy) this.validateValue();
         return;
       }
 
       this.$emit('input', text);
+      await this.$nextTick();
+      if (!this.field.lazy) this.validateValue();
 
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  ::v-deep {
-    .v-text-field__details {
-      margin-bottom: 0 !important;
-    }
-  }
-</style>

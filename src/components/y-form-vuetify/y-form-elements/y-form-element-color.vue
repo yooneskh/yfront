@@ -54,9 +54,10 @@ export default {
   },
   mixins: [YFormElementMixin],
   methods: {
-    handleChange(value) {
+    async handleChange(value) {
       this.$emit('input', value.hex);
-      setImmediate(this.validateValue);
+      await this.$nextTick();
+      this.validateValue();
     }
   }
 }
