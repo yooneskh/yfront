@@ -1,6 +1,9 @@
 export const YFormElementMixin = {
   mounted() {
-    if (typeof this.value === 'string') {
+    if (this.field.preemptiveValidation) {
+      this.validateValue();
+    }
+    else if (typeof this.value === 'string') {
       if (this.value.length > 0) this.validateValue();
     }
     else if (Array.isArray(this.value)) {
