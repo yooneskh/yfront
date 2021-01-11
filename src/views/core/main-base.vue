@@ -99,6 +99,10 @@ export default {
       return;
     }
 
+    if (!this.toolbars.find(it => !it.children?.find(i => i.path === this.$route.path))) {
+      this.$router.replace(this.toolbars[0].children[0].path);
+    }
+
     if (Config.socket.enabled && (!Config.socket.needsAuthentication || this.$token)) {
       this.$socket.client.connect();
     }
