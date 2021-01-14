@@ -20,9 +20,35 @@
           class="my-4"
         />
 
-        <v-btn v-if="!readonly" class="delete-button" icon small color="error" @click="deletePart(index)" :style="{[$vuetify.rtl ? 'left' : 'right']: '4px'}">
-          <v-icon small>mdi-close</v-icon>
-        </v-btn>
+        <div class="actions-container" :style="{[$vuetify.rtl ? 'left' : 'right']: '4px'}">
+          <v-menu v-if="!readonly" absolute>
+
+            <template #activator="{ on }">
+              <v-btn icon color="primary" small v-on="on">
+                <v-icon small>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list dense>
+              <v-list-item v-if="part.type === 'title'" @click="convertToParagraph(index)">
+                <v-list-item-content>
+                  <v-list-item-title>Convert to Paragraph</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item v-if="part.type === 'text'" @click="convertToTitle(index)">
+                <v-list-item-content>
+                  <v-list-item-title>Convert to Title</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item color="error" @click="deletePart(index)">
+                <v-list-item-content>
+                  <v-list-item-title class="error--text">Delete</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+
+          </v-menu>
+        </div>
 
       </drag-element>
     </drag-container>
@@ -83,6 +109,28 @@ export default {
         })
       );
     },
+    convertToParagraph(index) {
+      this.$emit(
+        'input',
+        JSON.stringify({
+          ...this.parsedValue,
+          parts: this.parsedValue.parts.map((it, itIndex) =>
+            itIndex === index ? ({ _id: this.$uuid(), type: 'text', text: it.title }) : it
+          )
+        })
+      );
+    },
+    convertToTitle(index) {
+      this.$emit(
+        'input',
+        JSON.stringify({
+          ...this.parsedValue,
+          parts: this.parsedValue.parts.map((it, itIndex) =>
+            itIndex === index ? ({ _id: this.$uuid(), type: 'title', title: it.text }) : it
+          )
+        })
+      );
+    },
     deletePart(index) {
       this.$emit(
         'input',
@@ -133,12 +181,12 @@ export default {
 
     .editor-item {
       position: relative;
-      & > .delete-button {
+      & > .actions-container {
         position: absolute;
         top: 4px;
         opacity: 0;
       }
-      &:hover .delete-button {
+      &:hover .actions-container {
         opacity: 1;
       }
     }
