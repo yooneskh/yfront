@@ -5,16 +5,14 @@
     :label="field.title"
     :solo="field.solo || field.simple"
     :flat="field.flat || field.simple"
-    :label-format="field.labelFormat"
-    :input-format="field.inputFormat"
-    :value-format="field.valueFormat || 'jYYYY/jMM/jDD'"
+    :label-format="field.labelFormat || defaultValueFormat"
+    :value-format="field.valueFormat || defaultValueFormat"
     :startup-view="field.startupView"
     :placeholder="field.placeholder"
     :background-color="field.background"
     :dense="field.dense"
     :locale="field.locale || 'fa'"
     :dir="field.dir"
-    :value="value"
     :disabled-dates="field.disabledDates"
     :color="field.color"
     :dark="field.dark"
@@ -30,8 +28,10 @@
     :error="field.error"
     :success="field.success"
     :message="field.message"
+    :value="value"
+    :epoch="!field.unepoch"
     :hint="typeof field.hint === 'function' ? field.hint(value) : field.hint"
-    @input="$emit('input', $event); !field.lazy && $nextTick().then(validateValue)"
+    @input="handleInput"
     @blur="validateValue"
   />
 </template>
@@ -52,7 +52,27 @@ export default {
       required: true
     }
   },
-  mixins: [YFormElementMixin]
+  mixins: [YFormElementMixin],
+  computed: {
+    defaultValueFormat() {
+      return {
+        'fa': 'jYYYY/jMM/jDD',
+        'en': 'YYYY/MM/DD'
+      }[this.field.locale || 'fa']
+    }
+  },
+  methods: {
+    async handleInput(value) {
+
+      this.$emit('input', value);
+
+      if (!this.field.lazy) {
+        await this.$nextTick();
+        this.validateValue();
+      }
+
+    }
+  }
 }
 
 </script>

@@ -6,7 +6,7 @@
     :flat="field.flat || field.simple"
     :dense="field.dense"
     :background-color="field.background"
-    @change="$emit('input', $event); !field.lazy && $nextTick().then(validateValue);"
+    @change="handleInput"
     :label="field.title"
     :placeholder="field.placeholder"
     :class="field.classes"
@@ -39,6 +39,18 @@ export default {
       required: true
     }
   },
-  mixins: [YFormElementMixin]
+  mixins: [YFormElementMixin],
+  methods: {
+    async handleInput(value) {
+
+      this.$emit('input', value);
+
+      if (!this.field.lazy) {
+        await this.$nextTick();
+        this.validateValue();
+      }
+
+    }
+  }
 }
 </script>

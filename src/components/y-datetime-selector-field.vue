@@ -35,8 +35,8 @@
       :max="max"
       :min="min"
       :color="color"
-      :value="value"
-      :input-format="inputFormat"
+      :value="formattedValue"
+      :input-format="valueFormat"
       :display-format="labelFormat"
       :format="valueFormat"
       @input="handleInput"
@@ -58,7 +58,6 @@ export default {
     inputStyle: String,
     label: String,
     dir: String,
-    labelFormat: String,
     placeholder: String,
     hideDetails: Boolean,
     autofocus: Boolean,
@@ -66,26 +65,27 @@ export default {
     dense: Boolean,
     solo: Boolean,
     flat: Boolean,
-    locale: String,
-    backgroundColor: String,
-    value: {},
-    disabledDates: Function,
-    startupView: String,
-    inputFormat: String,
     color: String,
     dark: Boolean,
     disabled: Boolean,
+    backgroundColor: String,
+    error: Boolean,
+    success: Boolean,
+    message: String,
+    hint: String,
+    value: {},
+    disabledDates: Function,
+    startupView: String,
+    locale: String,
     max: String,
     min: String,
     readonly: Boolean,
     type: String,
     multiple: Boolean,
     range: Boolean,
+    labelFormat: String,
     valueFormat: String,
-    error: Boolean,
-    success: Boolean,
-    message: String,
-    hint: String
+    epoch: Boolean
   },
   data: () => ({
     menuOpened: false
@@ -93,16 +93,32 @@ export default {
   computed: {
     fieldTitle() {
       if (!this.value) return '';
-      return moment(this.value, this.inputFormat || this.valueFormat).format(this.labelFormat || this.valueFormat);
+      return moment(this.value, this.epoch ? undefined : this.valueFormat).format(this.labelFormat);
+    },
+    formattedValue() {
+      if (this.epoch) {
+        return this.$formatTime(this.value, this.valueFormat);
+      }
+      else {
+        return this.value;
+      }
     }
   },
   methods: {
     handleInput(value) {
-      this.$emit('input', value);
+
+      if (this.epoch) {
+        this.$emit('input', moment(value, this.valueFormat).valueOf());
+      }
+      else {
+        this.$emit('input', value);
+      }
+
       setImmediate(() => {
         this.$emit('blur');
         this.menuOpened = false;
       });
+
     }
   }
 }

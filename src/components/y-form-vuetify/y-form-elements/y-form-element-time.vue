@@ -32,7 +32,7 @@
     :no-title="field.noTitle"
     :use-seconds="field.useSeconds"
     :width="field.clockWidth"
-    @input="$emit('input', $event); !field.lazy && $nextTick().then(validateValue)"
+    @input="handleInput"
     @blur="validateValue"
   />
 </template>
@@ -53,7 +53,19 @@ export default {
       required: true
     }
   },
-  mixins: [YFormElementMixin]
+  mixins: [YFormElementMixin],
+  methods: {
+    async handleInput(value) {
+
+      this.$emit('input', value);
+
+      if (!this.field.lazy) {
+        await this.$nextTick();
+        this.validateValue();
+      }
+
+    }
+  }
 }
 
 </script>

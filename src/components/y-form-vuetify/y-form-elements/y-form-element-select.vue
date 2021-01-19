@@ -11,7 +11,7 @@
     :disabled="field.disabled"
     :readonly="field.readonly"
     :autofocus="field.autofocus"
-    @input="$emit('input', $event); !field.lazy && $nextTick().then(validateValue);"
+    @input="handleInput"
     @blur="validateValue"
     :error="field.error"
     :success="field.success"
@@ -32,7 +32,7 @@
     :disabled="field.disabled"
     :readonly="field.readonly"
     :autofocus="field.autofocus"
-    @input="$emit('input', $event); !field.lazy && $nextTick().then(validateValue);"
+    @input="handleInput"
     @blur="validateValue"
     :error="field.error"
     :success="field.success"
@@ -52,7 +52,7 @@
     :disabled="field.disabled"
     :readonly="field.readonly"
     :autofocus="field.autofocus"
-    @input="$emit('input', $event); !field.lazy && $nextTick().then(validateValue);"
+    @input="handleInput"
     @blur="validateValue"
     :error="field.error"
     :success="field.success"
@@ -90,6 +90,18 @@ export default {
       }
 
       return this.field.items;
+
+    }
+  },
+  methods: {
+    async handleInput(value) {
+
+      this.$emit('input', value);
+
+      if (!this.field.lazy) {
+        await this.$nextTick();
+        this.validateValue();
+      }
 
     }
   }
