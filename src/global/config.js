@@ -16,5 +16,8 @@ export const Config = {
   socket: {
     enabled: false,
     needsAuthentication: true
+  },
+  localization: {
+    default: 'en'
   }
 }

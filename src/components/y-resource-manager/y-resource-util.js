@@ -1,6 +1,7 @@
 import YNetwork from 'ynetwork';
 import { YCacher } from '../../plugins/y-cacher';
 import { plural } from 'pluralize';
+import { Config } from '../../global/config';
 
 export function pluralizeModelName(model) {
   return plural(model).toLowerCase();
@@ -36,7 +37,7 @@ export async function loadRelationsFor(apiBase, resourceName) {
 
 }
 
-export async function transformResourceToTitle(apiBase, resourceName, resourceId) {
+export async function transformResourceToTitle(apiBase, resourceName, resourceId, locale) {
 
   const result = await Promise.all([
     new Promise(resolve =>
@@ -61,6 +62,9 @@ export async function transformResourceToTitle(apiBase, resourceName, resourceId
     titleableMetas.map(meta => new Promise(resolve => {
       if (meta.ref) {
         transformResourceToTitle(apiBase, meta.ref, resource[meta.key]).then(resolve);
+      }
+      else if (meta.languages) {
+        resolve(resource[meta.key][locale || Config.localization.default] ?? '---');
       }
       else {
         resolve(resource[meta.key]);
