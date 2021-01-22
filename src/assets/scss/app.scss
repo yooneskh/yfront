@@ -52,3 +52,8 @@ html {
 .v-text-field.v-text-field--enclosed .v-text-field__details {
   margin-bottom: 0;
 }
+
+.v-dialog > .v-card > .v-card__actions {
+  padding-left: 8px;
+  padding-right: 8px;
+}
