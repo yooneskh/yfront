@@ -37,7 +37,7 @@ export async function loadRelationsFor(apiBase, resourceName) {
 
 }
 
-export async function transformResourceToTitle(apiBase, resourceName, resourceId, locale) {
+export async function transformResourceToTitle(apiBase, resourceName, resourceId, locale = Config.localization.default) {
 
   const result = await Promise.all([
     new Promise(resolve =>
@@ -64,7 +64,7 @@ export async function transformResourceToTitle(apiBase, resourceName, resourceId
         transformResourceToTitle(apiBase, meta.ref, resource[meta.key]).then(resolve);
       }
       else if (meta.languages) {
-        resolve(resource[meta.key][locale || Config.localization.default] ?? '---');
+        resolve(resource[meta.key][locale] ?? '---');
       }
       else {
         resolve(resource[meta.key]);
