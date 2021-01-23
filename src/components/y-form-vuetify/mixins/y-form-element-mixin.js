@@ -9,7 +9,7 @@ export const YFormElementMixin = {
     else if (Array.isArray(this.value)) {
       if (this.value.length > 0) this.validateValue();
     }
-    else if (this.value) {
+    else if (this.value !== undefined && this.value !== null && !isNaN(this.value)) {
       this.validateValue();
     }
   },
