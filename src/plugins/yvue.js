@@ -16,6 +16,20 @@ moment.loadPersian({ dialect: 'persian-modern' });
 Vue.component('y-form', require('../components/y-form-vuetify').default);
 Vue.component('y-table', () => import('../components/y-table' /* webpackChunkName: 'y-table' */));
 
+function downloadAsFile(filename, text) {
+
+  const element = document.createElement('a');
+
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+
+}
+
 function formatTime(time, format) {
   return moment(time || undefined).format(format)
 }
@@ -66,6 +80,9 @@ Vue.mixin({
     },
     $copy(text) {
       return copyToClipboard(text);
+    },
+    $downloadAsFile(filename, text) {
+      return downloadAsFile(filename, text);
     },
     $dialogConfirmDelete({ title, message, options }) {
       return this.$dialog(import('../dialogs/confirm-delete.vue' /* webpackChunkName: 'confirm-delete-dialog' */), {
