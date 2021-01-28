@@ -107,10 +107,21 @@ export default {
       this.$socket.client.connect();
     }
 
-    if (this.$token && Config.auth.refreshIdentityOnLoad) {
-      this.loading = true;
-      await this.loadData();
-      this.loading = false;
+    if (this.$token) {
+      if (Config.auth.refreshIdentityOnLoad) {
+        this.loading = true;
+        await this.loadData();
+        this.loading = false;
+      }
+      else {
+        try {
+          this.$root.$user = JSON.parse('--user--');
+        }
+        catch {
+          this.$toast.error('اطلاعات کاربری شما قابل بارگذاری نبود.');
+          this.$root.logout();
+        }
+      }
     }
 
   },

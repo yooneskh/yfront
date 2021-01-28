@@ -146,6 +146,10 @@ export default {
       this.$root.user = result.user;
       localStorage.setItem('--token--', result.token);
 
+      if (!Config.auth.refreshIdentityOnLoad) {
+        localStorage.setItem('--user--', result.user);
+      }
+
       this.$root.resetCredentials();
       this.$router.replace(this.$route.query.next || '/');
 
