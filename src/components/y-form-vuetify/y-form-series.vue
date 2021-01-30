@@ -180,7 +180,7 @@ export default {
 <style lang="scss" scoped>
   .series-item {
     position: relative;
-    .actions-container {
+    & > .actions-container {
       position: absolute;
       top: 0px;
       opacity: 0;
@@ -188,7 +188,7 @@ export default {
       transition: all 0.2s ease-in-out;
     }
   }
-  .series-item:hover .actions-container {
+  .series-item:hover > .actions-container {
     opacity: 1;
     pointer-events: all;
   }
