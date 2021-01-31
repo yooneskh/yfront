@@ -18,6 +18,6 @@ export const Config = {
     needsAuthentication: true
   },
   localization: {
-    default: 'en'
+    default: 'fa'
   }
 }
