@@ -95,12 +95,12 @@ export default {
   async beforeMount() {
 
     if (!this.$token && Config.auth.isAuthMandatory) {
-      this.$router.replace('/auth');
+      this.$router.replace('/auth', () => {});
       return;
     }
 
     if (!this.toolbars.find(it => !it.children?.find(i => i.path === this.$route.path))) {
-      this.$router.replace(this.toolbars[0].children[0].path);
+      this.$router.replace(this.toolbars[0].children[0].path, () => {});
     }
 
     if (Config.socket.enabled && (!Config.socket.needsAuthentication || this.$token)) {
