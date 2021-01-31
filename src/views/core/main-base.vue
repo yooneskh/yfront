@@ -115,7 +115,7 @@ export default {
       }
       else {
         try {
-          this.$root.$user = JSON.parse('--user--');
+          this.$root.$user = JSON.parse(localStorage.getItem('--user--') || '---');
         }
         catch {
           this.$toast.error('اطلاعات کاربری شما قابل بارگذاری نبود.');
