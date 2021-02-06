@@ -8533,9 +8533,9 @@ vue-loader@^15.9.2:
     vue-style-loader "^4.1.0"
 
 vue-persian-datetime-picker@^2.4.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/vue-persian-datetime-picker/-/vue-persian-datetime-picker-2.5.0.tgz#26f2ab8bc34f977a9a56875e2919062e5c34d7dd"
-  integrity sha512-IevkH5vPtveH0Tgxaq/aTlt+8Nv82TgPaX4wikRUDTA6YWTNjYC9ASyYEW6ZEfIvaQvXUgpborWJvNM/OTyTTw==
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/vue-persian-datetime-picker/-/vue-persian-datetime-picker-2.6.0.tgz#beac31dd774e7da71ef92055df07ca9a027ba1ff"
+  integrity sha512-helk+/puOyZ7Xm+XH9mNaEwkML1tPvOxd2rFNhRkxrYBtI2Y33YEyYAzRklC3jddq+kQQp3GgPX9lAENI79Rcg==
   dependencies:
     moment-jalaali "^0.9.2"
 
