@@ -132,7 +132,7 @@ export default {
 
       }
 
-      const value = field.number ? parseInt(text || field.defaultNumber || '0', field.radix || 10) : text;
+      const value = field.number ? parseFloat(text || field.defaultNumber || '0', field.radix || 10) : text;
 
       if (field.setter) {
         field.setter(this.target, value, this.targetIndex);
