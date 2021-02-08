@@ -20,7 +20,7 @@
         />
       </template>
       <template v-if="part.type === 'link'">
-        <v-card :to="!part.link || part.link.startsWith('http') ? undefined : part.link" target="_blank" :href="part.link && part.link.startsWith('http') ? part.link : undefined" outlined class="my-4 d-flex flex-row pa-1">
+        <v-card outlined class="my-4 mx-6 d-flex flex-row pa-1" :to="!part.link || part.link.startsWith('http') ? undefined : part.link" target="_blank" :href="part.link && part.link.startsWith('http') ? part.link : undefined">
           <v-img v-if="part.image" :src="part.image" contain class="me-3 flex-grow-0" height="88" width="88"/>
           <div>
             <div class="text-h6">{{ part.title }}</div>
