@@ -20,6 +20,15 @@
           class="my-4"
         />
 
+        <v-card v-if="part.type === 'link'" :to="!part.link || part.link.startsWith('http') ? undefined : part.link" target="_blank" :href="part.link && part.link.startsWith('http') ? part.link : undefined" outlined class="my-4 d-flex flex-row pa-1">
+          <v-img v-if="part.image" :src="part.image" contain class="me-3 flex-grow-0" height="88" width="88"/>
+          <div>
+            <div class="text-h6">{{ part.title }}</div>
+            <div class="text-subtitle-2 font-weight-light mt-n1">{{ part.domain }}</div>
+            <div class="text-body-1 mt-3" style="white-space: nowrap;">{{ part.description }}</div>
+          </div>
+        </v-card>
+
         <div class="actions-container" :style="{[$vuetify.rtl ? 'left' : 'right']: '4px'}">
           <v-menu v-if="!readonly" absolute>
 
@@ -58,6 +67,7 @@
       <v-btn class="ms-2" icon @click="appendPart({ type: 'title', title: '' })"> <v-icon>mdi-format-title</v-icon> </v-btn>
       <v-btn class="ms-2" icon @click="appendPart({ type: 'text', text: '' })"> <v-icon>mdi-text-subject</v-icon> </v-btn>
       <v-btn class="ms-2" icon @click="addImage"> <v-icon>mdi-image</v-icon> </v-btn>
+      <v-btn class="ms-2" icon @click="addLink"> <v-icon>mdi-link</v-icon> </v-btn>
     </div>
 
   </div>
@@ -146,7 +156,10 @@ export default {
         title: 'افزودن تصویر',
         description: 'لطفا فایل تصویر مورد نظر را انتخاب کنید.',
         fields: [
-          { key: 'file', type: 'file', title: 'فایل', wrapped: false }
+          {
+            key: 'file', type: 'file', title: 'Image',
+            rules: [v => !!v || 'Image is required!']
+          }
         ]
       }); if (!form || !form.file) return;
 
@@ -154,6 +167,38 @@ export default {
       if (this.$generalHandle(status, result)) return;
 
       this.appendPart({ type: 'image', path: result.path });
+
+    },
+    async addLink() {
+
+      const form = await this.$dialogFormMaker({
+        title: 'Add Link',
+        description: 'Enter information for file.',
+        fields: [
+          {
+            key: 'link', type: 'text', title: 'Link',
+            rules: [v => !!v || 'Link is required!']
+          },
+          {
+            key: 'title', type: 'text', title: 'Title',
+            rules: [v => !!v || 'Title is required!']
+          },
+          { key: 'image', type: 'file', title: 'Image' },
+          { key: 'domain', type: 'text', title: 'Domain' },
+          { key: 'description', type: 'textarea', title: 'Description' }
+        ]
+      }); if (!form) return;
+
+      const { link, title, image, domain, description } = form;
+      let imagePath;
+
+      if (image) {
+        const { status, result } = await Api.Media.loadOne(image);
+        if (this.$generalHandle(status, result)) return;
+        imagePath = result.path;
+      }
+
+      this.appendPart({ type: 'link', link, title, image: imagePath, domain, description });
 
     },
     handleDrop(dropResult) {

@@ -19,6 +19,16 @@
           :style="`margin-left: -${paddingHorizontal}px; margin-right: -${paddingHorizontal}px;`"
         />
       </template>
+      <template v-if="part.type === 'link'">
+        <v-card :to="!part.link || part.link.startsWith('http') ? undefined : part.link" target="_blank" :href="part.link && part.link.startsWith('http') ? part.link : undefined" outlined class="my-4 d-flex flex-row pa-1">
+          <v-img v-if="part.image" :src="part.image" contain class="me-3 flex-grow-0" height="88" width="88"/>
+          <div>
+            <div class="text-h6">{{ part.title }}</div>
+            <div class="text-subtitle-2 font-weight-light mt-n1">{{ part.domain }}</div>
+            <div class="text-body-1 mt-3" style="white-space: nowrap;">{{ part.description }}</div>
+          </div>
+        </v-card>
+      </template>
     </div>
   </div>
 </template>
