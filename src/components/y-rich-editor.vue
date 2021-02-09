@@ -1,7 +1,7 @@
 <template>
   <div class="y-rich-editor">
 
-    <drag-container @drop="handleDrop" :drag-handle-selector="readonly ? '#non-existant-id' : undefined">
+    <drag-container @drop="handleDrop" :drag-handle-selector="readonly ? '#non-existant-id' : '.drag-handle'">
       <drag-element v-for="(part, index) in parsedValue.parts" :key="part._id" class="editor-item">
 
         <h2
@@ -29,15 +29,25 @@
           </div>
         </v-card>
 
-        <div class="actions-container" :style="{[$vuetify.rtl ? 'left' : 'right']: '4px'}">
-          <v-menu v-if="!readonly" absolute>
+        <template v-if="part.type === 'map'">
+          <l-map :zoom="part.zoom" :center="makeLatLong(part.latitude, part.longitude)" :options="{}" :style="`height: ${part.height || '300px'}`">
+            <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <l-marker :lat-lng="makeLatLong(part.latitude, part.longitude)" />
+          </l-map>
+        </template>
 
+        <div class="actions-container" :style="{[$vuetify.rtl ? 'left' : 'right']: '4px'}">
+
+          <v-btn class="drag-handle" icon small>
+            <v-icon>mdi-drag</v-icon>
+          </v-btn>
+
+          <v-menu v-if="!readonly" absolute>
             <template #activator="{ on }">
               <v-btn icon color="primary" small v-on="on">
                 <v-icon small>mdi-dots-vertical</v-icon>
               </v-btn>
             </template>
-
             <v-list dense>
               <v-list-item v-if="part.type === 'title'" @click="convertToParagraph(index)">
                 <v-list-item-content>
@@ -55,8 +65,8 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-
           </v-menu>
+
         </div>
 
       </drag-element>
@@ -68,6 +78,7 @@
       <v-btn class="ms-2" icon @click="appendPart({ type: 'text', text: '' })"> <v-icon>mdi-text-subject</v-icon> </v-btn>
       <v-btn class="ms-2" icon @click="addImage"> <v-icon>mdi-image</v-icon> </v-btn>
       <v-btn class="ms-2" icon @click="addLink"> <v-icon>mdi-link</v-icon> </v-btn>
+      <v-btn class="ms-2" icon @click="addMap"> <v-icon>mdi-map</v-icon> </v-btn>
     </div>
 
   </div>
@@ -78,13 +89,18 @@
 import Api from '../api';
 
 import { Container, Draggable } from "vue-smooth-dnd";
+import { latLng } from 'leaflet';
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 
 export default {
   name: 'YRichEditor',
   components: {
     'y-editable-text': require('./y-editable-text').default,
     'drag-container': Container,
-    'drag-element': Draggable
+    'drag-element': Draggable,
+    'l-map': LMap,
+    'l-tile-layer': LTileLayer,
+    'l-marker': LMarker
   },
   props: {
     value: {
@@ -201,6 +217,35 @@ export default {
       this.appendPart({ type: 'link', link, title, image: imagePath, domain, description });
 
     },
+    async addMap() {
+
+      const form = await this.$dialogFormMaker({
+        title: 'Add Map',
+        description: 'Enter information for file.',
+        fields: [
+          {
+            key: 'latitude', type: 'text', title: 'Latitude', number: true, dir: 'ltr',
+            rules: [v => !!v || 'Latitude is required!']
+          },
+          {
+            key: 'longitude', type: 'text', title: 'Longitude', number: true, dir: 'ltr',
+            rules: [v => !!v || 'Longitude is required!']
+          },
+          {
+            key: 'zoom', type: 'text', title: 'Zoom', number: true, dir: 'ltr',
+            rules: [v => !!v || 'Zoom is required!']
+          },
+          {
+            key: 'height', type: 'text', title: 'Height', dir: 'ltr'
+          }
+        ]
+      }); if (!form) return;
+
+      const { latitude, longitude, zoom, height } = form;
+
+      this.appendPart({ type: 'map', latitude, longitude, zoom, height });
+
+    },
     handleDrop(dropResult) {
 
       const { removedIndex, addedIndex } = dropResult;
@@ -216,6 +261,9 @@ export default {
         })
       );
 
+    },
+    makeLatLong(latitude, longitude) {
+      return latLng(latitude, longitude);
     }
   }
 }
@@ -230,6 +278,7 @@ export default {
         position: absolute;
         top: 4px;
         opacity: 0;
+        z-index: 900;
       }
       &:hover .actions-container {
         opacity: 1;
