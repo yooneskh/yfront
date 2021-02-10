@@ -142,6 +142,7 @@ export function mapMetaType(meta) {
   if (meta.type === 'series') return 'series';
   if (meta.ref) return 'resource';
   if (meta.isArray) return 'select';
+  if (meta.labelFormat || meta.valueFormat) return 'date';
 
   switch (meta.type) {
     case 'string': return meta.richText ? 'editor' : (meta.longText ? 'textarea' : 'text');
@@ -165,8 +166,9 @@ export function mapMetaToFormFields(metas, readonly = false) {
     base: meta.serieBase, // for series
     multiple: meta.isArray, // for select
     addable: meta.isArray, // for select
-    wrapped: false, // for the file picker
-    readonly
+    readonly,
+    unepoch: !!meta.valueFormat,
+    locale: Config.localization.default
   }));
 
 }

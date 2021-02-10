@@ -23,8 +23,8 @@
       </span>
     </template>
     <template v-else>
-      <span v-if="header.timeFormat" :style="{'direction': header.dir}" class="d-inline-block text-center">
-        {{ data === 0 ? '-' : $formatTime(data, header.timeFormat) }}
+      <span v-if="header.labelFormat || header.valueFormat" :style="{'direction': header.dir}" class="d-inline-block text-center">
+        {{ data === 0 ? '-' : $formatTime(data, header.labelFormat || header.valueFormat) }}
       </span>
       <template v-else-if="header.ref">
         <y-resource-visualizer v-if="data" :model="header.ref" :id="data" />

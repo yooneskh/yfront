@@ -41,13 +41,13 @@ export default {
           {
             key: 'createdAt',
             text: 'زمان ایجاد',
-            timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
+            labelFormat: 'jYYYY/jMM/jDD HH:mm:ss',
             dir: 'ltr'
           },
           {
             key: 'updatedAt',
             text: 'زمان تغییر',
-            timeFormat: 'jYYYY/jMM/jDD HH:mm:ss',
+            labelFormat: 'jYYYY/jMM/jDD HH:mm:ss',
             dir: 'ltr'
           }
         ]);

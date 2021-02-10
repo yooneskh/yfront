@@ -59,7 +59,7 @@ export default {
           { value: '~=', text: 'شامل' }
         ]);
       }
-      else if (this.currentMeta.timeFormat) {
+      else if (this.currentMeta.labelFormat) {
         result.push({ value: '~=', text: 'شامل' });
       }
 
