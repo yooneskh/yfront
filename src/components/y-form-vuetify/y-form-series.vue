@@ -2,7 +2,7 @@
   <div class="y-form-series">
 
     <v-label>
-      {{ field.title }} <span class="caption">({{ target[field.key].length }})</span>
+      {{ field.title }} <span class="caption d-inline-block">({{ target[field.key].length }})</span>
       <v-btn v-if="!field.readonly && !field.disabled && !field.unaddable && (!field.maxSize || field.maxSize > (target[field.key] && target[field.key].length))" class="ms-2" small icon @click="addItem">
         <v-icon small>mdi-plus</v-icon>
       </v-btn>
