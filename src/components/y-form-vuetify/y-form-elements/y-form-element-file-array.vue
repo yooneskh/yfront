@@ -5,6 +5,7 @@
     :fields="[
       {
         key: 'files', type: 'series', title: field.title,
+        maxSize: field.maxSize,
         base: { file: '' }, itemFields: [
           {
             key: 'file', type: 'file', title: 'File',
