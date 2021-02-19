@@ -188,20 +188,20 @@ export default {
     async addLink() {
 
       const form = await this.$dialogFormMaker({
-        title: 'Add Link',
-        description: 'Enter information for file.',
+        title: 'افزودن لینک',
+        description: 'اطلاعات لینک را در زیر وارد کنید.',
         fields: [
           {
-            key: 'link', type: 'text', title: 'Link',
-            rules: [v => !!v || 'Link is required!']
+            key: 'link', type: 'text', title: 'لینک', dir: 'ltr',
+            rules: [v => !!v || 'وارد کردن لینک الزامی است!']
           },
           {
-            key: 'title', type: 'text', title: 'Title',
-            rules: [v => !!v || 'Title is required!']
+            key: 'title', type: 'text', title: 'عنوان',
+            rules: [v => !!v || 'وارد کردن عنوان الزامی است!']
           },
-          { key: 'image', type: 'file', title: 'Image' },
-          { key: 'domain', type: 'text', title: 'Domain' },
-          { key: 'description', type: 'textarea', title: 'Description' }
+          { key: 'image', type: 'file', title: 'تصویر' },
+          { key: 'domain', type: 'text', title: 'دامنه' },
+          { key: 'description', type: 'textarea', title: 'توضیح' }
         ]
       }); if (!form) return;
 
@@ -220,23 +220,23 @@ export default {
     async addMap() {
 
       const form = await this.$dialogFormMaker({
-        title: 'Add Map',
-        description: 'Enter information for file.',
+        title: 'افزودن نقشه',
+        description: 'اطلاعات را برای افزودن نقشه اضافه کنید.',
         fields: [
           {
             key: 'latitude', type: 'text', title: 'Latitude', number: true, dir: 'ltr',
-            rules: [v => !!v || 'Latitude is required!']
+            rules: [v => !!v || 'Latitude الزامی است!']
           },
           {
             key: 'longitude', type: 'text', title: 'Longitude', number: true, dir: 'ltr',
-            rules: [v => !!v || 'Longitude is required!']
+            rules: [v => !!v || 'Longitude الزامی است!']
           },
           {
             key: 'zoom', type: 'text', title: 'Zoom', number: true, dir: 'ltr',
-            rules: [v => !!v || 'Zoom is required!']
+            rules: [v => !!v || 'وارد کردن میزان زوم الزامی است!']
           },
           {
-            key: 'height', type: 'text', title: 'Height', dir: 'ltr'
+            key: 'height', type: 'text', title: 'ارتفاع', dir: 'ltr'
           }
         ]
       }); if (!form) return;
