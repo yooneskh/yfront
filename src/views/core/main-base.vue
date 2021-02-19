@@ -99,7 +99,7 @@ export default {
       return;
     }
 
-    if (!this.toolbars.find(it => !it.children?.find(i => i.path === this.$route.path)) && this.toolbars[0]?.children?.[0]) {
+    if (!this.toolbars.find(it => it.children?.some(i => i.path === this.$route.path)) && this.toolbars[0]?.children?.[0]) {
       this.$router.replace(this.toolbars[0].children[0].path, () => {});
     }
 
