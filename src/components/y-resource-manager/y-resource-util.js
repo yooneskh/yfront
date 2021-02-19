@@ -167,6 +167,7 @@ export function mapMetaToFormFields(metas, readonly = false) {
     base: meta.serieBase, // for series
     multiple: meta.isArray, // for select
     addable: meta.isArray, // for select
+    searchable: meta.isArray, // for select
     readonly,
     unepoch: !!meta.valueFormat,
     locale: Config.localization.default,
