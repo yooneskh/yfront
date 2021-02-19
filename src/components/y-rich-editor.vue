@@ -48,20 +48,20 @@
                 <v-icon small>mdi-dots-vertical</v-icon>
               </v-btn>
             </template>
-            <v-list dense>
+            <v-list dense min-width="200">
               <v-list-item v-if="part.type === 'title'" @click="convertToParagraph(index)">
                 <v-list-item-content>
-                  <v-list-item-title>Convert to Paragraph</v-list-item-title>
+                  <v-list-item-title>تبدیل به متن</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item v-if="part.type === 'text'" @click="convertToTitle(index)">
                 <v-list-item-content>
-                  <v-list-item-title>Convert to Title</v-list-item-title>
+                  <v-list-item-title>تبدیل به عنوان</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item color="error" @click="deletePart(index)">
                 <v-list-item-content>
-                  <v-list-item-title class="error--text">Delete</v-list-item-title>
+                  <v-list-item-title class="error--text">حذف</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -162,7 +162,7 @@ export default {
         'input',
         JSON.stringify({
           ...this.parsedValue,
-          parts: this.parsedValue.parts.filter((it, itIndex) => itIndex !== index)
+          parts: this.parsedValue.parts.filter((_, itIndex) => itIndex !== index)
         })
       );
     },
@@ -173,11 +173,11 @@ export default {
         description: 'لطفا فایل تصویر مورد نظر را انتخاب کنید.',
         fields: [
           {
-            key: 'file', type: 'file', title: 'Image',
-            rules: [v => !!v || 'Image is required!']
+            key: 'file', type: 'file', title: 'تصویر',
+            rules: [v => !!v || 'تصویر الزامی است!']
           }
         ]
-      }); if (!form || !form.file) return;
+      }); if (!form) return;
 
       const { status, result } = await Api.Media.loadOne(form.file);
       if (this.$generalHandle(status, result)) return;
@@ -199,9 +199,15 @@ export default {
             key: 'title', type: 'text', title: 'عنوان',
             rules: [v => !!v || 'وارد کردن عنوان الزامی است!']
           },
-          { key: 'image', type: 'file', title: 'تصویر' },
-          { key: 'domain', type: 'text', title: 'دامنه' },
-          { key: 'description', type: 'textarea', title: 'توضیح' }
+          {
+            key: 'image', type: 'file', title: 'تصویر'
+          },
+          {
+            key: 'domain', type: 'text', title: 'دامنه', dir: 'ltr'
+          },
+          {
+            key: 'description', type: 'textarea', title: 'توضیح'
+          }
         ]
       }); if (!form) return;
 
