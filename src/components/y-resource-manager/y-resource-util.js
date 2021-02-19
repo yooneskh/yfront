@@ -143,6 +143,7 @@ export function mapMetaType(meta) {
   if (meta.ref) return 'resource';
   if (meta.isArray) return 'select';
   if (meta.labelFormat || meta.valueFormat) return 'date';
+  if (meta.enum || meta.items) return 'select';
 
   switch (meta.type) {
     case 'string': return meta.richText ? 'editor' : (meta.longText ? 'textarea' : 'text');
@@ -168,7 +169,8 @@ export function mapMetaToFormFields(metas, readonly = false) {
     addable: meta.isArray, // for select
     readonly,
     unepoch: !!meta.valueFormat,
-    locale: Config.localization.default
+    locale: Config.localization.default,
+    items: meta.items || meta.enum
   }));
 
 }
