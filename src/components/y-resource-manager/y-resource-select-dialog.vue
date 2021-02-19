@@ -14,7 +14,18 @@
 
     <div v-if="multiple && selectedItems.length > 0" class="pa-2 pb-1">
       <v-chip v-for="(item, index) in selectedItems" :key="item._id" small class="me-2 mb-1" close @click:close="selectedItems.splice(index, 1)">
+
         {{ titles[item] || '---' }}
+
+        <div class="ms-2 me-n1">
+          <v-btn v-if="index > 0" x-small icon @click="moveSelectedItem(index, index - 1)">
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-btn>
+          <v-btn v-if="index < selectedItems.length - 1" x-small icon @click="moveSelectedItem(index, index + 1)">
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-btn>
+        </div>
+
       </v-chip>
     </div>
 
@@ -237,6 +248,16 @@ export default {
       else {
         this.$set(this.titles, item._id, await transformResourceToTitle(this.$apiBase, this.modelName, item._id));
       }
+
+    },
+    moveSelectedItem(fromIndex, toIndex) {
+
+      const newSelectedItems = [...this.selectedItems];
+
+      [newSelectedItems[fromIndex], newSelectedItems[toIndex]] = [newSelectedItems[toIndex], newSelectedItems[fromIndex]];
+      [this.titles[fromIndex], this.titles[toIndex]] = [this.titles[toIndex], this.titles[fromIndex]];
+
+      this.selectedItems = newSelectedItems;
 
     }
   }
