@@ -8547,7 +8547,7 @@ vue-loader@^15.9.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-persian-datetime-picker@^2.4.0:
+vue-persian-datetime-picker@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/vue-persian-datetime-picker/-/vue-persian-datetime-picker-2.6.0.tgz#beac31dd774e7da71ef92055df07ca9a027ba1ff"
   integrity sha512-helk+/puOyZ7Xm+XH9mNaEwkML1tPvOxd2rFNhRkxrYBtI2Y33YEyYAzRklC3jddq+kQQp3GgPX9lAENI79Rcg==
@@ -8956,6 +8956,25 @@ yeast@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
   integrity sha1-AI4G2AlDIMNy28L47XagymyKxBk=
+
+ykh-form-extended@^1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ykh-form-extended/-/ykh-form-extended-1.0.2.tgz#21c932b6aaae96b6cc453e1d4d29534fb7b33f96"
+  integrity sha512-eisBwieFP2a5LMXURL+uNONr4o/xPQp0ak2N4SJFKNr4cciBDfrV5vK4GmYxsIpixmFVi1B/PoAOhZb6XMKQXA==
+  dependencies:
+    leaflet "^1.7.1"
+    vue-smooth-dnd "^0.8.1"
+    vue2-leaflet "^2.6.0"
+    ykh-form "^1.0.1"
+    ynetwork "^2.6.0"
+
+ykh-form@^1.0.1:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ykh-form/-/ykh-form-1.0.3.tgz#37d472fe8210f22cf916155ad252cf9ae5a2fa43"
+  integrity sha512-6GUZ4Mn3RbGyuwj/aHplG16/G9B3Q6MrOG/JoG8G6ojIPg7hDUBcNCl3r5OMiZFCazyYVGa6hzA1NUqlflZtkA==
+  dependencies:
+    moment-jalaali "^0.9.2"
+    vue-persian-datetime-picker "^2.6.0"
 
 ynetwork@^2.6.0:
   version "2.6.0"

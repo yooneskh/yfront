@@ -32,7 +32,7 @@
 
 import YNetwork from 'ynetwork';
 import { transformResourceToTitle, loadMetasFor, loadRelationsFor, transformRelationToTitle } from '../../y-resource-manager/y-resource-util';
-import { YFormElementMixin } from '../mixins/y-form-element-mixin';
+import { YFormElementMixin } from 'ykh-form-extended';
 
 export default {
   name: 'YFormElementResource',
