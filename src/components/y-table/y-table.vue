@@ -22,22 +22,28 @@
         </td>
 
         <td v-if="showActions" class="text-center" style="white-space: nowrap;">
-          <v-btn
-            v-for="(action, index) in actions"
-            :key="action.key"
-            text
-            :color="action.color"
-            :icon="action.icon && !action.title"
-            :small="!action.large"
-            class="mb-1 me-1"
-            :class="{'mt-1': index === 0}"
-            :to="action.link && action.link(item)"
-            @click="$emit(action.key, item)">
+          <v-tooltip v-for="(action, index) in actions" :key="action.key" :disabled="!action.tooltip || $isMobile" fixed top>
+            <template #activator="{ on }">
+              <v-btn
+                text
+                :color="action.color"
+                :icon="action.icon && !(!!action.title || ($isMobile && !!action.tooltip))"
+                :rounded="action.icon && (!!action.title || ($isMobile && !!action.tooltip))"
+                :small="!action.large"
+                class="mb-1 me-1"
+                :class="{'mt-1': index === 0}"
+                v-on="on"
+                :to="action.link && !action.link(item).startsWith('http') ? action.link(item) : undefined"
+                :href="action.link && action.link(item).startsWith('http') ? action.link(item) : undefined" target="_blank"
+                @click="$emit(action.key, item)">
 
-            <v-icon :small="!action.large" v-if="action.icon">{{ action.icon }}</v-icon>
-            {{ action.title }}
+                <v-icon v-if="action.icon" :small="!action.large" :left="(!!action.title || ($isMobile && !!action.tooltip))">{{ action.icon }}</v-icon>
+                {{ (action.title || ($isMobile ? action.tooltip : undefined)) }}
 
-          </v-btn>
+              </v-btn>
+            </template>
+            <span>{{ action.tooltip }}</span>
+          </v-tooltip>
         </td>
 
       </tr>
