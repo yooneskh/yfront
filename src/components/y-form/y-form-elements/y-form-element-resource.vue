@@ -20,7 +20,7 @@
     :hint="typeof field.hint === 'function' ? field.hint(value) : field.hint"
     persistent-hint
     :hide-details="!field.message && !field.hint">
-    <template v-if="field.multiple ? value && value.length : value" #append>
+    <template v-if="!field.disabled && !field.readonly && (field.multiple ? value && value.length : value)" #append>
       <v-btn icon small @click.stop.prevent="$emit('input', field.multiple ? [] : '')">
         <v-icon small>mdi-close</v-icon>
       </v-btn>
