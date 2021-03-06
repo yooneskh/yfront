@@ -34,7 +34,7 @@
                 :class="{'mt-1': index === 0}"
                 v-on="on"
                 :to="action.link && !action.link(item).startsWith('http') ? action.link(item) : undefined"
-                :href="action.link && action.link(item).startsWith('http') ? action.link(item) : undefined" target="_blank"
+                :href="action.link && action.link(item).startsWith('http') ? action.link(item) : undefined" :target="action.newPage ? '_blank' : undefined"
                 @click="$emit(action.key, item)">
 
                 <v-icon v-if="action.icon" :small="!action.large" :left="(!!action.title || ($isMobile && !!action.tooltip))">{{ action.icon }}</v-icon>
