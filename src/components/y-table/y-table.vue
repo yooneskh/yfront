@@ -16,9 +16,11 @@
       <tr :key="item[itemKey]">
 
         <td v-for="header in rawHeaders" :key="header.value" :class="header.class">
-          <slot :name="`item-${header.key}`" :item="item" :header="header" :data="item[header.value]">
-            <span :class="header.itemClass">{{ item[header.value] }}</span>
-          </slot>
+          <span class="d-inline-block" :class="header.itemClass">
+            <slot :name="`item-${header.key}`" :item="item" :header="header" :data="item[header.value]">
+              {{ item[header.value] }}
+            </slot>
+          </span>
         </td>
 
         <td v-if="showActions" class="text-center" style="white-space: nowrap;">
