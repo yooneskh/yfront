@@ -108,9 +108,10 @@ Vue.mixin({
         items
       });
     },
-    $dialogYesNo({ title, message, danger, yesText, noText, yesValue, noValue, options } = {}) {
+    $dialogYesNo({ icon, title, message, danger, yesText, noText, yesValue, noValue, options } = {}) {
       return this.$dialog(import('../dialogs/yes-no-dialog.vue' /* webpackChunkName: 'yes-no-dialog' */), {
         ...options,
+        icon,
         title,
         message,
         danger,
@@ -118,6 +119,17 @@ Vue.mixin({
         noText,
         yesValue,
         noValue
+      });
+    },
+    $dialogOk({ icon, title, message, danger, text, value, options } = {}) {
+      return this.$dialog(import('../dialogs/ok-dialog.vue' /* webpackChunkName: 'ok-dialog' */), {
+        ...options,
+        icon,
+        title,
+        message,
+        danger,
+        text,
+        value
       });
     }
   }

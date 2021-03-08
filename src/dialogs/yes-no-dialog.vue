@@ -2,6 +2,7 @@
   <v-card>
 
     <v-card-title>
+      <v-icon v-if="icon" class="me-4">{{ icon }}</v-icon>
       {{ title }}
     </v-card-title>
 
@@ -10,9 +11,9 @@
     </v-card-text>
 
     <v-card-actions :class="{'flex-row-reverse': danger}">
-      <v-btn text :color="danger ? 'error' : 'primary'" @click="$emit('resolve', yesValue || true)">{{ yesText || 'بله' }}</v-btn>
+      <v-btn text :color="danger ? 'error' : 'primary'" @click="$emit('resolve', typeof yesValue === 'function' ? (yesValue()) : (yesValue || true))">{{ yesText || 'بله' }}</v-btn>
       <v-spacer />
-      <v-btn text :color="danger ? undefined : 'error'" @click="$emit('resolve', noValue || false)">{{ noText || 'خیر' }}</v-btn>
+      <v-btn text :color="danger ? undefined : 'error'" @click="$emit('resolve', typeof noValue === 'function' ? (noValue()) : (noValue || false))">{{ noText || 'خیر' }}</v-btn>
     </v-card-actions>
 
   </v-card>
