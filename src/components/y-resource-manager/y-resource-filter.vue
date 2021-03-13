@@ -1,11 +1,16 @@
 <template>
-  <div class="filter-section align-center">
+  <div class="filter-section align-center px-1">
 
     <y-filter-element
       class="part me-2"
-      v-for="filter in value" :key="filter[0]"
-      :filter="filter"
+      v-for="(filter, index) of value" :key="filter.id"
       :metas="metas"
+      :value="filter"
+      @input="$emit('input', [
+        ...value.slice(0, index),
+        $event,
+        ...value.slice(index + 1)
+      ])"
     />
 
     <v-btn v-if="value.length > 0" class="my-1 me-1" icon small @click="removeLastFilter">
@@ -39,13 +44,13 @@ export default {
         'input',
         [
           ...this.value,
-          { key: this.metas[0].key, operator: hasNotContain ? '=' : '~=', value: '' }
+          { id: this.$uuid(), key: meta.key, operator: hasNotContain ? '=' : '~=', value: '' }
         ]
       );
 
     },
     removeLastFilter() {
-      this.$emit('input', this.value.filter((it, index) => index !== this.value.length - 1));
+      this.$emit('input', this.value.filter((_, index) => index !== this.value.length - 1));
     }
   }
 }
