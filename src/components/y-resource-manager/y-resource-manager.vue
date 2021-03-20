@@ -71,6 +71,9 @@ export default {
     },
     customActions: {
       type: Array
+    },
+    editorWidth: {
+      default: '550px'
     }
   },
   data: () => ({
@@ -193,7 +196,7 @@ export default {
     },
     initEditor(resource) {
       this.$dialog(import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
-        width: '550px',
+        width: this.editorWidth,
         modelName: this.modelName,
         baseResource: resource
       }).then(result => result && this.loadData());
