@@ -7,7 +7,7 @@
     </v-col>
     <v-col cols="12" md="8" class="d-flex pa-0 grey lighten-3 flex-column align-center justify-center">
 
-      <v-img src="../../assets/img/logo.png" width="80" style="position: absolute; top: 8px;" :style="{'left': $isMobile ? '50%' : '12px', 'transform': $isMobile ? 'translateX(-50%)' : ''}" />
+      <v-img src="../../assets/img/logo.png" width="80" style="position: absolute; top: 8px;" :style="{[$vuetify.rtl ? 'left' : 'right']: $isMobile ? '50%' : '12px', 'transform': $isMobile ? 'translateX(-50%)' : ''}" />
 
       <v-card max-width="350" outlined>
 
