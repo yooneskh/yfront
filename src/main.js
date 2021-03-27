@@ -8,10 +8,12 @@ import { ENDPOINT_BASE, ENDPOINT_CORE } from './api/ApiBaseEndpoints';
 import { Config } from './global/config';
 import io from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io-extended';
+import VueAsyncComputed from 'vue-async-computed'
 
 import './assets/scss/app.scss';
 
 Vue.config.productionTip = false;
+Vue.use(VueAsyncComputed);
 
 if (Config.socket.enabled) {
   Vue.use(VueSocketIO, io(`${ENDPOINT_CORE}`, { autoConnect: false }));
@@ -30,7 +32,7 @@ Vue.mixin({
     }
   },
   methods: {
-    $generalHandle(status, result, silent) { // eslint-disable no-unused-vars
+    $generalHandle(status, _result, silent) { // eslint-disable no-unused-vars
       if (status !== 200) {
         if (!silent) this.$toast.error('مشکلی پیش آمده. لطفا دوباره تلاش کنید.');
         return true;
