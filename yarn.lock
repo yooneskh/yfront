@@ -9069,9 +9069,9 @@ yeast@0.1.2:
   integrity sha1-AI4G2AlDIMNy28L47XagymyKxBk=
 
 ykh-form-extended@^1.0.0:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/ykh-form-extended/-/ykh-form-extended-1.3.1.tgz#e86756374b9c33e40fe4cfac87de1e76483a5a7d"
-  integrity sha512-YtYn2V1ZMGdpg6b1SeIOgZCiiRZWLTAgBYArj3vnNoTUtVYqm5K8tqQJfzSGWaIquX1G4EfJ5AxG/yRcBf4FsQ==
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/ykh-form-extended/-/ykh-form-extended-1.4.0.tgz#dd5a488b8af6d276eadba4d64143397885079cb1"
+  integrity sha512-rfTUB4low8AJW30C6ATS3CLpErdE4i6FyewM0e5zgfjYGKpG7UElQEJ1EpEEfp7yN2CFyu8xGwlU0e/cEISkqQ==
   dependencies:
     leaflet "^1.7.1"
     vue-smooth-dnd "^0.8.1"
@@ -9080,9 +9080,9 @@ ykh-form-extended@^1.0.0:
     ynetwork "^2.6.0"
 
 ykh-form@^1.0.1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/ykh-form/-/ykh-form-1.1.2.tgz#6580db0d9ff9311d1588bd8f21c097d22fff4d1e"
-  integrity sha512-/dKtizf/+wx7a4/HoihIYSP1lmHQ34krKgzVNxgHYRx809Ss7ja1m6F9dAsQ+z0KGZmd/t/GrhW0UR6hCaDeNA==
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/ykh-form/-/ykh-form-1.2.0.tgz#5c27c9ffd9fa2fde0fab0d3e0ea1f03b059cefb9"
+  integrity sha512-MQ20jwy1idRwpEruy47B/1NN9TkhAOFPq4ggy3SAGY+TDnAtfP5QrccWYCF21fu8sDkaroRIAw/cVmildPh7/w==
   dependencies:
     moment-jalaali "^0.9.2"
     vue-persian-datetime-picker "^2.6.0"
