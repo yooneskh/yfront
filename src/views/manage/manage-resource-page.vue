@@ -5,6 +5,8 @@
       :icon="$route.meta.icon"
       :model-name="$route.meta.model"
       sort-latest
+      :new-url="$route.meta.newUrl"
+      :edit-handler="$route.meta.editHandler ? (it => $route.meta.editHandler(this, it)) : undefined"
     />
   </v-container>
 </template>
