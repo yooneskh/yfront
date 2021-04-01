@@ -176,7 +176,7 @@ export default {
       this.loading = true;
       const [{ status, result }, { status: s2, result: r2 }] = await Promise.all([
         YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
-        YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/count?${transformFilters}`)
+        YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/count?${transformedFilters}`)
       ]);
       this.loading = false;
       if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
