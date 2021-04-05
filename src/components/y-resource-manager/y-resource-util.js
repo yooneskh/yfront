@@ -138,6 +138,7 @@ export function transformSorts(sorts) {
 
 export function mapMetaType(meta) {
 
+  if (meta.handlerElement) return meta.handlerElement;
   if (meta.type === 'string' && meta.ref === 'Media') return meta.isArray ? 'file-array' : 'file';
   if (meta.type === 'series') return 'series';
   if (meta.ref) return 'resource';
