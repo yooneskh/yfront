@@ -82,6 +82,16 @@ export default new Router({
             model: 'Update'
           }
         },
+        {
+          path: 'settings/application',
+          component: () => import('./views/manage/manage-setting-page.vue' /* webpackChunkName: 'manage-setting-page' */),
+          meta: {
+            icon: 'mdi-book-cog',
+            title: 'تنظیمات برنامه',
+            model: 'ApplicationSetting',
+            pathSuffix: '/settings/application'
+          }
+        },
       ]
     },
     {
