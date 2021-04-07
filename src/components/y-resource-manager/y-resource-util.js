@@ -155,6 +155,22 @@ export function mapMetaType(meta) {
 
 }
 
+export function makeMetaRules(meta) {
+
+  const rules = [];
+
+  if (meta.required) {
+    rules.push(v => {
+      if (meta.type === 'number' && (v !== undefined && v !== null && !isNaN(v))) return true;
+      if (meta.isArray && (!!v && v.length > 0)) return true;
+      return !!v || `${meta.title} الزامی است!`;
+    });
+  }
+
+  return rules;
+
+}
+
 export function mapMetaToFormFields(metas, readonly = false) {
   if (!metas) return;
 
@@ -172,7 +188,8 @@ export function mapMetaToFormFields(metas, readonly = false) {
     readonly,
     unepoch: !!meta.valueFormat,
     locale: Config.localization.default,
-    items: meta.items || meta.enum
+    items: meta.items || meta.enum,
+    rules: makeMetaRules(meta)
   }));
 
 }
