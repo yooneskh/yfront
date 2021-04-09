@@ -111,27 +111,37 @@ export default {
   components: {
     'y-moveable': require('../../components/y-moveable').default
   },
-  data: () => ({
-    heh: {
-      name: '',
-      textMulti: {
-        fa: 'این متن است!'
+  data() {
+    return {
+      toolbars: [
+        { title: 'درباره شرکت', icon: 'mdi-home', bar: 'topEnd', handler: () => {
+          // use this;
+        } },
+        { title: 'ارتباط با شرکت', bar: 'bottomEnd', handler: () => {
+          // use this;
+        } },
+      ],
+      heh: {
+        name: '',
+        textMulti: {
+          fa: 'این متن است!'
+        },
+        isMale: true,
+        fruit: 'سیب',
+        fruits: [],
+        media: '',
+        bodies: {
+          en: 'This is the body!'
+        },
+        job: 'comp',
+        freeTimes: [],
+        freeNames: [],
+        items: []
       },
-      isMale: true,
-      fruit: 'سیب',
-      fruits: [],
-      media: '',
-      bodies: {
-        en: 'This is the body!'
-      },
-      job: 'comp',
-      freeTimes: [],
-      freeNames: [],
-      items: []
-    },
-    formValid: undefined,
-    boxPosition: [0, 0]
-  }),
+      formValid: undefined,
+      boxPosition: [0, 0]
+    }
+  },
   methods: {
     async makeDialog() {
       await this.$dialogConfirmDelete({ title: 'سیستم سرمایشی' });

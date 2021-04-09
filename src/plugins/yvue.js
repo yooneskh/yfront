@@ -101,13 +101,15 @@ Vue.mixin({
         values
       });
     },
-    $dialogListPicker({ icon, title, items, readonly, options } = {}) {
+    $dialogListPicker({ icon, title, body, items, readonly, navigation, options } = {}) {
       return this.$dialog(import('../dialogs/list-picker.vue' /* webpackChunkName: 'list-picker-dialog' */), {
         ...options,
         icon,
         title,
+        body,
         items,
-        readonly
+        readonly,
+        navigation
       });
     },
     $dialogYesNo({ icon, title, message, danger, yesText, noText, yesValue, noValue, options } = {}) {

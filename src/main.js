@@ -67,7 +67,6 @@ new Vue({
       this.$root.token = '';
       this.$root.user = {};
       this.resetCredentials();
-      this.$router.replace('/auth');
     }
   }
 }).$mount('#app')

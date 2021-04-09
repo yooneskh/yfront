@@ -1,7 +1,7 @@
 <template>
-  <v-sheet elevation="1" width="285" class="ma-0 grey lighten-5 d-flex flex-column">
+  <v-sheet elevation="1" width="285" class="main-sidebar ma-0 grey lighten-5 d-flex flex-column">
     <div class="sidebar-header flex-grow-0">
-      <v-card outlined :color="barColor" :dark="isColorDark" class="d-flex flex-row align-center ma-2 pa-2 rounded-sm" :to="(toolbarItems[0][0] || { path: '/' }).path">
+      <v-card outlined :color="color" :dark="dark" class="d-flex flex-row align-center ma-2 pa-2 rounded-sm" :to="(toolbarItems[0][0] || { path: '/' }).path">
         <v-img src="../../../assets/img/logo.png" width="40" class="flex-grow-0 me-4 ms-2" contain />
         <div class="titles">
           <div class="text-h6 font-weight-bold">
@@ -75,9 +75,10 @@
         </div>
 
       </div>
-      <div class="sidebar-items-children grey lighten-4 pa-2 flex-grow-1">
+      <div class="d-flex flex-column sidebar-items-children grey lighten-4 pa-2 flex-grow-1">
+
         <v-list dense nav class="pa-0" style="background: transparent;">
-          <v-list-item v-for="child of (selectedGroup || activeGroup || {}).children" :key="child.path" :to="!child.path.startsWith('http') ? child.path : undefined" :href="child.path.startsWith('http') ? child.path : undefined" :target="child.path.startsWith('http') ? '_blank' : undefined">
+          <v-list-item v-for="child of (selectedGroup || activeGroup || {}).children" :key="child.path + child.title" :to="child.path && !child.path.startsWith('http') ? child.path : undefined" :href="child.path && child.path.startsWith('http') ? child.path : undefined" :target="child.path && child.path.startsWith('http') ? '_blank' : undefined" v-on="makeEventHandlersFor(child)">
             <v-list-item-icon v-if="child.icon" class="me-2">
               <v-icon small>{{ child.icon }}</v-icon>
             </v-list-item-icon>
@@ -86,6 +87,20 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
+
+        <v-spacer />
+
+        <v-list v-if="extraToolbarItems && extraToolbarItems.length > 0" dense nav class="pa-0" style="background: transparent;">
+          <v-list-item v-for="child of extraToolbarItems" :key="child.path + child.title" :to="child.path && !child.path.startsWith('http') ? child.path : undefined" :href="child.path && child.path.startsWith('http') ? child.path : undefined" :target="child.path && child.path.startsWith('http') ? '_blank' : undefined" v-on="makeEventHandlersFor(child)">
+            <v-list-item-icon v-if="child.icon" class="me-2">
+              <v-icon small>{{ child.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>{{ child.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+
       </div>
     </div>
   </v-sheet>
@@ -103,8 +118,9 @@ export default {
   Title,
   props: {
     toolbarItems: Array,
-    barColor: String,
-    isColorDark: Boolean
+    extraToolbarItems: Array,
+    color: String,
+    dark: Boolean
   },
   data: () => ({
     selectedGroup: undefined
@@ -134,6 +150,15 @@ export default {
   },
   beforeDestroy() {
     document.querySelectorAll('html, body, .v-application').forEach(element => element.style.height = 'unset');
+  },
+  methods: {
+    makeEventHandlersFor(item) {
+      if (item.handler) {
+        return {
+          click: item.handler
+        }
+      } return {};
+    }
   }
 };
 

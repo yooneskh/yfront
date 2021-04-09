@@ -6,22 +6,15 @@
     </div>
     <template v-else>
 
-      <main-app-bar
-        v-if="appliedConfigMode === 'appbar' && !$route.meta.hideNavbar"
-        class="main-bar"
+      <component
+        v-if="!$route.meta.hideNavbar"
+        :is="appliedConfigMode === 'appbar' ? 'main-app-bar' : 'main-side-bar'"
         :toolbar-items="toolbars"
+        :extra-toolbar-items="currentComponent && currentComponent.toolbars ? currentComponent.toolbars : []"
         :color="config.color"
         :height="config.appBarHeight"
         :dark="config.isDark"
         :sticky="config.stickyAppBar"
-      />
-
-      <main-side-bar
-        v-if="appliedConfigMode === 'sidebar' && !$route.meta.hideNavbar"
-        class="main-sidebar"
-        :toolbar-items="toolbars"
-        :bar-color="config.color"
-        :is-color-dark="config.isDark"
       />
 
       <router-view
@@ -50,6 +43,7 @@ export default {
   data: () => ({
     loading: false,
     error: false,
+    code: 1,
     config: {
       mode: Config.baseLayout.defaultBarMode,
       appBarHeight: Config.baseLayout.appBarHeight,
@@ -59,10 +53,10 @@ export default {
     },
     toolbars: [
       { groupTitle: 'عمومی', groupIcon: 'mdi-home' , children: [
-        { title: 'خانه', icon: 'mdi-home', path: '/' },
+        { title: 'خانه', icon: 'mdi-home', path: '/', bar: 'topStart' },
       ]},
       { groupTitle: 'مدیریت', groupIcon: 'mdi-cog' , children: [
-        { title: 'مدیریت کاربران', icon: 'mdi-account', path: '/users' },
+        { title: 'مدیریت کاربران', icon: 'mdi-account', path: '/users', bar: 'topStart' },
         { title: 'مدیریت فاکتورها', icon: 'mdi-cash-register', path: '/factors' },
         { title: 'مدیریت پرداخت‌ها', icon: 'mdi-cash', path: '/paytickets' },
         { title: 'مدیریت حساب‌ها', icon: 'mdi-bank', path: '/accounts' },
@@ -73,6 +67,9 @@ export default {
     ]
   }),
   computed: {
+    currentComponent() {
+      return this.code && this.$route?.matched?.[this.$route.matched.length - 1]?.instances?.default;
+    },
     appliedConfigMode() {
       if (this.config.mode === 'appbar') return 'appbar';
       if (this.$isMobile || this.$isTablet) return 'appbar';
@@ -81,15 +78,28 @@ export default {
 
     },
     contentTopPadding() {
-      if (this.appliedConfigMode !== 'appbar') return Config.baseLayout.mainContentAreaTopSpacing;
-      if (!this.config.stickyAppBar) return Config.baseLayout.mainContentAreaTopSpacing;
+
+      const bl = Config.baseLayout;
+
+      if (this.appliedConfigMode !== 'appbar') return bl.mainContentAreaTopSpacing;
+      if (!bl.isAppBarSticky) return bl.mainContentAreaTopSpacing;
 
       if (!this.toolbars || this.toolbars.length === 0) {
-        return this.config.appBarHeight + Config.baseLayout.mainContentAreaTopSpacing;
+        return bl.appBarHeight + bl.mainContentAreaTopSpacing;
       }
 
-      return this.config.appBarHeight + Config.baseLayout.appBarToolbarHeight + Config.baseLayout.mainContentAreaTopSpacing;
+      if (!this.$isMobile) {
+        return bl.appBarHeight + bl.appBarToolbarHeight + bl.mainContentAreaTopSpacing;
+      }
 
+      return bl.appBarHeight + bl.mainContentAreaTopSpacing;
+
+
+    }
+  },
+  watch: {
+    '$route'() {
+      setTimeout(() => this.code = Math.random(), 20);
     }
   },
   async beforeMount() {
@@ -124,6 +134,9 @@ export default {
       }
     }
 
+  },
+  mounted() {
+    setTimeout(() => this.code = Math.random(), 20);
   },
   sockets: {
     connect() {

@@ -5,13 +5,14 @@ export const Config = {
     refreshIdentityOnLoad: true
   },
   baseLayout: {
-    defaultBarMode: 'sidebar', // or 'sidebar'
+    defaultBarMode: 'sidebar', // appbar | sidebar
     appBarHeight: 64,
     barColor: 'primary',
     isBarColorDark: true,
-    isAppBarSticky: false,
+    isAppBarSticky: true,
     mainContentAreaTopSpacing: 12,
-    appBarToolbarHeight: 64
+    appBarToolbarHeight: 44,
+    appBarToolbarScrollbarHeight: 15
   },
   socket: {
     enabled: false,
