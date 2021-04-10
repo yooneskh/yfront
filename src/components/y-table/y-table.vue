@@ -24,7 +24,7 @@
         </td>
 
         <td v-if="showActions" class="text-center" style="white-space: nowrap;">
-          <v-tooltip v-for="(action, index) in actions" :key="action.key" :disabled="!action.tooltip || $isMobile" fixed top>
+          <v-tooltip v-for="(action, index) in actions.filter(it => !it.vIf || it.vIf(item))" :key="action.key" :disabled="!action.tooltip || $isMobile" fixed top>
             <template #activator="{ on }">
               <v-btn
                 text
