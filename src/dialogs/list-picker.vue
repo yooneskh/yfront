@@ -16,6 +16,9 @@
           <v-list-item-icon v-if="item.icon">
             <v-icon :color="item.color">{{ item.icon }}</v-icon>
           </v-list-item-icon>
+          <v-list-item-icon v-if="item.iconPath">
+            <img :src="item.iconPath" style="height: 24px;" />
+          </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title :class="[item.color ? `${item.color}--text` : undefined]">{{ item.text || item.value || item }}</v-list-item-title>
             <v-list-item-subtitle v-if="item.subtitle" :class="[item.color ? `${item.color}--text` : undefined]">{{ item.subtitle }}</v-list-item-subtitle>
