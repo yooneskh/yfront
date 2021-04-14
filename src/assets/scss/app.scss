@@ -57,3 +57,7 @@ html {
   padding-left: 8px;
   padding-right: 8px;
 }
+
+.leaflet-container {
+  z-index: 1 !important;
+}
