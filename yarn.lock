@@ -9094,9 +9094,9 @@ yeast@0.1.2:
   integrity sha1-AI4G2AlDIMNy28L47XagymyKxBk=
 
 ykh-form-extended@^1.0.0:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/ykh-form-extended/-/ykh-form-extended-1.4.2.tgz#2df183ac612a78b80beda2a727b2e6181d929dd0"
-  integrity sha512-L5BmmqXWn+7ZH7bIMVlATq9tcX9dqz/szLjUx3pMf7cMTbNsfjR/I18Hp0GrMjK4gSsZHA5MomTWx3gBvn9AKg==
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/ykh-form-extended/-/ykh-form-extended-1.4.4.tgz#f0f3422db85dc76d4f105fdc267fdc889c3b27ef"
+  integrity sha512-x2b7eoduMbM1bL6YzRge7NZ01NFYBsqXVVnWfEDlLk+bag2p6nj2PZnJQ+udekvhxUJ6wTsoNpgMpDMINbkkOQ==
   dependencies:
     leaflet "^1.7.1"
     vue-smooth-dnd "^0.8.1"
