@@ -24,7 +24,7 @@
     </template>
     <template v-else>
       <span v-if="header.labelFormat || header.valueFormat" :style="{'direction': header.dir}" class="d-inline-block text-center">
-        {{ data === 0 ? '-' : $formatTime(data, header.labelFormat || header.valueFormat) }}
+        {{ !(data > 0) ? '-' : $formatTime(data, header.labelFormat || header.valueFormat) }}
       </span>
       <template v-else-if="header.ref">
         <y-resource-visualizer v-if="data" :model="header.ref" :id="data" />
@@ -33,7 +33,7 @@
         <v-icon :color="data ? 'success' : 'error'" >{{ data ? 'mdi-check' : 'mdi-close' }}</v-icon>
       </template>
       <span v-else :style="{'direction': header.dir}" class="d-inline-block" :class="{'ltred': header.type === 'number'}">
-        {{ data }}
+        {{ header.items && header.items.find(it => it.value === data) ? header.items.find(it => it.value === data).text : data }}
       </span>
     </template>
   </div>
