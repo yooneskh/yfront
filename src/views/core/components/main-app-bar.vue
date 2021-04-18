@@ -50,7 +50,7 @@
 
         <v-list dense nav>
 
-          <v-list-item :to="`/users/${$user._id}`">
+          <v-list-item to="/profile">
             <v-list-item-icon class="me-2">
               <v-icon small>mdi-account</v-icon>
             </v-list-item-icon>
