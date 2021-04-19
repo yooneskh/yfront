@@ -121,7 +121,8 @@ export default {
       const toEdit = !!relation;
       const title = toEdit ? 'ویرایش' : `افزودن`;
       const actionTitle = toEdit ? 'ویرایش' : `افزودن`;
-      const fields = mapMetaToFormFields(this.relation.properties);
+
+      const fields = toEdit ? mapMetaToFormFields(this.relation.properties) : mapMetaToFormFields(this.metas.list.filter(it => !it.readonly && !it.disabled));
 
       if (!toEdit) {
         fields.unshift({

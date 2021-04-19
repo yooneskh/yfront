@@ -71,7 +71,16 @@ export default {
   }),
   computed: {
     fields() {
+
+      if (!this.baseResource) {
+        return mapMetaToFormFields(
+          this.metas.list.filter(it => !it.readonly && !it.disabled),
+          this.readonly
+        );
+      }
+
       return mapMetaToFormFields(this.metas.list, this.readonly);
+
     },
     allLoading() {
       return this.loading || this.metasLoading || this.relationsLoading;
