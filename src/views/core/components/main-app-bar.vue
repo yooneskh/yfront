@@ -220,7 +220,7 @@ export default {
       }
       else {
 
-        const target = this.joinedToolbarItems[item.value];
+        const target = this.joinedToolbarItems[item];
 
         if (target.handler) {
           target.handler();
