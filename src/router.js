@@ -20,6 +20,16 @@ export default new Router({
           component: () => import('./views/home/home-page.vue' /* webpackChunkName: 'home-page' */)
         },
         {
+          path: '/profile',
+          component: () => import('./views/profile/profile-base.vue' /* webpackChunkName: 'profile-base' */),
+          children: [
+            {
+              path: '/',
+              component: () => import('./views/profile/profile-part-information.vue' /* webpackChunkName: 'profile-part-information' */)
+            }
+          ]
+        },
+        {
           path: 'users',
           component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
           meta: {
