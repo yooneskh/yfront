@@ -25,6 +25,19 @@
               ]"
               @keyup.enter.native="doLogin"
             />
+
+            <div v-html="captcha.data" class="mt-3 mx-auto text-center" />
+
+            <v-text-field
+              filled hide-details
+              label="کد بالا را وارد کنید"
+              v-model="captchaText"
+              dir="ltr">
+              <template #append>
+                <v-icon class="ms-3" @click="$asyncComputed.captcha.update(); captchaText = '';">mdi-refresh</v-icon>
+              </template>
+            </v-text-field>
+
           </template>
 
           <template v-if="mode === 'register'">
@@ -37,6 +50,19 @@
               ]"
               @keyup.enter.native="doRegister"
             />
+
+            <div v-html="captcha.data" class="mt-3 mx-auto text-center" />
+
+            <v-text-field
+              filled hide-details
+              label="کد بالا را وارد کنید"
+              v-model="captchaText"
+              dir="ltr">
+              <template #append>
+                <v-icon class="ms-3" @click="$asyncComputed.captcha.update(); captchaText = '';">mdi-refresh</v-icon>
+              </template>
+            </v-text-field>
+
           </template>
 
           <template v-if="mode === 'verify'">
@@ -55,10 +81,10 @@
 
         <div class="px-2 pb-2">
           <template v-if="mode === 'login'">
-            <v-btn block depressed color="primary" large :disabled="!phoneNumber || cleanPhoneNumber.length !== 11" :loading="loading" @click="doLogin">ورود به حساب کاربری</v-btn>
+            <v-btn block depressed color="primary" large :disabled="!phoneNumber || cleanPhoneNumber.length !== 11 || !captchaText" :loading="loading" @click="doLogin">ورود به حساب کاربری</v-btn>
           </template>
           <template v-if="mode === 'register'">
-            <v-btn block depressed color="primary" large :disabled="!name" :loading="loading" @click="doRegister">ایجاد حساب جدید</v-btn>
+            <v-btn block depressed color="primary" large :disabled="!name || !captchaText" :loading="loading" @click="doRegister">ایجاد حساب جدید</v-btn>
           </template>
           <template v-if="mode === 'verify'">
             <v-btn block depressed color="primary" large :disabled="!verificationCode" :loading="loading" @click="doVerify">بررسی کد تایید</v-btn>
@@ -98,27 +124,42 @@ export default {
     loading: false,
     phoneNumber: '09',
     name: '',
-    verificationCode: ''
+    verificationCode: '',
+    captchaText: ''
   }),
   computed: {
     cleanPhoneNumber() {
       return this.phoneNumber.replace(/\s*/g, '');
     },
   },
+  asyncComputed: {
+    captcha: {
+      default: {},
+      async get() {
+
+        const { status, result } = await Api.Auth.getCaptcha();
+        if (this.$generalHandle(status, result)) return {};
+
+        return result;
+
+      }
+    }
+  },
   methods: {
     async doLogin() {
-
       if (this.cleanPhoneNumber.length !== 11) return this.$toast.error('شماره تلفن صحیح نیست!');
 
       this.loading = true;
-      const { status, result } = await Api.Auth.login(`+98${this.cleanPhoneNumber.slice(1)}`);
+      const { status, result } = await Api.Auth.login(`+98${this.cleanPhoneNumber.slice(1)}`, this.captcha.id, this.captchaText);
       this.loading = false;
 
       if (status === 404 && Config.auth.registerEnabled) {
         this.mode = 'register';
+        this.$asyncComputed.captcha.update();
+        this.captchaText = '';
       }
       else if (this.$generalHandle(status, result)) {
-        return;
+        return this.$asyncComputed.captcha.update();
       }
       else {
         this.mode = 'verify';
@@ -128,10 +169,9 @@ export default {
     async doRegister() {
 
       this.loading = true;
-      const { status, result } = await Api.Auth.register(`+98${this.cleanPhoneNumber.slice(1)}`, this.name);
+      const { status, result } = await Api.Auth.register(`+98${this.cleanPhoneNumber.slice(1)}`, this.name, this.captcha.id, this.captchaText);
       this.loading = false;
-
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, result)) return this.$asyncComputed.captcha.update();
 
       this.mode = 'verify';
 

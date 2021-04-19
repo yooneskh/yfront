@@ -1,6 +1,10 @@
 import YNetwork from 'ynetwork';
 import { ENDPOINT_BASE } from './ApiBaseEndpoints';
 
+export function getCaptcha() {
+  return YNetwork.post(`${ENDPOINT_BASE}/captchas/request`);
+}
+
 export function login(phoneNumber) {
   return YNetwork.post(`${ENDPOINT_BASE}/auth/login`, {
     phoneNumber
