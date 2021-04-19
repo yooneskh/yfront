@@ -8,12 +8,14 @@
         </v-card-title>
         <v-card-text class="pb-1">
           <y-form
+            ref="theForm"
+            :valid.sync="isValid"
             :target="resource"
             :fields="fields"
           />
         </v-card-text>
         <v-card-actions v-if="!readonly">
-          <v-btn text color="primary" @click="submit">
+          <v-btn text color="primary" :disabled="!isValid" @click="submit">
             {{ resource._id ? 'ویرایش' : 'افزودن' }}
           </v-btn>
         </v-card-actions>
@@ -60,6 +62,7 @@ export default {
   data: () => ({
     loading: false,
     metasLoading: false,
+    isValid: undefined,
     relationsLoading: false,
     resource: {},
     metas: {
@@ -91,7 +94,17 @@ export default {
   },
   mounted() {
 
-    this.loadMeta();
+    this.loadMeta().then(async () => {
+      await this.$nextTick();
+
+      if (!this.resource._id) {
+        this.isValid = !this.fields.some(it => it.rules && it.rules.length > 0)
+      }
+      else {
+        this.$refs.theForm.revalidateAll();
+      }
+
+    });
 
     if (this.baseResource) {
       this.resource = JSON.parse(JSON.stringify(this.baseResource));
