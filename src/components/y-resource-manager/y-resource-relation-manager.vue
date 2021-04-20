@@ -122,7 +122,7 @@ export default {
       const title = toEdit ? 'ویرایش' : `افزودن`;
       const actionTitle = toEdit ? 'ویرایش' : `افزودن`;
 
-      const fields = toEdit ? mapMetaToFormFields(this.relation.properties) : mapMetaToFormFields(this.metas.list.filter(it => !it.readonly && !it.disabled));
+      const fields = toEdit ? mapMetaToFormFields(this.relation.properties) : mapMetaToFormFields(this.metas.list.filter(it => !it.readonly && !it.disabled && !it.nonCreating));
 
       if (!toEdit) {
         fields.unshift({

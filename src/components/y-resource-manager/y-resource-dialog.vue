@@ -77,7 +77,7 @@ export default {
 
       if (!this.baseResource) {
         return mapMetaToFormFields(
-          this.metas.list.filter(it => !it.readonly && !it.disabled),
+          this.metas.list.filter(it => !it.readonly && !it.disabled && !it.nonCreating),
           this.readonly
         );
       }
