@@ -176,7 +176,7 @@ export function mapMetaToFormFields(metas, readonly = false) {
 
   return metas.map(meta => ({
     ...meta,
-    title: meta.title || meta.key,
+    title: (meta.title || meta.key) + (meta.required ? ' *' : ''),
     type: mapMetaType(meta),
     resource: meta.ref,
     number: meta.type === 'number',

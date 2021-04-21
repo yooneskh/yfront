@@ -3,9 +3,11 @@
     <v-row no-gutters>
 
       <v-col :cols="!showRelations ? 12 : 4">
+
         <v-card-title>
           {{ readonly ? ('مشاهده') : (resource._id ? 'ویرایش' : 'افزودن') }} مورد
         </v-card-title>
+
         <v-card-text class="pb-1">
           <y-form
             ref="theForm"
@@ -14,11 +16,23 @@
             :fields="fields"
           />
         </v-card-text>
+
+        <v-card-text v-if="validationMessages">
+          <v-card color="error" dark elevation="0">
+            <v-list dense style="background: transparent;">
+              <v-list-item v-for="error of Object.values(validationMessages).flatMap(it => it)" :key="error">
+                {{ error }}
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-card-text>
+
         <v-card-actions v-if="!readonly">
-          <v-btn text color="primary" :disabled="!isValid" @click="submit">
+          <v-btn text color="primary" :disabled="!isValid || validating || !!validationMessages || blockForValidate" @click="submit">
             {{ resource._id ? 'ویرایش' : 'افزودن' }}
           </v-btn>
         </v-card-actions>
+
       </v-col>
 
       <v-col v-if="showRelations" cols="8" style="border-right: 1px solid rgba(0, 0, 0, 0.1)">
@@ -40,6 +54,7 @@
 
 import YNetwork from 'ynetwork';
 import { loadMetasFor, loadRelationsFor, mapMetaToFormFields, pluralizeModelName } from './y-resource-util';
+import debounce from 'lodash/debounce';
 
 export default {
   name: 'YResourceDialog',
@@ -70,26 +85,51 @@ export default {
     },
     relations: {
       list: []
-    }
+    },
+    validating: false,
+    blockForValidate: false,
+    hasValidation: false,
+    validationMessages: undefined
   }),
   computed: {
+    pluralModelName() {
+      return pluralizeModelName(this.modelName);
+    },
     fields() {
 
+      let fields = [];
+
       if (!this.baseResource) {
-        return mapMetaToFormFields(
+        fields = mapMetaToFormFields(
           this.metas.list.filter(it => !it.readonly && !it.disabled && !it.nonCreating),
           this.readonly
         );
       }
+      else {
+        fields = mapMetaToFormFields(this.metas.list, this.readonly);
+      }
 
-      return mapMetaToFormFields(this.metas.list, this.readonly);
+      return fields.map(it => ({
+        ...it,
+        error: it.key in (this.validationMessages || {}),
+        message: this.validationMessages?.[it.key]?.join(' - ')
+      }));
 
     },
     allLoading() {
-      return this.loading || this.metasLoading || this.relationsLoading;
+      return this.loading || this.metasLoading || this.relationsLoading || this.validating;
     },
     showRelations() {
       return this.relations.list.length > 0 && this.resource._id;
+    }
+  },
+  watch: {
+    'resource': {
+      deep: true,
+      handler() {
+        this.blockForValidate = true;
+        this.validateResource();
+      }
     }
   },
   mounted() {
@@ -110,6 +150,8 @@ export default {
       this.resource = JSON.parse(JSON.stringify(this.baseResource));
       this.loadRelations();
     }
+
+    this.checkValidations();
 
   },
   methods: {
@@ -139,9 +181,25 @@ export default {
       }
 
     },
-    async submit() {
+    async checkValidations() {
+      this.hasValidation = (await YNetwork.get(`${this.$apiBase}/${this.pluralModelName}/validate`)).result === true;
+    },
+    validateResource: debounce(async function() {
+      if (!this.hasValidation) return;
 
-      this.loading = true;
+      const payload = JSON.parse(JSON.stringify(this.resource));
+
+      this.blockForValidate = false;
+      this.validationMessages = undefined;
+      this.validating = true;
+      const { status, result } = await YNetwork.post(`${this.$apiBase}/${this.pluralModelName}/validate`, payload);
+      this.validating = false;
+      if (status === 200) return this.validationMessages = undefined;
+
+      this.validationMessages = result.fields;
+
+    }, 500),
+    async submit() {
 
       const payload = { ...this.resource };
 
@@ -159,24 +217,26 @@ export default {
 
       if (this.resource._id) {
 
-        const { status, result } = await YNetwork.patch(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/${this.resource._id}`, payload);
+        this.loading = true;
+        const { status, result } = await YNetwork.patch(`${this.$apiBase}/${this.pluralModelName}/${this.resource._id}`, payload);
         this.loading = false;
         if (this.$generalHandle(status, result)) return;
 
         this.$toast.success('ویرایش انجام شد.');
+        this.$emit('resolve', result);
 
       }
       else {
 
-        const { status, result } = await YNetwork.post(`${this.$apiBase}/${pluralizeModelName(this.modelName)}`, payload);
+        this.loading = true;
+        const { status, result } = await YNetwork.post(`${this.$apiBase}/${this.pluralModelName}`, payload);
         this.loading = false;
         if (this.$generalHandle(status, result)) return;
 
         this.$toast.success('افزودن انجام شد.');
+        this.$emit('resolve', result);
 
       }
-
-      this.$emit('resolve', true);
 
     }
   }
