@@ -5,16 +5,20 @@ export function getCaptcha() {
   return YNetwork.post(`${ENDPOINT_BASE}/captchas/request`);
 }
 
-export function login(phoneNumber) {
+export function login(phoneNumber, captchaId, captchaText) {
   return YNetwork.post(`${ENDPOINT_BASE}/auth/login`, {
-    phoneNumber
+    phoneNumber,
+    captchaId,
+    captchaText
   });
 }
 
-export function register(phoneNumber, name) {
+export function register(phoneNumber, name, captchaId, captchaText) {
   return YNetwork.post(`${ENDPOINT_BASE}/auth/register`, {
     phoneNumber,
-    name
+    name,
+    captchaId,
+    captchaText
   });
 }
 
