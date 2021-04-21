@@ -8744,9 +8744,9 @@ vuetify-toast-snackbar@^0.6.1:
   integrity sha512-F2bLPMXiw7qQgX68adSu0zQrMTKODN5JAzCP8AP/HGhz/Bz1z24QbvYcX0fyHnG/yP6PAPkpMCXsLQSq6HV0Ag==
 
 vuetify@^2.3.15:
-  version "2.4.10"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.4.10.tgz#e3989f3c3fa49dbb62534ba3aeca8dc890e43bab"
-  integrity sha512-ic/qg2dtXdWpCxQteyErBcBpzPvk/66u+RJOw57spZvd4BkhDUjUcOGWAruePfWmwnRryCNvpjbLZRjdt8k5BA==
+  version "2.4.11"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.4.11.tgz#3aba19a32cd89c5dce523260f589cf95d90e2dce"
+  integrity sha512-xFNwr95tFRfbyGNg5DBuUkWaKazMBr+ptzoSSL4PGrI0qItY5Vuusxh+ETPtjUXxwz76v5zVtGvF5rWvGQjy7A==
 
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"
