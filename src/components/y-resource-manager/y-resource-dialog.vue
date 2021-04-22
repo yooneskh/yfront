@@ -190,7 +190,6 @@ export default {
       const payload = JSON.parse(JSON.stringify(this.resource));
 
       this.blockForValidate = false;
-      this.validationMessages = undefined;
       this.validating = true;
       const { status, result } = await YNetwork.post(`${this.$apiBase}/${this.pluralModelName}/validate`, payload);
       this.validating = false;
