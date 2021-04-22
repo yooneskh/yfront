@@ -195,7 +195,20 @@ export default {
       this.validating = false;
       if (status === 200) return this.validationMessages = undefined;
 
-      this.validationMessages = result.fields;
+      const messages = result.fields;
+
+      for (const key of Object.keys(messages)) {
+        if (this.metas.list.find(it => it.key === key)?.required && (this.resource[key] === undefined || this.resource[key] === null || this.resource[key] === '')) {
+          if (messages[key].length <= 1) {
+            delete messages[key];
+          }
+          else {
+            messages[key].splice(0, 1);
+          }
+        }
+      }
+
+      this.validationMessages = Object.keys(messages).length > 0 ? messages : undefined;
 
     }, 500),
     async submit() {
