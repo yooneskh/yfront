@@ -128,8 +128,8 @@ export default {
       deep: true,
       handler() {
         if (this.hasValidation) {
-	      this.blockForValidate = true;
-	      this.validateResource();	
+          this.blockForValidate = true;
+          this.validateResource();
         }
       }
     }
