@@ -127,8 +127,10 @@ export default {
     'resource': {
       deep: true,
       handler() {
-        this.blockForValidate = true;
-        this.validateResource();
+        if (this.hasValidation) {
+	      this.blockForValidate = true;
+	      this.validateResource();	
+        }
       }
     }
   },
@@ -185,7 +187,6 @@ export default {
       this.hasValidation = (await YNetwork.get(`${this.$apiBase}/${this.pluralModelName}/validate`)).result === true;
     },
     validateResource: debounce(async function() {
-      if (!this.hasValidation) return;
 
       const payload = JSON.parse(JSON.stringify(this.resource));
 
