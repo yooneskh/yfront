@@ -10,10 +10,14 @@
 </template>
 
 <script>
+
+import YSettingResourceManager from '../../components/y-resource-manager/y-setting-resource-manager.vue';
+
 export default {
   name: 'ManageSettingResourcePage',
   components: {
-    'y-setting-resource-manager': require('../../components/y-resource-manager/y-setting-resource-manager.vue').default
+    'y-setting-resource-manager': YSettingResourceManager
   }
 };
+
 </script>

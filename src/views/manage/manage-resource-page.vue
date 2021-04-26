@@ -12,10 +12,14 @@
 </template>
 
 <script>
+
+import YResourceManager from '../../components/y-resource-manager/y-resource-manager.vue';
+
 export default {
   name: 'ListResourcePage',
   components: {
-    'y-resource-manager': require('../../components/y-resource-manager/y-resource-manager.vue').default
+    'y-resource-manager': YResourceManager
   }
 };
+
 </script>

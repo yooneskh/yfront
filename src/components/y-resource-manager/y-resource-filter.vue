@@ -25,10 +25,13 @@
 </template>
 
 <script>
+
+import YResourceFilterElement from './y-resource-filter-element.vue';
+
 export default {
   name: 'YResourceFilter',
   components: {
-    'y-filter-element': require('./y-resource-filter-element').default
+    'y-filter-element': YResourceFilterElement
   },
   props: {
     value: Array,
@@ -53,7 +56,8 @@ export default {
       this.$emit('input', this.value.filter((_, index) => index !== this.value.length - 1));
     }
   }
-}
+};
+
 </script>
 
 <style lang="scss" scoped>

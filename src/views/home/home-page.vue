@@ -106,10 +106,13 @@
 </template>
 
 <script>
+
+import YMoveable from '../../components/y-moveable.vue';
+
 export default {
   name: 'HomePage',
   components: {
-    'y-moveable': require('../../components/y-moveable').default
+    'y-moveable': YMoveable
   },
   data() {
     return {
@@ -151,4 +154,5 @@ export default {
     }
   }
 };
+
 </script>

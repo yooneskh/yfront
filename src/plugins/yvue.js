@@ -13,7 +13,8 @@ YNetwork.debug = process.env.NODE_ENV !== 'production';
 
 moment.loadPersian({ dialect: 'persian-modern' });
 
-Vue.component('y-form', require('../components/y-form/y-form.js').default);
+import YForm from '../components/y-form/y-form';
+Vue.component('y-form', YForm);
 Vue.component('y-table', () => import('../components/y-table' /* webpackChunkName: 'y-table' */));
 
 function downloadAsFile(filename, text) {

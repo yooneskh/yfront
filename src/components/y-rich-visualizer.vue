@@ -70,5 +70,6 @@ export default {
       return latLng(latitude, longitude);
     }
   }
-}
+};
+
 </script>

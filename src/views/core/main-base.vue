@@ -31,14 +31,17 @@
 
 <script>
 
+import MainAppBar from './components/main-app-bar.vue';
+import MainSideBar from './components/main-side-bar.vue';
+
 import { Config } from '../../global/config';
 import Api from '../../api';
 
 export default {
   name: 'MainBase',
   components: {
-    'main-app-bar': require('./components/main-app-bar').default,
-    'main-side-bar': require('./components/main-side-bar').default
+    'main-app-bar': MainAppBar,
+    'main-side-bar': MainSideBar
   },
   data: () => ({
     loading: false,

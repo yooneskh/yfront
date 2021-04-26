@@ -41,13 +41,16 @@
 
 <script>
 
+import YResourceVisualizer from './y-resource-visualizer.vue';
+import YResourceSeriesVisualizerDialog from './y-resource-series-visualizer-dialog.vue';
+
 import YNetwork from 'ynetwork';
 import { transformResourceToTitle, loadRelationsFor, pluralizeModelName } from './y-resource-util';
 
 export default {
   name: 'YResourceCell',
   components: {
-    'y-resource-visualizer': require('./y-resource-visualizer').default
+    'y-resource-visualizer': YResourceVisualizer
   },
   props: {
     header: {},
@@ -107,13 +110,13 @@ export default {
       }
     },
     async showSeriesData(meta, data) {
-      this.$dialog(require('./y-resource-series-visualizer-dialog').default, {
+      this.$dialog(YResourceSeriesVisualizerDialog, {
         width: 768,
         meta,
         data
       });
     }
   }
-}
+};
 
 </script>

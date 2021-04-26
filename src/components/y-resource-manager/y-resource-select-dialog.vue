@@ -51,6 +51,9 @@
 
 <script>
 
+import YResourceFilter from './y-resource-filter.vue';
+import YResourceTableCell from './y-resource-table-cell.vue';
+
 import YNetwork from 'ynetwork';
 import { loadMetasFor, transformFilters, transformSorts, transformResourceToTitle, transformRelationToTitle, pluralizeModelName } from './y-resource-util';
 import debounce from 'lodash/debounce';
@@ -58,8 +61,8 @@ import debounce from 'lodash/debounce';
 export default {
   name: 'YResourceSelectDialog',
   components: {
-    'y-resource-filter': require('./y-resource-filter').default,
-    'y-resource-table-cell': require('./y-resource-table-cell').default
+    'y-resource-filter': YResourceFilter,
+    'y-resource-table-cell': YResourceTableCell
   },
   props: {
     modelName: {

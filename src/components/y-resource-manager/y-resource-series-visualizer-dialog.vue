@@ -15,10 +15,13 @@
 </template>
 
 <script>
+
+import YResourceTableCell from './y-resource-table-cell.vue';
+
 export default {
   name: 'YResourceSeriesVisualizerDialog',
   components: {
-    'y-resource-table-cell': require('./y-resource-table-cell').default
+    'y-resource-table-cell': YResourceTableCell
   },
   props: {
     meta: {
@@ -53,5 +56,6 @@ export default {
         ]);
     }
   },
-}
+};
+
 </script>

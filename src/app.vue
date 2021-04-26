@@ -6,10 +6,14 @@
 </template>
 
 <script>
+
+import YDialogContainer from './plugins/ydialog-container.vue';
+
 export default {
   name: 'ApplicationBase',
   components: {
-    'y-dialog-container': require('./plugins/ydialog-container.vue').default
+    'y-dialog-container': YDialogContainer
   }
 };
+
 </script>

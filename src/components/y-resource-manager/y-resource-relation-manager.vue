@@ -26,13 +26,15 @@
 
 <script>
 
+import YResourceTableCell from './y-resource-table-cell.vue';
+
 import YNetwork from 'ynetwork';
 import { mapMetaToFormFields, pluralizeModelName } from './y-resource-util';
 
 export default {
   name: 'YResourceRelationManager',
   components: {
-    'y-resource-table-cell': require('./y-resource-table-cell').default
+    'y-resource-table-cell': YResourceTableCell
   },
   props: {
     sourceModel: String,
@@ -198,5 +200,6 @@ export default {
 
     }
   }
-}
+};
+
 </script>

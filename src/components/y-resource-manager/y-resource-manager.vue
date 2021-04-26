@@ -38,6 +38,9 @@
 
 <script>
 
+import YResourceTableCell from './y-resource-table-cell.vue';
+import YResourceFilter from './y-resource-filter.vue';
+
 import YNetwork from 'ynetwork';
 import debounce from 'lodash/debounce';
 import { loadMetasFor, pluralizeModelName, transformFilters, transformSorts } from './y-resource-util';
@@ -45,8 +48,8 @@ import { loadMetasFor, pluralizeModelName, transformFilters, transformSorts } fr
 export default {
   name: 'YResourceManager',
   components: {
-    'y-resource-table-cell': require('./y-resource-table-cell').default,
-    'y-resource-filter': require('./y-resource-filter').default
+    'y-resource-table-cell': YResourceTableCell,
+    'y-resource-filter': YResourceFilter
   },
   props: {
     title: {

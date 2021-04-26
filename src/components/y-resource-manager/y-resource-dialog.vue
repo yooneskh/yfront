@@ -52,6 +52,8 @@
 
 <script>
 
+import YResourceRelationManager from './y-resource-relation-manager.vue';
+
 import YNetwork from 'ynetwork';
 import { loadMetasFor, loadRelationsFor, mapMetaToFormFields, pluralizeModelName } from './y-resource-util';
 import debounce from 'lodash/debounce';
@@ -59,7 +61,7 @@ import debounce from 'lodash/debounce';
 export default {
   name: 'YResourceDialog',
   components: {
-    'y-resource-relation-manager': require('./y-resource-relation-manager').default
+    'y-resource-relation-manager': YResourceRelationManager
   },
   props: {
     modelName: {
@@ -253,6 +255,6 @@ export default {
 
     }
   }
-}
+};
 
 </script>
