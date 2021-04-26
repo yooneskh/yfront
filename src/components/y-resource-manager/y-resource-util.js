@@ -145,6 +145,7 @@ export function mapMetaType(meta) {
   if (meta.isArray) return 'select';
   if (meta.labelFormat || meta.valueFormat) return 'date';
   if (meta.enum || meta.items) return 'select';
+  if (meta.geo) return 'geo';
 
   switch (meta.type) {
     case 'string': return meta.richText ? 'editor' : (meta.longText ? 'textarea' : 'text');
@@ -189,7 +190,8 @@ export function mapMetaToFormFields(metas, readonly = false) {
     unepoch: !!meta.valueFormat,
     locale: Config.localization.default,
     items: meta.items || meta.enum,
-    rules: makeMetaRules(meta)
+    rules: makeMetaRules(meta),
+    selectPointByCenter: 'auto'
   }));
 
 }
