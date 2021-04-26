@@ -1,6 +1,12 @@
 <template>
-  <div>
-    <v-label>{{ field.title }}</v-label>
+  <div class="y-form-element-permissions">
+
+    <label
+      class="v-label"
+      :class="{ 'error--text': field.error, 'success--text': field.success }">
+      {{ field.title }}
+    </label>
+
     <permission-selector
       v-for="permission of permissions" :key="permission[0]"
       class="my-2"
@@ -9,6 +15,17 @@
       :localize="localize"
       @input="handleInput"
     />
+
+    <div v-if="field.hint" class="caption mt-1 ms-2">
+      {{ typeof field.hint === 'function' ? field.hint(value) : field.hint }}
+    </div>
+
+    <transition name="slide-from-up">
+      <div v-if="field.message" class="caption mt-1 ms-2" :class="{ 'error--text': field.error, 'success--text': field.success }">
+        {{ field.message }}
+      </div>
+    </transition>
+
   </div>
 </template>
 
