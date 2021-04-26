@@ -25,7 +25,7 @@
     "vue-router": "3.5.1",
     "vue-socket.io-extended": "4.0.5",
     "vue2-leaflet": "2.7.0",
-    "vuetify": "2.3.15",
+    "vuetify": "2.4.11",
     "vuetify-toast-snackbar": "0.6.1",
     "ykh-form-extended": "1.0.0",
     "ynetwork": "2.6.0"
