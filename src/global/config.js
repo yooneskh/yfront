@@ -15,7 +15,6 @@ export const Config = {
     appBarToolbarScrollbarHeight: 15
   },
   socket: {
-    enabled: false,
     needsAuthentication: true
   },
   localization: {

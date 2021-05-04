@@ -4,20 +4,18 @@ import router from './router'
 import vuetify from './plugins/vuetify';
 import './plugins/yvue';
 import Api from './api';
-import { ENDPOINT_BASE, ENDPOINT_CORE } from './api/ApiBaseEndpoints';
-import { Config } from './global/config';
-import io from 'socket.io-client';
-import VueSocketIO from 'vue-socket.io-extended';
-import VueAsyncComputed from 'vue-async-computed'
-
+import { ENDPOINT_BASE } from './api/ApiBaseEndpoints';
 import './assets/scss/app.scss';
 
-Vue.config.productionTip = false;
+import VueAsyncComputed from 'vue-async-computed'
 Vue.use(VueAsyncComputed);
 
-if (Config.socket.enabled) {
-  Vue.use(VueSocketIO, io(`${ENDPOINT_CORE}`, { autoConnect: false }));
-}
+// import io from 'socket.io-client';
+// import VueSocketIO from 'vue-socket.io-extended';
+// import { Config } from './global/config';
+// Vue.use(VueSocketIO, io(`${ENDPOINT_CORE}`, { autoConnect: false }));
+
+Vue.config.productionTip = false;
 
 Vue.mixin({
   computed: {
@@ -32,7 +30,7 @@ Vue.mixin({
     }
   },
   methods: {
-    $generalHandle(status, _result, silent) { // eslint-disable no-unused-vars
+    $generalHandle(status, _result, silent) {
       if (status !== 200) {
         if (!silent) this.$toast.error('مشکلی پیش آمده. لطفا دوباره تلاش کنید.');
         return true;
