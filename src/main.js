@@ -30,9 +30,9 @@ Vue.mixin({
     }
   },
   methods: {
-    $generalHandle(status, _result, silent) {
+    $generalHandle(status, result, silent) {
       if (status !== 200) {
-        if (!silent) this.$toast.error('مشکلی پیش آمده. لطفا دوباره تلاش کنید.');
+        if (!silent) this.$toast.error(result?.message || 'مشکلی پیش آمده. لطفا دوباره تلاش کنید.');
         return true;
       }
     },
