@@ -9,6 +9,9 @@
     :server-items-length="serverItemsLength"
     :caption="caption"
     :itemid="itemKey"
+    :footer-props="{
+      itemsPerPageOptions
+    }"
     @update:page="$emit('update:page', $event)"
     :items-per-page="itemsPerPage"
     @update:items-per-page="$emit('update:items-per-page', $event)">
@@ -90,6 +93,9 @@ export default {
     sorts: {
       type: Object,
       default: () => ({})
+    },
+    itemsPerPageOptions: {
+      type: Array
     }
   },
   data: () => ({

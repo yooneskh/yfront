@@ -22,6 +22,7 @@
         :server-items-length="resources.allCount"
         @update:page="page = $event"
         :items-per-page="itemsPerPage"
+        :items-per-page-options="[5, 15, 30]"
         @update:items-per-page="itemsPerPage = $event"
         :sorts.sync="sorts"
         @edit="editHandler ? editHandler($event) : initEditor($event)"

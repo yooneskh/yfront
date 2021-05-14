@@ -14,6 +14,7 @@
       :headers="headers"
       :items="resources.list"
       :actions="tableActions"
+      :items-per-page-options="[5, 15, 30]"
       @edit="initEditor"
       @delete="deleteRelation">
       <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ data }">
