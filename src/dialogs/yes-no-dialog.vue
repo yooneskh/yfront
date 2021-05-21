@@ -23,6 +23,7 @@
 export default {
   name: 'YesNoDialog',
   props: {
+    icon: String,
     title: String,
     message: String,
     danger: Boolean,
