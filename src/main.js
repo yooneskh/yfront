@@ -8,6 +8,7 @@ import { ENDPOINT_BASE } from './api/ApiBaseEndpoints';
 import './assets/scss/app.scss';
 
 import VueAsyncComputed from 'vue-async-computed'
+import { unmakeIt } from './util/encryption';
 Vue.use(VueAsyncComputed);
 
 // import io from 'socket.io-client';
@@ -56,7 +57,7 @@ new Vue({
   },
   methods: {
     resetCredentials() {
-      this.token = localStorage.getItem('--token--') || '';
+      this.token = unmakeIt(localStorage.getItem('--token--') || '');
       Api.setToken(this.$token);
     },
     logout() {

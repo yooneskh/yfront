@@ -114,6 +114,7 @@
 import Api from '../../api';
 import { title as Title } from '../../../package.json';
 import { Config } from '../../global/config';
+import { makeIt } from '../../util/encryption';
 
 export default {
   name: 'AuthPage',
@@ -184,7 +185,7 @@ export default {
       if (this.$generalHandle(status, result)) return;
 
       this.$root.user = result.user;
-      localStorage.setItem('--token--', result.token);
+      localStorage.setItem('--token--', makeIt(result.token));
 
       if (!Config.auth.refreshIdentityOnLoad) {
         localStorage.setItem('--user--', result.user);
