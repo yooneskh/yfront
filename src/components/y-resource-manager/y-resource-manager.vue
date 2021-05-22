@@ -3,13 +3,21 @@
     <v-card :loading="loading">
 
       <v-card-title class="pe-3">
+
         <v-icon v-if="icon" class="me-3">{{ icon }}</v-icon>
         {{ title }}
+
         <v-spacer />
+
+        <v-btn small text class="me-1" @click="initExcelExport">
+          گرفتن خروجی
+        </v-btn>
+
         <v-btn text color="primary" @click="(newUrl && $router.push(newUrl)) || initEditor(undefined)">
           افزودن
           <v-icon right>mdi-plus</v-icon>
         </v-btn>
+
       </v-card-title>
 
       <y-resource-filter v-model="filters" :metas="metas.list" />
@@ -213,6 +221,27 @@ export default {
 
       this.$toast('حذف با موفقیت انجام شد');
       this.loadData();
+
+    },
+    async initExcelExport() {
+
+      const choice = await this.$dialogYesNo({
+        icon: 'mdi-download',
+        title: 'خروجی گرفتن از داده‌ها',
+        message: `شما در حال خروجی گرفتن از ${this.resources.allCount} داده هستید. آیا می‌خواهید ادامه دهید؟`,
+        yesText: 'از داده‌ها خروجی بگیر',
+        noText: 'لغو عملیات'
+      }); if (!choice) return;
+
+      const exports = await this.$dialog(import('./dialogs/y-resource-export-dialog.vue' /* webpackChunkName: 'y-resource-export-dialog' */), {
+        icon: 'mdi-download',
+        title: 'خروجی گرفتن از داده‌ها',
+        model: this.modelName,
+        filters: this.filters,
+        sorts: this.sorts
+      }); if (!exports) return;
+
+      this.$toast.success('خروجی با موفقیت گرفته شد.');
 
     }
   }

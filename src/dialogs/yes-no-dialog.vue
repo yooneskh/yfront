@@ -2,7 +2,7 @@
   <v-card>
 
     <v-card-title>
-      <v-icon v-if="icon" class="me-4">{{ icon }}</v-icon>
+      <v-icon v-if="icon" class="me-3">{{ icon }}</v-icon>
       {{ title }}
     </v-card-title>
 
