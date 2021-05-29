@@ -5,6 +5,7 @@
       :icon="$route.meta.icon"
       :model-name="$route.meta.model"
       sort-latest
+      :custom-actions="$route.meta.customActions"
       :new-url="$route.meta.newUrl"
       :edit-handler="$route.meta.editHandler ? (it => $route.meta.editHandler(this, it)) : undefined"
     />
