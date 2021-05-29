@@ -9,6 +9,8 @@
 
         <v-spacer />
 
+        <slot name="prepend-actions" />
+
         <v-btn small text class="me-1" @click="initExcelExport">
           گرفتن خروجی
         </v-btn>
@@ -17,6 +19,8 @@
           افزودن
           <v-icon right>mdi-plus</v-icon>
         </v-btn>
+
+        <slot name="append-actions" />
 
       </v-card-title>
 
@@ -145,7 +149,7 @@ export default {
       const listeners = {};
 
       for (const action of this.customActions || []) {
-        listeners[action.key] = (item) => this.$emit(action.key, item);
+        listeners[action.key] = (item) => action.handler?.(item) ?? this.$emit(action.key, item);
       }
 
       return listeners;
