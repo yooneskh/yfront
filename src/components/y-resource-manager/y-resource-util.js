@@ -184,7 +184,7 @@ export function mapMetaToFormFields(metas, readonly = false) {
     itemFields: mapMetaToFormFields(meta.serieSchema), // for series
     base: meta.serieBase, // for series
     multiple: meta.isArray, // for select
-    addable: meta.isArray, // for select
+    addable: meta.isArray && !meta.items && !meta.enum, // for select
     searchable: meta.isArray, // for select
     readonly: readonly || meta.readonly,
     unepoch: !!meta.valueFormat,
