@@ -13,7 +13,7 @@
     </template>
 
     <v-card v-if="model === 'Media' && resource.path" flat>
-      <v-img :src="resource.path" width="200" height="auto" />
+      <v-img :src="resource.path" width="169" height="auto" />
     </v-card>
 
   </v-menu>
