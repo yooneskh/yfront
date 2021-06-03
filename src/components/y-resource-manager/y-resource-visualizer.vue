@@ -1,12 +1,22 @@
 <template>
-  <span :title="model === 'Media' && title" class="y-resource-visualizer primary--text caption text-decoration-underline" style="cursor: pointer" @click="!error && goToResource()">
-    <v-icon v-if="error" small color="red">
-      mdi-alert-circle-outline
-    </v-icon>
-    <template v-else>
-      {{ model === 'Media' ? 'Media File' : title }}
+  <v-menu open-on-hover offset-y offset-x fixed>
+
+    <template #activator="{ on }">
+      <span :title="model === 'Media' ? title : undefined" class="y-resource-visualizer d-inline-block primary--text caption text-decoration-underline" style="cursor: pointer" v-on="on" @click="!error && goToResource()">
+        <v-icon v-if="error" small color="red">
+          mdi-alert-circle-outline
+        </v-icon>
+        <template v-else>
+          {{ model === 'Media' ? 'Media File' : title }}
+        </template>
+      </span>
     </template>
-  </span>
+
+    <v-card v-if="model === 'Media' && resource.path" flat>
+      <v-img :src="resource.path" width="200" height="auto" />
+    </v-card>
+
+  </v-menu>
 </template>
 
 <script>
@@ -40,6 +50,7 @@ export default {
 
     if (result[0] === '---' || result[1].status !== 200) {
       this.error = true;
+      if (result[1].status !== 200) this.title = result[1].result;
       return;
     }
 
