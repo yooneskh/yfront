@@ -1,13 +1,6 @@
 import YNetwork from 'ynetwork';
 
-import * as Auth from './AuthApi';
-import * as Media from './MediaApi';
-import * as Payment from './PaymentApi';
-
-export default {
-  Auth,
-  Media,
-  Payment,
+export const ApiHelper = {
   setHeader(header, value) {
     if (value === undefined || value === '' || value === null) {
       delete YNetwork.headers[header];

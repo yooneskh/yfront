@@ -1,5 +1,5 @@
 <template>
-  <v-menu open-on-hover offset-y offset-x fixed>
+  <v-menu open-on-hover offset-y offset-x fixed :disabled="model !== 'Media' || !resource.path">
 
     <template #activator="{ on }">
       <span :title="model === 'Media' ? title : undefined" class="y-resource-visualizer d-inline-block primary--text caption text-decoration-underline" style="cursor: pointer" v-on="on" @click="!error && goToResource()">

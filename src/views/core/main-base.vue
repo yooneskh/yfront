@@ -35,7 +35,7 @@ import MainAppBar from './components/main-app-bar.vue';
 import MainSideBar from './components/main-side-bar.vue';
 
 import { Config } from '../../global/config';
-import Api from '../../api';
+import { AuthService } from '../../api/AuthApi';
 
 export default {
   name: 'MainBase',
@@ -156,7 +156,7 @@ export default {
   },
   methods: {
     async loadData() {
-      const identityApi = await Api.Auth.getIdentity();
+      const identityApi = await AuthService.getIdentity();
       if (identityApi.status !== 200) return this.onLoadDataError();
       this.$root.user = identityApi.result;
     },

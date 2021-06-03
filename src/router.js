@@ -105,15 +105,11 @@ export default new Router({
       ]
     },
     {
-      path: '/payment/verify',
-      component: () => import('./views/general/verify-payment-page.vue' /* webpackChunkName: 'verify-payment' */)
-    },
-    {
       path: '*',
       component: () => import('./views/error/404-page' /* webpackChunkName: '404-page' */)
     }
   ],
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(to, _from, savedPosition) {
     if (savedPosition) {
       return savedPosition
     }

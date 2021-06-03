@@ -3,7 +3,8 @@ import App from './app'
 import router from './router'
 import vuetify from './plugins/vuetify';
 import './plugins/yvue';
-import Api from './api';
+import { ApiHelper } from './api';
+import { AuthService } from './api/AuthApi';
 import { ENDPOINT_BASE } from './api/ApiBaseEndpoints';
 import './assets/scss/app.scss';
 
@@ -58,10 +59,10 @@ new Vue({
   methods: {
     resetCredentials() {
       this.token = unmakeIt(localStorage.getItem('--token--') || '');
-      Api.setToken(this.$token);
+      ApiHelper.setToken(this.$token);
     },
     logout() {
-      Api.Auth.logout();
+      AuthService.logout();
       localStorage.removeItem('--token--');
       this.$root.token = '';
       this.$root.user = {};

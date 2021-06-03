@@ -111,7 +111,7 @@
 
 <script>
 
-import Api from '../../api';
+import { AuthService } from '../../api/AuthApi';
 import { title as Title } from '../../../package.json';
 import { Config } from '../../global/config';
 import { makeIt } from '../../util/encryption';
@@ -138,7 +138,7 @@ export default {
       default: {},
       async get() {
 
-        const { status, result } = await Api.Auth.getCaptcha();
+        const { status, result } = await AuthService.getCaptcha();
         if (this.$generalHandle(status, result)) return {};
 
         return result;
@@ -151,7 +151,7 @@ export default {
       if (this.cleanPhoneNumber.length !== 11) return this.$toast.error('شماره تلفن صحیح نیست!');
 
       this.loading = true;
-      const { status, result } = await Api.Auth.login(`+98${this.cleanPhoneNumber.slice(1)}`, this.captcha.id, this.captchaText);
+      const { status, result } = await AuthService.login(`+98${this.cleanPhoneNumber.slice(1)}`, this.captcha.id, this.captchaText);
       this.loading = false;
 
       if (status === 404 && Config.auth.registerEnabled) {
@@ -170,7 +170,7 @@ export default {
     async doRegister() {
 
       this.loading = true;
-      const { status, result } = await Api.Auth.register(`+98${this.cleanPhoneNumber.slice(1)}`, this.name, this.captcha.id, this.captchaText);
+      const { status, result } = await AuthService.register(`+98${this.cleanPhoneNumber.slice(1)}`, this.name, this.captcha.id, this.captchaText);
       this.loading = false;
       if (this.$generalHandle(status, result)) return this.$asyncComputed.captcha.update();
 
@@ -180,7 +180,7 @@ export default {
     async doVerify() {
 
       this.loading = true;
-      const { status, result } = await Api.Auth.verify(`+98${this.cleanPhoneNumber.slice(1)}`, this.verificationCode);
+      const { status, result } = await AuthService.verify(`+98${this.cleanPhoneNumber.slice(1)}`, this.verificationCode);
       this.loading = false;
       if (this.$generalHandle(status, result)) return;
 
