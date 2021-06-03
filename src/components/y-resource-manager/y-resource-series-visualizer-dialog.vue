@@ -15,17 +15,14 @@
 </template>
 
 <script>
-
-import YResourceTableCell from './y-resource-table-cell.vue';
-
 export default {
   name: 'YResourceSeriesVisualizerDialog',
   components: {
-    'y-resource-table-cell': YResourceTableCell
+    'y-resource-table-cell': () => import('./y-resource-table-cell.vue' /* webpackChunkName: 'y-resource-table-cell' */),
   },
   props: {
     meta: {
-      type: Object,
+      type: Array,
       required: true
     },
     data: {
@@ -34,7 +31,7 @@ export default {
   },
   computed: {
     headers() {
-      return this.meta.serieSchema
+      return this.meta
         .filter(header => !header.hideInTable)
         .map(meta => ({
           ...meta,
@@ -57,5 +54,4 @@ export default {
     }
   },
 };
-
 </script>

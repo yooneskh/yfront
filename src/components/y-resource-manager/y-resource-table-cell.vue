@@ -112,7 +112,7 @@ export default {
     async showSeriesData(meta, data) {
       this.$dialog(YResourceSeriesVisualizerDialog, {
         width: 768,
-        meta,
+        meta: meta.serieSchema,
         data
       });
     }

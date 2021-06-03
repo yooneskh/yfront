@@ -2,7 +2,7 @@
   <v-menu open-on-hover offset-y offset-x fixed :disabled="model !== 'Media' || !resource.path">
 
     <template #activator="{ on }">
-      <span :title="model === 'Media' ? title : undefined" class="y-resource-visualizer d-inline-block primary--text caption text-decoration-underline" style="cursor: pointer" v-on="on" @click="!error && goToResource()">
+      <span :title="model === 'Media' || error ? title : undefined" class="y-resource-visualizer d-inline-block primary--text caption text-decoration-underline" style="cursor: pointer" v-on="on" @click="!error && goToResource()">
         <v-icon v-if="error" small color="red">
           mdi-alert-circle-outline
         </v-icon>
