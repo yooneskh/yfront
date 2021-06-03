@@ -8439,10 +8439,10 @@ vuetify-toast-snackbar@0.6.1:
   resolved "https://registry.yarnpkg.com/vuetify-toast-snackbar/-/vuetify-toast-snackbar-0.6.1.tgz#a90d93c5b1aae3411d7d297f5ee00934fa6952dc"
   integrity sha512-F2bLPMXiw7qQgX68adSu0zQrMTKODN5JAzCP8AP/HGhz/Bz1z24QbvYcX0fyHnG/yP6PAPkpMCXsLQSq6HV0Ag==
 
-vuetify@2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.5.2.tgz#0f9ccf5dc8e9ee0a2f8376a965e2f909a420cac5"
-  integrity sha512-Tc8CJffVOTrBn0Zx51qn/m+Pl55EtOoKae7gIZjHGg9SQ/Oh94EWtsA8hF+JHE8udbQoef5GpWOpr2lCmBJ0zQ==
+vuetify@2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.5.3.tgz#9d703414a736879673c94550035adc177a6ca394"
+  integrity sha512-c0oX063PzWrIV29Mi7Pyi63OcF0FlCDJcgMvu0woTt4GL4yVmNQMh5hyKS5NEwlsS66HcjKJERMoY0JJc1bYGA==
 
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"
