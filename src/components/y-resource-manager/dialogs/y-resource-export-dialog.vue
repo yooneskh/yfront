@@ -76,7 +76,7 @@ export default {
       return pluralizeModelName(this.model);
     },
     visibleMetas() {
-      return this.metas.filter(it => !it.hidden);
+      return this.filterShowableMetas(this.metas);
     },
     metaKeys() {
       return this.visibleMetas.map(it => it.key);
@@ -92,6 +92,15 @@ export default {
     this.initInfo();
   },
   methods: {
+    filterShowableMetas(metas) {
+      return metas.filter(it => !it.hidden);
+    },
+    sanitizeString(element) {
+      if (!( typeof element === 'string' )) return element;
+
+      return element.replace(/,/g, '').replace(/;/g, '').replace(/\s+/g, ' ');
+
+    },
     async initInfo() {
 
       this.metas = await loadMetasFor(this.$apiBase, this.model);
@@ -111,65 +120,83 @@ export default {
       if (this.completed) return;
       if (datas.length === 0) return this.finalizeExport();
 
-      const transformedDatas = await Promise.all( datas.map(this.transformData) );
+      const transformedDatas = await Promise.all(
+        datas.map(it =>
+          this.transformData(it, this.visibleMetas)
+        )
+      );
       if (this.completed) return;
       this.rows.push(...transformedDatas);
 
       setTimeout(() => this.exportDatas(skip + limit, limit), this.batchDelay);
 
     },
-    async transformData(data) {
-
-      const result = [];
-
-      for (const meta of this.visibleMetas) {
-        const element = data[meta.key];
-
+    async transformData(data, metas) {
+      return Promise.all(
+        metas.map(meta =>
+          this.transformElement(data[meta.key], meta)
+        )
+      );
+    },
+    async transformElement(element, meta) {
+      try {
         if (meta.type === 'series') {
-          result.push('مجموعه');
+          if (!element || !(element.length > 0)) return '---';
+
+          const elementTexts = await Promise.all(
+            element.map(it =>
+              this.transformData(it, this.filterShowableMetas(meta.serieSchema))
+            )
+          );
+
+          return elementTexts.map(it => `(${it.join(' ')})`).join(' - ');
+
         }
         else if (Array.isArray(element)) {
-          result.push('آرایه');
+          return (await Promise.all( element.map(it => this.transformElement(it, meta)) )).join(' - ');
         }
         else if (meta.languages) {
-          result.push('چند زبانه');
+          return Object.keys(meta.languages).map(lang => `(${lang}) ${element[lang]}`).join(' - ')
         }
-        // if is relation
+        /* else if (is relation) {} */
         else if (meta.labelFormat || meta.valueFormat) {
-          result.push( !(data > 0) ? '---' : this.$formatTime(element, meta.labelFormat || meta.valueFormat) );
+          return !(element > 0) ? '---' : this.$formatTime(element, meta.labelFormat || meta.valueFormat);
         }
         else if (meta.ref === 'Media') {
           const { status, result: media } = await YNetwork.get(`${this.$apiBase}/media/${element}?selects=path`);
-          result.push(status === 200 ? media.path : '---');
+          return status === 200 ? media.path : '---';
         }
         else if (meta.ref) {
           if (element) {
-            result.push( await transformResourceToTitle(this.$apiBase, meta.ref, element) );
+            return transformResourceToTitle(this.$apiBase, meta.ref, element);
           }
           else {
-            result.push('---');
+            return '---';
           }
         }
         else if (meta.type === 'boolean') {
-          result.push(element ? 'بله' : 'خیر');
+          return element ? 'بله' : 'خیر';
         }
         else if (meta.items && meta.items.find(it => it === element || it.value === element)) {
-          result.push(meta.items.find(it => it === element || it.value === element).text);
+          return meta.items.find(it => it === element || it.value === element).text;
         }
         else {
-          result.push(element);
+          return element;
         }
-
       }
-
-      return result;
-
+      catch {
+        return '---';
+      }
     },
     finalizeExport() {
       this.completed = true;
     },
     downloadFile() {
-      this.$downloadAsFile(`${this.model.toLowerCase()}-export-${this.$formatTime(Date.now(), 'YYYY-MM-DD-HH-mm-ss')}.csv`, this.rows.map(it => it.join(',')).join('\n'));
+      this.$downloadAsFile(
+        `${this.model.toLowerCase()}-export-${this.$formatTime(Date.now(), 'YYYY-MM-DD-HH-mm-ss')}.csv`,
+        this.rows.map(it =>
+          it.map(this.sanitizeString).join(',')).join('\n')
+        );
     }
   }
 };
