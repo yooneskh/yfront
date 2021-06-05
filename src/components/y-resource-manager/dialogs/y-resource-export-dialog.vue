@@ -9,7 +9,7 @@
     <v-card-text v-if="!completed" class="d-flex flex-column align-center justify-center pa-12">
 
       <div class="tetx-body-1 ltred">
-        {{ rows.length }} / {{ allCount }}
+        {{ Math.max(0, rows.length - 1) }} / {{ allCount }}
       </div>
 
       <v-progress-circular indeterminate color="primary" size="20" class="mt-3" />
@@ -22,7 +22,7 @@
 
     <v-card-actions>
 
-      <v-btn v-if="!completed" text color="warning">
+      <v-btn v-if="!completed" text color="warning" @click="completed = true;">
         توقف و گرفتن خروجی تا الان
       </v-btn>
 
@@ -104,12 +104,15 @@ export default {
 
     },
     async exportDatas(skip, limit) {
+      if (this.completed) return;
 
       const { status, result: datas } = await YNetwork.get(`${this.$apiBase}/${this.pluralModelName}?skip=${skip}&limit=${limit}&${this.queryFilters}&${this.querySorts}`)
       if (this.$generalHandle(status, datas)) return;
+      if (this.completed) return;
       if (datas.length === 0) return this.finalizeExport();
 
       const transformedDatas = await Promise.all( datas.map(this.transformData) );
+      if (this.completed) return;
       this.rows.push(...transformedDatas);
 
       setTimeout(() => this.exportDatas(skip + limit, limit), this.batchDelay);
@@ -166,7 +169,7 @@ export default {
       this.completed = true;
     },
     downloadFile() {
-      this.$downloadAsFile('download.csv', this.rows.map(it => it.join(',')).join('\n'));
+      this.$downloadAsFile(`${this.model.toLowerCase()}-export-${this.$formatTime(Date.now(), 'YYYY-MM-DD-HH-mm-ss')}.csv`, this.rows.map(it => it.join(',')).join('\n'));
     }
   }
 };
