@@ -5,10 +5,21 @@
       class="small-text"
       dense solo flat hide-details
       background-color="transparent"
-      :items="metas.map(meta => ({ value: meta.key, text: meta.title }))"
+      :items="metas.map(meta => ({ value: meta.key, text: meta.title || meta.key }))"
       :value="value.key"
-      @input="$emit('input', { ...value, key: $event })"
+      @input="changeValue('key', $event)"
       style="width: 110px;"
+    />
+
+    <v-select
+      v-if="currentMeta && currentMeta.languages"
+      class="small-text"
+      dense solo flat hide-details
+      background-color="transparent"
+      :items="Object.keys(currentMeta.languages)"
+      :value="value.modifier"
+      @input="changeValue('modifier', $event)"
+      style="width: 60px;"
     />
 
     <v-select
@@ -17,7 +28,7 @@
       background-color="transparent"
       :items="currentOperators"
       :value="value.operator"
-      @input="$emit('input', { ...value, operator: $event })"
+      @input="changeValue('operator', $event)"
       style="width: 90px;"
     />
 
@@ -33,6 +44,7 @@
 </template>
 
 <script>
+import { resourceFilterNextConfig } from './y-resource-util';
 export default {
   name: 'YResourceFilterElement',
   props: {
@@ -53,11 +65,11 @@ export default {
       if (this.currentMeta.type === 'boolean') return result;
 
       if (!this.currentMeta.ref) {
-        result.push(...[
+        result.push(
           { value: '>', text: 'بیشتر' },
           { value: '<', text: 'کمتر' },
           { value: '~=', text: 'شامل' }
-        ]);
+        );
       }
       else if (this.currentMeta.labelFormat) {
         result.push({ value: '~=', text: 'شامل' });
@@ -78,6 +90,22 @@ export default {
       else {
         return [ { key: 'value', type: 'text', placeholder: 'جستجو', number: this.currentMeta.type === 'number', dense: true, simple: true, background: 'transparent', unfilled: true } ];
       }
+
+    }
+  },
+  methods: {
+    changeValue(key, value) {
+
+      const changes = { [key]: value };
+
+      if (key === 'key') {
+        Object.assign(
+          changes,
+          resourceFilterNextConfig(this.metas.find(it => it.key === value))
+        );
+      }
+
+      this.$emit('input', { ...this.value, ...changes });
 
     }
   }

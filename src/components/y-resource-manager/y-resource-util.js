@@ -120,7 +120,7 @@ export function transformFilters(filters) {
   if (!filters) return '';
 
   return 'filters=' + filters.map(filter =>
-    `${filter.key}:${filter.operator}:${filter.value}`
+    `${filter.key}${filter.modifier ? `.${filter.modifier}` : ''}:${filter.operator}:${filter.value}`
   ).join(',');
 
 }
@@ -193,5 +193,25 @@ export function mapMetaToFormFields(metas, readonly = false) {
     rules: makeMetaRules(meta),
     selectPointByCenter: 'auto'
   }));
+
+}
+
+export function resourceFilterNextConfig(meta) {
+
+  const config = {
+    operator: '~=',
+    value: '',
+    modifier: ''
+  };
+
+  if (meta.labelFormat || meta.valueFormat || meta.ref) {
+    config.operator = '=';
+  }
+
+  if (meta.languages) {
+    config.modifier = Object.keys(meta.languages)[0];
+  }
+
+  return config;
 
 }

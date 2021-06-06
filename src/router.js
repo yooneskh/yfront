@@ -35,7 +35,7 @@ export default new Router({
           meta: {
             title: 'مدیریت کاربران',
             icon: 'mdi-account',
-            model: 'User'
+            model: 'TourCategory'
           }
         },
         {

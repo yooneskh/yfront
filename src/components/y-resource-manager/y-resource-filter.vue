@@ -13,12 +13,12 @@
       ])"
     />
 
-    <v-btn v-if="value.length > 0" class="my-1 me-1" icon small @click="removeLastFilter">
-      <v-icon small>mdi-minus</v-icon>
+    <v-btn v-if="value.length > 0" class="my-1 me-1" x-small icon @click="removeLastFilter">
+      <v-icon x-small>mdi-minus</v-icon>
     </v-btn>
 
-    <v-btn class="my-1" :class="{'ms-2': value.length === 0}" icon small @click="addFilter">
-      <v-icon small>mdi-plus</v-icon>
+    <v-btn class="my-1" :class="{'ms-2': value.length === 0}" x-small icon @click="addFilter">
+      <v-icon x-small>mdi-plus</v-icon>
     </v-btn>
 
   </div>
@@ -27,6 +27,7 @@
 <script>
 
 import YResourceFilterElement from './y-resource-filter-element.vue';
+import { resourceFilterNextConfig } from './y-resource-util';
 
 export default {
   name: 'YResourceFilter',
@@ -41,19 +42,23 @@ export default {
     addFilter() {
 
       const meta = this.metas[0];
-      const hasNotContain = !!meta.labelFormat || !!meta.ref;
+      const config = resourceFilterNextConfig(meta);
 
       this.$emit(
         'input',
         [
           ...this.value,
-          { id: this.$uuid(), key: meta.key, operator: hasNotContain ? '=' : '~=', value: '' }
+          {
+            id: this.$uuid(),
+            key: meta.key,
+            ...config
+          }
         ]
       );
 
     },
     removeLastFilter() {
-      this.$emit('input', this.value.filter((_, index) => index !== this.value.length - 1));
+      this.$emit('input', this.value.slice(0, -1));
     }
   }
 };
