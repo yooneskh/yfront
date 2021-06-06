@@ -11,98 +11,33 @@
 
       <v-card max-width="350" outlined>
 
-        <v-card-title class="justify-center">ورود {{ $options.Title }}</v-card-title>
+        <v-card-title class="justify-center">
+          ورود {{ $options.Title }}
+        </v-card-title>
 
-        <v-card-text class="mt-2">
-
-          <template v-if="mode === 'login'">
-            شماره تلفن خود را در زیر وارد کنید تا به حساب خود وارد شوید.
-            <y-form
-              class="pt-4"
-              :target="this"
-              :fields="[
-                { key: 'phoneNumber', type: 'text', title: 'شماره تلفن', mask: '#### ### ####', classes: 'ltred', inputNumeric: true }
-              ]"
-              @keyup.enter.native="doLogin"
-            />
-
-            <div v-html="captcha.data" class="mt-3 mx-auto text-center" />
-
-            <v-text-field
-              filled hide-details
-              label="کد بالا را وارد کنید"
-              v-model="captchaText"
-              dir="ltr">
-              <template #append>
-                <v-icon class="ms-3" @click="$asyncComputed.captcha.update(); captchaText = '';">mdi-refresh</v-icon>
-              </template>
-            </v-text-field>
-
-          </template>
-
-          <template v-if="mode === 'register'">
-            شما قبلا حساب کاربری نساخته‌اید. لطفا اطلاعات زیر را وارد کرده تا حساب شما ساخته شود.
-            <y-form
-              class="pt-4"
-              :target="this"
-              :fields="[
-                { key: 'name', type: 'text', title: 'نام' },
-              ]"
-              @keyup.enter.native="doRegister"
-            />
-
-            <div v-html="captcha.data" class="mt-3 mx-auto text-center" />
-
-            <v-text-field
-              filled hide-details
-              label="کد بالا را وارد کنید"
-              v-model="captchaText"
-              dir="ltr">
-              <template #append>
-                <v-icon class="ms-3" @click="$asyncComputed.captcha.update(); captchaText = '';">mdi-refresh</v-icon>
-              </template>
-            </v-text-field>
-
-          </template>
-
-          <template v-if="mode === 'verify'">
-            کد تایید به شماره شما فرستاده شده است. لطفا آن را در زیر وارد کنید.
-            <y-form
-              class="pt-4"
-              :target="this"
-              :fields="[
-                { key: 'verificationCode', type: 'text', title: 'کد تایید', mask: '######',  classes: 'ltred', inputNumeric: true, autocomplete: 'one-time-password' }
-              ]"
-              @keyup.enter.native="doVerify"
-            />
-          </template>
-
-        </v-card-text>
-
-        <div class="px-2 pb-2">
-          <template v-if="mode === 'login'">
-            <v-btn block depressed color="primary" large :disabled="!phoneNumber || cleanPhoneNumber.length !== 11 || !captchaText" :loading="loading" @click="doLogin">ورود به حساب کاربری</v-btn>
-          </template>
-          <template v-if="mode === 'register'">
-            <v-btn block depressed color="primary" large :disabled="!name || !captchaText" :loading="loading" @click="doRegister">ایجاد حساب جدید</v-btn>
-          </template>
-          <template v-if="mode === 'verify'">
-            <v-btn block depressed color="primary" large :disabled="!verificationCode" :loading="loading" @click="doVerify">بررسی کد تایید</v-btn>
-          </template>
-        </div>
+        <auth-handler
+          ref="authHandler"
+          @update:loading="loading = $event"
+          @update:mode="mode = $event"
+          @done="$router.replace($route.query.next || '/');"
+        />
 
       </v-card>
 
       <div>
-        <template v-if="mode === 'login' && (!isMandatory || $token)">
-          <v-btn class="mt-1" small text block>بازگشت به صفحه اصلی</v-btn>
-        </template>
-        <template v-if="mode === 'register'">
-          <v-btn class="mt-1" small text block @click="phoneNumber = ''; mode = 'login';">بازگشت به وارد کردن شماره تلفن</v-btn>
-        </template>
-        <template v-if="mode === 'verify'">
-          <v-btn class="mt-1" small text block @click="doLogin">کد رو دوباره بفرست</v-btn>
-        </template>
+
+        <v-btn v-if="mode === 'login' && (!isMandatory || $token)" class="mt-1" small text block>
+          بازگشت به صفحه اصلی
+        </v-btn>
+
+        <v-btn v-if="mode === 'register'" class="mt-1" small text block @click="phoneNumber = ''; mode = 'login';">
+          بازگشت به وارد کردن شماره تلفن
+        </v-btn>
+
+        <v-btn v-if="mode === 'verify'" class="mt-1" small text block @click="$refs.authHandler.doLogin">
+          کد رو دوباره بفرست
+        </v-btn>
+
       </div>
 
     </v-col>
@@ -111,90 +46,21 @@
 
 <script>
 
-import { AuthService } from '../../api/AuthApi';
 import { title as Title } from '../../../package.json';
 import { Config } from '../../global/config';
-import { makeIt } from '../../util/encryption';
+
+import AuthHandler from './components/auth-handler.vue';
 
 export default {
   name: 'AuthPage',
   Title,
+  components: {
+    'auth-handler': AuthHandler
+  },
   data: () => ({
     isMandatory: Config.auth.isAuthMandatory,
-    mode: 'login',
     loading: false,
-    phoneNumber: '09',
-    name: '',
-    verificationCode: '',
-    captchaText: ''
-  }),
-  computed: {
-    cleanPhoneNumber() {
-      return this.phoneNumber.replace(/\s*/g, '');
-    },
-  },
-  asyncComputed: {
-    captcha: {
-      default: {},
-      async get() {
-
-        const { status, result } = await AuthService.getCaptcha();
-        if (this.$generalHandle(status, result)) return {};
-
-        return result;
-
-      }
-    }
-  },
-  methods: {
-    async doLogin() {
-      if (this.cleanPhoneNumber.length !== 11) return this.$toast.error('شماره تلفن صحیح نیست!');
-
-      this.loading = true;
-      const { status, result } = await AuthService.login(`+98${this.cleanPhoneNumber.slice(1)}`, this.captcha.id, this.captchaText);
-      this.loading = false;
-
-      if (status === 404 && Config.auth.registerEnabled) {
-        this.mode = 'register';
-        this.$asyncComputed.captcha.update();
-        this.captchaText = '';
-      }
-      else if (this.$generalHandle(status, result)) {
-        return this.$asyncComputed.captcha.update();
-      }
-      else {
-        this.mode = 'verify';
-      }
-
-    },
-    async doRegister() {
-
-      this.loading = true;
-      const { status, result } = await AuthService.register(`+98${this.cleanPhoneNumber.slice(1)}`, this.name, this.captcha.id, this.captchaText);
-      this.loading = false;
-      if (this.$generalHandle(status, result)) return this.$asyncComputed.captcha.update();
-
-      this.mode = 'verify';
-
-    },
-    async doVerify() {
-
-      this.loading = true;
-      const { status, result } = await AuthService.verify(`+98${this.cleanPhoneNumber.slice(1)}`, this.verificationCode);
-      this.loading = false;
-      if (this.$generalHandle(status, result)) return;
-
-      this.$root.user = result.user;
-      localStorage.setItem('--token--', makeIt(result.token));
-
-      if (!Config.auth.refreshIdentityOnLoad) {
-        localStorage.setItem('--user--', result.user);
-      }
-
-      this.$root.resetCredentials();
-      this.$router.replace(this.$route.query.next || '/');
-
-    }
-  }
+    mode: 'loading'
+  })
 };
 </script>
