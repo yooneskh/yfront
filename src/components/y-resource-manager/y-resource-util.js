@@ -163,8 +163,8 @@ export function makeMetaRules(meta) {
   if (meta.required) {
     rules.push(v => {
       if (meta.type === 'number' && (v !== undefined && v !== null && !isNaN(v))) return true;
-      if (meta.isArray && (!!v && v.length > 0)) return true;
-      return !!v || `${meta.title} الزامی است!`;
+      if ((meta.isArray || meta.type === 'series') && (!!v && v.length > 0)) return true;
+      return !!v || `${meta.title || meta.key} الزامی است!`;
     });
   }
 
