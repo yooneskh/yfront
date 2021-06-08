@@ -9,7 +9,7 @@
       <component
         v-if="!$route.meta.hideNavbar"
         :is="appliedConfigMode === 'appbar' ? 'main-app-bar' : 'main-side-bar'"
-        :toolbar-items="toolbars"
+        :toolbar-items="permittedToolbars"
         :extra-toolbar-items="currentComponent && currentComponent.toolbars ? currentComponent.toolbars : []"
         :color="config.color"
         :height="config.appBarHeight"
@@ -59,13 +59,13 @@ export default {
         { title: 'خانه', icon: 'mdi-home', path: '/', bar: 'topStart' },
       ]},
       { groupTitle: 'مدیریت', groupIcon: 'mdi-cog' , children: [
-        { title: 'مدیریت کاربران', icon: 'mdi-account', path: '/users', bar: 'topStart' },
-        { title: 'مدیریت فاکتورها', icon: 'mdi-cash-register', path: '/factors' },
-        { title: 'مدیریت پرداخت‌ها', icon: 'mdi-cash', path: '/paytickets' },
-        { title: 'مدیریت حساب‌ها', icon: 'mdi-bank', path: '/accounts' },
-        { title: 'مدیریت تراکنش‌ها', icon: 'mdi-cash-check', path: '/transactions' },
-        { title: 'مدیریت انتقال‌ها', icon: 'mdi-bank-transfer', path: '/transfers' },
-        { title: 'مدیریت آپدیت‌ها', icon: 'mdi-update', path: '/updates' }
+        { title: 'مدیریت کاربران', icon: 'mdi-account', path: '/users', bar: 'topStart', permissions: ['admin.user.list'] },
+        { title: 'مدیریت فاکتورها', icon: 'mdi-cash-register', path: '/factors', permissions: ['admin.factor.list'] },
+        { title: 'مدیریت پرداخت‌ها', icon: 'mdi-cash', path: '/paytickets', permissions: ['admin.payticket.list'] },
+        { title: 'مدیریت حساب‌ها', icon: 'mdi-bank', path: '/accounts', permissions: ['admin.account.list'] },
+        { title: 'مدیریت تراکنش‌ها', icon: 'mdi-cash-check', path: '/transactions', permissions: ['admin.transaction.list'] },
+        { title: 'مدیریت انتقال‌ها', icon: 'mdi-bank-transfer', path: '/transfers', permissions: ['admin.transfer.list'] },
+        { title: 'مدیریت آپدیت‌ها', icon: 'mdi-update', path: '/updates', permissions: ['admin.update.list'] }
       ]}
     ]
   }),
@@ -97,6 +97,37 @@ export default {
 
       return bl.appBarHeight + bl.mainContentAreaTopSpacing;
 
+
+    },
+    permittedToolbars() {
+
+      const isItemPermitted = item => {
+
+        if (item.permissions) {
+          if (!this.$hasAccesses(item.permissions)) {
+            return false;
+          }
+        }
+
+        if (item.anyPermissions) {
+          if (!item.anyPermissions.some(it => this.$hasAccesses([it]))) {
+            return false;
+          }
+        }
+
+        return true;
+
+      };
+
+      return this.toolbars.map(bar => {
+        if (!isItemPermitted(bar)) return undefined;
+
+        return {
+          ...bar,
+          children: bar.children?.filter(isItemPermitted)
+        };
+
+      }).filter(Boolean);
 
     }
   },

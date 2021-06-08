@@ -3,6 +3,7 @@ import App from './app'
 import router from './router'
 import vuetify from './plugins/vuetify';
 import './plugins/yvue';
+import { hasPermissions } from './util/permissions';
 import { ApiHelper } from './api';
 import { AuthService } from './api/AuthApi';
 import { ENDPOINT_BASE } from './api/ApiBaseEndpoints';
@@ -38,8 +39,9 @@ Vue.mixin({
         return true;
       }
     },
-    $hasAccess(access) {
-      return access && this.$user.permissions?.indexOf(access) >= 0; // TODO: handle regexiness
+    $hasAccesses(accesses) {
+      if (!this.$user || !this.$user.permissions) return false;
+      return hasPermissions(this.$user.permissions, accesses);
     }
   }
 });

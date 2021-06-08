@@ -1,7 +1,7 @@
 <template>
   <v-sheet elevation="1" width="285" class="main-sidebar ma-0 grey lighten-5 d-flex flex-column">
     <div class="sidebar-header flex-grow-0">
-      <v-card outlined :color="color" :dark="dark" class="d-flex flex-row align-center ma-2 pa-2 rounded-sm" :to="(toolbarItems[0][0] || { path: '/' }).path">
+      <v-card outlined :color="color" :dark="dark" class="d-flex flex-row align-center ma-2 pa-2 rounded-sm" :to="(validToolbarItems[0][0] || { path: '/' }).path">
         <v-img src="../../../assets/img/logo.png" width="40" class="flex-grow-0 me-4 ms-2" contain />
         <div class="titles">
           <div class="text-h6 font-weight-bold">
@@ -50,7 +50,7 @@
           </v-card>
         </v-menu>
 
-        <v-tooltip v-for="group of toolbarItems" :key="group.groupTitle" fixed :left="$vuetify.rtl" :right="!$vuetify.rtl">
+        <v-tooltip v-for="group of validToolbarItems" :key="group.groupTitle" fixed :left="$vuetify.rtl" :right="!$vuetify.rtl">
           <template #activator="{ on }">
             <v-btn
               text
@@ -131,17 +131,22 @@ export default {
     }
   },
   computed: {
+    validToolbarItems() {
+      return this.toolbarItems.filter(it => it.children?.length > 0);
+    },
     activeGroup() {
 
       const targetRoute = this.$route.matched.slice(-1)[0];
 
-      for (const group of this.toolbarItems) {
+      for (const group of this.validToolbarItems) {
         for (const child of group.children) {
           if (child.path === targetRoute.path) {
             return group;
           }
         }
-      } return undefined;
+      }
+
+      return undefined;
 
     }
   },
