@@ -9,8 +9,7 @@ export const AuthService = {
     return YNetwork.post(`${ENDPOINT_BASE}/auth/login`, {
       phoneNumber,
       captchaId,
-      captchaText,
-      business: '5fdce7f762a0f63db43ba260'
+      captchaText
     });
   },
   register(phoneNumber, name, captchaId, captchaText) {
@@ -24,8 +23,7 @@ export const AuthService = {
   verify(phoneNumber, verificationCode) {
     return YNetwork.post(`${ENDPOINT_BASE}/auth/verify`, {
       phoneNumber,
-      verificationCode,
-      business: '5fdce7f762a0f63db43ba260'
+      verificationCode
     });
   },
   getIdentity() {

@@ -162,6 +162,7 @@ export function makeMetaRules(meta) {
 
   if (meta.required) {
     rules.push(v => {
+      // vIf is handled in the y-form
       if (meta.type === 'number' && (v !== undefined && v !== null && !isNaN(v))) return true;
       if ((meta.isArray || meta.type === 'series') && (!!v && v.length > 0)) return true;
       return !!v || `${meta.title || meta.key} الزامی است!`;
