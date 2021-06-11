@@ -15,6 +15,7 @@
     "core-js": "3.14.0",
     "leaflet": "1.7.1",
     "lodash": "4.17.21",
+    "mingo": "4.1.2",
     "moment-jalaali": "0.9.2",
     "pluralize": "8.0.0",
     "roboto-fontface": "0.10.0",
@@ -26,7 +27,7 @@
     "vue2-leaflet": "2.7.0",
     "vuetify": "2.5.3",
     "vuetify-toast-snackbar": "0.6.1",
-    "ykh-form-extended": "1.4.10",
+    "ykh-form-extended": "1.4.11",
     "ynetwork": "2.6.0"
   },
   "devDependencies": {
