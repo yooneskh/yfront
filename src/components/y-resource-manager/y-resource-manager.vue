@@ -56,7 +56,8 @@ import YResourceFilter from './y-resource-filter.vue';
 
 import YNetwork from 'ynetwork';
 import debounce from 'lodash/debounce';
-import { fromPascalToKebabCase, loadMetasFor, pluralizeModelName, transformFilters, transformSorts } from './y-resource-util';
+import { loadMetasFor, pluralizeModelName, transformFilters, transformSorts } from './y-resource-util';
+import kebabCase from 'lodash/kebabCase';
 
 export default {
   name: 'YResourceManager',
@@ -109,7 +110,7 @@ export default {
   }),
   computed: {
     kebabModelName() {
-      return fromPascalToKebabCase(this.modelName);
+      return kebabCase(this.modelName);
     },
     headers() {
       return this.metas.list
