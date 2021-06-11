@@ -14,6 +14,11 @@
           :valid.sync="formValid"
           :fields="[
             { key: 'name', type: 'text', title: 'نام', autofocus: true, rules: [v => !!v || 'نام باید وارد شود!'], width: 6 },
+            {
+              vIf: { name: 'testName' },
+              key: 'nameCheck', type: 'text', title: 'نام دوم', width: 6,
+              rules: [v => !!v || 'نام دوم باید وارد شود!']
+            },
             { key: 'textMulti', type: 'text', title: 'متن', languages: { en: {}, fa: {}, fr: {} }, width: 6 },
             { key: 'counts', type: 'text', number: true, title: 'تعداد', readonly: true, disabled: true, width: 6 },
             { key: 'pass', type: 'text', password: true, title: 'رمز عبور', width: 6 },

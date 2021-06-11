@@ -8797,21 +8797,21 @@ yargs@^16.0.0:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
-ykh-form-extended@1.4.12:
-  version "1.4.12"
-  resolved "https://registry.yarnpkg.com/ykh-form-extended/-/ykh-form-extended-1.4.12.tgz#72017ec631d07643c628e6775248ebe06d271097"
-  integrity sha512-7t0acBe3VS2IBEo2Xrllr6dIkD2ztt5vWyCRCKj5dMeTplq3HT3HChnVzSriPHJFlIwACiyle2ZHVjcDns7Nig==
+ykh-form-extended@1.4.13:
+  version "1.4.13"
+  resolved "https://registry.yarnpkg.com/ykh-form-extended/-/ykh-form-extended-1.4.13.tgz#ed706fa8abb1b6d2f3ceda537d7ae5d48182c7a8"
+  integrity sha512-HCyoahuB+k0hPnlJ9HvIXrhLmhC63IbbZX5hPHTjjCHb1YZsEf2vySS7qgnjvAqzdUl2y4a/rBUmOaqf15xiIQ==
   dependencies:
     leaflet "^1.7.1"
     vue-smooth-dnd "^0.8.1"
     vue2-leaflet "^2.6.0"
-    ykh-form "1.4.1"
+    ykh-form "1.4.2"
     ynetwork "^2.6.0"
 
-ykh-form@1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/ykh-form/-/ykh-form-1.4.1.tgz#6b94da1b60727854a35ef48a8c2bd6d54a6e09e9"
-  integrity sha512-WbXAvRY+ke70Np+uKiAyVWhWwjIvQcVPGFlXf2dYDA/j1xUc3KzilYFjiloam5ctxbn6T56bwPD968OE83vCzg==
+ykh-form@1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/ykh-form/-/ykh-form-1.4.2.tgz#247a4a51168654806fc9e977865a41360718ab25"
+  integrity sha512-CIeRhYVJ1oh8hO7SW9pyBxCu3xNy3EMXyfxsQVr/0HFjQoXDlM6SQxVYiwL/4uMehgwacDSgl1A8tgK7I2h/kA==
   dependencies:
     mingo "4.1.2"
     moment-jalaali "^0.9.2"
