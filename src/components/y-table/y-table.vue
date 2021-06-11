@@ -3,8 +3,8 @@
     class="no-wrap"
     :headers="datatableHeaders"
     @update:options="handleSort"
-    :sort-by="sortBy"
-    :sort-desc="sortDesc"
+    :sort-by="Object.keys(sorts)[0]"
+    :sort-desc="Object.values(sorts)[0] === -1"
     :items="items"
     :server-items-length="serverItemsLength"
     :caption="caption"
@@ -27,7 +27,7 @@
         </td>
 
         <td v-if="showActions" class="text-center" style="white-space: nowrap;">
-          <v-tooltip v-for="(action, index) in actions.filter(it => !it.vIf || it.vIf(item))" :key="action.key" :disabled="!action.tooltip || $isMobile" fixed top>
+          <v-tooltip v-for="(action, index) in permittedActions.filter(it => !it.vIf || it.vIf(item))" :key="action.key" :disabled="!action.tooltip || $isMobile" fixed top>
             <template #activator="{ on }">
               <v-btn
                 text
@@ -98,11 +98,17 @@ export default {
       type: Array
     }
   },
-  data: () => ({
-    sortBy: '',
-    sortDesc: ''
-  }),
   computed: {
+    permittedActions() {
+      return (this.actions || []).filter(it => {
+        if (it.permissions) return this.$hasAccesses(it.permissions);
+        if (it.anyPermissions) return it.anyPermissions.some(p => this.$hasAccesses([p]));
+        return true;
+      });
+    },
+    showActions() {
+      return this.permittedActions.length > 0;
+    },
     rawHeaders() {
 
       const headers = this.headers.map(header => ({
@@ -111,16 +117,13 @@ export default {
         value: header.key
       }));
 
-      if (this.actions.length > 0) {
-        headers.push();
-      }
+      if (this.showActions) headers.push();
 
       return headers;
 
     },
     datatableHeaders() {
-
-      if (this.actions.length === 0) return this.rawHeaders;
+      if (!this.showActions) return this.rawHeaders;
 
       return [
         ...this.rawHeaders,
@@ -132,41 +135,22 @@ export default {
         }
       ];
 
-    },
-    showActions() {
-      return this.actions.length > 0;
-    }
-  },
-  watch: {
-    sorts: {
-      deep: true,
-      immediate: true,
-      handler() {
-
-        const sortKey = Object.keys(this.sorts)[0];
-
-        if (sortKey) {
-          this.sortBy = sortKey;
-          this.sortDesc = this.sorts[sortKey] === -1;
-        }
-        else {
-          this.sortBy = undefined;
-          this.sortDesc = false;
-        }
-
-      }
     }
   },
   methods: {
-    handleSort(options) {
+    async handleSort(options) {
 
-      const t = (options.sortBy || []).concat(options.sortDesc || []);
-      let tt = {};
+      const { sortBy: [ sortBy ], sortDesc: [ sortDesc ] } = options;
 
-      if (options.sortBy?.[0]) tt = {[t[0]]: 1};
-      if (options.sortDesc?.[0]) tt = {[t[0]]: -1};
+      if (!sortBy) {
+        if (JSON.stringify(this.sorts) === '{}') return;
+        return this.$emit('update:sorts', {});
+      }
 
-      this.$emit('update:sorts', tt);
+      const newSort = { [sortBy]: sortDesc ? -1 : 1 };
+      if (JSON.stringify(newSort) === JSON.stringify(this.sorts)) return;
+
+      this.$emit('update:sorts', newSort);
 
     }
   }

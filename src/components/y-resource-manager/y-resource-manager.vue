@@ -11,11 +11,11 @@
 
         <slot name="prepend-actions" />
 
-        <v-btn small text class="me-1" @click="initExcelExport">
+        <v-btn small text @click="initExcelExport">
           گرفتن خروجی
         </v-btn>
 
-        <v-btn text color="primary" @click="(newUrl && $router.push(newUrl)) || initEditor(undefined)">
+        <v-btn v-if="$hasAccesses([`admin.${kebabModelName}.create`])" text color="primary" class="ms-1" @click="(newUrl && $router.push(newUrl)) || initEditor(undefined)">
           افزودن
           <v-icon right>mdi-plus</v-icon>
         </v-btn>
@@ -56,7 +56,7 @@ import YResourceFilter from './y-resource-filter.vue';
 
 import YNetwork from 'ynetwork';
 import debounce from 'lodash/debounce';
-import { loadMetasFor, pluralizeModelName, transformFilters, transformSorts } from './y-resource-util';
+import { fromPascalToKebabCase, loadMetasFor, pluralizeModelName, transformFilters, transformSorts } from './y-resource-util';
 
 export default {
   name: 'YResourceManager',
@@ -108,6 +108,9 @@ export default {
     sorts: {}
   }),
   computed: {
+    kebabModelName() {
+      return fromPascalToKebabCase(this.modelName);
+    },
     headers() {
       return this.metas.list
         .filter(header => !header.hideInTable)
@@ -137,8 +140,8 @@ export default {
       actions.push(...(this.customActions || []));
 
       actions.push(
-        { key: 'edit', icon: 'mdi-pen' },
-        { key: 'delete', icon: 'mdi-delete', color: 'error' }
+        { key: 'edit', icon: 'mdi-pen', permissions: [`admin.${this.kebabModelName}.update`] },
+        { key: 'delete', icon: 'mdi-delete', color: 'error', permissions: [`admin.${this.kebabModelName}.delete`] }
       );
 
       return actions;
@@ -156,20 +159,7 @@ export default {
 
     }
   },
-  mounted() {
-
-    if (this.sortLatest) {
-      this.sorts = { 'createdAt': -1 };
-    }
-
-    this.loadMeta();
-    this.loadData();
-
-  },
   watch: {
-    query() {
-      this.loadData();
-    },
     page() {
       this.loadData();
     },
@@ -185,6 +175,20 @@ export default {
         this.loadData();
       }, 500)
     }
+  },
+  created() {
+    if (this.sortLatest) {
+      this.sorts = { 'createdAt': -1 };
+    }
+  },
+  mounted() {
+
+    this.loadMeta();
+
+    if (!this.sortLatest) { // todo: because it would be done twice, fix
+      this.loadData();
+    }
+
   },
   methods: {
     async loadMeta() {

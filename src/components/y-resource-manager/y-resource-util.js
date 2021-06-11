@@ -7,6 +7,13 @@ export function pluralizeModelName(model) {
   return plural(model).toLowerCase();
 }
 
+export function fromPascalToKebabCase(string) {
+  return string.match(/[A-Z]{2,}(?=[A-Z][a-z0-9]*|\b)|[A-Z]?[a-z0-9]*|[A-Z]|[0-9]+/g)
+    .filter(Boolean)
+    .map(x => x.toLowerCase())
+    .join('-');
+}
+
 export async function loadMetasFor(apiBase, resourceName, pathSuffix) {
   if (YCacher.has([resourceName, 'Meta'])) return YCacher.get([resourceName, 'Meta']);
 

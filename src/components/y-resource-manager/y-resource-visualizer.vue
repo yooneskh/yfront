@@ -41,6 +41,11 @@ export default {
     error: false,
     title: ''
   }),
+  computed: {
+    isResourceImage() {
+      return this.model === 'Media' && this.resource.type && ['image/bmp', 'image/jpeg', 'image/png', 'image/tiff'].includes(this.resource.type);
+    }
+  },
   async mounted() {
 
     const result = await Promise.all([
