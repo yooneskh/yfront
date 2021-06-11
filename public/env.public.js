@@ -1,3 +1,3 @@
 window.__env__ = {
-  apiBase: 'https://api.aaa.opendata.khoshghadam.com'
+  apiBase: 'http://localhost:48500'
 }
