@@ -27,7 +27,7 @@
     "vue2-leaflet": "2.7.0",
     "vuetify": "2.5.3",
     "vuetify-toast-snackbar": "0.6.1",
-    "ykh-form-extended": "1.4.11",
+    "ykh-form-extended": "1.4.12",
     "ynetwork": "2.6.0"
   },
   "devDependencies": {

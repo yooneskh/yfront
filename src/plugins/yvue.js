@@ -5,7 +5,6 @@ import { v4 as UUIDV4 } from 'uuid';
 import YNetwork from 'ynetwork';
 import copyToClipboard from 'copy-to-clipboard';
 import UserPlaceholder from '../assets/img/user-placeholder.jpeg';
-import { isConforming } from '../util/validation';
 
 // import VueAnalytics from 'vue-analytics';
 // Vue.use(VueAnalytics, { id: '---' });
@@ -82,9 +81,6 @@ Vue.mixin({
     },
     $copy(text) {
       return copyToClipboard(text);
-    },
-    $conforms(object, rule) {
-      return isConforming(object, rule);
     },
     $downloadAsFile(filename, text) {
       return downloadAsFile(filename, text);
