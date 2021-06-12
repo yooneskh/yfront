@@ -76,6 +76,7 @@ export default {
       this.original = JSON.parse(JSON.stringify(result));
       this.setting = result;
 
+      await this.$nextTick();
       this.$refs.theForm.revalidateAll();
 
     },
