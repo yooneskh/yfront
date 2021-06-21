@@ -26,12 +26,28 @@
 
       <y-resource-filter v-model="filters" :metas="metas.list" />
 
+      <v-tabs v-if="tabGroups" :color="selectedGroup && selectedGroup.color">
+        <v-tab v-for="(group, index) of tabGroups" :key="group.title" style="letter-spacing: 0;" @click="selectedGroupTitle = group.title;">
+
+          <v-icon v-if="group.icon" class="me-3">
+            {{ group.icon }}
+          </v-icon>
+
+          {{ group.title }}
+
+          <v-chip x-small :color="group.color" class="ms-2">
+            {{ groupResources[index] && groupResources[index].allCount }}
+          </v-chip>
+
+        </v-tab>
+      </v-tabs>
+
       <y-table
         :headers="headers"
-        :items="resources.list"
+        :items="currentResources.list || []"
         :actions="tableActions"
         :loading="loading"
-        :server-items-length="resources.allCount"
+        :server-items-length="currentResources.allCount || 0"
         @update:page="page = $event"
         :items-per-page="itemsPerPage"
         :items-per-page-options="[5, 15, 30]"
@@ -91,6 +107,9 @@ export default {
     },
     editorWidth: {
       default: '550px'
+    },
+    tabGroups: {
+      type: Array
     }
   },
   data: () => ({
@@ -106,7 +125,9 @@ export default {
     filters: [],
     page: 1,
     itemsPerPage: 5,
-    sorts: {}
+    sorts: {},
+    selectedGroupTitle: undefined,
+    groupResources: []
   }),
   computed: {
     kebabModelName() {
@@ -158,6 +179,17 @@ export default {
 
       return listeners;
 
+    },
+    selectedGroup() {
+      if (!this.tabGroups || this.tabGroups.length === 0) return undefined;
+      return this.tabGroups.find(it => it.title === this.selectedGroupTitle);
+    },
+    currentResources() {
+      if (!this.tabGroups) return this.resources;
+      if (!this.selectedGroupTitle) return {};
+
+      return this.groupResources.find(it => it.title === this.selectedGroupTitle);
+
     }
   },
   watch: {
@@ -186,7 +218,7 @@ export default {
 
     this.loadMeta();
 
-    if (!this.sortLatest) { // todo: because it would be done twice, fix
+    if (!this.sortLatest) { // todo: because it would be done twice, to be fixed
       this.loadData();
     }
 
@@ -196,6 +228,7 @@ export default {
       this.metas.list = await loadMetasFor(this.$apiBase, this.modelName);
     },
     async loadData() {
+      if (this.tabGroups) return this.loadGroupsData();
 
       const filters = transformFilters(this.filters);
       const sorts = transformSorts(this.sorts);
@@ -213,6 +246,34 @@ export default {
 
       this.resources.list = result;
       this.resources.allCount = r2;
+
+    },
+    async loadGroupsData() {
+
+      const sorts = transformSorts(this.sorts);
+
+      const skip = (this.page - 1) * this.itemsPerPage;
+      const limit = this.itemsPerPage;
+
+      this.loading = true;
+
+      const groupResults = await Promise.all(
+        this.tabGroups.map(group =>
+          Promise.all([
+            group.title,
+            YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}?skip=${skip}&limit=${limit}&${transformFilters([ ...this.filters, ...group.filters ])}&${sorts}`),
+            YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/count?${transformFilters([ ...this.filters, ...group.filters ])}`)
+          ])
+        )
+      );
+
+      this.loading = false;
+
+      this.groupResources = groupResults.map(it => ({
+        title: it[0],
+        list: it[1].result,
+        allCount: it[2].result
+      }));
 
     },
     initEditor(resource) {
