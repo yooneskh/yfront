@@ -8,6 +8,7 @@
       :custom-actions="$route.meta.customActions"
       :new-url="$route.meta.newUrl"
       :edit-handler="$route.meta.editHandler ? (it => $route.meta.editHandler(this, it)) : undefined"
+      :editor-width="$route.meta.editorWidth"
     />
   </v-container>
 </template>
