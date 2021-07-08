@@ -5,6 +5,8 @@ export default {
   extends: YKhFormExtended,
   components: {
     'y-form-element-resource': () => import('./y-form-elements/y-form-element-resource.vue' /* webpackChunkName: 'y-form-element-resource' */),
-    'y-form-element-permissions': () => import('./y-form-elements/y-form-element-permissions.vue' /* webpackChunkName: 'y-form-element-permissions' */)
+    'y-form-element-permissions': () => import('./y-form-elements/y-form-element-permissions.vue' /* webpackChunkName: 'y-form-element-permissions' */),
+    'y-form-element-json': () => import('./y-form-elements/y-form-element-json.vue' /* webpackChunkName: 'y-form-element-json' */),
+    'y-form-element-json-schema': () => import('./y-form-elements/y-form-element-json-schema.vue' /* webpackChunkName: 'y-form-element-json-schema' */)
   }
 }
