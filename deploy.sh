@@ -1,2 +1,2 @@
 yarn build
-rsync -rvh dist/ root@khoshghadam.com:/home/yooneskh/khoshghadam-users-web
+rsync -rvh dist/ user@domain.com:/path
