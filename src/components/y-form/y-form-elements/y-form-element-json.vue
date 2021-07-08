@@ -11,7 +11,7 @@
       :placeholder="field.placeholder"
       :class="field.classes"
       :dir="field.dir || 'ltr'"
-      :rows="field.rows"
+      :rows="field.rows || 7"
       :auto-grow="field.autoGrow"
       :disabled="field.disabled"
       :readonly="field.readonly"
@@ -24,9 +24,11 @@
       :hide-details="!field.message && !field.hint"
     />
 
-    <v-alert v-if="invalidJson" dark dense color="error" icon="mdi-alert" class="mt-2">
-      <span class="text-body-2">شکل JSON صحیح نیست!</span>
-    </v-alert>
+    <transition name="slide-from-up">
+      <v-alert v-if="invalidJson" dark dense color="error" icon="mdi-alert" class="mt-2">
+        <span class="text-body-2">شکل JSON صحیح نیست!</span>
+      </v-alert>
+    </transition>
 
   </div>
 </template>
@@ -76,3 +78,11 @@ export default {
 };
 
 </script>
+
+<style lang="scss">
+  .y-form-element-json textarea {
+    font-family: monospace !important;
+    font-size: 12px !important;
+    line-height: 20px !important;
+  }
+</style>
