@@ -151,6 +151,7 @@ export function mapMetaType(meta) {
     case 'string': return meta.richText ? 'editor' : (meta.longText ? 'textarea' : 'text');
     case 'number': return 'text';
     case 'boolean': return 'checkbox';
+    case 'any': case 'object': return 'json';
     default: return 'text';
   }
 
