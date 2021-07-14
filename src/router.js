@@ -102,6 +102,72 @@ export default new Router({
             pathSuffix: '/settings/application'
           }
         },
+        {
+          path: 'ticketcategories',
+          component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
+          meta: {
+            title: 'مدیریت دسته‌بندی‌های تیکت‌ها',
+            icon: 'mdi-shape',
+            model: 'TicketCategory'
+          }
+        },
+        {
+          path: 'tickets',
+          component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
+          meta: {
+            title: 'مدیریت تیکت‌ها',
+            icon: 'mdi-ticket-account',
+            model: 'Ticket',
+            customActions: [
+              { key: 'view', icon: 'mdi-eye', link: it => `/tickets/${it._id}` }
+            ],
+            tabGroups: [
+              {
+                title: 'در حال انتظار', icon: 'mdi-clock', color: 'primary',
+                filters: [
+                  { key: 'status', operator: '=', value: 'pending' }
+                ]
+              },
+              {
+                title: 'جواب داده شده', icon: 'mdi-face', color: 'error',
+                filters: [
+                  { key: 'status', operator: '=', value: 'answered' }
+                ]
+              },
+              {
+                title: 'بسته شده', icon: 'mdi-lock', color: 'orange',
+                filters: [
+                  { key: 'status', operator: '=', value: 'closed' }
+                ]
+              },
+              {
+                title: 'أرشیو شده', icon: 'mdi-archive', color: 'info',
+                filters: [
+                  { key: 'status', operator: '=', value: 'archived' }
+                ]
+              },
+              {
+                title: 'حذف شده', icon: 'mdi-delete', color: 'error',
+                filters: [
+                  { key: 'status', operator: '=', value: 'deleted' }
+                ]
+              },
+            ]
+          }
+        },
+        {
+          path: 'tickets/:ticketId',
+          component: () => import('./views/tickets/ticket-single-page.vue' /* webpackChunkName: 'ticket-single-page' */),
+        },
+        {
+          path: 'ticketmessages',
+          component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
+          meta: {
+            title: 'مدیریت پاسخ‌های تیکت‌ها',
+            icon: 'mdi-mail',
+            model: 'TicketMessage'
+          }
+        }
       ]
     },
     {

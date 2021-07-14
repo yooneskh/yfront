@@ -9,6 +9,7 @@
       :new-url="$route.meta.newUrl"
       :edit-handler="$route.meta.editHandler ? (it => $route.meta.editHandler(this, it)) : undefined"
       :editor-width="$route.meta.editorWidth"
+      :tab-groups="$route.meta.tabGroups"
     />
   </v-container>
 </template>
