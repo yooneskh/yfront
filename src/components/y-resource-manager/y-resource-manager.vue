@@ -174,7 +174,7 @@ export default {
       const listeners = {};
 
       for (const action of this.customActions || []) {
-        listeners[action.key] = (item) => action.handler?.(item, this) ?? this.$emit(action.key, item);
+        listeners[action.key] = item => action.handler ? (action.handler(item, this)) : (this.$emit(action.key, item));
       }
 
       return listeners;
