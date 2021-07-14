@@ -26,6 +26,18 @@ export default new Router({
             {
               path: '/',
               component: () => import('./views/profile/profile-part-information.vue' /* webpackChunkName: 'profile-part-information' */)
+            },
+            {
+              path: '/profile/tickets/new',
+              component: () => import('./views/profile/profile-part-tickets-new.vue' /* webpackChunkName: 'profile-part-tickets-new' */)
+            },
+            {
+              path: '/profile/tickets',
+              component: () => import('./views/profile/profile-part-tickets-list.vue' /* webpackChunkName: 'profile-part-tickets-list' */)
+            },
+            {
+              path: '/profile/tickets/:ticketId',
+              component: () => import('./views/profile/profile-part-tickets-single.vue' /* webpackChunkName: 'profile-part-tickets-single' */)
             }
           ]
         },

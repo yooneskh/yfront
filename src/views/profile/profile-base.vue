@@ -12,8 +12,15 @@
             </v-avatar>
 
             <div class="d-flex flex-column">
-              <span class="text-body-1 font-weight-bold">{{ $user.name }}</span>
-              <span class="caption font-weight-light">{{ $formatTime($user.createdAt, 'jYYYY/jMM/jDD') }}</span>
+
+              <span class="text-body-1 font-weight-bold">
+                {{ $user.name }}
+              </span>
+
+              <span class="caption font-weight-light">
+                {{ $formatTime($user.createdAt, 'jYYYY/jMM/jDD') }}
+              </span>
+
             </div>
 
           </div>
@@ -21,14 +28,16 @@
           <v-list nav class="pt-0">
             <v-list-item-group color="primary">
 
-              <v-list-item to="/profile">
+              <v-list-item v-for="section of sections" :key="section.path" exact :to="section.path">
                 <v-list-item-icon>
-                  <v-icon>mdi-account</v-icon>
+                  <v-icon>{{ section.icon }}</v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>اطلاعات اکانت</v-list-item-title>
+                  <v-list-item-title>
+                    {{ section.title }}
+                  </v-list-item-title>
                   <v-list-item-subtitle class="caption">
-                    مشاهده و تغییر اطلاعات حساب کاربری
+                    {{ section.caption }}
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
@@ -52,7 +61,26 @@
 export default {
   name: 'ProfileBase',
   data: () => ({
-    loading: false
+    sections: [
+      {
+        path: '/profile',
+        icon: 'mdi-account',
+        title: 'اطلاعات حساب',
+        caption: 'مشاهده و تغییر اطلاعات حساب کاربری'
+      },
+      {
+        path: '/profile/tickets',
+        icon: 'mdi-ticket-account',
+        title: 'تیکت‌های من',
+        caption: 'لیست تیکت‌های من'
+      },
+      {
+        path: '/profile/tickets/new',
+        icon: 'mdi-ticket-confirmation',
+        title: 'تیکت جدید',
+        caption: 'یک تیکت جدید برای پشتیبانی ایجاد کنید'
+      }
+    ]
   })
 };
 
