@@ -275,6 +275,8 @@ export default {
         allCount: it[2].result
       }));
 
+      if (!this.selectedGroupTitle) this.selectedGroupTitle = this.groupResources[0]?.title;
+
     },
     initEditor(resource) {
       this.$dialog(import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
