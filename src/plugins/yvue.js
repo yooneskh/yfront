@@ -70,6 +70,17 @@ Vue.mixin({
       // eslint-disable-next-line no-console
       console.log(...args);
     },
+    $range(start, end) {
+
+      const _start = end !== undefined ? start : 0;
+      const _end = end !== undefined ? end : start;
+
+      const result = _start + ( Math.random() * (_end - _start) );
+
+      if (!Number.isSafeInteger(_start) || !Number.isSafeInteger(_end)) return result;
+      return Math.trunc(result);
+
+    },
     $formatTime(time, format) {
       return formatTime(time, format);
     },
