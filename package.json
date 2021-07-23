@@ -27,7 +27,7 @@
     "vuetify": "2.5.7",
     "vuetify-toast-snackbar": "0.6.1",
     "ykh-form-extended": "1.4.15",
-    "ynetwork": "2.8.1"
+    "ynetwork": "3.0.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "7.14.5",
