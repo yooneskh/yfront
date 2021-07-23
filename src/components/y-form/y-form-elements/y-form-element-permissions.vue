@@ -33,7 +33,7 @@
 
 import YFormPermissionsSelector from './components/y-form-permissions-selector.vue';
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import { YFormElementMixin } from 'ykh-form-extended';
 
 export default {
@@ -64,11 +64,11 @@ export default {
     async loadInfo() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/auth/permissions`);
+      const { status, data } = await YNetwork.get(`${this.$apiBase}/auth/permissions`);
       this.loading = false;
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, data)) return;
 
-      const { permissions, locales } = result;
+      const { permissions, locales } = data;
       this.permissions = permissions;
       this.locales = locales;
 

@@ -30,7 +30,7 @@
 
 <script>
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import { transformResourceToTitle, loadMetasFor, loadRelationsFor, transformRelationToTitle } from '../../y-resource-manager/y-resource-util';
 import { YFormElementMixin } from 'ykh-form-extended';
 
@@ -108,11 +108,11 @@ export default {
 
       const resourceUrl = this.field.resource.toLowerCase() + 's';
 
-      const [{ result: metas }, { result: items }] = await Promise.all([
+      const [{ data: metas }, { data: items }] = await Promise.all([
         new Promise(resolve =>
           loadMetasFor(this.$apiBase, this.field.resource).then(rs => resolve({
             status: 200,
-            result: rs
+            data: rs
           }))
         ),
         YNetwork.get(`${this.$apiBase}/${resourceUrl}`)
@@ -153,12 +153,12 @@ export default {
       const targetName = (this.field.resource || this.field.relationTargetModel).toLowerCase();
       const sourceName = this.field.relationSourceModel.toLowerCase();
 
-      const [{ result: allData }, { result: relations }] = await Promise.all([
+      const [{ data: allData }, { data: relations }] = await Promise.all([
         YNetwork.get(`${this.$apiBase}/${sourceName}s/${targetName}s`),
         new Promise(resolve =>
           loadRelationsFor(this.$apiBase, this.field.relationSourceModel).then(rs => resolve({
             status: 200,
-            result: rs
+            data: rs
           }))
         )
       ]);

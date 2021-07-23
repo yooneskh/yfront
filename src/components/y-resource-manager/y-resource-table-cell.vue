@@ -44,7 +44,7 @@
 import YResourceVisualizer from './y-resource-visualizer.vue';
 import YResourceSeriesVisualizerDialog from './y-resource-series-visualizer-dialog.vue';
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import { transformResourceToTitle, loadRelationsFor, pluralizeModelName } from './y-resource-util';
 
 export default {
@@ -72,12 +72,12 @@ export default {
       const targetName = pluralizeModelName(this.header.ref || this.header.relationTargetModel);
       const sourceName = pluralizeModelName(this.header.relationSourceModel);
 
-      const [{ result: relationData }, { result: relations }] = await Promise.all([
+      const [{ data: relationData }, { data: relations }] = await Promise.all([
         YNetwork.get(`${this.$apiBase}/${sourceName}/${targetName}/${this.data}`),
         new Promise(resolve =>
           loadRelationsFor(this.$apiBase, this.header.relationSourceModel).then(rs => resolve({
             status: 200,
-            result: rs
+            data: rs
           }))
         )
       ]);
@@ -91,7 +91,7 @@ export default {
       ]);
 
       this.relationTitle = sourceTitle + ' ' + targetTitle + ' ' + relationMeta.properties.filter(p => p.titleable).map(meta => relationData[meta.key]).join(' ');
-      this.sourceResourceData = (await YNetwork.get(`${this.$apiBase}/${sourceName}/${this.relationSourceId}`)).result;
+      this.sourceResourceData = (await YNetwork.get(`${this.$apiBase}/${sourceName}/${this.relationSourceId}`)).data;
 
     }
   },

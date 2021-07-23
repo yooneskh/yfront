@@ -54,7 +54,7 @@
 import YResourceFilter from './y-resource-filter.vue';
 import YResourceTableCell from './y-resource-table-cell.vue';
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import { loadMetasFor, transformFilters, transformSorts, transformResourceToTitle, transformRelationToTitle, pluralizeModelName } from './y-resource-util';
 import debounce from 'lodash/debounce';
 
@@ -177,23 +177,23 @@ export default {
       const limit = this.itemsPerPage;
 
       this.loading = true;
-      const [{ status, result }, { status: s2, result: r2 }] = await Promise.all([
+      const [{ status, data }, { status: s2, data: d2 }] = await Promise.all([
         YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
         YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/count?${transformedFilters}`)
       ]);
       this.loading = false;
-      if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
+      if (this.$generalHandle(status, data) || this.$generalHandle(s2, d2)) return;
 
-      this.items = result;
-      this.allItemsCount = r2;
+      this.items = data;
+      this.allItemsCount = d2;
 
     },
     async setupRelations() {
 
       this.loadRelationsData();
 
-      const { result } = await YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.relationSourceModel)}/relations`);
-      const relation = result.find(r => r.targetModel === this.relationTargetModel);
+      const { data } = await YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.relationSourceModel)}/relations`);
+      const relation = data.find(r => r.targetModel === this.relationTargetModel);
 
       this.metas = [
         {
@@ -225,15 +225,15 @@ export default {
       const sourceName = pluralizeModelName(this.relationSourceModel);
 
       this.loading = true;
-      const [{ status, result }, { status: s2, result: r2 }] = await Promise.all([
+      const [{ status, data }, { status: s2, data: d2 }] = await Promise.all([
         YNetwork.get(`${this.$apiBase}/${sourceName}/${targetName}?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
         YNetwork.get(`${this.$apiBase}/${sourceName}/${targetName}/count?${transformedFilters}`)
       ]);
       this.loading = false;
-      if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
+      if (this.$generalHandle(status, data) || this.$generalHandle(s2, d2)) return;
 
-      this.items = result;
-      this.allItemsCount = r2;
+      this.items = data;
+      this.allItemsCount = d2;
 
     },
     async handleItemClick(item) {

@@ -29,7 +29,7 @@
 
 import YResourceTableCell from './y-resource-table-cell.vue';
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import { mapMetaToFormFields, pluralizeModelName } from './y-resource-util';
 
 export default {
@@ -112,11 +112,11 @@ export default {
     async loadData() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.sourceModel)}/${this.sourceId}/${pluralizeModelName(this.modelName)}`);
+      const { status, data } = await YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.sourceModel)}/${this.sourceId}/${pluralizeModelName(this.modelName)}`);
       this.loading = false;
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, data)) return;
 
-      this.resources.list = result;
+      this.resources.list = data;
 
     },
     async initEditor(relation) {
@@ -167,9 +167,9 @@ export default {
       if (!toEdit) {
 
         this.loading = true;
-        const { status, result } = await YNetwork.post(url, payload);
+        const { status, data } = await YNetwork.post(url, payload);
         this.loading = false;
-        if (this.$generalHandle(status, result)) return;
+        if (this.$generalHandle(status, data)) return;
 
         this.$toast.success('افزودن با موفقیت انجام شد.');
         this.loadData();
@@ -178,9 +178,9 @@ export default {
       else {
 
         this.loading = true;
-        const { status, result } = await YNetwork.patch(url + '/' + relation._id, payload);
+        const { status, data } = await YNetwork.patch(url + '/' + relation._id, payload);
         this.loading = false;
-        if (this.$generalHandle(status, result)) return;
+        if (this.$generalHandle(status, data)) return;
 
         this.$toast.success('ویرایش با موفقیت انجام شد.');
         this.loadData();
@@ -193,8 +193,8 @@ export default {
 
       const url = `${this.$apiBase}/${pluralizeModelName(this.sourceModel)}/${this.sourceId}/${pluralizeModelName(this.modelName)}/${relation[this.relation.targetModel.toLowerCase()]}/${relation._id}`;
 
-      const { status, result } = await YNetwork.delete(url);
-      if (this.$generalHandle(status, result)) return;
+      const { status, data } = await YNetwork.delete(url);
+      if (this.$generalHandle(status, data)) return;
 
       this.$toast.success('حذف با موفقیت انجام شد.');
       this.loadData();

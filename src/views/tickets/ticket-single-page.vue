@@ -93,7 +93,7 @@
 
 <script>
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 
 export default {
   name: 'TicketSinglePage',
@@ -122,25 +122,25 @@ export default {
     async loadData() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/ticketmessages/ticket/${this.$route.params.ticketId}`);
+      const { status, data } = await YNetwork.get(`${this.$apiBase}/ticketmessages/ticket/${this.$route.params.ticketId}`);
       this.loading = false;
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, data)) return;
 
-      this.ticket = result.ticket;
-      this.messages = result.messages.reverse();
+      this.ticket = data.ticket;
+      this.messages = data.messages.reverse();
 
     },
     async submitMessage() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.post(`${this.$apiBase}/ticketmessages`, {
+      const { status, data } = await YNetwork.post(`${this.$apiBase}/ticketmessages`, {
         user: this.$user._id,
         ticket: this.$route.params.ticketId,
         body: this.newMessage.body,
         files: this.newMessage.files
       });
       this.loading = false;
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, data)) return;
 
       this.$toast.success('پیام جدید شما ثبت شد.');
       this.newMessage = {};

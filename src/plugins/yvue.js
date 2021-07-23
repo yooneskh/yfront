@@ -2,14 +2,14 @@ import Vue from 'vue';
 import moment from 'moment-jalaali';
 import YDialog from './ydialog';
 import { v4 as UUIDV4 } from 'uuid';
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import copyToClipboard from 'copy-to-clipboard';
 import UserPlaceholder from '../assets/img/user-placeholder.jpeg';
 
 // import VueAnalytics from 'vue-analytics';
 // Vue.use(VueAnalytics, { id: '---' });
 
-YNetwork.debug = process.env.NODE_ENV !== 'production';
+YNetwork.setDebug(process.env.NODE_ENV !== 'production');
 
 moment.loadPersian({ dialect: 'persian-modern' });
 

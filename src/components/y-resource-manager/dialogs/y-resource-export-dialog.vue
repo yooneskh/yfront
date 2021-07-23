@@ -44,7 +44,7 @@
 
 <script>
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import { loadMetasFor, pluralizeModelName, transformFilters, transformResourceToTitle, transformSorts } from '../y-resource-util';
 
 export default {
@@ -104,10 +104,10 @@ export default {
     async initInfo() {
 
       this.metas = await loadMetasFor(this.$apiBase, this.model);
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/${this.pluralModelName}/count?${this.queryFilters}&${this.querySorts}`)
-      if (this.$generalHandle(status, result)) return;
+      const { status, data } = await YNetwork.get(`${this.$apiBase}/${this.pluralModelName}/count?${this.queryFilters}&${this.querySorts}`)
+      if (this.$generalHandle(status, data)) return;
 
-      this.allCount = result;
+      this.allCount = data;
       this.rows.push(this.visibleMetas.map(it => it.title));
       this.exportDatas(0, this.batchSize);
 
@@ -115,7 +115,7 @@ export default {
     async exportDatas(skip, limit) {
       if (this.completed) return;
 
-      const { status, result: datas } = await YNetwork.get(`${this.$apiBase}/${this.pluralModelName}?skip=${skip}&limit=${limit}&${this.queryFilters}&${this.querySorts}`)
+      const { status, data: datas } = await YNetwork.get(`${this.$apiBase}/${this.pluralModelName}?skip=${skip}&limit=${limit}&${this.queryFilters}&${this.querySorts}`)
       if (this.$generalHandle(status, datas)) return;
       if (this.completed) return;
       if (datas.length === 0) return this.finalizeExport();
@@ -163,7 +163,7 @@ export default {
           return !(element > 0) ? '---' : this.$formatTime(element, meta.labelFormat || meta.valueFormat);
         }
         else if (meta.ref === 'Media') {
-          const { status, result: media } = await YNetwork.get(`${this.$apiBase}/media/${element}?selects=path`);
+          const { status, data: media } = await YNetwork.get(`${this.$apiBase}/media/${element}?selects=path`);
           return status === 200 ? media.path : '---';
         }
         else if (meta.ref) {

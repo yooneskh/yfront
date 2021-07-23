@@ -1,4 +1,4 @@
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import { ENDPOINT_BASE } from './ApiBaseEndpoints';
 
 export const AuthService = {

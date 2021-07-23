@@ -1,4 +1,4 @@
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import { YCacher } from '../../plugins/y-cacher';
 import { plural } from 'pluralize';
 import { Config } from '../../global/config';
@@ -14,10 +14,10 @@ export async function loadMetasFor(apiBase, resourceName, pathSuffix) {
 
     const urlPathSuffix = pathSuffix || `/${pluralizeModelName(resourceName)}`;
 
-    const { status, result } = await YNetwork.get(`${apiBase}${urlPathSuffix}/metas`);
+    const { status, data } = await YNetwork.get(`${apiBase}${urlPathSuffix}/metas`);
     if (status !== 200) return [];
 
-    return result;
+    return data;
 
   });
 
@@ -28,10 +28,10 @@ export async function loadRelationsFor(apiBase, resourceName) {
 
   return YCacher.preempt([resourceName, 'Relation'], async () => {
 
-    const { status, result } = await YNetwork.get(`${apiBase}/${pluralizeModelName(resourceName)}/relations`);
+    const { status, data } = await YNetwork.get(`${apiBase}/${pluralizeModelName(resourceName)}/relations`);
     if (status !== 200) return [];
 
-    return result;
+    return data;
 
   });
 
@@ -43,7 +43,7 @@ export async function transformResourceToTitle(apiBase, resourceName, resourceId
     new Promise(resolve =>
       loadMetasFor(apiBase, resourceName).then(rs => resolve({
         status: 200,
-        result: rs
+        data: rs
       }))
     ),
     YNetwork.get(`${apiBase}/${pluralizeModelName(resourceName)}/${resourceId}`)
@@ -53,8 +53,8 @@ export async function transformResourceToTitle(apiBase, resourceName, resourceId
     return '---';
   }
 
-  const metas = result[0].result;
-  const resource = result[1].result;
+  const metas = result[0].data;
+  const resource = result[1].data;
 
   const titleableMetas = metas.filter(meta => meta.titleable);
 
@@ -81,12 +81,12 @@ export async function transformRelationToTitle(apiBase, resourceModel, relationI
   const targetName = (resourceModel || relationTargetModel);
   const sourceName = relationSourceModel;
 
-  const [{ result: item }, { result: relations }] = await Promise.all([
+  const [{ data: item }, { data: relations }] = await Promise.all([
     YNetwork.get(`${apiBase}/${pluralizeModelName(sourceName)}/${pluralizeModelName(targetName)}/${relationId}`),
     new Promise(resolve =>
       loadRelationsFor(apiBase, relationSourceModel).then(rs => resolve({
         status: 200,
-        result: rs
+        data: rs
       }))
     )
   ]);

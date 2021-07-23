@@ -53,7 +53,7 @@
 
 <script>
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import groupBy from 'lodash/groupBy';
 
 export default {
@@ -94,19 +94,19 @@ export default {
     async loadInfo() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}/tickets/mine/list`);
+      const { status, data } = await YNetwork.get(`${this.$apiBase}/tickets/mine/list`);
       this.loading = false;
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, data)) return;
 
-      this.tickets = groupBy(result, 'status');
+      this.tickets = groupBy(data, 'status');
 
     },
     async changeTicketStatus(ticket, newStatus) {
 
       this.loading = true;
-      const { status, result } = await YNetwork.patch(`${this.$apiBase}/tickets/mine/${ticket._id}`, { status: newStatus });
+      const { status, data } = await YNetwork.patch(`${this.$apiBase}/tickets/mine/${ticket._id}`, { status: newStatus });
       this.loading = false;
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, data)) return;
 
       this.$toast.success('وضعیت با موفقیت تغییر کرد.');
       this.loadInfo();

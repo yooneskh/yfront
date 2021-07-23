@@ -54,7 +54,7 @@
 
 import YResourceRelationManager from './y-resource-relation-manager.vue';
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import { loadMetasFor, loadRelationsFor, mapMetaToFormFields, pluralizeModelName } from './y-resource-util';
 import debounce from 'lodash/debounce';
 
@@ -186,7 +186,7 @@ export default {
 
     },
     async checkValidations() {
-      this.hasValidation = (await YNetwork.get(`${this.$apiBase}/${this.pluralModelName}/validate`)).result === true;
+      this.hasValidation = (await YNetwork.get(`${this.$apiBase}/${this.pluralModelName}/validate`)).data === true;
     },
     validateResource: debounce(async function() {
 
@@ -194,11 +194,11 @@ export default {
 
       this.blockForValidate = false;
       this.validating = true;
-      const { status, result } = await YNetwork.post(`${this.$apiBase}/${this.pluralModelName}/validate`, payload);
+      const { status, data } = await YNetwork.post(`${this.$apiBase}/${this.pluralModelName}/validate`, payload);
       this.validating = false;
       if (status === 200) return this.validationMessages = undefined;
 
-      const messages = result.fields;
+      const messages = data.fields;
 
       for (const key of Object.keys(messages)) {
         if (this.metas.list.find(it => it.key === key)?.required && (this.resource[key] === undefined || this.resource[key] === null || this.resource[key] === '')) {
@@ -233,23 +233,23 @@ export default {
       if (this.resource._id) {
 
         this.loading = true;
-        const { status, result } = await YNetwork.patch(`${this.$apiBase}/${this.pluralModelName}/${this.resource._id}`, payload);
+        const { status, data } = await YNetwork.patch(`${this.$apiBase}/${this.pluralModelName}/${this.resource._id}`, payload);
         this.loading = false;
-        if (this.$generalHandle(status, result)) return;
+        if (this.$generalHandle(status, data)) return;
 
         this.$toast.success('ویرایش انجام شد.');
-        this.$emit('resolve', result);
+        this.$emit('resolve', data);
 
       }
       else {
 
         this.loading = true;
-        const { status, result } = await YNetwork.post(`${this.$apiBase}/${this.pluralModelName}`, payload);
+        const { status, data } = await YNetwork.post(`${this.$apiBase}/${this.pluralModelName}`, payload);
         this.loading = false;
-        if (this.$generalHandle(status, result)) return;
+        if (this.$generalHandle(status, data)) return;
 
         this.$toast.success('افزودن انجام شد.');
-        this.$emit('resolve', result);
+        this.$emit('resolve', data);
 
       }
 

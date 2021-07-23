@@ -53,7 +53,7 @@
 
 <script>
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 
 export default {
   name: 'ProfilePartTicketsNew',
@@ -117,10 +117,10 @@ export default {
       default: [],
       async get() {
 
-        const { status, result } = await YNetwork.get(`${this.$apiBase}/ticketcategories`);
-        if (this.$generalHandle(status, result)) return [];
+        const { status, data } = await YNetwork.get(`${this.$apiBase}/ticketcategories`);
+        if (this.$generalHandle(status, data)) return [];
 
-        return result;
+        return data;
 
       }
     }
@@ -129,7 +129,7 @@ export default {
     async submitTicket() {
 
       this.loading = true;
-      const { status: ticketStatus, result: ticket } = await YNetwork.post(`${this.$apiBase}/tickets/mine`, {
+      const { status: ticketStatus, data: ticket } = await YNetwork.post(`${this.$apiBase}/tickets/mine`, {
         category: this.ticket.category,
         title: this.ticket.title,
         informations: this.selectedCategory.fields.map(field => ({
@@ -141,14 +141,14 @@ export default {
       if (this.$generalHandle(ticketStatus, ticket)) return;
 
       this.loading = true;
-      const { status, result } = await YNetwork.post(`${this.$apiBase}/ticketmessages`, {
+      const { status, data } = await YNetwork.post(`${this.$apiBase}/ticketmessages`, {
         user: this.$user._id,
         ticket: ticket._id,
         body: this.ticket.body,
         files: this.ticket.files
       });
       this.loading = false;
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, data)) return;
 
       this.$toast.success('تیکت شما با موفقیت ثبت شد.');
       this.$router.replace(`/profile/tickets/${ticket._id}`);

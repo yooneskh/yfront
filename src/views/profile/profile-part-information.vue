@@ -45,7 +45,7 @@
 
 <script>
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 
 export default {
   name: 'ProfilePartInformation',
@@ -64,9 +64,9 @@ export default {
       const { name, email, profile } = this.info;
 
       this.loading = true;
-      const { status, result } = await YNetwork.patch(`${this.$apiBase}/auth/identity`, { name, email, profile })
+      const { status, data } = await YNetwork.patch(`${this.$apiBase}/auth/identity`, { name, email, profile })
       this.loading = false;
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, data)) return;
 
       this.$toast.success('اطلاعات با موفقیت ثبت شد.');
 

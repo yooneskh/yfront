@@ -21,7 +21,7 @@
 
 <script>
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import { pluralizeModelName, transformResourceToTitle } from './y-resource-util'
 
 export default {
@@ -55,12 +55,12 @@ export default {
 
     if (result[0] === '---' || result[1].status !== 200) {
       this.error = true;
-      if (result[1].status !== 200) this.title = result[1].result;
+      if (result[1].status !== 200) this.title = result[1].data;
       return;
     }
 
     this.title = result[0];
-    this.resource = result[1].result;
+    this.resource = result[1].data;
 
   },
   methods: {

@@ -70,7 +70,7 @@
 import YResourceTableCell from './y-resource-table-cell.vue';
 import YResourceFilter from './y-resource-filter.vue';
 
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 import debounce from 'lodash/debounce';
 import { loadMetasFor, pluralizeModelName, transformFilters, transformSorts } from './y-resource-util';
 import kebabCase from 'lodash/kebabCase';
@@ -237,15 +237,15 @@ export default {
       const limit = this.itemsPerPage;
 
       this.loading = true;
-      const [{ status, result }, { status: s2, result: r2 }] = await Promise.all([
+      const [{ status, data }, { status: s2, data: d2 }] = await Promise.all([
         YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}?skip=${skip}&limit=${limit}&${filters}&${sorts}`),
         YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/count?${filters}`)
       ]);
       this.loading = false;
-      if (this.$generalHandle(status, result) || this.$generalHandle(s2, r2)) return;
+      if (this.$generalHandle(status, data) || this.$generalHandle(s2, d2)) return;
 
-      this.resources.list = result;
-      this.resources.allCount = r2;
+      this.resources.list = data;
+      this.resources.allCount = d2;
 
     },
     async loadGroupsData() {
@@ -271,8 +271,8 @@ export default {
 
       this.groupResources = groupResults.map(it => ({
         title: it[0],
-        list: it[1].result,
-        allCount: it[2].result
+        list: it[1].data,
+        allCount: it[2].data
       }));
 
       if (!this.selectedGroupTitle) this.selectedGroupTitle = this.groupResources[0]?.title;
@@ -288,8 +288,8 @@ export default {
     async deleteResource(resource) {
       if (!await this.$dialogConfirmDelete()) return;
 
-      const { status, result } = await YNetwork.delete(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/${resource._id}`);
-      if (this.$generalHandle(status, result)) return;
+      const { status, data } = await YNetwork.delete(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/${resource._id}`);
+      if (this.$generalHandle(status, data)) return;
 
       this.$toast('حذف با موفقیت انجام شد');
       this.loadData();

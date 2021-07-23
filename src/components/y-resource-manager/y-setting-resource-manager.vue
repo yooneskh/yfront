@@ -26,7 +26,7 @@
 <script>
 
 import { loadMetasFor, mapMetaToFormFields } from './y-resource-util';
-import YNetwork from 'ynetwork';
+import { YNetwork } from 'ynetwork';
 
 export default {
   name: 'YSettingResourceManager',
@@ -69,12 +69,12 @@ export default {
     async loadSetting() {
 
       this.loading = true;
-      const { status, result } = await YNetwork.get(`${this.$apiBase}${this.pathSuffix}`);
+      const { status, data } = await YNetwork.get(`${this.$apiBase}${this.pathSuffix}`);
       this.loading = false;
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, data)) return;
 
-      this.original = JSON.parse(JSON.stringify(result));
-      this.setting = result;
+      this.original = JSON.parse(JSON.stringify(data));
+      this.setting = data;
 
       await this.$nextTick();
       this.$refs.theForm.revalidateAll();
@@ -98,9 +98,9 @@ export default {
       } if (Object.keys(payload).length === 0) return this.$toast.error('هیچ مقداری تغییر داده نشده است.');
 
       this.loading = true;
-      const { status, result } = await YNetwork.patch(`${this.$apiBase}${this.pathSuffix}`, payload);
+      const { status, data } = await YNetwork.patch(`${this.$apiBase}${this.pathSuffix}`, payload);
       this.loading = false;
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, data)) return;
 
       this.$toast.success('تنظیمات با موفقیت ذخیره شد.');
       this.loadSetting();
