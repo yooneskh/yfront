@@ -38,7 +38,7 @@
                   <v-list-item-title>مشاهده پروفایل</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item class="red mt-2" @click="$root.logout(); $router.replace('/auth');">
+              <v-list-item class="red mt-2" @click="$root.logout()">
                 <v-list-item-icon class="me-3">
                   <v-icon color="white">mdi-logout</v-icon>
                 </v-list-item-icon>

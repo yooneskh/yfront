@@ -163,7 +163,7 @@ export default {
         }
         catch {
           this.$toast.error('اطلاعات کاربری شما قابل بارگذاری نبود.');
-          this.$root.logout();
+          this.$root.logout(Config.auth.isAuthMandatory);
         }
       }
     }
@@ -193,8 +193,7 @@ export default {
     },
     async onLoadDataError() {
       this.$toast.error('مشکلی در گرفتن اطلاعات شما وجود دارد. لطفا دوباره تلاش کنید.');
-      this.$root.logout();
-      this.$router.replace('/auth');
+      this.$root.logout(Config.auth.isAuthMandatory);
     }
   }
 }

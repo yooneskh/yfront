@@ -57,7 +57,7 @@
             <v-list-item-title>مشاهده پروفایل</v-list-item-title>
           </v-list-item>
 
-          <v-list-item @click="$root.logout(); $router.push('/auth')">
+          <v-list-item @click="$root.logout()">
             <v-list-item-icon class="me-2">
               <v-icon small color="error">mdi-delete</v-icon>
             </v-list-item-icon>
@@ -216,7 +216,6 @@ export default {
       }
       else if (item === 'logout') {
         this.$root.logout();
-        this.$router.push('/auth');
       }
       else {
 

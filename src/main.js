@@ -63,12 +63,17 @@ new Vue({
       this.token = unmakeIt(localStorage.getItem('--token--') || '');
       ApiHelper.setToken(this.$token);
     },
-    logout() {
+    logout(redirect = true) {
+
       AuthService.logout();
+
       localStorage.removeItem('--token--');
       this.$root.token = '';
       this.$root.user = {};
+
       this.resetCredentials();
+      if (redirect) this.$router.replace('/auth');
+
     }
   }
 }).$mount('#app')
