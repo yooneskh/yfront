@@ -21,7 +21,7 @@
     persistent-hint
     :hide-details="!field.message && !field.hint">
     <template v-if="!field.disabled && !field.readonly && (field.multiple ? value && value.length : value)" #append>
-      <v-btn icon small @click.stop.prevent="$emit('input', field.multiple ? [] : undefined)">
+      <v-btn icon small @click.stop.prevent="clearData">
         <v-icon small>mdi-close</v-icon>
       </v-btn>
     </template>
@@ -195,6 +195,11 @@ export default {
         })
       );
 
+    },
+    async clearData() {
+      this.$emit('input', this.field.multiple ? [] : null);
+      await this.$nextTick();
+      this.validateValue();
     }
   }
 }
