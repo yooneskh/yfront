@@ -8813,10 +8813,10 @@ yargs@^16.0.0:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
-ykh-form-extended@1.4.15:
-  version "1.4.15"
-  resolved "https://registry.yarnpkg.com/ykh-form-extended/-/ykh-form-extended-1.4.15.tgz#24f519894f7b812cb9139a522797eee0af887d98"
-  integrity sha512-c0pZNSJB4urs27I4+nCPaKbRxMwwYRvZur0j/w7rsoiY+Xc2QvoVT+Y+1/pNoRyoP9YvC6uL87PzTuIuMQVm+g==
+ykh-form-extended@1.4.16:
+  version "1.4.16"
+  resolved "https://registry.yarnpkg.com/ykh-form-extended/-/ykh-form-extended-1.4.16.tgz#4722fb707e2f3413b6e5280eedf6392742f7c324"
+  integrity sha512-HfP5Fo7HXXgSYw1FLab1ly8gGns9Z0FRv2IOiMqJQnIs58JEssJ8Apys28dFSbNX82jeHuqi23vTjG6SkqxPLw==
   dependencies:
     leaflet "^1.7.1"
     vue-smooth-dnd "^0.8.1"
