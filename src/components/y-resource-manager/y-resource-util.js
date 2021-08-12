@@ -163,10 +163,24 @@ export function makeMetaRules(meta) {
 
   if (meta.required) {
     rules.push(v => {
+
+      const requiredErrorMessage = `${meta.title || meta.key} الزامی است!`;
+
       // vIf is handled in the y-form
-      if (meta.type === 'number') return (v !== undefined && v !== null && !isNaN(v)) || `${meta.title || meta.key} الزامی است!`;
-      if (meta.isArray || meta.type === 'series') return (!!v && v.length > 0) || `${meta.title || meta.key} الزامی است!`;
-      return !!v || `${meta.title || meta.key} الزامی است!`;
+      if (meta.type === 'number') {
+        return (v !== undefined && v !== null && !isNaN(v)) || requiredErrorMessage;
+      }
+
+      if (meta.isArray || meta.type === 'series') {
+        return (!!v && v.length > 0) || requiredErrorMessage;
+      }
+
+      if (meta.type === 'boolean') {
+        return (v === true || v === false) || requiredErrorMessage;
+      }
+
+      return (v !== undefined && v !== null && v !== '') || requiredErrorMessage;
+
     });
   }
 
