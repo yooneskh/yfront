@@ -161,7 +161,7 @@ export function makeMetaRules(meta) {
 
   const rules = [];
 
-  if (meta.required) {
+  if (meta.required || meta.conditionalRequired) {
     rules.push(v => {
 
       const requiredErrorMessage = `${meta.title || meta.key} الزامی است!`;
@@ -193,7 +193,7 @@ export function mapMetaToFormFields(metas, readonly = false) {
 
   return metas.map(meta => ({
     ...meta,
-    title: (meta.title || meta.key) + (meta.required ? ' *' : ''),
+    title: (meta.title || meta.key) + (meta.required || meta.conditionalRequired ? ' *' : ''),
     type: mapMetaType(meta),
     resource: meta.ref,
     number: meta.type === 'number',
