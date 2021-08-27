@@ -147,6 +147,16 @@ Vue.mixin({
         text,
         value
       });
+    },
+    $dialogTable({ icon, title, headers, items, actions, options } = {}) {
+      return this.$dialog(import('../dialogs/table-dialog.vue' /* webpackChunkName: 'table-dialog' */), {
+        ...options,
+        icon,
+        title,
+        headers,
+        items,
+        actions
+      });
     }
   }
 });
