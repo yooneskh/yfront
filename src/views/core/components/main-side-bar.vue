@@ -1,5 +1,5 @@
 <template>
-  <v-sheet elevation="1" width="285" class="main-sidebar ma-0 grey lighten-5 d-flex flex-column">
+  <v-sheet elevation="1" :width="collapsed ? 64 : 285" class="main-sidebar ma-0 grey lighten-5 d-flex flex-column">
 
     <div class="sidebar-header flex-grow-0">
       <v-card v-if="!collapsed" outlined :color="color" :dark="dark" class="d-flex flex-row align-center ma-2 pa-2 rounded-sm" :to="(validToolbarItems[0][0] || { path: '/' }).path">
