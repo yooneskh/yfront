@@ -189,7 +189,7 @@ export default {
     async loadData() {
       const identityApi = await AuthService.getIdentity();
       if (identityApi.status !== 200) return this.onLoadDataError();
-      this.$root.user = identityApi.result;
+      this.$root.user = identityApi.data;
     },
     async onLoadDataError() {
       this.$toast.error('مشکلی در گرفتن اطلاعات شما وجود دارد. لطفا دوباره تلاش کنید.');

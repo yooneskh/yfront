@@ -19,7 +19,7 @@
           @keyup.enter.native="doLogin"
         />
 
-        <div v-html="captcha.data" class="mt-3 mx-auto text-center" />
+        <div v-html="captcha.svg" class="mt-3 mx-auto text-center" />
 
         <v-text-field
           filled hide-details
@@ -27,7 +27,9 @@
           v-model="captchaText"
           dir="ltr">
           <template #append>
-            <v-icon class="ms-3" @click="$asyncComputed.captcha.update(); captchaText = '';">mdi-refresh</v-icon>
+            <v-icon class="ms-3" @click="$asyncComputed.captcha.update(); captchaText = '';">
+              mdi-refresh
+            </v-icon>
           </template>
         </v-text-field>
 
@@ -48,7 +50,7 @@
           @keyup.enter.native="doRegister"
         />
 
-        <div v-html="captcha.data" class="mt-3 mx-auto text-center" />
+        <div v-html="captcha.svg" class="mt-3 mx-auto text-center" />
 
         <v-text-field
           filled hide-details
@@ -56,7 +58,9 @@
           v-model="captchaText"
           dir="ltr">
           <template #append>
-            <v-icon class="ms-3" @click="$asyncComputed.captcha.update(); captchaText = '';">mdi-refresh</v-icon>
+            <v-icon class="ms-3" @click="$asyncComputed.captcha.update(); captchaText = '';">
+              mdi-refresh
+            </v-icon>
           </template>
         </v-text-field>
 
@@ -133,7 +137,8 @@ export default {
       name: '',
       verificationCode: '',
     },
-    captchaText: ''
+    captchaText: '',
+    verificationToken: ''
   }),
   computed: {
     cleanPhoneNumber() {
@@ -145,10 +150,10 @@ export default {
       default: {},
       async get() {
 
-        const { status, result } = await AuthService.getCaptcha();
-        if (this.$generalHandle(status, result)) return {};
+        const { status, data } = await AuthService.getCaptcha();
+        if (this.$generalHandle(status, data)) return {};
 
-        return result;
+        return data;
 
       }
     }
@@ -166,7 +171,7 @@ export default {
       if (this.cleanPhoneNumber.length !== 11) return this.$toast.error('شماره تلفن صحیح نیست!');
 
       this.loading = true;
-      const { status, result } = await AuthService.login(`+98${this.cleanPhoneNumber.slice(1)}`, this.captcha.id, this.captchaText);
+      const { status, data } = await AuthService.login(`+98${this.cleanPhoneNumber.slice(1)}`, this.captcha.captchaId, this.captchaText);
       this.loading = false;
 
       if (status === 404 && Config.auth.registerEnabled) {
@@ -174,10 +179,11 @@ export default {
         this.$asyncComputed.captcha.update();
         this.captchaText = '';
       }
-      else if (this.$generalHandle(status, result)) {
+      else if (this.$generalHandle(status, data)) {
         return this.$asyncComputed.captcha.update();
       }
       else {
+        this.verificationToken = data.verificationToken;
         this.mode = 'verify';
       }
 
@@ -185,25 +191,33 @@ export default {
     async doRegister() {
 
       this.loading = true;
-      const { status, result } = await AuthService.register(`+98${this.cleanPhoneNumber.slice(1)}`, this.info.name, this.captcha.id, this.captchaText);
+      const { status, data } = await AuthService.register(`+98${this.cleanPhoneNumber.slice(1)}`, this.info.name, this.captcha.captchaId, this.captchaText);
       this.loading = false;
-      if (this.$generalHandle(status, result)) return this.$asyncComputed.captcha.update();
+      if (this.$generalHandle(status, data)) return this.$asyncComputed.captcha.update();
 
+      this.verificationToken = data.verificationToken;
       this.mode = 'verify';
 
     },
     async doVerify() {
 
       this.loading = true;
-      const { status, result } = await AuthService.verify(`+98${this.cleanPhoneNumber.slice(1)}`, this.info.verificationCode);
+      const { status, data } = await AuthService.verify(this.verificationToken, this.info.verificationCode);
       this.loading = false;
-      if (this.$generalHandle(status, result)) return;
+      if (this.$generalHandle(status, data)) return;
 
-      this.$root.user = result.user;
-      localStorage.setItem('--token--', makeIt(result.token));
+      const token = data;
+
+      this.loading = true;
+      const { status: identityStatus, data: identityData } = await AuthService.getIdentity(token);
+      this.loading = false;
+      if (this.$generalHandle(identityStatus, identityData)) return;
+
+      localStorage.setItem('--token--', makeIt(token));
+      this.$root.user = identityData;
 
       if (!Config.auth.refreshIdentityOnLoad) {
-        localStorage.setItem('--user--', result.user);
+        localStorage.setItem('--user--', identityData);
       }
 
       this.$root.resetCredentials();
