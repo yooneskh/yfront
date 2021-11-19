@@ -7,7 +7,7 @@ export const AuthService = {
   },
   login(phoneNumber, captchaId, captchaText) {
     return YNetwork.post(
-      `${ENDPOINT_BASE}/auth/login`,
+      `${ENDPOINT_BASE}/authentication/login`,
       {
         provider: 'phoneNumber',
         phoneNumber
@@ -20,7 +20,7 @@ export const AuthService = {
   },
   register(phoneNumber, name, captchaId, captchaText) {
     return YNetwork.post(
-      `${ENDPOINT_BASE}/auth/register`,
+      `${ENDPOINT_BASE}/authentication/register`,
       {
         provider: 'phoneNumber',
         phoneNumber,
@@ -33,16 +33,16 @@ export const AuthService = {
     );
   },
   verify(verificationToken, verificationCode) {
-    return YNetwork.post(`${ENDPOINT_BASE}/auth/verify`, {
+    return YNetwork.post(`${ENDPOINT_BASE}/authentication/verify`, {
       provider: 'phoneNumber',
       verificationToken,
       verificationCode
     });
   },
   getIdentity(token) {
-    return YNetwork.get(`${ENDPOINT_BASE}/auth/identity`, undefined, token ? { Authorization: token } : undefined);
+    return YNetwork.get(`${ENDPOINT_BASE}/authentication/identity`, undefined, token ? { Authorization: token } : undefined);
   },
   logout() {
-    return YNetwork.post(`${ENDPOINT_BASE}/auth/logout`);
+    return YNetwork.post(`${ENDPOINT_BASE}/authentication/logout`);
   }
 };
