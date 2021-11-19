@@ -4,7 +4,9 @@
 
       <v-card-title class="pe-3">
 
-        <v-icon v-if="icon" class="me-3">{{ icon }}</v-icon>
+        <v-icon v-if="icon" class="me-3">
+          {{ icon }}
+        </v-icon>
         {{ title }}
 
         <v-spacer />
@@ -17,14 +19,19 @@
 
         <v-btn v-if="$hasAccesses([`admin.${kebabModelName}.create`])" text color="primary" class="ms-1" @click="(newUrl && $router.push(newUrl)) || initEditor(undefined)">
           افزودن
-          <v-icon right>mdi-plus</v-icon>
+          <v-icon right>
+            mdi-plus
+          </v-icon>
         </v-btn>
 
         <slot name="append-actions" />
 
       </v-card-title>
 
-      <y-resource-filter v-model="filters" :metas="metas.list" />
+      <y-resource-filter
+        :metas="metas.list"
+        v-model="filters"
+      />
 
       <v-tabs v-if="tabGroups" :color="selectedGroup && selectedGroup.color">
         <v-tab v-for="(group, index) of tabGroups" :key="group.title" style="letter-spacing: 0;" @click="selectedGroupTitle = group.title;">
@@ -57,7 +64,11 @@
         @delete="deleteResource"
         v-on="customActionListeners">
         <template v-for="header in headers" v-slot:[`item-${header.key}`]="{ data }">
-          <y-resource-table-cell :key="header.key + data" :data="data" :header="header" />
+          <y-resource-table-cell
+            :key="header.key + data"
+            :data="data"
+            :header="header"
+          />
         </template>
       </y-table>
 
@@ -238,7 +249,7 @@ export default {
 
       this.loading = true;
       const [{ status, data }, { status: s2, data: d2 }] = await Promise.all([
-        YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}?skip=${skip}&limit=${limit}&${filters}&${sorts}`),
+        YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/?skip=${skip}&limit=${limit}&${filters}&${sorts}`),
         YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/count?${filters}`)
       ]);
       this.loading = false;

@@ -198,19 +198,32 @@ export default {
       this.validating = false;
       if (status === 200) return this.validationMessages = undefined;
 
-      const messages = data.fields;
+      const { validations } = data;
+      const messages = {};
 
-      for (const key of Object.keys(messages)) {
-        if (this.metas.list.find(it => it.key === key)?.required && (this.resource[key] === undefined || this.resource[key] === null || this.resource[key] === '')) {
-          if (messages[key].length <= 1) {
-            delete messages[key];
+      for (const meta of this.metas.list) {
+
+        const metaValidations = validations.filter(it => it.property === meta.key);
+        const resourceValue = this.resource[meta.key];
+        if (metaValidations.length === 0) continue;
+
+        if (!meta.required && metaValidations.length > 0) {
+          messages[meta.key] = metaValidations.map(it => it.error);
+        }
+        else if (meta.required) {
+          if (resourceValue === undefined || resourceValue === null || resourceValue === '') {
+            if (metaValidations.length > 1) {
+              messages[meta.key] = metaValidations.slice(1).map(it => it.error);
+            }
           }
           else {
-            messages[key].splice(0, 1);
+            messages[meta.key] = metaValidations.map(it => it.error);
           }
         }
+
       }
 
+      console.log(11111, messages);
       this.validationMessages = Object.keys(messages).length > 0 ? messages : undefined;
 
     }, 500),
@@ -233,7 +246,7 @@ export default {
       if (this.resource._id) {
 
         this.loading = true;
-        const { status, data } = await YNetwork.patch(`${this.$apiBase}/${this.pluralModelName}/${this.resource._id}`, payload);
+        const { status, data } = await YNetwork.patch(`${this.$apiBase}/${this.pluralModelName}/${this.resource._id}/`, payload);
         this.loading = false;
         if (this.$generalHandle(status, data)) return;
 
@@ -244,7 +257,7 @@ export default {
       else {
 
         this.loading = true;
-        const { status, data } = await YNetwork.post(`${this.$apiBase}/${this.pluralModelName}`, payload);
+        const { status, data } = await YNetwork.post(`${this.$apiBase}/${this.pluralModelName}/`, payload);
         this.loading = false;
         if (this.$generalHandle(status, data)) return;
 

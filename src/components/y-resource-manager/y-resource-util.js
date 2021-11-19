@@ -14,7 +14,7 @@ export async function loadMetasFor(apiBase, resourceName, pathSuffix) {
 
     const urlPathSuffix = pathSuffix || `/${pluralizeModelName(resourceName)}`;
 
-    const { status, data } = await YNetwork.get(`${apiBase}${urlPathSuffix}/metas`);
+    const { status, data } = await YNetwork.get(`${apiBase}${urlPathSuffix}/meta`);
     if (status !== 200) return [];
 
     return data;
