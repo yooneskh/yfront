@@ -223,7 +223,6 @@ export default {
 
       }
 
-      console.log(11111, messages);
       this.validationMessages = Object.keys(messages).length > 0 ? messages : undefined;
 
     }, 500),
