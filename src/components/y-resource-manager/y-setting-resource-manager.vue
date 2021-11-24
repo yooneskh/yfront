@@ -69,7 +69,7 @@ export default {
     async loadSetting() {
 
       this.loading = true;
-      const { status, data } = await YNetwork.get(`${this.$apiBase}${this.pathSuffix}`);
+      const { status, data } = await YNetwork.get(`${this.$apiBase}${this.pathSuffix}/`);
       this.loading = false;
       if (this.$generalHandle(status, data)) return;
 
@@ -98,7 +98,7 @@ export default {
       } if (Object.keys(payload).length === 0) return this.$toast.error('هیچ مقداری تغییر داده نشده است.');
 
       this.loading = true;
-      const { status, data } = await YNetwork.patch(`${this.$apiBase}${this.pathSuffix}`, payload);
+      const { status, data } = await YNetwork.patch(`${this.$apiBase}${this.pathSuffix}/`, payload);
       this.loading = false;
       if (this.$generalHandle(status, data)) return;
 
