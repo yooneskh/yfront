@@ -190,7 +190,7 @@ export default {
 
       this.loading = true;
       const [{ status, data }, { status: s2, data: d2 }] = await Promise.all([
-        YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
+        YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
         YNetwork.get(`${this.$apiBase}/${pluralizeModelName(this.modelName)}/count?${transformedFilters}`)
       ]);
       this.loading = false;
@@ -238,7 +238,7 @@ export default {
 
       this.loading = true;
       const [{ status, data }, { status: s2, data: d2 }] = await Promise.all([
-        YNetwork.get(`${this.$apiBase}/${sourceName}/${targetName}?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
+        YNetwork.get(`${this.$apiBase}/${sourceName}/${targetName}/?skip=${skip}&limit=${limit}&${transformedFilters}&${sorts}`),
         YNetwork.get(`${this.$apiBase}/${sourceName}/${targetName}/count?${transformedFilters}`)
       ]);
       this.loading = false;

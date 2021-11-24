@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
 
-    <v-card-title>مجموعه داده {{ meta.title }}</v-card-title>
+    <v-card-title>مجموعه داده {{ title }}</v-card-title>
 
     <y-table
       :headers="headers"
@@ -27,6 +27,9 @@ export default {
     },
     data: {
       type: Array
+    },
+    title: {
+      type: String
     }
   },
   computed: {

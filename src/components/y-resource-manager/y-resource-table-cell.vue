@@ -45,7 +45,7 @@ import YResourceVisualizer from './y-resource-visualizer.vue';
 import YResourceSeriesVisualizerDialog from './y-resource-series-visualizer-dialog.vue';
 
 import { YNetwork } from 'ynetwork';
-import { transformResourceToTitle, loadRelationsFor, pluralizeModelName } from './y-resource-util';
+import { transformResourceToTitle, loadRelationsFor, pluralizeModelName, convertObjectMetaToArray } from './y-resource-util';
 
 export default {
   name: 'YResourceCell',
@@ -112,7 +112,8 @@ export default {
     async showSeriesData(meta, data) {
       this.$dialog(YResourceSeriesVisualizerDialog, {
         width: 768,
-        meta: meta.serieSchema,
+        title: meta.title || meta.key,
+        meta: convertObjectMetaToArray(meta.seriesSchema),
         data
       });
     }

@@ -139,10 +139,10 @@ export function transformSorts(sorts) {
 export function mapMetaType(meta) {
 
   if (meta.handlerElement) return meta.handlerElement;
-  if (meta.type === 'string' && meta.ref === 'Media') return meta.isArray ? 'file-array' : 'file';
+  if (meta.type === 'string' && meta.ref === 'Media') return meta.array ? 'file-array' : 'file';
   if (meta.type === 'series') return 'series';
   if (meta.ref) return 'resource';
-  if (meta.isArray) return 'select';
+  if (meta.array) return 'select';
   if (meta.labelFormat || meta.valueFormat) return 'date';
   if (meta.enum || meta.items) return 'select';
   if (meta.geo) return 'geo';
@@ -171,7 +171,7 @@ export function makeMetaRules(meta) {
         return (v !== undefined && v !== null && !isNaN(v)) || requiredErrorMessage;
       }
 
-      if (meta.isArray || meta.type === 'series') {
+      if (meta.array || meta.type === 'series') {
         return (!!v && v.length > 0) || requiredErrorMessage;
       }
 
@@ -188,6 +188,10 @@ export function makeMetaRules(meta) {
 
 }
 
+export function convertObjectMetaToArray(meta) {
+  return Object.keys(meta || {}).map(key => ({ ...meta[key], key }));
+}
+
 export function mapMetaToFormFields(metas, readonly = false) {
   if (!metas) return;
 
@@ -197,11 +201,11 @@ export function mapMetaToFormFields(metas, readonly = false) {
     type: mapMetaType(meta),
     resource: meta.ref,
     number: meta.type === 'number',
-    itemFields: mapMetaToFormFields(meta.serieSchema), // for series
-    base: meta.serieBase, // for series
-    multiple: meta.isArray, // for select
-    addable: meta.isArray && !meta.items && !meta.enum, // for select
-    searchable: meta.isArray, // for select
+    itemFields: mapMetaToFormFields(convertObjectMetaToArray(meta.seriesSchema)), // for series
+    base: meta.seriesBase, // for series
+    multiple: meta.array, // for select
+    addable: meta.array && !meta.items && !meta.enum, // for select
+    searchable: meta.array, // for select
     readonly: readonly || meta.readonly,
     unepoch: !!meta.valueFormat,
     locale: Config.localization.default,
