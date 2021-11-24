@@ -2,12 +2,24 @@
   <v-card :loading="loading">
 
     <v-card-title class="pe-3">
+
       انتخاب {{ title || 'آیتم' }}
       <v-spacer />
+
+      <v-btn text color="primary" @click="createNew">
+        ساختن مورد جدید
+        <v-icon right>
+          mdi-plus
+        </v-icon>
+      </v-btn>
+
       <v-btn v-if="multiple" text color="primary" @click="$emit('resolve', selectedItems)">
         انتخاب
-        <v-icon right>mdi-check</v-icon>
+        <v-icon right>
+          mdi-check
+        </v-icon>
       </v-btn>
+
     </v-card-title>
 
     <y-resource-filter v-model="filters" :metas="metas" />
@@ -261,6 +273,15 @@ export default {
       [this.titles[fromIndex], this.titles[toIndex]] = [this.titles[toIndex], this.titles[fromIndex]];
 
       this.selectedItems = newSelectedItems;
+
+    },
+    async createNew() {
+
+      const result = await this.$dialog(import('./y-resource-dialog' /* webpackChunkName: 'y-resource-dialog' */), {
+        modelName: this.modelName
+      }); if (!result) return;
+
+      this.handleItemClick(result);
 
     }
   }
