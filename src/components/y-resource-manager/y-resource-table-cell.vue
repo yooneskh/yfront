@@ -8,9 +8,9 @@
     <template v-else-if="Array.isArray(data)">
       <YResourceCell v-for="dataElement in data" :key="dataElement" class="me-2 d-inline-block" :header="header" :data="dataElement" />
     </template>
-    <template v-else-if="header.languages">
+    <template v-else-if="header.locales">
       <v-chip
-        v-for="(config, language) in header.languages"
+        v-for="(config, language) in header.locales"
         :key="language"
         class="me-1"
         small>

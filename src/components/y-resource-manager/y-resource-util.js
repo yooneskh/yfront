@@ -63,7 +63,7 @@ export async function transformResourceToTitle(apiBase, resourceName, resourceId
       if (meta.ref) {
         transformResourceToTitle(apiBase, meta.ref, resource[meta.key]).then(resolve);
       }
-      else if (meta.languages) {
+      else if (meta.locales) {
         resolve(resource[meta.key][locale] ?? '---');
       }
       else {
@@ -228,8 +228,8 @@ export function resourceFilterNextConfig(meta) {
     config.operator = '=';
   }
 
-  if (meta.languages) {
-    config.modifier = Object.keys(meta.languages)[0];
+  if (meta.locales) {
+    config.modifier = Object.keys(meta.locales)[0];
   }
 
   return config;
