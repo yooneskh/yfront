@@ -3,9 +3,11 @@ import { YCacher } from '../../plugins/y-cacher';
 import { plural } from 'pluralize';
 import { Config } from '../../global/config';
 
+
 export function pluralizeModelName(model) {
   return plural(model).toLowerCase();
 }
+
 
 export async function loadMetasFor(apiBase, resourceName, pathSuffix) {
   if (YCacher.has([resourceName, 'Meta'])) return YCacher.get([resourceName, 'Meta']);
@@ -36,6 +38,7 @@ export async function loadRelationsFor(apiBase, resourceName) {
   });
 
 }
+
 
 export async function transformResourceToTitle(apiBase, resourceName, resourceId, locale = Config.localization.default) {
 
@@ -116,6 +119,7 @@ export async function transformRelationToTitle(apiBase, resourceModel, relationI
 
 }
 
+
 export function transformFilters(filters) {
   if (!filters) return '';
 
@@ -135,6 +139,7 @@ export function transformSorts(sorts) {
   ).join(',');
 
 }
+
 
 export function mapMetaType(meta) {
 
@@ -157,6 +162,24 @@ export function mapMetaType(meta) {
 
 }
 
+export function doesMetaValueExist(meta, value) {
+
+  if (meta.type === 'number') {
+    return (value !== undefined && value !== null && !isNaN(value));
+  }
+
+  if (meta.array || meta.type === 'series') {
+    return (!!value && value.length > 0);
+  }
+
+  if (meta.type === 'boolean') {
+    return (value === true || value === false);
+  }
+
+  return (value !== undefined && value !== null && value !== '');
+
+}
+
 export function makeMetaRules(meta) {
 
   const rules = [];
@@ -164,22 +187,18 @@ export function makeMetaRules(meta) {
   if (meta.required || meta.conditionalRequired) {
     rules.push(v => {
 
-      const requiredErrorMessage = `${meta.title || meta.key} الزامی است!`;
-
       // vIf is handled in the y-form
-      if (meta.type === 'number') {
-        return (v !== undefined && v !== null && !isNaN(v)) || requiredErrorMessage;
-      }
 
-      if (meta.array || meta.type === 'series') {
-        return (!!v && v.length > 0) || requiredErrorMessage;
+      if (meta.locales) {
+        for (const locale in meta.locales) {
+          if (! doesMetaValueExist({ ...meta, ...meta.locales[locale] }, v?.[locale]) ) {
+            return `${meta.title || meta.key} in ${locale} is required!`;
+          }
+        }
       }
-
-      if (meta.type === 'boolean') {
-        return (v === true || v === false) || requiredErrorMessage;
+      else {
+        return doesMetaValueExist(meta, v) || `${meta.title || meta.key} is required!`;
       }
-
-      return (v !== undefined && v !== null && v !== '') || requiredErrorMessage;
 
     });
   }
@@ -187,6 +206,7 @@ export function makeMetaRules(meta) {
   return rules;
 
 }
+
 
 export function convertObjectMetaToArray(meta) {
   return Object.keys(meta || {}).map(key => ({ ...meta[key], key }));
@@ -215,6 +235,7 @@ export function mapMetaToFormFields(metas, readonly = false) {
   }));
 
 }
+
 
 export function resourceFilterNextConfig(meta) {
 
