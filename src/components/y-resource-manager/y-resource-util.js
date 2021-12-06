@@ -66,7 +66,7 @@ export async function transformResourceToTitle(apiBase, resourceName, resourceId
       if (meta.ref) {
         transformResourceToTitle(apiBase, meta.ref, resource[meta.key]).then(resolve);
       }
-      else if (meta.locales) {
+      else if (meta.variants) {
         resolve(resource[meta.key][locale] ?? '---');
       }
       else {
@@ -189,10 +189,10 @@ export function makeMetaRules(meta) {
 
       // vIf is handled in the y-form
 
-      if (meta.locales) {
-        for (const locale in meta.locales) {
-          if (! doesMetaValueExist({ ...meta, ...meta.locales[locale] }, v?.[locale]) ) {
-            return `${meta.title || meta.key} in ${locale} is required!`;
+      if (meta.variants) {
+        for (const variant in meta.variants) {
+          if (! doesMetaValueExist({ ...meta, ...meta.variants[variant] }, v?.[variant]) ) {
+            return `${meta.title || meta.key} in ${variant} is required!`;
           }
         }
       }
@@ -249,8 +249,8 @@ export function resourceFilterNextConfig(meta) {
     config.operator = '=';
   }
 
-  if (meta.locales) {
-    config.modifier = Object.keys(meta.locales)[0];
+  if (meta.variants) {
+    config.modifier = Object.keys(meta.variants)[0];
   }
 
   return config;

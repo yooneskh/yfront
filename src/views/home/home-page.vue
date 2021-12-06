@@ -19,15 +19,15 @@
               key: 'nameCheck', type: 'text', title: 'نام دوم', width: 6,
               rules: [v => !!v || 'نام دوم باید وارد شود!']
             },
-            { key: 'textMulti', type: 'text', title: 'متن', locales: { en: {}, fa: {}, fr: {} }, width: 6 },
+            { key: 'textMulti', type: 'text', title: 'متن', variants: { en: {}, fa: {}, fr: {} }, width: 6 },
             { key: 'counts', type: 'text', number: true, title: 'تعداد', readonly: true, disabled: true, width: 6 },
             { key: 'pass', type: 'text', password: true, title: 'رمز عبور', width: 6 },
             { key: 'fruits', type: 'select', title: 'میوه‌ها', width: 6, multiple: true, rules: [v => !!v && v.length > 0 || 'میوه باید وارد شود!'], items: ['سیب', 'موز', 'پرتقال'] },
             { key: 'media', type: 'file', title: 'تصویر دانش‌آموز', width: 6 },
             { key: 'from', type: 'date', title: 'تاریخ ورود', rules: [v => !!v || 'تاریخ ورودت چیه؟'], labelFormat: 'jDD jMMMM jYYYY', unepoch: true, width: 6 },
             { key: 'isMale', type: 'checkbox', title: 'دانش‌آموز هستید؟', rules: [v => v === true || 'باید قبول کنید!'], width: 6 },
-            { key: 'bodies', type: 'textarea', title: 'متن کمتر تاریخی', locales: { en: {}, fa: {}, fr: {} }, width: 6 },
-            { key: 'body', type: 'editor', title: 'متن تاریخی', locales: { en: {}, fa: {}, fr: {} }, width: 6 },
+            { key: 'bodies', type: 'textarea', title: 'متن کمتر تاریخی', variants: { en: {}, fa: {}, fr: {} }, width: 6 },
+            { key: 'body', type: 'editor', title: 'متن تاریخی', variants: { en: {}, fa: {}, fr: {} }, width: 6 },
             { key: 'color', type: 'color', title: 'رنگ پس‌زمینه', rules: [v => !!v], width: 6 },
             { key: 'job', type: 'radios', title: 'شغل', rules: [v => v === 'mech' || 'قانون من'], width: 6, items: [
               { value: 'mech', text: 'مکانیک' },

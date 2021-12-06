@@ -12,11 +12,11 @@
     />
 
     <v-select
-      v-if="currentMeta && currentMeta.locales"
+      v-if="currentMeta && currentMeta.variants"
       class="small-text"
       dense solo flat hide-details
       background-color="transparent"
-      :items="Object.keys(currentMeta.locales)"
+      :items="Object.keys(currentMeta.variants)"
       :value="value.modifier"
       @input="changeValue('modifier', $event)"
       style="width: 60px;"

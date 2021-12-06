@@ -8,13 +8,13 @@
     <template v-else-if="Array.isArray(data)">
       <YResourceCell v-for="dataElement in data" :key="dataElement" class="me-2 d-inline-block" :header="header" :data="dataElement" />
     </template>
-    <template v-else-if="header.locales">
+    <template v-else-if="header.variants">
       <v-chip
-        v-for="(config, language) in header.locales"
-        :key="language"
+        v-for="(config, variant) in header.variants"
+        :key="variant"
         class="me-1"
         small>
-        {{ language }}: {{ data[language] }}
+        {{ variant }}: {{ data[variant] }}
       </v-chip>
     </template>
     <template v-else-if="isRelation">

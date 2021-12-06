@@ -155,8 +155,8 @@ export default {
         else if (Array.isArray(element)) {
           return (await Promise.all( element.map(it => this.transformElement(it, meta)) )).join(' - ');
         }
-        else if (meta.locales) {
-          return Object.keys(meta.locales).map(lang => `(${lang}) ${element[lang]}`).join(' - ')
+        else if (meta.variants) {
+          return Object.keys(meta.variants).map(lang => `(${lang}) ${element[lang]}`).join(' - ')
         }
         /* else if (is relation) {} */
         else if (meta.labelFormat || meta.valueFormat) {
