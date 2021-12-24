@@ -5,8 +5,26 @@ function matchPermission(permit, permission) {
   const permissionParts = permission.split('.');
 
   for (let i = 0, len = permitParts.length; i < len; i++) {
-    if (permitParts[i] === '*') return  true;
-    if (permitParts[i] !== permissionParts[i]) return false;
+
+    const curPermission = permissionParts[i];
+    const curPermit = permitParts[i];
+
+    if (curPermit.includes('**')) {
+      return curPermission.startsWith( curPermit.slice(0, curPermit.indexOf('**')) );
+    }
+    else if (curPermit.includes('*')) {
+
+      const testReg = new RegExp(`^${curPermit.replaceAll('*', '.+')}$`);
+
+      if (!testReg.test(curPermission)) {
+        return false;
+      }
+
+    }
+    else if (curPermit !== curPermission) {
+      return false;
+    }
+
   }
 
   return permitParts.length === permissionParts.length;
