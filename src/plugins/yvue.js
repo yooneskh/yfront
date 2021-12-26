@@ -21,7 +21,10 @@ function downloadAsFile(filename, text) {
 
   const element = document.createElement('a');
 
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+
+  element.setAttribute('href', url);
   element.setAttribute('download', filename);
 
   element.style.display = 'none';

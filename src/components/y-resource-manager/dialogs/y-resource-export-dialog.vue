@@ -2,13 +2,15 @@
   <v-card flat>
 
     <v-card-title>
-      <v-icon v-if="icon" class="me-3">{{ icon }}</v-icon>
-      {{ title || 'خروجی از داده‌ها' }}
+      <v-icon v-if="icon" class="me-3">
+        {{ icon }}
+      </v-icon>
+      {{ title || 'خروجی داده' }}
     </v-card-title>
 
     <v-card-text v-if="!completed" class="d-flex flex-column align-center justify-center pa-12">
 
-      <div class="tetx-body-1 ltred">
+      <div class="text-body-1 ltred">
         {{ Math.max(0, rows.length - 1) }} / {{ allCount }}
       </div>
 
@@ -17,24 +19,26 @@
     </v-card-text>
 
     <v-card-text v-if="completed">
-      عملیات خروجی گرفتن به اتمام رسید. برای دانلود فایل بر روی دکمه دانلود خروجی زیر کلیک کنید.
+      عملیات خروجی گرفتن به اتمام رسید. برای دانلود خروجی روی دکمه زیر کلیک کنید.
     </v-card-text>
 
     <v-card-actions>
 
       <v-btn v-if="!completed" text color="warning" @click="completed = true;">
-        توقف و گرفتن خروجی تا الان
+        توقف و دانلود خروجی ناکامل
       </v-btn>
 
       <v-btn v-if="completed" depressed color="primary" @click="downloadFile">
         دانلود خروجی
-        <v-icon right>mdi-download</v-icon>
+        <v-icon right>
+          mdi-download
+        </v-icon>
       </v-btn>
 
       <v-spacer />
 
       <v-btn text color="error" @click="$emit('resolve', undefined)">
-        لغو کامل
+        لغو
       </v-btn>
 
     </v-card-actions>
@@ -45,7 +49,7 @@
 <script>
 
 import { YNetwork } from 'ynetwork';
-import { loadMetasFor, pluralizeModelName, transformFilters, transformResourceToTitle, transformSorts } from '../y-resource-util';
+import { convertObjectMetaToArray, loadMetasFor, pluralizeModelName, transformFilters, transformResourceToTitle, transformSorts } from '../y-resource-util';
 
 export default {
   name: 'YResourceExportDialog',
@@ -115,7 +119,7 @@ export default {
     async exportDatas(skip, limit) {
       if (this.completed) return;
 
-      const { status, data: datas } = await YNetwork.get(`${this.$apiBase}/${this.pluralModelName}?skip=${skip}&limit=${limit}&${this.queryFilters}&${this.querySorts}`)
+      const { status, data: datas } = await YNetwork.get(`${this.$apiBase}/${this.pluralModelName}/?skip=${skip}&limit=${limit}&${this.queryFilters}&${this.querySorts}`)
       if (this.$generalHandle(status, datas)) return;
       if (this.completed) return;
       if (datas.length === 0) return this.finalizeExport();
@@ -145,7 +149,12 @@ export default {
 
           const elementTexts = await Promise.all(
             element.map(it =>
-              this.transformData(it, this.filterShowableMetas(meta.serieSchema))
+              this.transformData(
+                it,
+                this.filterShowableMetas(
+                  convertObjectMetaToArray(meta.seriesSchema)
+                )
+              )
             )
           );
 
@@ -193,10 +202,14 @@ export default {
     },
     downloadFile() {
       this.$downloadAsFile(
-        `${this.model.toLowerCase()}-export-${this.$formatTime(Date.now(), 'YYYY-MM-DD-HH-mm-ss')}.csv`,
-        this.rows.map(it =>
-          it.map(this.sanitizeString).join(',')).join('\n')
-        );
+        `${this.pluralModelName}-export-${this.$formatTime(Date.now(), 'YYYY-MM-DD-HH-mm-ss')}.csv`,
+        [
+          '"sep=,"',
+          ...this.rows.map(it =>
+            it.map(this.sanitizeString).join(',')
+          )
+        ].join('\n')
+      );
     }
   }
 };
