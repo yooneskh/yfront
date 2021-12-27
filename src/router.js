@@ -115,6 +115,17 @@ export default new Router({
           }
         },
         {
+          path: 'resource-tree',
+          component: () => import('./views/manage/view-resource-tree-page.vue' /* webpackChunkName: 'view-resource-tree-page' */),
+          meta: {
+            title: 'مشاهده درخت',
+            icon: 'mdi-file-tree',
+            model: 'ResourceModel',
+            parentalKey: 'parent',
+            avatarKey: 'picture'
+          }
+        },
+        {
           path: 'ticketcategories',
           component: () => import('./views/manage/manage-resource-page.vue' /* webpackChunkName: 'manage-resource-page' */),
           meta: {

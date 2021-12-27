@@ -256,3 +256,25 @@ export function resourceFilterNextConfig(meta) {
   return config;
 
 }
+
+export async function loadAllResource(url, params, generalHandle) {
+
+
+  const { status: countStatus, data: dataCount } = await YNetwork.get(`${url}count?${params}`);
+  if (generalHandle(countStatus, dataCount)) return [];
+
+  const result = [];
+  let fetchCount = 0;
+
+  while (result.length < dataCount && (fetchCount++) < 40) {
+
+    const { status, data } = await YNetwork.get(`${url}?skip=${result.length}&${params}`);
+    if (generalHandle(status, data)) return result;
+
+    result.push(...data);
+
+  }
+
+  return result;
+
+}
