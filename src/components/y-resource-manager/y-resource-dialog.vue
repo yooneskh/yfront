@@ -27,10 +27,20 @@
           </v-card>
         </v-card-text>
 
-        <v-card-actions v-if="!readonly">
-          <v-btn text color="primary" :disabled="!isValid || validating || !!validationMessages || blockForValidate" @click="submit">
+        <v-card-actions v-if="!readonly" class="align-center">
+
+          <v-btn text color="primary" @click="submit">
             {{ resource._id ? 'ویرایش' : 'افزودن' }}
           </v-btn>
+
+          <v-progress-circular
+            v-if="validating"
+            size="24"
+            color="primary"
+            indeterminate
+            class="ms-3"
+          />
+
         </v-card-actions>
 
       </v-col>
