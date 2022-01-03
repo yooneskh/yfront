@@ -8925,10 +8925,10 @@ yargs@^16.0.0:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
-ykh-form-extended@1.6.14:
-  version "1.6.14"
-  resolved "https://registry.yarnpkg.com/ykh-form-extended/-/ykh-form-extended-1.6.14.tgz#1c2dd60be1e03e003bda3cabba02e1a69e134201"
-  integrity sha512-iYGMjhVgGYzTFTZ8B25r37IKDj+GPgS1syulUimEUhdFoKPXQ7YBwXDqxhsWDH8bB048KpN2O+Ry8Si3Z4eARQ==
+ykh-form-extended@1.6.15:
+  version "1.6.15"
+  resolved "https://registry.yarnpkg.com/ykh-form-extended/-/ykh-form-extended-1.6.15.tgz#9fda5148e3e079e4757c1e520082fece3c6321dc"
+  integrity sha512-Je5HUItL+ykldWoTGmBDgLAFDVInUNSCricvJkROxnrMpvLSRzmxKUOLNB8SCK0KgVn5PVSDcFE2eA7S6Dn2UA==
   dependencies:
     easymde "2.15.0"
     leaflet "^1.7.1"
