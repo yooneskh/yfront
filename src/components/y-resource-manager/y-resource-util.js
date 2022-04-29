@@ -123,9 +123,16 @@ export async function transformRelationToTitle(apiBase, resourceModel, relationI
 export function transformFilters(filters) {
   if (!filters) return '';
 
-  return 'filters=' + filters.map(filter =>
-    `${filter.key}${filter.modifier ? `.${filter.modifier}` : ''}:${filter.operator}:${filter.value}`
-  ).join(',');
+  const filtersString = (
+    filters
+      .filter(it => !!it.value)
+      .map(it =>
+        `${it.key}${it.modifier ? `.${it.modifier}` : ''}:${it.operator}:${it.value}`
+      )
+      .join(',')
+  );
+
+  return `filters=${filtersString}`;
 
 }
 
@@ -240,13 +247,13 @@ export function mapMetaToFormFields(metas, readonly = false) {
 export function resourceFilterNextConfig(meta) {
 
   const config = {
-    operator: '~=',
+    operator: 'inc',
     value: '',
     modifier: ''
   };
 
   if (meta.labelFormat || meta.valueFormat || meta.ref) {
-    config.operator = '=';
+    config.operator = 'eq';
   }
 
   if (meta.variants) {

@@ -58,21 +58,23 @@ export default {
     currentOperators() {
 
       const result = [
-        { value: '=', text: 'مساوی' },
-        { value: '!=', text: 'نامساوی' }
+        { value: 'eq', text: 'مساوی' },
+        { value: 'neq', text: 'نامساوی' }
       ];
 
       if (this.currentMeta.type === 'boolean') return result;
 
       if (!this.currentMeta.ref) {
         result.push(
-          { value: '>', text: 'بیشتر' },
-          { value: '<', text: 'کمتر' },
-          { value: '~=', text: 'شامل' }
+          { value: 'gt', text: 'بیشتر' },
+          { value: 'gt', text: 'بیشتر مساوی' },
+          { value: 'lt', text: 'کمتر' },
+          { value: 'lt', text: 'کمتر مساوی' },
+          { value: 'inc', text: 'شامل' }
         );
       }
       else if (this.currentMeta.labelFormat) {
-        result.push({ value: '~=', text: 'شامل' });
+        result.push({ value: 'inc', text: 'شامل' });
       }
 
       return result;
