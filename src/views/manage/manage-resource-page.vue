@@ -10,6 +10,7 @@
       :edit-handler="$route.meta.editHandler ? (it => $route.meta.editHandler(this, it)) : undefined"
       :editor-width="$route.meta.editorWidth"
       :tab-groups="$route.meta.tabGroups"
+      :permission-module="$route.meta.permissionModule"
     />
   </v-container>
 </template>

@@ -17,7 +17,7 @@
           گرفتن خروجی
         </v-btn>
 
-        <v-btn v-if="$hasAccesses([`admin.${kebabModelName}.create`])" text color="primary" class="ms-1" @click="(newUrl && $router.push(newUrl)) || initEditor(undefined)">
+        <v-btn v-if="hasPermissionPart('create')" text color="primary" class="ms-1" @click="(newUrl && $router.push(newUrl)) || initEditor(undefined)">
           افزودن
           <v-icon right>
             mdi-plus
@@ -121,6 +121,9 @@ export default {
     },
     tabGroups: {
       type: Array
+    },
+    permissionModule: {
+      type: String
     }
   },
   data: () => ({
@@ -173,8 +176,8 @@ export default {
       actions.push(...(this.customActions || []));
 
       actions.push(
-        { key: 'edit', icon: 'mdi-pen', permissions: [`admin.${this.kebabModelName}.update`] },
-        { key: 'delete', icon: 'mdi-delete', color: 'error', permissions: [`admin.${this.kebabModelName}.delete`] }
+        { key: 'edit', icon: 'mdi-pen', permissions: this.makePermissionsArrayForPart('update') },
+        { key: 'delete', icon: 'mdi-delete', color: 'error', permissions: this.makePermissionsArrayForPart('delete') }
       );
 
       return actions;
@@ -326,6 +329,12 @@ export default {
 
       this.$toast.success('خروجی با موفقیت گرفته شد.');
 
+    },
+    hasPermissionPart(part) {
+      return this.$hasAccesses(this.makePermissionsArrayForPart(part));
+    },
+    makePermissionsArrayForPart(part) {
+      return [`admin${this.permissionModule ? `.${this.permissionModule}` : ''}.${this.kebabModelName}.${part}`];
     }
   }
 }
