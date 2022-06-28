@@ -38,6 +38,19 @@
         <template #append="{ item }">
           <div class="d-flex flex-row" style="gap: 8px;">
 
+            <v-tooltip v-for="customAdd of customAdds" :key="customAdd.model" fixed top>
+              <template #activator="{ on }">
+                <v-btn small icon color="primary" v-on="on" @click.stop="addCustomModelFor(item, customAdd.model, customAdd.referenceKey)">
+                  <v-icon small>
+                    {{ customAdd.icon }}
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>
+                {{ customAdd.title }}
+              </span>
+            </v-tooltip>
+
             <v-tooltip fixed top>
               <template #activator="{ on }">
                 <v-btn small icon color="primary" v-on="on" @click.stop="addWithParent(item)">
@@ -101,7 +114,8 @@ export default {
     title: String,
     model: String,
     avatarKey: String,
-    parentalKey: String
+    parentalKey: String,
+    customAdds: Array,
   },
   data: () => ({
     loading: false,
@@ -186,7 +200,9 @@ export default {
 
       const result = await this.$dialog(YResourceDialog, {
         modelName: this.model,
-        baseResource: { [this.parentalKey]: item?._id }
+        baseResource: {
+          [this.parentalKey]: item?._id
+        }
       });
       if (!result) return;
 
@@ -248,6 +264,16 @@ export default {
         this.reloadParentOfItem(target.__children, item);
 
       }
+    },
+    addCustomModelFor(item, model, referenceKey) {
+
+      this.$dialog(YResourceDialog, {
+        modelName: model,
+        baseResource: {
+          [referenceKey]: item?._id
+        }
+      });
+
     }
   }
 };

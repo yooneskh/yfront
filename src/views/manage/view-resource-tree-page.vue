@@ -6,6 +6,7 @@
       :model="$route.meta.model"
       :parental-key="$route.meta.parentalKey"
       :avatar-key="$route.meta.avatarKey"
+      :custom-adds="$route.meta.customAdds"
     />
   </v-container>
 </template>
