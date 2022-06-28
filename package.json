@@ -31,7 +31,7 @@
     "ynetwork": "3.0.6"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-optional-chaining": "7.16.7",
+    "@babel/plugin-proposal-optional-chaining": "7.18.6",
     "@vue/cli-plugin-babel": "4.5.15",
     "@vue/cli-plugin-eslint": "4.5.15",
     "@vue/cli-service": "4.5.15",
